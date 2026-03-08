@@ -1,0 +1,2994 @@
+[
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E11",
+    "officeName": "서울특별시교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "교육비특별회계",
+    "amount": 3339078
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E11",
+    "officeName": "서울특별시교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "기타특별회계",
+    "amount": 320980
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E11",
+    "officeName": "서울특별시교육청",
+    "functionName": "중등교육",
+    "accountType": "교육비특별회계",
+    "amount": 3055722
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E11",
+    "officeName": "서울특별시교육청",
+    "functionName": "중등교육",
+    "accountType": "기타특별회계",
+    "amount": 300649
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E11",
+    "officeName": "서울특별시교육청",
+    "functionName": "고등교육",
+    "accountType": "교육비특별회계",
+    "amount": 323155
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E11",
+    "officeName": "서울특별시교육청",
+    "functionName": "고등교육",
+    "accountType": "기타특별회계",
+    "amount": 29398
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E11",
+    "officeName": "서울특별시교육청",
+    "functionName": "평생직업교육",
+    "accountType": "교육비특별회계",
+    "amount": 434956
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E11",
+    "officeName": "서울특별시교육청",
+    "functionName": "평생직업교육",
+    "accountType": "기타특별회계",
+    "amount": 48345
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E11",
+    "officeName": "서울특별시교육청",
+    "functionName": "교육일반",
+    "accountType": "교육비특별회계",
+    "amount": 994589
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E11",
+    "officeName": "서울특별시교육청",
+    "functionName": "교육일반",
+    "accountType": "기타특별회계",
+    "amount": 136636
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E11",
+    "officeName": "서울특별시교육청",
+    "functionName": "학교시설",
+    "accountType": "교육비특별회계",
+    "amount": 1110906
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E11",
+    "officeName": "서울특별시교육청",
+    "functionName": "학교시설",
+    "accountType": "기타특별회계",
+    "amount": 107945
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E11",
+    "officeName": "서울특별시교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "교육비특별회계",
+    "amount": 751088
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E11",
+    "officeName": "서울특별시교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "기타특별회계",
+    "amount": 45504
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E11",
+    "officeName": "서울특별시교육청",
+    "functionName": "교육복지",
+    "accountType": "교육비특별회계",
+    "amount": 616656
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E11",
+    "officeName": "서울특별시교육청",
+    "functionName": "교육복지",
+    "accountType": "기타특별회계",
+    "amount": 38447
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E11",
+    "officeName": "서울특별시교육청",
+    "functionName": "보건안전",
+    "accountType": "교육비특별회계",
+    "amount": 282742
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E11",
+    "officeName": "서울특별시교육청",
+    "functionName": "보건안전",
+    "accountType": "기타특별회계",
+    "amount": 26211
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E11",
+    "officeName": "서울특별시교육청",
+    "functionName": "기관운영",
+    "accountType": "교육비특별회계",
+    "amount": 516605
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E11",
+    "officeName": "서울특별시교육청",
+    "functionName": "기관운영",
+    "accountType": "기타특별회계",
+    "amount": 49025
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E11",
+    "officeName": "서울특별시교육청",
+    "functionName": "예비비기타",
+    "accountType": "교육비특별회계",
+    "amount": 247873
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E11",
+    "officeName": "서울특별시교육청",
+    "functionName": "예비비기타",
+    "accountType": "기타특별회계",
+    "amount": 23491
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E21",
+    "officeName": "부산광역시교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "교육비특별회계",
+    "amount": 1076461
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E21",
+    "officeName": "부산광역시교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "기타특별회계",
+    "amount": 99275
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E21",
+    "officeName": "부산광역시교육청",
+    "functionName": "중등교육",
+    "accountType": "교육비특별회계",
+    "amount": 1032353
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E21",
+    "officeName": "부산광역시교육청",
+    "functionName": "중등교육",
+    "accountType": "기타특별회계",
+    "amount": 96424
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E21",
+    "officeName": "부산광역시교육청",
+    "functionName": "고등교육",
+    "accountType": "교육비특별회계",
+    "amount": 115010
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E21",
+    "officeName": "부산광역시교육청",
+    "functionName": "고등교육",
+    "accountType": "기타특별회계",
+    "amount": 8821
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E21",
+    "officeName": "부산광역시교육청",
+    "functionName": "평생직업교육",
+    "accountType": "교육비특별회계",
+    "amount": 143604
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E21",
+    "officeName": "부산광역시교육청",
+    "functionName": "평생직업교육",
+    "accountType": "기타특별회계",
+    "amount": 22815
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E21",
+    "officeName": "부산광역시교육청",
+    "functionName": "교육일반",
+    "accountType": "교육비특별회계",
+    "amount": 413424
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E21",
+    "officeName": "부산광역시교육청",
+    "functionName": "교육일반",
+    "accountType": "기타특별회계",
+    "amount": 60445
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E21",
+    "officeName": "부산광역시교육청",
+    "functionName": "학교시설",
+    "accountType": "교육비특별회계",
+    "amount": 308857
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E21",
+    "officeName": "부산광역시교육청",
+    "functionName": "학교시설",
+    "accountType": "기타특별회계",
+    "amount": 31881
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E21",
+    "officeName": "부산광역시교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "교육비특별회계",
+    "amount": 221727
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E21",
+    "officeName": "부산광역시교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "기타특별회계",
+    "amount": 17349
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E21",
+    "officeName": "부산광역시교육청",
+    "functionName": "교육복지",
+    "accountType": "교육비특별회계",
+    "amount": 172527
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E21",
+    "officeName": "부산광역시교육청",
+    "functionName": "교육복지",
+    "accountType": "기타특별회계",
+    "amount": 21707
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E21",
+    "officeName": "부산광역시교육청",
+    "functionName": "보건안전",
+    "accountType": "교육비특별회계",
+    "amount": 126343
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E21",
+    "officeName": "부산광역시교육청",
+    "functionName": "보건안전",
+    "accountType": "기타특별회계",
+    "amount": 10603
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E21",
+    "officeName": "부산광역시교육청",
+    "functionName": "기관운영",
+    "accountType": "교육비특별회계",
+    "amount": 125145
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E21",
+    "officeName": "부산광역시교육청",
+    "functionName": "기관운영",
+    "accountType": "기타특별회계",
+    "amount": 13917
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E21",
+    "officeName": "부산광역시교육청",
+    "functionName": "예비비기타",
+    "accountType": "교육비특별회계",
+    "amount": 73283
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E21",
+    "officeName": "부산광역시교육청",
+    "functionName": "예비비기타",
+    "accountType": "기타특별회계",
+    "amount": 8028
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E22",
+    "officeName": "대구광역시교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "교육비특별회계",
+    "amount": 922926
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E22",
+    "officeName": "대구광역시교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "기타특별회계",
+    "amount": 65032
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E22",
+    "officeName": "대구광역시교육청",
+    "functionName": "중등교육",
+    "accountType": "교육비특별회계",
+    "amount": 604560
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E22",
+    "officeName": "대구광역시교육청",
+    "functionName": "중등교육",
+    "accountType": "기타특별회계",
+    "amount": 95292
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E22",
+    "officeName": "대구광역시교육청",
+    "functionName": "고등교육",
+    "accountType": "교육비특별회계",
+    "amount": 72492
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E22",
+    "officeName": "대구광역시교육청",
+    "functionName": "고등교육",
+    "accountType": "기타특별회계",
+    "amount": 9855
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E22",
+    "officeName": "대구광역시교육청",
+    "functionName": "평생직업교육",
+    "accountType": "교육비특별회계",
+    "amount": 116468
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E22",
+    "officeName": "대구광역시교육청",
+    "functionName": "평생직업교육",
+    "accountType": "기타특별회계",
+    "amount": 9938
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E22",
+    "officeName": "대구광역시교육청",
+    "functionName": "교육일반",
+    "accountType": "교육비특별회계",
+    "amount": 290739
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E22",
+    "officeName": "대구광역시교육청",
+    "functionName": "교육일반",
+    "accountType": "기타특별회계",
+    "amount": 15839
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E22",
+    "officeName": "대구광역시교육청",
+    "functionName": "학교시설",
+    "accountType": "교육비특별회계",
+    "amount": 295240
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E22",
+    "officeName": "대구광역시교육청",
+    "functionName": "학교시설",
+    "accountType": "기타특별회계",
+    "amount": 45126
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E22",
+    "officeName": "대구광역시교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "교육비특별회계",
+    "amount": 151123
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E22",
+    "officeName": "대구광역시교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "기타특별회계",
+    "amount": 18496
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E22",
+    "officeName": "대구광역시교육청",
+    "functionName": "교육복지",
+    "accountType": "교육비특별회계",
+    "amount": 157027
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E22",
+    "officeName": "대구광역시교육청",
+    "functionName": "교육복지",
+    "accountType": "기타특별회계",
+    "amount": 17100
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E22",
+    "officeName": "대구광역시교육청",
+    "functionName": "보건안전",
+    "accountType": "교육비특별회계",
+    "amount": 99901
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E22",
+    "officeName": "대구광역시교육청",
+    "functionName": "보건안전",
+    "accountType": "기타특별회계",
+    "amount": 8418
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E22",
+    "officeName": "대구광역시교육청",
+    "functionName": "기관운영",
+    "accountType": "교육비특별회계",
+    "amount": 125183
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E22",
+    "officeName": "대구광역시교육청",
+    "functionName": "기관운영",
+    "accountType": "기타특별회계",
+    "amount": 8715
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E22",
+    "officeName": "대구광역시교육청",
+    "functionName": "예비비기타",
+    "accountType": "교육비특별회계",
+    "amount": 63550
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E22",
+    "officeName": "대구광역시교육청",
+    "functionName": "예비비기타",
+    "accountType": "기타특별회계",
+    "amount": 6980
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E23",
+    "officeName": "인천광역시교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "교육비특별회계",
+    "amount": 956088
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E23",
+    "officeName": "인천광역시교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "기타특별회계",
+    "amount": 159292
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E23",
+    "officeName": "인천광역시교육청",
+    "functionName": "중등교육",
+    "accountType": "교육비특별회계",
+    "amount": 817792
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E23",
+    "officeName": "인천광역시교육청",
+    "functionName": "중등교육",
+    "accountType": "기타특별회계",
+    "amount": 116031
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E23",
+    "officeName": "인천광역시교육청",
+    "functionName": "고등교육",
+    "accountType": "교육비특별회계",
+    "amount": 90353
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E23",
+    "officeName": "인천광역시교육청",
+    "functionName": "고등교육",
+    "accountType": "기타특별회계",
+    "amount": 12745
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E23",
+    "officeName": "인천광역시교육청",
+    "functionName": "평생직업교육",
+    "accountType": "교육비특별회계",
+    "amount": 124150
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E23",
+    "officeName": "인천광역시교육청",
+    "functionName": "평생직업교육",
+    "accountType": "기타특별회계",
+    "amount": 11493
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E23",
+    "officeName": "인천광역시교육청",
+    "functionName": "교육일반",
+    "accountType": "교육비특별회계",
+    "amount": 348837
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E23",
+    "officeName": "인천광역시교육청",
+    "functionName": "교육일반",
+    "accountType": "기타특별회계",
+    "amount": 40744
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E23",
+    "officeName": "인천광역시교육청",
+    "functionName": "학교시설",
+    "accountType": "교육비특별회계",
+    "amount": 370528
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E23",
+    "officeName": "인천광역시교육청",
+    "functionName": "학교시설",
+    "accountType": "기타특별회계",
+    "amount": 63627
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E23",
+    "officeName": "인천광역시교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "교육비특별회계",
+    "amount": 170413
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E23",
+    "officeName": "인천광역시교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "기타특별회계",
+    "amount": 13857
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E23",
+    "officeName": "인천광역시교육청",
+    "functionName": "교육복지",
+    "accountType": "교육비특별회계",
+    "amount": 165999
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E23",
+    "officeName": "인천광역시교육청",
+    "functionName": "교육복지",
+    "accountType": "기타특별회계",
+    "amount": 26477
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E23",
+    "officeName": "인천광역시교육청",
+    "functionName": "보건안전",
+    "accountType": "교육비특별회계",
+    "amount": 85803
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E23",
+    "officeName": "인천광역시교육청",
+    "functionName": "보건안전",
+    "accountType": "기타특별회계",
+    "amount": 11132
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E23",
+    "officeName": "인천광역시교육청",
+    "functionName": "기관운영",
+    "accountType": "교육비특별회계",
+    "amount": 128730
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E23",
+    "officeName": "인천광역시교육청",
+    "functionName": "기관운영",
+    "accountType": "기타특별회계",
+    "amount": 7735
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E23",
+    "officeName": "인천광역시교육청",
+    "functionName": "예비비기타",
+    "accountType": "교육비특별회계",
+    "amount": 67028
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E23",
+    "officeName": "인천광역시교육청",
+    "functionName": "예비비기타",
+    "accountType": "기타특별회계",
+    "amount": 11146
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E24",
+    "officeName": "광주광역시교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "교육비특별회계",
+    "amount": 514904
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E24",
+    "officeName": "광주광역시교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "기타특별회계",
+    "amount": 51371
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E24",
+    "officeName": "광주광역시교육청",
+    "functionName": "중등교육",
+    "accountType": "교육비특별회계",
+    "amount": 516665
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E24",
+    "officeName": "광주광역시교육청",
+    "functionName": "중등교육",
+    "accountType": "기타특별회계",
+    "amount": 69453
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E24",
+    "officeName": "광주광역시교육청",
+    "functionName": "고등교육",
+    "accountType": "교육비특별회계",
+    "amount": 50959
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E24",
+    "officeName": "광주광역시교육청",
+    "functionName": "고등교육",
+    "accountType": "기타특별회계",
+    "amount": 8548
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E24",
+    "officeName": "광주광역시교육청",
+    "functionName": "평생직업교육",
+    "accountType": "교육비특별회계",
+    "amount": 68043
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E24",
+    "officeName": "광주광역시교육청",
+    "functionName": "평생직업교육",
+    "accountType": "기타특별회계",
+    "amount": 5009
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E24",
+    "officeName": "광주광역시교육청",
+    "functionName": "교육일반",
+    "accountType": "교육비특별회계",
+    "amount": 170822
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E24",
+    "officeName": "광주광역시교육청",
+    "functionName": "교육일반",
+    "accountType": "기타특별회계",
+    "amount": 27190
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E24",
+    "officeName": "광주광역시교육청",
+    "functionName": "학교시설",
+    "accountType": "교육비특별회계",
+    "amount": 182210
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E24",
+    "officeName": "광주광역시교육청",
+    "functionName": "학교시설",
+    "accountType": "기타특별회계",
+    "amount": 15756
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E24",
+    "officeName": "광주광역시교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "교육비특별회계",
+    "amount": 119931
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E24",
+    "officeName": "광주광역시교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "기타특별회계",
+    "amount": 10368
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E24",
+    "officeName": "광주광역시교육청",
+    "functionName": "교육복지",
+    "accountType": "교육비특별회계",
+    "amount": 86376
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E24",
+    "officeName": "광주광역시교육청",
+    "functionName": "교육복지",
+    "accountType": "기타특별회계",
+    "amount": 9240
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E24",
+    "officeName": "광주광역시교육청",
+    "functionName": "보건안전",
+    "accountType": "교육비특별회계",
+    "amount": 56153
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E24",
+    "officeName": "광주광역시교육청",
+    "functionName": "보건안전",
+    "accountType": "기타특별회계",
+    "amount": 6675
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E24",
+    "officeName": "광주광역시교육청",
+    "functionName": "기관운영",
+    "accountType": "교육비특별회계",
+    "amount": 80055
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E24",
+    "officeName": "광주광역시교육청",
+    "functionName": "기관운영",
+    "accountType": "기타특별회계",
+    "amount": 4605
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E24",
+    "officeName": "광주광역시교육청",
+    "functionName": "예비비기타",
+    "accountType": "교육비특별회계",
+    "amount": 40657
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E24",
+    "officeName": "광주광역시교육청",
+    "functionName": "예비비기타",
+    "accountType": "기타특별회계",
+    "amount": 5011
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E25",
+    "officeName": "대전광역시교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "교육비특별회계",
+    "amount": 394232
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E25",
+    "officeName": "대전광역시교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "기타특별회계",
+    "amount": 63882
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E25",
+    "officeName": "대전광역시교육청",
+    "functionName": "중등교육",
+    "accountType": "교육비특별회계",
+    "amount": 520289
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E25",
+    "officeName": "대전광역시교육청",
+    "functionName": "중등교육",
+    "accountType": "기타특별회계",
+    "amount": 37983
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E25",
+    "officeName": "대전광역시교육청",
+    "functionName": "고등교육",
+    "accountType": "교육비특별회계",
+    "amount": 61628
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E25",
+    "officeName": "대전광역시교육청",
+    "functionName": "고등교육",
+    "accountType": "기타특별회계",
+    "amount": 5734
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E25",
+    "officeName": "대전광역시교육청",
+    "functionName": "평생직업교육",
+    "accountType": "교육비특별회계",
+    "amount": 71278
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E25",
+    "officeName": "대전광역시교육청",
+    "functionName": "평생직업교육",
+    "accountType": "기타특별회계",
+    "amount": 9807
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E25",
+    "officeName": "대전광역시교육청",
+    "functionName": "교육일반",
+    "accountType": "교육비특별회계",
+    "amount": 184858
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E25",
+    "officeName": "대전광역시교육청",
+    "functionName": "교육일반",
+    "accountType": "기타특별회계",
+    "amount": 15161
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E25",
+    "officeName": "대전광역시교육청",
+    "functionName": "학교시설",
+    "accountType": "교육비특별회계",
+    "amount": 201771
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E25",
+    "officeName": "대전광역시교육청",
+    "functionName": "학교시설",
+    "accountType": "기타특별회계",
+    "amount": 20657
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E25",
+    "officeName": "대전광역시교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "교육비특별회계",
+    "amount": 111410
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E25",
+    "officeName": "대전광역시교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "기타특별회계",
+    "amount": 8266
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E25",
+    "officeName": "대전광역시교육청",
+    "functionName": "교육복지",
+    "accountType": "교육비특별회계",
+    "amount": 97586
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E25",
+    "officeName": "대전광역시교육청",
+    "functionName": "교육복지",
+    "accountType": "기타특별회계",
+    "amount": 9311
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E25",
+    "officeName": "대전광역시교육청",
+    "functionName": "보건안전",
+    "accountType": "교육비특별회계",
+    "amount": 61514
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E25",
+    "officeName": "대전광역시교육청",
+    "functionName": "보건안전",
+    "accountType": "기타특별회계",
+    "amount": 7836
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E25",
+    "officeName": "대전광역시교육청",
+    "functionName": "기관운영",
+    "accountType": "교육비특별회계",
+    "amount": 63503
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E25",
+    "officeName": "대전광역시교육청",
+    "functionName": "기관운영",
+    "accountType": "기타특별회계",
+    "amount": 9068
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E25",
+    "officeName": "대전광역시교육청",
+    "functionName": "예비비기타",
+    "accountType": "교육비특별회계",
+    "amount": 39637
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E25",
+    "officeName": "대전광역시교육청",
+    "functionName": "예비비기타",
+    "accountType": "기타특별회계",
+    "amount": 4587
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E26",
+    "officeName": "울산광역시교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "교육비특별회계",
+    "amount": 374940
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E26",
+    "officeName": "울산광역시교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "기타특별회계",
+    "amount": 26109
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E26",
+    "officeName": "울산광역시교육청",
+    "functionName": "중등교육",
+    "accountType": "교육비특별회계",
+    "amount": 348672
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E26",
+    "officeName": "울산광역시교육청",
+    "functionName": "중등교육",
+    "accountType": "기타특별회계",
+    "amount": 54113
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E26",
+    "officeName": "울산광역시교육청",
+    "functionName": "고등교육",
+    "accountType": "교육비특별회계",
+    "amount": 45749
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E26",
+    "officeName": "울산광역시교육청",
+    "functionName": "고등교육",
+    "accountType": "기타특별회계",
+    "amount": 4448
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E26",
+    "officeName": "울산광역시교육청",
+    "functionName": "평생직업교육",
+    "accountType": "교육비특별회계",
+    "amount": 58137
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E26",
+    "officeName": "울산광역시교육청",
+    "functionName": "평생직업교육",
+    "accountType": "기타특별회계",
+    "amount": 7525
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E26",
+    "officeName": "울산광역시교육청",
+    "functionName": "교육일반",
+    "accountType": "교육비특별회계",
+    "amount": 130704
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E26",
+    "officeName": "울산광역시교육청",
+    "functionName": "교육일반",
+    "accountType": "기타특별회계",
+    "amount": 9210
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E26",
+    "officeName": "울산광역시교육청",
+    "functionName": "학교시설",
+    "accountType": "교육비특별회계",
+    "amount": 117449
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E26",
+    "officeName": "울산광역시교육청",
+    "functionName": "학교시설",
+    "accountType": "기타특별회계",
+    "amount": 18020
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E26",
+    "officeName": "울산광역시교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "교육비특별회계",
+    "amount": 83265
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E26",
+    "officeName": "울산광역시교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "기타특별회계",
+    "amount": 5169
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E26",
+    "officeName": "울산광역시교육청",
+    "functionName": "교육복지",
+    "accountType": "교육비특별회계",
+    "amount": 67300
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E26",
+    "officeName": "울산광역시교육청",
+    "functionName": "교육복지",
+    "accountType": "기타특별회계",
+    "amount": 9797
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E26",
+    "officeName": "울산광역시교육청",
+    "functionName": "보건안전",
+    "accountType": "교육비특별회계",
+    "amount": 39944
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E26",
+    "officeName": "울산광역시교육청",
+    "functionName": "보건안전",
+    "accountType": "기타특별회계",
+    "amount": 6949
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E26",
+    "officeName": "울산광역시교육청",
+    "functionName": "기관운영",
+    "accountType": "교육비특별회계",
+    "amount": 57418
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E26",
+    "officeName": "울산광역시교육청",
+    "functionName": "기관운영",
+    "accountType": "기타특별회계",
+    "amount": 4314
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E26",
+    "officeName": "울산광역시교육청",
+    "functionName": "예비비기타",
+    "accountType": "교육비특별회계",
+    "amount": 27566
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E26",
+    "officeName": "울산광역시교육청",
+    "functionName": "예비비기타",
+    "accountType": "기타특별회계",
+    "amount": 3201
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E29",
+    "officeName": "세종특별자치시교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "교육비특별회계",
+    "amount": 167579
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E29",
+    "officeName": "세종특별자치시교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "기타특별회계",
+    "amount": 12209
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E29",
+    "officeName": "세종특별자치시교육청",
+    "functionName": "중등교육",
+    "accountType": "교육비특별회계",
+    "amount": 121399
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E29",
+    "officeName": "세종특별자치시교육청",
+    "functionName": "중등교육",
+    "accountType": "기타특별회계",
+    "amount": 16583
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E29",
+    "officeName": "세종특별자치시교육청",
+    "functionName": "고등교육",
+    "accountType": "교육비특별회계",
+    "amount": 16916
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E29",
+    "officeName": "세종특별자치시교육청",
+    "functionName": "고등교육",
+    "accountType": "기타특별회계",
+    "amount": 1988
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E29",
+    "officeName": "세종특별자치시교육청",
+    "functionName": "평생직업교육",
+    "accountType": "교육비특별회계",
+    "amount": 22619
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E29",
+    "officeName": "세종특별자치시교육청",
+    "functionName": "평생직업교육",
+    "accountType": "기타특별회계",
+    "amount": 2098
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E29",
+    "officeName": "세종특별자치시교육청",
+    "functionName": "교육일반",
+    "accountType": "교육비특별회계",
+    "amount": 49018
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E29",
+    "officeName": "세종특별자치시교육청",
+    "functionName": "교육일반",
+    "accountType": "기타특별회계",
+    "amount": 5559
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E29",
+    "officeName": "세종특별자치시교육청",
+    "functionName": "학교시설",
+    "accountType": "교육비특별회계",
+    "amount": 47789
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E29",
+    "officeName": "세종특별자치시교육청",
+    "functionName": "학교시설",
+    "accountType": "기타특별회계",
+    "amount": 6853
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E29",
+    "officeName": "세종특별자치시교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "교육비특별회계",
+    "amount": 38283
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E29",
+    "officeName": "세종특별자치시교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "기타특별회계",
+    "amount": 2880
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E29",
+    "officeName": "세종특별자치시교육청",
+    "functionName": "교육복지",
+    "accountType": "교육비특별회계",
+    "amount": 31069
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E29",
+    "officeName": "세종특별자치시교육청",
+    "functionName": "교육복지",
+    "accountType": "기타특별회계",
+    "amount": 2019
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E29",
+    "officeName": "세종특별자치시교육청",
+    "functionName": "보건안전",
+    "accountType": "교육비특별회계",
+    "amount": 16325
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E29",
+    "officeName": "세종특별자치시교육청",
+    "functionName": "보건안전",
+    "accountType": "기타특별회계",
+    "amount": 1343
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E29",
+    "officeName": "세종특별자치시교육청",
+    "functionName": "기관운영",
+    "accountType": "교육비특별회계",
+    "amount": 24352
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E29",
+    "officeName": "세종특별자치시교육청",
+    "functionName": "기관운영",
+    "accountType": "기타특별회계",
+    "amount": 1535
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E29",
+    "officeName": "세종특별자치시교육청",
+    "functionName": "예비비기타",
+    "accountType": "교육비특별회계",
+    "amount": 10644
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E29",
+    "officeName": "세종특별자치시교육청",
+    "functionName": "예비비기타",
+    "accountType": "기타특별회계",
+    "amount": 941
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E31",
+    "officeName": "경기도교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "교육비특별회계",
+    "amount": 4949121
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E31",
+    "officeName": "경기도교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "기타특별회계",
+    "amount": 533185
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E31",
+    "officeName": "경기도교육청",
+    "functionName": "중등교육",
+    "accountType": "교육비특별회계",
+    "amount": 3655059
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E31",
+    "officeName": "경기도교육청",
+    "functionName": "중등교육",
+    "accountType": "기타특별회계",
+    "amount": 567448
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E31",
+    "officeName": "경기도교육청",
+    "functionName": "고등교육",
+    "accountType": "교육비특별회계",
+    "amount": 483786
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E31",
+    "officeName": "경기도교육청",
+    "functionName": "고등교육",
+    "accountType": "기타특별회계",
+    "amount": 30633
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E31",
+    "officeName": "경기도교육청",
+    "functionName": "평생직업교육",
+    "accountType": "교육비특별회계",
+    "amount": 772896
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E31",
+    "officeName": "경기도교육청",
+    "functionName": "평생직업교육",
+    "accountType": "기타특별회계",
+    "amount": 68178
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E31",
+    "officeName": "경기도교육청",
+    "functionName": "교육일반",
+    "accountType": "교육비특별회계",
+    "amount": 1755485
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E31",
+    "officeName": "경기도교육청",
+    "functionName": "교육일반",
+    "accountType": "기타특별회계",
+    "amount": 197468
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E31",
+    "officeName": "경기도교육청",
+    "functionName": "학교시설",
+    "accountType": "교육비특별회계",
+    "amount": 1705859
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E31",
+    "officeName": "경기도교육청",
+    "functionName": "학교시설",
+    "accountType": "기타특별회계",
+    "amount": 234075
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E31",
+    "officeName": "경기도교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "교육비특별회계",
+    "amount": 1147308
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E31",
+    "officeName": "경기도교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "기타특별회계",
+    "amount": 84928
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E31",
+    "officeName": "경기도교육청",
+    "functionName": "교육복지",
+    "accountType": "교육비특별회계",
+    "amount": 765059
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E31",
+    "officeName": "경기도교육청",
+    "functionName": "교육복지",
+    "accountType": "기타특별회계",
+    "amount": 116956
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E31",
+    "officeName": "경기도교육청",
+    "functionName": "보건안전",
+    "accountType": "교육비특별회계",
+    "amount": 507044
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E31",
+    "officeName": "경기도교육청",
+    "functionName": "보건안전",
+    "accountType": "기타특별회계",
+    "amount": 46172
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E31",
+    "officeName": "경기도교육청",
+    "functionName": "기관운영",
+    "accountType": "교육비특별회계",
+    "amount": 518923
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E31",
+    "officeName": "경기도교육청",
+    "functionName": "기관운영",
+    "accountType": "기타특별회계",
+    "amount": 59706
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E31",
+    "officeName": "경기도교육청",
+    "functionName": "예비비기타",
+    "accountType": "교육비특별회계",
+    "amount": 257255
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E31",
+    "officeName": "경기도교육청",
+    "functionName": "예비비기타",
+    "accountType": "기타특별회계",
+    "amount": 43455
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E32",
+    "officeName": "강원특별자치도교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "교육비특별회계",
+    "amount": 625591
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E32",
+    "officeName": "강원특별자치도교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "기타특별회계",
+    "amount": 46799
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E32",
+    "officeName": "강원특별자치도교육청",
+    "functionName": "중등교육",
+    "accountType": "교육비특별회계",
+    "amount": 450179
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E32",
+    "officeName": "강원특별자치도교육청",
+    "functionName": "중등교육",
+    "accountType": "기타특별회계",
+    "amount": 51554
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E32",
+    "officeName": "강원특별자치도교육청",
+    "functionName": "고등교육",
+    "accountType": "교육비특별회계",
+    "amount": 67294
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E32",
+    "officeName": "강원특별자치도교육청",
+    "functionName": "고등교육",
+    "accountType": "기타특별회계",
+    "amount": 10033
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E32",
+    "officeName": "강원특별자치도교육청",
+    "functionName": "평생직업교육",
+    "accountType": "교육비특별회계",
+    "amount": 89559
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E32",
+    "officeName": "강원특별자치도교육청",
+    "functionName": "평생직업교육",
+    "accountType": "기타특별회계",
+    "amount": 12446
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E32",
+    "officeName": "강원특별자치도교육청",
+    "functionName": "교육일반",
+    "accountType": "교육비특별회계",
+    "amount": 225441
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E32",
+    "officeName": "강원특별자치도교육청",
+    "functionName": "교육일반",
+    "accountType": "기타특별회계",
+    "amount": 16128
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E32",
+    "officeName": "강원특별자치도교육청",
+    "functionName": "학교시설",
+    "accountType": "교육비특별회계",
+    "amount": 178975
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E32",
+    "officeName": "강원특별자치도교육청",
+    "functionName": "학교시설",
+    "accountType": "기타특별회계",
+    "amount": 9997
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E32",
+    "officeName": "강원특별자치도교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "교육비특별회계",
+    "amount": 98964
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E32",
+    "officeName": "강원특별자치도교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "기타특별회계",
+    "amount": 12589
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E32",
+    "officeName": "강원특별자치도교육청",
+    "functionName": "교육복지",
+    "accountType": "교육비특별회계",
+    "amount": 89330
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E32",
+    "officeName": "강원특별자치도교육청",
+    "functionName": "교육복지",
+    "accountType": "기타특별회계",
+    "amount": 5667
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E32",
+    "officeName": "강원특별자치도교육청",
+    "functionName": "보건안전",
+    "accountType": "교육비특별회계",
+    "amount": 66698
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E32",
+    "officeName": "강원특별자치도교육청",
+    "functionName": "보건안전",
+    "accountType": "기타특별회계",
+    "amount": 9855
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E32",
+    "officeName": "강원특별자치도교육청",
+    "functionName": "기관운영",
+    "accountType": "교육비특별회계",
+    "amount": 78902
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E32",
+    "officeName": "강원특별자치도교육청",
+    "functionName": "기관운영",
+    "accountType": "기타특별회계",
+    "amount": 10737
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E32",
+    "officeName": "강원특별자치도교육청",
+    "functionName": "예비비기타",
+    "accountType": "교육비특별회계",
+    "amount": 41066
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E32",
+    "officeName": "강원특별자치도교육청",
+    "functionName": "예비비기타",
+    "accountType": "기타특별회계",
+    "amount": 2197
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E33",
+    "officeName": "충청북도교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "교육비특별회계",
+    "amount": 470524
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E33",
+    "officeName": "충청북도교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "기타특별회계",
+    "amount": 60050
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E33",
+    "officeName": "충청북도교육청",
+    "functionName": "중등교육",
+    "accountType": "교육비특별회계",
+    "amount": 494987
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E33",
+    "officeName": "충청북도교육청",
+    "functionName": "중등교육",
+    "accountType": "기타특별회계",
+    "amount": 45630
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E33",
+    "officeName": "충청북도교육청",
+    "functionName": "고등교육",
+    "accountType": "교육비특별회계",
+    "amount": 60354
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E33",
+    "officeName": "충청북도교육청",
+    "functionName": "고등교육",
+    "accountType": "기타특별회계",
+    "amount": 4789
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E33",
+    "officeName": "충청북도교육청",
+    "functionName": "평생직업교육",
+    "accountType": "교육비특별회계",
+    "amount": 73051
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E33",
+    "officeName": "충청북도교육청",
+    "functionName": "평생직업교육",
+    "accountType": "기타특별회계",
+    "amount": 4425
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E33",
+    "officeName": "충청북도교육청",
+    "functionName": "교육일반",
+    "accountType": "교육비특별회계",
+    "amount": 213807
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E33",
+    "officeName": "충청북도교육청",
+    "functionName": "교육일반",
+    "accountType": "기타특별회계",
+    "amount": 22985
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E33",
+    "officeName": "충청북도교육청",
+    "functionName": "학교시설",
+    "accountType": "교육비특별회계",
+    "amount": 196382
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E33",
+    "officeName": "충청북도교육청",
+    "functionName": "학교시설",
+    "accountType": "기타특별회계",
+    "amount": 33420
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E33",
+    "officeName": "충청북도교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "교육비특별회계",
+    "amount": 108609
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E33",
+    "officeName": "충청북도교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "기타특별회계",
+    "amount": 6976
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E33",
+    "officeName": "충청북도교육청",
+    "functionName": "교육복지",
+    "accountType": "교육비특별회계",
+    "amount": 95566
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E33",
+    "officeName": "충청북도교육청",
+    "functionName": "교육복지",
+    "accountType": "기타특별회계",
+    "amount": 15454
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E33",
+    "officeName": "충청북도교육청",
+    "functionName": "보건안전",
+    "accountType": "교육비특별회계",
+    "amount": 58033
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E33",
+    "officeName": "충청북도교육청",
+    "functionName": "보건안전",
+    "accountType": "기타특별회계",
+    "amount": 6343
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E33",
+    "officeName": "충청북도교육청",
+    "functionName": "기관운영",
+    "accountType": "교육비특별회계",
+    "amount": 72407
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E33",
+    "officeName": "충청북도교육청",
+    "functionName": "기관운영",
+    "accountType": "기타특별회계",
+    "amount": 3960
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E33",
+    "officeName": "충청북도교육청",
+    "functionName": "예비비기타",
+    "accountType": "교육비특별회계",
+    "amount": 48430
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E33",
+    "officeName": "충청북도교육청",
+    "functionName": "예비비기타",
+    "accountType": "기타특별회계",
+    "amount": 3819
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E34",
+    "officeName": "충청남도교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "교육비특별회계",
+    "amount": 826580
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E34",
+    "officeName": "충청남도교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "기타특별회계",
+    "amount": 91051
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E34",
+    "officeName": "충청남도교육청",
+    "functionName": "중등교육",
+    "accountType": "교육비특별회계",
+    "amount": 529625
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E34",
+    "officeName": "충청남도교육청",
+    "functionName": "중등교육",
+    "accountType": "기타특별회계",
+    "amount": 84170
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E34",
+    "officeName": "충청남도교육청",
+    "functionName": "고등교육",
+    "accountType": "교육비특별회계",
+    "amount": 81175
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E34",
+    "officeName": "충청남도교육청",
+    "functionName": "고등교육",
+    "accountType": "기타특별회계",
+    "amount": 11511
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E34",
+    "officeName": "충청남도교육청",
+    "functionName": "평생직업교육",
+    "accountType": "교육비특별회계",
+    "amount": 88562
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E34",
+    "officeName": "충청남도교육청",
+    "functionName": "평생직업교육",
+    "accountType": "기타특별회계",
+    "amount": 7686
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E34",
+    "officeName": "충청남도교육청",
+    "functionName": "교육일반",
+    "accountType": "교육비특별회계",
+    "amount": 236374
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E34",
+    "officeName": "충청남도교육청",
+    "functionName": "교육일반",
+    "accountType": "기타특별회계",
+    "amount": 40090
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E34",
+    "officeName": "충청남도교육청",
+    "functionName": "학교시설",
+    "accountType": "교육비특별회계",
+    "amount": 234700
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E34",
+    "officeName": "충청남도교육청",
+    "functionName": "학교시설",
+    "accountType": "기타특별회계",
+    "amount": 29607
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E34",
+    "officeName": "충청남도교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "교육비특별회계",
+    "amount": 147082
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E34",
+    "officeName": "충청남도교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "기타특별회계",
+    "amount": 11999
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E34",
+    "officeName": "충청남도교육청",
+    "functionName": "교육복지",
+    "accountType": "교육비특별회계",
+    "amount": 113756
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E34",
+    "officeName": "충청남도교육청",
+    "functionName": "교육복지",
+    "accountType": "기타특별회계",
+    "amount": 19784
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E34",
+    "officeName": "충청남도교육청",
+    "functionName": "보건안전",
+    "accountType": "교육비특별회계",
+    "amount": 78691
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E34",
+    "officeName": "충청남도교육청",
+    "functionName": "보건안전",
+    "accountType": "기타특별회계",
+    "amount": 8886
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E34",
+    "officeName": "충청남도교육청",
+    "functionName": "기관운영",
+    "accountType": "교육비특별회계",
+    "amount": 84284
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E34",
+    "officeName": "충청남도교육청",
+    "functionName": "기관운영",
+    "accountType": "기타특별회계",
+    "amount": 14090
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E34",
+    "officeName": "충청남도교육청",
+    "functionName": "예비비기타",
+    "accountType": "교육비특별회계",
+    "amount": 52767
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E34",
+    "officeName": "충청남도교육청",
+    "functionName": "예비비기타",
+    "accountType": "기타특별회계",
+    "amount": 7531
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E35",
+    "officeName": "전북특별자치도교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "교육비특별회계",
+    "amount": 511322
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E35",
+    "officeName": "전북특별자치도교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "기타특별회계",
+    "amount": 73137
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E35",
+    "officeName": "전북특별자치도교육청",
+    "functionName": "중등교육",
+    "accountType": "교육비특별회계",
+    "amount": 622670
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E35",
+    "officeName": "전북특별자치도교육청",
+    "functionName": "중등교육",
+    "accountType": "기타특별회계",
+    "amount": 47012
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E35",
+    "officeName": "전북특별자치도교육청",
+    "functionName": "고등교육",
+    "accountType": "교육비특별회계",
+    "amount": 70291
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E35",
+    "officeName": "전북특별자치도교육청",
+    "functionName": "고등교육",
+    "accountType": "기타특별회계",
+    "amount": 10500
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E35",
+    "officeName": "전북특별자치도교육청",
+    "functionName": "평생직업교육",
+    "accountType": "교육비특별회계",
+    "amount": 77142
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E35",
+    "officeName": "전북특별자치도교육청",
+    "functionName": "평생직업교육",
+    "accountType": "기타특별회계",
+    "amount": 4787
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E35",
+    "officeName": "전북특별자치도교육청",
+    "functionName": "교육일반",
+    "accountType": "교육비특별회계",
+    "amount": 224641
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E35",
+    "officeName": "전북특별자치도교육청",
+    "functionName": "교육일반",
+    "accountType": "기타특별회계",
+    "amount": 34377
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E35",
+    "officeName": "전북특별자치도교육청",
+    "functionName": "학교시설",
+    "accountType": "교육비특별회계",
+    "amount": 272422
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E35",
+    "officeName": "전북특별자치도교육청",
+    "functionName": "학교시설",
+    "accountType": "기타특별회계",
+    "amount": 19296
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E35",
+    "officeName": "전북특별자치도교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "교육비특별회계",
+    "amount": 155618
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E35",
+    "officeName": "전북특별자치도교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "기타특별회계",
+    "amount": 24747
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E35",
+    "officeName": "전북특별자치도교육청",
+    "functionName": "교육복지",
+    "accountType": "교육비특별회계",
+    "amount": 132280
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E35",
+    "officeName": "전북특별자치도교육청",
+    "functionName": "교육복지",
+    "accountType": "기타특별회계",
+    "amount": 12799
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E35",
+    "officeName": "전북특별자치도교육청",
+    "functionName": "보건안전",
+    "accountType": "교육비특별회계",
+    "amount": 71640
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E35",
+    "officeName": "전북특별자치도교육청",
+    "functionName": "보건안전",
+    "accountType": "기타특별회계",
+    "amount": 4593
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E35",
+    "officeName": "전북특별자치도교육청",
+    "functionName": "기관운영",
+    "accountType": "교육비특별회계",
+    "amount": 77469
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E35",
+    "officeName": "전북특별자치도교육청",
+    "functionName": "기관운영",
+    "accountType": "기타특별회계",
+    "amount": 6609
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E35",
+    "officeName": "전북특별자치도교육청",
+    "functionName": "예비비기타",
+    "accountType": "교육비특별회계",
+    "amount": 44074
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E35",
+    "officeName": "전북특별자치도교육청",
+    "functionName": "예비비기타",
+    "accountType": "기타특별회계",
+    "amount": 2574
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E36",
+    "officeName": "전라남도교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "교육비특별회계",
+    "amount": 642463
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E36",
+    "officeName": "전라남도교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "기타특별회계",
+    "amount": 106913
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E36",
+    "officeName": "전라남도교육청",
+    "functionName": "중등교육",
+    "accountType": "교육비특별회계",
+    "amount": 557356
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E36",
+    "officeName": "전라남도교육청",
+    "functionName": "중등교육",
+    "accountType": "기타특별회계",
+    "amount": 34349
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E36",
+    "officeName": "전라남도교육청",
+    "functionName": "고등교육",
+    "accountType": "교육비특별회계",
+    "amount": 69171
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E36",
+    "officeName": "전라남도교육청",
+    "functionName": "고등교육",
+    "accountType": "기타특별회계",
+    "amount": 4250
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E36",
+    "officeName": "전라남도교육청",
+    "functionName": "평생직업교육",
+    "accountType": "교육비특별회계",
+    "amount": 78327
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E36",
+    "officeName": "전라남도교육청",
+    "functionName": "평생직업교육",
+    "accountType": "기타특별회계",
+    "amount": 7629
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E36",
+    "officeName": "전라남도교육청",
+    "functionName": "교육일반",
+    "accountType": "교육비특별회계",
+    "amount": 258351
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E36",
+    "officeName": "전라남도교육청",
+    "functionName": "교육일반",
+    "accountType": "기타특별회계",
+    "amount": 24808
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E36",
+    "officeName": "전라남도교육청",
+    "functionName": "학교시설",
+    "accountType": "교육비특별회계",
+    "amount": 246765
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E36",
+    "officeName": "전라남도교육청",
+    "functionName": "학교시설",
+    "accountType": "기타특별회계",
+    "amount": 20913
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E36",
+    "officeName": "전라남도교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "교육비특별회계",
+    "amount": 133358
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E36",
+    "officeName": "전라남도교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "기타특별회계",
+    "amount": 10615
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E36",
+    "officeName": "전라남도교육청",
+    "functionName": "교육복지",
+    "accountType": "교육비특별회계",
+    "amount": 128685
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E36",
+    "officeName": "전라남도교육청",
+    "functionName": "교육복지",
+    "accountType": "기타특별회계",
+    "amount": 9726
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E36",
+    "officeName": "전라남도교육청",
+    "functionName": "보건안전",
+    "accountType": "교육비특별회계",
+    "amount": 85212
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E36",
+    "officeName": "전라남도교육청",
+    "functionName": "보건안전",
+    "accountType": "기타특별회계",
+    "amount": 6163
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E36",
+    "officeName": "전라남도교육청",
+    "functionName": "기관운영",
+    "accountType": "교육비특별회계",
+    "amount": 109031
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E36",
+    "officeName": "전라남도교육청",
+    "functionName": "기관운영",
+    "accountType": "기타특별회계",
+    "amount": 10069
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E36",
+    "officeName": "전라남도교육청",
+    "functionName": "예비비기타",
+    "accountType": "교육비특별회계",
+    "amount": 52899
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E36",
+    "officeName": "전라남도교육청",
+    "functionName": "예비비기타",
+    "accountType": "기타특별회계",
+    "amount": 2947
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E37",
+    "officeName": "경상북도교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "교육비특별회계",
+    "amount": 1008457
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E37",
+    "officeName": "경상북도교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "기타특별회계",
+    "amount": 91470
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E37",
+    "officeName": "경상북도교육청",
+    "functionName": "중등교육",
+    "accountType": "교육비특별회계",
+    "amount": 674470
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E37",
+    "officeName": "경상북도교육청",
+    "functionName": "중등교육",
+    "accountType": "기타특별회계",
+    "amount": 93027
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E37",
+    "officeName": "경상북도교육청",
+    "functionName": "고등교육",
+    "accountType": "교육비특별회계",
+    "amount": 99377
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E37",
+    "officeName": "경상북도교육청",
+    "functionName": "고등교육",
+    "accountType": "기타특별회계",
+    "amount": 14436
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E37",
+    "officeName": "경상북도교육청",
+    "functionName": "평생직업교육",
+    "accountType": "교육비특별회계",
+    "amount": 144077
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E37",
+    "officeName": "경상북도교육청",
+    "functionName": "평생직업교육",
+    "accountType": "기타특별회계",
+    "amount": 9018
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E37",
+    "officeName": "경상북도교육청",
+    "functionName": "교육일반",
+    "accountType": "교육비특별회계",
+    "amount": 320616
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E37",
+    "officeName": "경상북도교육청",
+    "functionName": "교육일반",
+    "accountType": "기타특별회계",
+    "amount": 40965
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E37",
+    "officeName": "경상북도교육청",
+    "functionName": "학교시설",
+    "accountType": "교육비특별회계",
+    "amount": 261884
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E37",
+    "officeName": "경상북도교육청",
+    "functionName": "학교시설",
+    "accountType": "기타특별회계",
+    "amount": 36835
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E37",
+    "officeName": "경상북도교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "교육비특별회계",
+    "amount": 212298
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E37",
+    "officeName": "경상북도교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "기타특별회계",
+    "amount": 21263
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E37",
+    "officeName": "경상북도교육청",
+    "functionName": "교육복지",
+    "accountType": "교육비특별회계",
+    "amount": 131442
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E37",
+    "officeName": "경상북도교육청",
+    "functionName": "교육복지",
+    "accountType": "기타특별회계",
+    "amount": 11755
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E37",
+    "officeName": "경상북도교육청",
+    "functionName": "보건안전",
+    "accountType": "교육비특별회계",
+    "amount": 101331
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E37",
+    "officeName": "경상북도교육청",
+    "functionName": "보건안전",
+    "accountType": "기타특별회계",
+    "amount": 9738
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E37",
+    "officeName": "경상북도교육청",
+    "functionName": "기관운영",
+    "accountType": "교육비특별회계",
+    "amount": 140098
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E37",
+    "officeName": "경상북도교육청",
+    "functionName": "기관운영",
+    "accountType": "기타특별회계",
+    "amount": 8140
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E37",
+    "officeName": "경상북도교육청",
+    "functionName": "예비비기타",
+    "accountType": "교육비특별회계",
+    "amount": 62487
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E37",
+    "officeName": "경상북도교육청",
+    "functionName": "예비비기타",
+    "accountType": "기타특별회계",
+    "amount": 6816
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E38",
+    "officeName": "경상남도교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "교육비특별회계",
+    "amount": 1018860
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E38",
+    "officeName": "경상남도교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "기타특별회계",
+    "amount": 99283
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E38",
+    "officeName": "경상남도교육청",
+    "functionName": "중등교육",
+    "accountType": "교육비특별회계",
+    "amount": 896533
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E38",
+    "officeName": "경상남도교육청",
+    "functionName": "중등교육",
+    "accountType": "기타특별회계",
+    "amount": 114849
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E38",
+    "officeName": "경상남도교육청",
+    "functionName": "고등교육",
+    "accountType": "교육비특별회계",
+    "amount": 119326
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E38",
+    "officeName": "경상남도교육청",
+    "functionName": "고등교육",
+    "accountType": "기타특별회계",
+    "amount": 18658
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E38",
+    "officeName": "경상남도교육청",
+    "functionName": "평생직업교육",
+    "accountType": "교육비특별회계",
+    "amount": 150627
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E38",
+    "officeName": "경상남도교육청",
+    "functionName": "평생직업교육",
+    "accountType": "기타특별회계",
+    "amount": 8683
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E38",
+    "officeName": "경상남도교육청",
+    "functionName": "교육일반",
+    "accountType": "교육비특별회계",
+    "amount": 361317
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E38",
+    "officeName": "경상남도교육청",
+    "functionName": "교육일반",
+    "accountType": "기타특별회계",
+    "amount": 32324
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E38",
+    "officeName": "경상남도교육청",
+    "functionName": "학교시설",
+    "accountType": "교육비특별회계",
+    "amount": 414600
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E38",
+    "officeName": "경상남도교육청",
+    "functionName": "학교시설",
+    "accountType": "기타특별회계",
+    "amount": 65490
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E38",
+    "officeName": "경상남도교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "교육비특별회계",
+    "amount": 253711
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E38",
+    "officeName": "경상남도교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "기타특별회계",
+    "amount": 25253
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E38",
+    "officeName": "경상남도교육청",
+    "functionName": "교육복지",
+    "accountType": "교육비특별회계",
+    "amount": 176749
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E38",
+    "officeName": "경상남도교육청",
+    "functionName": "교육복지",
+    "accountType": "기타특별회계",
+    "amount": 10581
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E38",
+    "officeName": "경상남도교육청",
+    "functionName": "보건안전",
+    "accountType": "교육비특별회계",
+    "amount": 97102
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E38",
+    "officeName": "경상남도교육청",
+    "functionName": "보건안전",
+    "accountType": "기타특별회계",
+    "amount": 13307
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E38",
+    "officeName": "경상남도교육청",
+    "functionName": "기관운영",
+    "accountType": "교육비특별회계",
+    "amount": 132745
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E38",
+    "officeName": "경상남도교육청",
+    "functionName": "기관운영",
+    "accountType": "기타특별회계",
+    "amount": 18861
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E38",
+    "officeName": "경상남도교육청",
+    "functionName": "예비비기타",
+    "accountType": "교육비특별회계",
+    "amount": 61811
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E38",
+    "officeName": "경상남도교육청",
+    "functionName": "예비비기타",
+    "accountType": "기타특별회계",
+    "amount": 9330
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E39",
+    "officeName": "제주특별자치도교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "교육비특별회계",
+    "amount": 202850
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E39",
+    "officeName": "제주특별자치도교육청",
+    "functionName": "유아및초등교육",
+    "accountType": "기타특별회계",
+    "amount": 32962
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E39",
+    "officeName": "제주특별자치도교육청",
+    "functionName": "중등교육",
+    "accountType": "교육비특별회계",
+    "amount": 245394
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E39",
+    "officeName": "제주특별자치도교육청",
+    "functionName": "중등교육",
+    "accountType": "기타특별회계",
+    "amount": 41398
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E39",
+    "officeName": "제주특별자치도교육청",
+    "functionName": "고등교육",
+    "accountType": "교육비특별회계",
+    "amount": 29366
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E39",
+    "officeName": "제주특별자치도교육청",
+    "functionName": "고등교육",
+    "accountType": "기타특별회계",
+    "amount": 2693
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E39",
+    "officeName": "제주특별자치도교육청",
+    "functionName": "평생직업교육",
+    "accountType": "교육비특별회계",
+    "amount": 36634
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E39",
+    "officeName": "제주특별자치도교육청",
+    "functionName": "평생직업교육",
+    "accountType": "기타특별회계",
+    "amount": 3394
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E39",
+    "officeName": "제주특별자치도교육청",
+    "functionName": "교육일반",
+    "accountType": "교육비특별회계",
+    "amount": 112271
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E39",
+    "officeName": "제주특별자치도교육청",
+    "functionName": "교육일반",
+    "accountType": "기타특별회계",
+    "amount": 8054
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E39",
+    "officeName": "제주특별자치도교육청",
+    "functionName": "학교시설",
+    "accountType": "교육비특별회계",
+    "amount": 84188
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E39",
+    "officeName": "제주특별자치도교육청",
+    "functionName": "학교시설",
+    "accountType": "기타특별회계",
+    "amount": 9535
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E39",
+    "officeName": "제주특별자치도교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "교육비특별회계",
+    "amount": 56431
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E39",
+    "officeName": "제주특별자치도교육청",
+    "functionName": "급식및체험활동",
+    "accountType": "기타특별회계",
+    "amount": 8357
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E39",
+    "officeName": "제주특별자치도교육청",
+    "functionName": "교육복지",
+    "accountType": "교육비특별회계",
+    "amount": 38230
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E39",
+    "officeName": "제주특별자치도교육청",
+    "functionName": "교육복지",
+    "accountType": "기타특별회계",
+    "amount": 2899
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E39",
+    "officeName": "제주특별자치도교육청",
+    "functionName": "보건안전",
+    "accountType": "교육비특별회계",
+    "amount": 28291
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E39",
+    "officeName": "제주특별자치도교육청",
+    "functionName": "보건안전",
+    "accountType": "기타특별회계",
+    "amount": 1828
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E39",
+    "officeName": "제주특별자치도교육청",
+    "functionName": "기관운영",
+    "accountType": "교육비특별회계",
+    "amount": 31154
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E39",
+    "officeName": "제주특별자치도교육청",
+    "functionName": "기관운영",
+    "accountType": "기타특별회계",
+    "amount": 5211
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E39",
+    "officeName": "제주특별자치도교육청",
+    "functionName": "예비비기타",
+    "accountType": "교육비특별회계",
+    "amount": 17343
+  },
+  {
+    "fiscalYear": 2024,
+    "officeCode": "E39",
+    "officeName": "제주특별자치도교육청",
+    "functionName": "예비비기타",
+    "accountType": "기타특별회계",
+    "amount": 1516
+  }
+]

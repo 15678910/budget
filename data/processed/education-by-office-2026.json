@@ -1,0 +1,2662 @@
+{
+  "id": "교육청 총계",
+  "name": "교육청 총계",
+  "children": [
+    {
+      "id": "office::E31",
+      "name": "경기도교육청",
+      "children": [
+        {
+          "id": "edu-func::E31::유아및초등교육",
+          "name": "유아및초등교육",
+          "value": 6328067,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경기도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E31::중등교육",
+          "name": "중등교육",
+          "value": 4966325,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경기도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E31::교육일반",
+          "name": "교육일반",
+          "value": 1854043,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경기도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E31::학교시설",
+          "name": "학교시설",
+          "value": 1707964,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경기도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E31::교육복지",
+          "name": "교육복지",
+          "value": 1098528,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경기도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E31::급식및체험활동",
+          "name": "급식및체험활동",
+          "value": 939575,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경기도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E31::평생직업교육",
+          "name": "평생직업교육",
+          "value": 869347,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경기도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E31::기관운영",
+          "name": "기관운영",
+          "value": 861060,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경기도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E31::고등교육",
+          "name": "고등교육",
+          "value": 578263,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경기도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E31::보건안전",
+          "name": "보건안전",
+          "value": 515242,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경기도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E31::예비비기타",
+          "name": "예비비기타",
+          "value": 446587,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경기도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        }
+      ],
+      "meta": {
+        "level": "domain",
+        "code": "E31",
+        "parentPath": [
+          "교육청 총계"
+        ]
+      }
+    },
+    {
+      "id": "office::E11",
+      "name": "서울특별시교육청",
+      "children": [
+        {
+          "id": "edu-func::E11::유아및초등교육",
+          "name": "유아및초등교육",
+          "value": 4146173,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "서울특별시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E11::중등교육",
+          "name": "중등교육",
+          "value": 2993913,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "서울특별시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E11::학교시설",
+          "name": "학교시설",
+          "value": 1610094,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "서울특별시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E11::교육일반",
+          "name": "교육일반",
+          "value": 1287093,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "서울특별시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E11::급식및체험활동",
+          "name": "급식및체험활동",
+          "value": 691548,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "서울특별시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E11::평생직업교육",
+          "name": "평생직업교육",
+          "value": 660134,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "서울특별시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E11::교육복지",
+          "name": "교육복지",
+          "value": 655729,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "서울특별시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E11::기관운영",
+          "name": "기관운영",
+          "value": 574130,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "서울특별시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E11::고등교육",
+          "name": "고등교육",
+          "value": 512934,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "서울특별시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E11::보건안전",
+          "name": "보건안전",
+          "value": 479721,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "서울특별시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E11::예비비기타",
+          "name": "예비비기타",
+          "value": 340530,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "서울특별시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        }
+      ],
+      "meta": {
+        "level": "domain",
+        "code": "E11",
+        "parentPath": [
+          "교육청 총계"
+        ]
+      }
+    },
+    {
+      "id": "office::E21",
+      "name": "부산광역시교육청",
+      "children": [
+        {
+          "id": "edu-func::E21::유아및초등교육",
+          "name": "유아및초등교육",
+          "value": 1345825,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "부산광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E21::중등교육",
+          "name": "중등교육",
+          "value": 1037970,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "부산광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E21::교육일반",
+          "name": "교육일반",
+          "value": 533184,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "부산광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E21::학교시설",
+          "name": "학교시설",
+          "value": 446725,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "부산광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E21::급식및체험활동",
+          "name": "급식및체험활동",
+          "value": 268832,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "부산광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E21::교육복지",
+          "name": "교육복지",
+          "value": 189218,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "부산광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E21::기관운영",
+          "name": "기관운영",
+          "value": 187780,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "부산광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E21::고등교육",
+          "name": "고등교육",
+          "value": 158595,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "부산광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E21::보건안전",
+          "name": "보건안전",
+          "value": 155147,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "부산광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E21::평생직업교육",
+          "name": "평생직업교육",
+          "value": 154415,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "부산광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E21::예비비기타",
+          "name": "예비비기타",
+          "value": 100307,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "부산광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        }
+      ],
+      "meta": {
+        "level": "domain",
+        "code": "E21",
+        "parentPath": [
+          "교육청 총계"
+        ]
+      }
+    },
+    {
+      "id": "office::E38",
+      "name": "경상남도교육청",
+      "children": [
+        {
+          "id": "edu-func::E38::유아및초등교육",
+          "name": "유아및초등교육",
+          "value": 1260616,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경상남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E38::중등교육",
+          "name": "중등교육",
+          "value": 1169905,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경상남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E38::학교시설",
+          "name": "학교시설",
+          "value": 468932,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경상남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E38::교육일반",
+          "name": "교육일반",
+          "value": 424600,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경상남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E38::급식및체험활동",
+          "name": "급식및체험활동",
+          "value": 226043,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경상남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E38::교육복지",
+          "name": "교육복지",
+          "value": 221284,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경상남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E38::평생직업교육",
+          "name": "평생직업교육",
+          "value": 173337,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경상남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E38::기관운영",
+          "name": "기관운영",
+          "value": 166020,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경상남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E38::고등교육",
+          "name": "고등교육",
+          "value": 138459,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경상남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E38::보건안전",
+          "name": "보건안전",
+          "value": 131428,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경상남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E38::예비비기타",
+          "name": "예비비기타",
+          "value": 88376,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경상남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        }
+      ],
+      "meta": {
+        "level": "domain",
+        "code": "E38",
+        "parentPath": [
+          "교육청 총계"
+        ]
+      }
+    },
+    {
+      "id": "office::E23",
+      "name": "인천광역시교육청",
+      "children": [
+        {
+          "id": "edu-func::E23::유아및초등교육",
+          "name": "유아및초등교육",
+          "value": 1302615,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "인천광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E23::중등교육",
+          "name": "중등교육",
+          "value": 933731,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "인천광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E23::학교시설",
+          "name": "학교시설",
+          "value": 487112,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "인천광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E23::교육일반",
+          "name": "교육일반",
+          "value": 335620,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "인천광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E23::교육복지",
+          "name": "교육복지",
+          "value": 241176,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "인천광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E23::급식및체험활동",
+          "name": "급식및체험활동",
+          "value": 235094,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "인천광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E23::평생직업교육",
+          "name": "평생직업교육",
+          "value": 146664,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "인천광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E23::고등교육",
+          "name": "고등교육",
+          "value": 134282,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "인천광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E23::기관운영",
+          "name": "기관운영",
+          "value": 134101,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "인천광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E23::보건안전",
+          "name": "보건안전",
+          "value": 112619,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "인천광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E23::예비비기타",
+          "name": "예비비기타",
+          "value": 78986,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "인천광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        }
+      ],
+      "meta": {
+        "level": "domain",
+        "code": "E23",
+        "parentPath": [
+          "교육청 총계"
+        ]
+      }
+    },
+    {
+      "id": "office::E37",
+      "name": "경상북도교육청",
+      "children": [
+        {
+          "id": "edu-func::E37::유아및초등교육",
+          "name": "유아및초등교육",
+          "value": 1133264,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경상북도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E37::중등교육",
+          "name": "중등교육",
+          "value": 978356,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경상북도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E37::교육일반",
+          "name": "교육일반",
+          "value": 395263,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경상북도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E37::학교시설",
+          "name": "학교시설",
+          "value": 372911,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경상북도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E37::급식및체험활동",
+          "name": "급식및체험활동",
+          "value": 214630,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경상북도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E37::기관운영",
+          "name": "기관운영",
+          "value": 155343,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경상북도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E37::교육복지",
+          "name": "교육복지",
+          "value": 147532,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경상북도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E37::평생직업교육",
+          "name": "평생직업교육",
+          "value": 136800,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경상북도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E37::보건안전",
+          "name": "보건안전",
+          "value": 121794,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경상북도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E37::고등교육",
+          "name": "고등교육",
+          "value": 99832,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경상북도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E37::예비비기타",
+          "name": "예비비기타",
+          "value": 59275,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "경상북도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        }
+      ],
+      "meta": {
+        "level": "domain",
+        "code": "E37",
+        "parentPath": [
+          "교육청 총계"
+        ]
+      }
+    },
+    {
+      "id": "office::E22",
+      "name": "대구광역시교육청",
+      "children": [
+        {
+          "id": "edu-func::E22::유아및초등교육",
+          "name": "유아및초등교육",
+          "value": 940309,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "대구광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E22::중등교육",
+          "name": "중등교육",
+          "value": 837858,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "대구광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E22::교육일반",
+          "name": "교육일반",
+          "value": 375884,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "대구광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E22::학교시설",
+          "name": "학교시설",
+          "value": 357950,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "대구광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E22::급식및체험활동",
+          "name": "급식및체험활동",
+          "value": 212299,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "대구광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E22::교육복지",
+          "name": "교육복지",
+          "value": 199050,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "대구광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E22::평생직업교육",
+          "name": "평생직업교육",
+          "value": 168352,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "대구광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E22::기관운영",
+          "name": "기관운영",
+          "value": 135917,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "대구광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E22::보건안전",
+          "name": "보건안전",
+          "value": 97896,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "대구광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E22::고등교육",
+          "name": "고등교육",
+          "value": 89609,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "대구광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E22::예비비기타",
+          "name": "예비비기타",
+          "value": 72875,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "대구광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        }
+      ],
+      "meta": {
+        "level": "domain",
+        "code": "E22",
+        "parentPath": [
+          "교육청 총계"
+        ]
+      }
+    },
+    {
+      "id": "office::E34",
+      "name": "충청남도교육청",
+      "children": [
+        {
+          "id": "edu-func::E34::유아및초등교육",
+          "name": "유아및초등교육",
+          "value": 977105,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "충청남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E34::중등교육",
+          "name": "중등교육",
+          "value": 698305,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "충청남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E34::교육일반",
+          "name": "교육일반",
+          "value": 327479,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "충청남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E34::학교시설",
+          "name": "학교시설",
+          "value": 281127,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "충청남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E34::급식및체험활동",
+          "name": "급식및체험활동",
+          "value": 157198,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "충청남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E34::교육복지",
+          "name": "교육복지",
+          "value": 140606,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "충청남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E34::기관운영",
+          "name": "기관운영",
+          "value": 121805,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "충청남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E34::평생직업교육",
+          "name": "평생직업교육",
+          "value": 110154,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "충청남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E34::보건안전",
+          "name": "보건안전",
+          "value": 90412,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "충청남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E34::고등교육",
+          "name": "고등교육",
+          "value": 77906,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "충청남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E34::예비비기타",
+          "name": "예비비기타",
+          "value": 69903,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "충청남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        }
+      ],
+      "meta": {
+        "level": "domain",
+        "code": "E34",
+        "parentPath": [
+          "교육청 총계"
+        ]
+      }
+    },
+    {
+      "id": "office::E36",
+      "name": "전라남도교육청",
+      "children": [
+        {
+          "id": "edu-func::E36::유아및초등교육",
+          "name": "유아및초등교육",
+          "value": 891056,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "전라남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E36::중등교육",
+          "name": "중등교육",
+          "value": 645170,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "전라남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E36::학교시설",
+          "name": "학교시설",
+          "value": 298049,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "전라남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E36::교육일반",
+          "name": "교육일반",
+          "value": 258447,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "전라남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E36::급식및체험활동",
+          "name": "급식및체험활동",
+          "value": 139006,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "전라남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E36::교육복지",
+          "name": "교육복지",
+          "value": 125227,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "전라남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E36::평생직업교육",
+          "name": "평생직업교육",
+          "value": 125090,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "전라남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E36::기관운영",
+          "name": "기관운영",
+          "value": 122072,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "전라남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E36::고등교육",
+          "name": "고등교육",
+          "value": 98884,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "전라남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E36::보건안전",
+          "name": "보건안전",
+          "value": 75906,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "전라남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E36::예비비기타",
+          "name": "예비비기타",
+          "value": 55093,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "전라남도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        }
+      ],
+      "meta": {
+        "level": "domain",
+        "code": "E36",
+        "parentPath": [
+          "교육청 총계"
+        ]
+      }
+    },
+    {
+      "id": "office::E35",
+      "name": "전북특별자치도교육청",
+      "children": [
+        {
+          "id": "edu-func::E35::유아및초등교육",
+          "name": "유아및초등교육",
+          "value": 706091,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "전북특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E35::중등교육",
+          "name": "중등교육",
+          "value": 686899,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "전북특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E35::교육일반",
+          "name": "교육일반",
+          "value": 327558,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "전북특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E35::학교시설",
+          "name": "학교시설",
+          "value": 270090,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "전북특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E35::급식및체험활동",
+          "name": "급식및체험활동",
+          "value": 147738,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "전북특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E35::기관운영",
+          "name": "기관운영",
+          "value": 134369,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "전북특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E35::교육복지",
+          "name": "교육복지",
+          "value": 125379,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "전북특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E35::평생직업교육",
+          "name": "평생직업교육",
+          "value": 94763,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "전북특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E35::보건안전",
+          "name": "보건안전",
+          "value": 92668,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "전북특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E35::고등교육",
+          "name": "고등교육",
+          "value": 88907,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "전북특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E35::예비비기타",
+          "name": "예비비기타",
+          "value": 50538,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "전북특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        }
+      ],
+      "meta": {
+        "level": "domain",
+        "code": "E35",
+        "parentPath": [
+          "교육청 총계"
+        ]
+      }
+    },
+    {
+      "id": "office::E32",
+      "name": "강원특별자치도교육청",
+      "children": [
+        {
+          "id": "edu-func::E32::유아및초등교육",
+          "name": "유아및초등교육",
+          "value": 666318,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "강원특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E32::중등교육",
+          "name": "중등교육",
+          "value": 581080,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "강원특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E32::학교시설",
+          "name": "학교시설",
+          "value": 260725,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "강원특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E32::교육일반",
+          "name": "교육일반",
+          "value": 249240,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "강원특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E32::급식및체험활동",
+          "name": "급식및체험활동",
+          "value": 134173,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "강원특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E32::교육복지",
+          "name": "교육복지",
+          "value": 128474,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "강원특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E32::평생직업교육",
+          "name": "평생직업교육",
+          "value": 99038,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "강원특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E32::기관운영",
+          "name": "기관운영",
+          "value": 95099,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "강원특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E32::보건안전",
+          "name": "보건안전",
+          "value": 73447,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "강원특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E32::고등교육",
+          "name": "고등교육",
+          "value": 70515,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "강원특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E32::예비비기타",
+          "name": "예비비기타",
+          "value": 39891,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "강원특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        }
+      ],
+      "meta": {
+        "level": "domain",
+        "code": "E32",
+        "parentPath": [
+          "교육청 총계"
+        ]
+      }
+    },
+    {
+      "id": "office::E24",
+      "name": "광주광역시교육청",
+      "children": [
+        {
+          "id": "edu-func::E24::중등교육",
+          "name": "중등교육",
+          "value": 614328,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "광주광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E24::유아및초등교육",
+          "name": "유아및초등교육",
+          "value": 550686,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "광주광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E24::교육일반",
+          "name": "교육일반",
+          "value": 271710,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "광주광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E24::학교시설",
+          "name": "학교시설",
+          "value": 244403,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "광주광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E24::교육복지",
+          "name": "교육복지",
+          "value": 139146,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "광주광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E24::급식및체험활동",
+          "name": "급식및체험활동",
+          "value": 130466,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "광주광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E24::기관운영",
+          "name": "기관운영",
+          "value": 80781,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "광주광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E24::평생직업교육",
+          "name": "평생직업교육",
+          "value": 77201,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "광주광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E24::고등교육",
+          "name": "고등교육",
+          "value": 65500,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "광주광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E24::보건안전",
+          "name": "보건안전",
+          "value": 64481,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "광주광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E24::예비비기타",
+          "name": "예비비기타",
+          "value": 50298,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "광주광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        }
+      ],
+      "meta": {
+        "level": "domain",
+        "code": "E24",
+        "parentPath": [
+          "교육청 총계"
+        ]
+      }
+    },
+    {
+      "id": "office::E33",
+      "name": "충청북도교육청",
+      "children": [
+        {
+          "id": "edu-func::E33::유아및초등교육",
+          "name": "유아및초등교육",
+          "value": 626138,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "충청북도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E33::중등교육",
+          "name": "중등교육",
+          "value": 611215,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "충청북도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E33::교육일반",
+          "name": "교육일반",
+          "value": 232722,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "충청북도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E33::학교시설",
+          "name": "학교시설",
+          "value": 219730,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "충청북도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E33::급식및체험활동",
+          "name": "급식및체험활동",
+          "value": 135567,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "충청북도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E33::기관운영",
+          "name": "기관운영",
+          "value": 102653,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "충청북도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E33::교육복지",
+          "name": "교육복지",
+          "value": 96907,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "충청북도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E33::평생직업교육",
+          "name": "평생직업교육",
+          "value": 90000,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "충청북도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E33::보건안전",
+          "name": "보건안전",
+          "value": 65052,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "충청북도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E33::고등교육",
+          "name": "고등교육",
+          "value": 62428,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "충청북도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E33::예비비기타",
+          "name": "예비비기타",
+          "value": 46587,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "충청북도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        }
+      ],
+      "meta": {
+        "level": "domain",
+        "code": "E33",
+        "parentPath": [
+          "교육청 총계"
+        ]
+      }
+    },
+    {
+      "id": "office::E25",
+      "name": "대전광역시교육청",
+      "children": [
+        {
+          "id": "edu-func::E25::유아및초등교육",
+          "name": "유아및초등교육",
+          "value": 605702,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "대전광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E25::중등교육",
+          "name": "중등교육",
+          "value": 488047,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "대전광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E25::학교시설",
+          "name": "학교시설",
+          "value": 218152,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "대전광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E25::교육일반",
+          "name": "교육일반",
+          "value": 200061,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "대전광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E25::급식및체험활동",
+          "name": "급식및체험활동",
+          "value": 166324,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "대전광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E25::교육복지",
+          "name": "교육복지",
+          "value": 124550,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "대전광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E25::기관운영",
+          "name": "기관운영",
+          "value": 101440,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "대전광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E25::평생직업교육",
+          "name": "평생직업교육",
+          "value": 100236,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "대전광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E25::고등교육",
+          "name": "고등교육",
+          "value": 65702,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "대전광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E25::보건안전",
+          "name": "보건안전",
+          "value": 59945,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "대전광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E25::예비비기타",
+          "name": "예비비기타",
+          "value": 49841,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "대전광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        }
+      ],
+      "meta": {
+        "level": "domain",
+        "code": "E25",
+        "parentPath": [
+          "교육청 총계"
+        ]
+      }
+    },
+    {
+      "id": "office::E26",
+      "name": "울산광역시교육청",
+      "children": [
+        {
+          "id": "edu-func::E26::중등교육",
+          "name": "중등교육",
+          "value": 462973,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "울산광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E26::유아및초등교육",
+          "name": "유아및초등교육",
+          "value": 455522,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "울산광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E26::교육일반",
+          "name": "교육일반",
+          "value": 141503,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "울산광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E26::학교시설",
+          "name": "학교시설",
+          "value": 131584,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "울산광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E26::급식및체험활동",
+          "name": "급식및체험활동",
+          "value": 107171,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "울산광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E26::기관운영",
+          "name": "기관운영",
+          "value": 72553,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "울산광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E26::교육복지",
+          "name": "교육복지",
+          "value": 71297,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "울산광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E26::평생직업교육",
+          "name": "평생직업교육",
+          "value": 68101,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "울산광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E26::보건안전",
+          "name": "보건안전",
+          "value": 51030,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "울산광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E26::고등교육",
+          "name": "고등교육",
+          "value": 41864,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "울산광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E26::예비비기타",
+          "name": "예비비기타",
+          "value": 31400,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "울산광역시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        }
+      ],
+      "meta": {
+        "level": "domain",
+        "code": "E26",
+        "parentPath": [
+          "교육청 총계"
+        ]
+      }
+    },
+    {
+      "id": "office::E39",
+      "name": "제주특별자치도교육청",
+      "children": [
+        {
+          "id": "edu-func::E39::유아및초등교육",
+          "name": "유아및초등교육",
+          "value": 342196,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "제주특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E39::중등교육",
+          "name": "중등교육",
+          "value": 226296,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "제주특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E39::교육일반",
+          "name": "교육일반",
+          "value": 119833,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "제주특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E39::학교시설",
+          "name": "학교시설",
+          "value": 93837,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "제주특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E39::급식및체험활동",
+          "name": "급식및체험활동",
+          "value": 76778,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "제주특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E39::교육복지",
+          "name": "교육복지",
+          "value": 60392,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "제주특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E39::기관운영",
+          "name": "기관운영",
+          "value": 42910,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "제주특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E39::평생직업교육",
+          "name": "평생직업교육",
+          "value": 41932,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "제주특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E39::고등교육",
+          "name": "고등교육",
+          "value": 38416,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "제주특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E39::보건안전",
+          "name": "보건안전",
+          "value": 27886,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "제주특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E39::예비비기타",
+          "name": "예비비기타",
+          "value": 19526,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "제주특별자치도교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        }
+      ],
+      "meta": {
+        "level": "domain",
+        "code": "E39",
+        "parentPath": [
+          "교육청 총계"
+        ]
+      }
+    },
+    {
+      "id": "office::E29",
+      "name": "세종특별자치시교육청",
+      "children": [
+        {
+          "id": "edu-func::E29::유아및초등교육",
+          "name": "유아및초등교육",
+          "value": 212207,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "세종특별자치시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E29::중등교육",
+          "name": "중등교육",
+          "value": 152490,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "세종특별자치시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E29::교육일반",
+          "name": "교육일반",
+          "value": 64922,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "세종특별자치시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E29::학교시설",
+          "name": "학교시설",
+          "value": 60597,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "세종특별자치시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E29::급식및체험활동",
+          "name": "급식및체험활동",
+          "value": 44169,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "세종특별자치시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E29::교육복지",
+          "name": "교육복지",
+          "value": 25493,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "세종특별자치시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E29::기관운영",
+          "name": "기관운영",
+          "value": 22560,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "세종특별자치시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E29::평생직업교육",
+          "name": "평생직업교육",
+          "value": 21567,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "세종특별자치시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E29::보건안전",
+          "name": "보건안전",
+          "value": 20598,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "세종특별자치시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E29::고등교육",
+          "name": "고등교육",
+          "value": 15548,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "세종특별자치시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        },
+        {
+          "id": "edu-func::E29::예비비기타",
+          "name": "예비비기타",
+          "value": 13850,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "교육청 총계",
+              "세종특별자치시교육청"
+            ],
+            "accountType": "교육비특별회계"
+          }
+        }
+      ],
+      "meta": {
+        "level": "domain",
+        "code": "E29",
+        "parentPath": [
+          "교육청 총계"
+        ]
+      }
+    }
+  ],
+  "meta": {
+    "level": "root",
+    "parentPath": []
+  }
+}
