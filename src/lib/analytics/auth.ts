@@ -1,10 +1,14 @@
 import bcrypt from 'bcryptjs';
 import { SignJWT, jwtVerify } from 'jose';
 
-if (!process.env.ADMIN_JWT_SECRET) {
-  throw new Error('ADMIN_JWT_SECRET environment variable is required');
+function getJWTSecret() {
+  const secret = process.env.ADMIN_JWT_SECRET;
+  if (!secret) {
+    throw new Error('ADMIN_JWT_SECRET environment variable is required');
+  }
+  return new TextEncoder().encode(secret);
 }
-const JWT_SECRET = new TextEncoder().encode(process.env.ADMIN_JWT_SECRET);
+
 const COOKIE_NAME = 'user_token';
 
 export async function hashPassword(password: string): Promise<string> {
@@ -26,12 +30,12 @@ export async function createUserToken(user: UserPayload): Promise<string> {
     .setProtectedHeader({ alg: 'HS256' })
     .setExpirationTime('7d')
     .setIssuedAt()
-    .sign(JWT_SECRET);
+    .sign(getJWTSecret());
 }
 
 export async function verifyUserToken(token: string): Promise<UserPayload | null> {
   try {
-    const { payload } = await jwtVerify(token, JWT_SECRET);
+    const { payload } = await jwtVerify(token, getJWTSecret());
     return {
       userId: payload.userId as number,
       email: payload.email as string,

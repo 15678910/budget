@@ -39,14 +39,11 @@ export async function POST(request: NextRequest) {
 
     const payload = (await verifyRes.json()) as GoogleTokenPayload;
 
-    // Verify the token was issued for our app
-    const clientId = process.env.GOOGLE_CLIENT_ID;
-    if (clientId && payload.sub) {
-      // Token is valid
-    } else {
+    // Verify the token has a valid Google user ID
+    if (!payload.sub || !payload.email) {
       return NextResponse.json(
-        { error: 'Google 인증 설정이 필요합니다.' },
-        { status: 503 },
+        { error: 'Google 인증 정보가 올바르지 않습니다.' },
+        { status: 401 },
       );
     }
 
