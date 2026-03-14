@@ -2,6 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef } from 'react';
+import { useUser } from '@/components/providers/UserProvider';
 
 function getOrCreateSessionId(): string {
   const key = '_ns_sid';
@@ -15,6 +16,7 @@ function getOrCreateSessionId(): string {
 
 export function AnalyticsTracker() {
   const pathname = usePathname();
+  const { user } = useUser();
   const lastTrackedPath = useRef<string | null>(null);
 
   useEffect(() => {
@@ -25,6 +27,7 @@ export function AnalyticsTracker() {
       const sessionId = getOrCreateSessionId();
       const payload = {
         sessionId,
+        userId: user?.id || null,
         pagePath: pathname,
         referrer: document.referrer,
         screenWidth: window.screen.width,

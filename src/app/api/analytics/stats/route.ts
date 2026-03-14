@@ -11,6 +11,7 @@ import {
   getReferrerStats,
   getHourlyHeatmap,
   getSurveyStats,
+  getUserStats,
 } from '@/lib/analytics/db';
 
 // ---------------------------------------------------------------------------
@@ -46,7 +47,8 @@ type SectionKey =
   | 'geo'
   | 'referrers'
   | 'heatmap'
-  | 'surveys';
+  | 'surveys'
+  | 'users';
 
 const SECTION_FETCHERS: Record<SectionKey, (days: number) => Promise<unknown>> = {
   overview:  (d) => getOverviewStats(d),
@@ -59,6 +61,7 @@ const SECTION_FETCHERS: Record<SectionKey, (days: number) => Promise<unknown>> =
   referrers: (d) => getReferrerStats(d),
   heatmap:   (d) => getHourlyHeatmap(d),
   surveys:   ()  => getSurveyStats(),
+  users:     (d) => getUserStats(d),
 };
 
 // ---------------------------------------------------------------------------
@@ -99,6 +102,7 @@ export async function GET(request: NextRequest) {
       referrers,
       heatmap,
       surveys,
+      users,
     ] = await Promise.all([
       getOverviewStats(days),
       getDailyTrend(days),
@@ -110,6 +114,7 @@ export async function GET(request: NextRequest) {
       getReferrerStats(days),
       getHourlyHeatmap(days),
       getSurveyStats(),
+      getUserStats(days),
     ]);
 
     return NextResponse.json({
@@ -123,6 +128,7 @@ export async function GET(request: NextRequest) {
       referrers,
       heatmap,
       surveys,
+      users,
     });
   } catch (error) {
     console.error('[analytics/stats] Error:', error);

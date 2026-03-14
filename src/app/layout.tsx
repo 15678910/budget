@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { UserProvider } from "@/components/providers/UserProvider";
 import { Header } from "@/components/layout/Header";
 import { GuidedTour } from "@/components/shared/GuidedTour";
 import { AnalyticsTracker } from "@/components/analytics/AnalyticsTracker";
@@ -28,13 +29,15 @@ export default function RootLayout({
     <html lang="ko" suppressHydrationWarning>
       <body className={`${notoSansKR.variable} font-sans antialiased bg-background text-foreground min-h-screen`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          <Header />
-          <main className="max-w-[1600px] mx-auto px-4 py-4">
-            {children}
-          </main>
-          <GuidedTour />
-          <AnalyticsTracker />
-          <SurveyPopup />
+          <UserProvider>
+            <Header />
+            <main className="max-w-[1600px] mx-auto px-4 py-4">
+              {children}
+            </main>
+            <GuidedTour />
+            <AnalyticsTracker />
+            <SurveyPopup />
+          </UserProvider>
         </ThemeProvider>
       </body>
     </html>

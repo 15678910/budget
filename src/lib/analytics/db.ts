@@ -27,6 +27,7 @@ export interface PageViewInput {
   screenWidth?: number;
   screenHeight?: number;
   language?: string;
+  userId?: number;
 }
 
 export interface EventInput {
@@ -64,7 +65,7 @@ export async function insertPageView(data: PageViewInput) {
     INSERT INTO page_views (
       session_id, page_path, referrer, user_agent, ip,
       country, city, region, device_type, browser, os,
-      screen_width, screen_height, language
+      screen_width, screen_height, language, user_id
     ) VALUES (
       ${data.sessionId},
       ${data.pagePath},
@@ -79,7 +80,8 @@ export async function insertPageView(data: PageViewInput) {
       ${data.os ?? ''},
       ${data.screenWidth ?? 0},
       ${data.screenHeight ?? 0},
-      ${data.language ?? ''}
+      ${data.language ?? ''},
+      ${data.userId ?? null}
     )
   `;
 }
@@ -360,4 +362,98 @@ export async function initializeSchema() {
   // Indexes -- user_surveys
   await sql`CREATE INDEX IF NOT EXISTS idx_surveys_created_at ON user_surveys (created_at)`;
   await sql`CREATE INDEX IF NOT EXISTS idx_surveys_session_id ON user_surveys (session_id)`;
+
+  // Users table
+  await sql`CREATE TABLE IF NOT EXISTS users (
+    id            SERIAL PRIMARY KEY,
+    email         VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    nickname      VARCHAR(50)  NOT NULL,
+    age_range     VARCHAR(20)  DEFAULT '',
+    gender        VARCHAR(10)  DEFAULT '',
+    interest      VARCHAR(200) DEFAULT '',
+    created_at    TIMESTAMPTZ  DEFAULT NOW()
+  )`;
+  await sql`CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)`;
+
+  // Add user_id column to existing tables
+  await sql`DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='page_views' AND column_name='user_id') THEN
+      ALTER TABLE page_views ADD COLUMN user_id INTEGER;
+    END IF;
+  END $$`;
+  await sql`CREATE INDEX IF NOT EXISTS idx_page_views_user_id ON page_views(user_id)`;
+}
+
+// ---------------------------------------------------------------------------
+// User types
+// ---------------------------------------------------------------------------
+
+export interface UserInput {
+  email: string;
+  passwordHash: string;
+  nickname: string;
+  ageRange: string;
+  gender: string;
+  interest: string;
+}
+
+export interface UserRow {
+  id: number;
+  email: string;
+  password_hash: string;
+  nickname: string;
+  age_range: string;
+  gender: string;
+  interest: string;
+  created_at: string;
+}
+
+// ---------------------------------------------------------------------------
+// User CRUD helpers
+// ---------------------------------------------------------------------------
+
+export async function createUser(data: UserInput): Promise<UserRow> {
+  const sql = getSQL();
+  const rows = await sql`
+    INSERT INTO users (email, password_hash, nickname, age_range, gender, interest)
+    VALUES (${data.email}, ${data.passwordHash}, ${data.nickname}, ${data.ageRange}, ${data.gender}, ${data.interest})
+    RETURNING *
+  `;
+  return rows[0] as UserRow;
+}
+
+export async function getUserByEmail(email: string): Promise<UserRow | null> {
+  const sql = getSQL();
+  const rows = await sql`SELECT * FROM users WHERE email = ${email} LIMIT 1`;
+  return (rows[0] as UserRow) || null;
+}
+
+export async function getUserById(id: number): Promise<UserRow | null> {
+  const sql = getSQL();
+  const rows = await sql`SELECT * FROM users WHERE id = ${id} LIMIT 1`;
+  return (rows[0] as UserRow) || null;
+}
+
+export async function getUserStats(days: number = 30) {
+  const sql = getSQL();
+  const startDate = new Date();
+  startDate.setDate(startDate.getDate() - days);
+
+  const total = await sql`SELECT COUNT(*) as count FROM users`;
+  const recent = await sql`SELECT COUNT(*) as count FROM users WHERE created_at >= ${startDate.toISOString()}`;
+  const ageDistribution = await sql`SELECT age_range, COUNT(*) as count FROM users WHERE age_range != '' GROUP BY age_range ORDER BY age_range`;
+  const genderDistribution = await sql`SELECT gender, COUNT(*) as count FROM users WHERE gender != '' GROUP BY gender`;
+  const loggedInViews = await sql`SELECT COUNT(*) as count FROM page_views WHERE user_id IS NOT NULL AND created_at >= ${startDate.toISOString()}`;
+  const totalViews = await sql`SELECT COUNT(*) as count FROM page_views WHERE created_at >= ${startDate.toISOString()}`;
+
+  return {
+    totalUsers: Number(total[0]?.count || 0),
+    recentUsers: Number(recent[0]?.count || 0),
+    ageDistribution: ageDistribution as { age_range: string; count: string }[],
+    genderDistribution: genderDistribution as { gender: string; count: string }[],
+    loggedInViewRate: Number(totalViews[0]?.count) > 0
+      ? (Number(loggedInViews[0]?.count || 0) / Number(totalViews[0]?.count)) * 100
+      : 0,
+  };
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { useUser } from '@/components/providers/UserProvider';
 
 const AGE_RANGES = ['10대', '20대', '30대', '40대', '50대', '60대 이상'] as const;
 const GENDERS = ['남성', '여성'] as const;
@@ -9,6 +10,7 @@ const INTERESTS = ['교육', '복지', '국방', '경제', '환경', '과학기�
 const STORAGE_KEY = '_ns_survey_done';
 
 export function SurveyPopup() {
+  const { isLoggedIn } = useUser();
   const [visible, setVisible] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
@@ -19,6 +21,7 @@ export function SurveyPopup() {
   // Show after 30 seconds if not already dismissed
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    if (isLoggedIn) return;
     if (localStorage.getItem(STORAGE_KEY) === 'true') return;
 
     const timer = setTimeout(() => {
@@ -26,7 +29,7 @@ export function SurveyPopup() {
     }, 30_000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [isLoggedIn]);
 
   const dismiss = useCallback(() => {
     localStorage.setItem(STORAGE_KEY, 'true');
@@ -72,7 +75,7 @@ export function SurveyPopup() {
     }, 1500);
   }, [ageRange, gender, interests]);
 
-  if (!visible) return null;
+  if (!visible || isLoggedIn) return null;
 
   return (
     <div className="fixed bottom-4 right-4 z-50 bg-card border border-border rounded-xl shadow-2xl p-5 w-80 animate-in fade-in slide-in-from-bottom-4">

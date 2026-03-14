@@ -6,6 +6,7 @@ import { useTheme } from "next-themes";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils/format";
 import { startTour } from "@/components/shared/GuidedTour";
+import { useUser } from "@/components/providers/UserProvider";
 
 const MAIN_TABS = [
   { href: "/", label: "트리맵" },
@@ -32,6 +33,9 @@ export function Header() {
   const [mounted, setMounted] = useState(false);
   const [aiMenuOpen, setAiMenuOpen] = useState(false);
   const aiMenuRef = useRef<HTMLDivElement>(null);
+  const { user, isLoggedIn, loading } = useUser();
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -43,6 +47,9 @@ export function Header() {
       if (aiMenuRef.current && !aiMenuRef.current.contains(e.target as Node)) {
         setAiMenuOpen(false);
       }
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
+        setUserMenuOpen(false);
+      }
     }
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
@@ -51,6 +58,7 @@ export function Header() {
   // Close dropdown on route change
   useEffect(() => {
     setAiMenuOpen(false);
+    setUserMenuOpen(false);
   }, [pathname]);
 
   const isAIActive = AI_SUB_TABS.some((t) => t.href === pathname);
@@ -130,8 +138,50 @@ export function Header() {
           </div>
         </nav>
 
-        {/* Right: Help + Theme toggle */}
+        {/* Right: User + Help + Theme toggle */}
         <div className="flex items-center gap-1">
+          {/* User auth */}
+          {!loading && (
+            isLoggedIn && user ? (
+              <div ref={userMenuRef} className="relative">
+                <button
+                  onClick={() => setUserMenuOpen((v) => !v)}
+                  className="flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md transition-colors text-muted-foreground hover:bg-muted hover:text-foreground"
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg>
+                  {user.nickname}
+                </button>
+                {userMenuOpen && (
+                  <div className="absolute top-full right-0 mt-1 w-36 bg-background border border-border rounded-lg shadow-lg p-1.5 z-50">
+                    <button
+                      onClick={async () => {
+                        await fetch('/api/auth/logout', { method: 'POST' });
+                        window.location.href = '/';
+                      }}
+                      className="block w-full text-left px-3 py-2 text-sm rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+                    >
+                      로그아웃
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link
+                href="/auth/login"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md transition-colors text-muted-foreground hover:bg-muted hover:text-foreground"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+                로그인
+              </Link>
+            )
+          )}
+
           <button
             onClick={() => startTour()}
             className="p-2 rounded-md hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"

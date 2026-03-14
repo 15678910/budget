@@ -72,6 +72,7 @@ export async function POST(request: NextRequest) {
       screenWidth,
       screenHeight,
       language,
+      userId,
     } = body as {
       sessionId?: string;
       pagePath?: string;
@@ -79,6 +80,7 @@ export async function POST(request: NextRequest) {
       screenWidth?: number;
       screenHeight?: number;
       language?: string;
+      userId?: number;
     };
 
     if (!sessionId || !pagePath) {
@@ -116,6 +118,7 @@ export async function POST(request: NextRequest) {
       screenWidth: screenWidth ?? 0,
       screenHeight: screenHeight ?? 0,
       language: truncate(language, 10),
+      userId: userId ? Number(userId) : undefined,
     });
 
     return NextResponse.json({ ok: true });
