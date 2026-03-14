@@ -91,10 +91,15 @@ export function Header() {
             </Link>
           ))}
 
-          {/* AI기본사회 Dropdown */}
-          <div ref={aiMenuRef} className="relative">
-            <button
-              onClick={() => setAiMenuOpen((v) => !v)}
+          {/* AI기본사회 Dropdown — hover to open */}
+          <div
+            ref={aiMenuRef}
+            className="relative"
+            onMouseEnter={() => setAiMenuOpen(true)}
+            onMouseLeave={() => setAiMenuOpen(false)}
+          >
+            <Link
+              href="/simulator"
               className={cn(
                 "flex items-center gap-1 px-3 py-1.5 text-sm rounded-md transition-colors whitespace-nowrap",
                 isAIActive
@@ -116,23 +121,25 @@ export function Header() {
               >
                 <polyline points="6 9 12 15 18 9" />
               </svg>
-            </button>
+            </Link>
             {aiMenuOpen && (
-              <div className="absolute top-full left-0 mt-1 w-40 bg-background border border-border rounded-lg shadow-lg p-1.5 z-50">
-                {AI_SUB_TABS.map((tab) => (
-                  <Link
-                    key={tab.href}
-                    href={tab.href}
-                    className={cn(
-                      "block px-3 py-2 text-sm rounded-md transition-colors",
-                      pathname === tab.href
-                        ? "text-foreground bg-muted/50 font-medium"
-                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                    )}
-                  >
-                    {tab.label}
-                  </Link>
-                ))}
+              <div className="absolute top-full left-0 pt-1 z-50">
+                <div className="w-40 bg-background border border-border rounded-lg shadow-lg p-1.5">
+                  {AI_SUB_TABS.map((tab) => (
+                    <Link
+                      key={tab.href}
+                      href={tab.href}
+                      className={cn(
+                        "block px-3 py-2 text-sm rounded-md transition-colors",
+                        pathname === tab.href
+                          ? "text-foreground bg-muted/50 font-medium"
+                          : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                      )}
+                    >
+                      {tab.label}
+                    </Link>
+                  ))}
+                </div>
               </div>
             )}
           </div>
