@@ -46,7 +46,7 @@ export function ExportButton({ items, filename = '예산데이터.csv', classNam
     <button
       onClick={handleExport}
       className={cn(
-        'flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm',
+        'flex items-center gap-1.5 px-3 py-1.5 rounded-md text-base',
         'border border-border text-muted-foreground',
         'hover:bg-muted hover:text-foreground transition-colors',
         className

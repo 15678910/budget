@@ -24,7 +24,7 @@ export function TablePageWrapper({ dataByYear, availableYears }: TablePageWrappe
           value={year}
           onChange={(e) => setYear(Number(e.target.value))}
           className={cn(
-            'px-3 py-1.5 text-sm rounded-lg border border-border bg-background'
+            'px-3 py-1.5 text-base rounded-lg border border-border bg-background'
           )}
         >
           {availableYears.map((y) => (

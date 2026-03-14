@@ -37,7 +37,7 @@ const MODES: { key: CompareMode; label: string }[] = [
 ];
 
 const SELECT_CLASS =
-  'bg-gray-800 border border-gray-700 text-gray-200 rounded px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500';
+  'bg-gray-800 border border-gray-700 text-gray-200 rounded px-2 py-1 text-base focus:outline-none focus:ring-1 focus:ring-blue-500';
 
 /* ---------- Sub-components ---------- */
 
@@ -100,7 +100,7 @@ function CompareCell({
 
   return (
     <div className="border border-gray-800 p-2 md:p-3 min-w-0">
-      <div className="text-[10px] md:text-xs text-gray-400 leading-tight truncate mb-1">
+      <div className="text-xs md:text-sm text-gray-400 leading-tight truncate mb-1">
         {comparison.categoryName}
       </div>
       <div className="flex items-center gap-1.5 mb-0.5">
@@ -110,7 +110,7 @@ function CompareCell({
         />
         <span className="text-[9px] font-medium flex-shrink-0" style={{ color: colorA }}>{labelA}</span>
         <span
-          className="text-xs md:text-sm font-mono font-bold tabular-nums truncate"
+          className="text-sm md:text-base font-mono font-bold tabular-nums truncate"
           style={{ color: colorA }}
         >
           {formatKoreanWon(comparison.amountA)}
@@ -123,7 +123,7 @@ function CompareCell({
         />
         <span className="text-[9px] font-medium flex-shrink-0" style={{ color: colorB }}>{labelB}</span>
         <span
-          className="text-xs md:text-sm font-mono font-bold tabular-nums truncate"
+          className="text-sm md:text-base font-mono font-bold tabular-nums truncate"
           style={{ color: colorB }}
         >
           {formatKoreanWon(comparison.amountB)}
@@ -447,12 +447,12 @@ export function RegionalCompareDashboard({
       {/* Title bar */}
       <div className="flex items-center justify-between px-4 py-3 bg-gray-900 border-b border-gray-800">
         <h2 className="text-lg font-bold tracking-tight">
-          지방재정 비교 대시보드
+          지역재정 비교 대시보드
         </h2>
         <select
           value={year}
           onChange={(e) => setYear(Number(e.target.value))}
-          className="bg-gray-800 text-gray-200 px-3 py-1 rounded text-sm border border-gray-700"
+          className="bg-gray-800 text-gray-200 px-3 py-1 rounded text-base border border-gray-700"
         >
           {availableYears.map((y) => (
             <option key={y} value={y}>
@@ -468,7 +468,7 @@ export function RegionalCompareDashboard({
           <button
             key={m.key}
             onClick={() => setMode(m.key)}
-            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
+            className={`px-4 py-1.5 rounded-full text-base font-medium transition-colors ${
               mode === m.key
                 ? 'bg-blue-600 text-white'
                 : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
@@ -554,31 +554,31 @@ export function RegionalCompareDashboard({
           {/* Budget totals */}
           <div className="grid grid-cols-2 md:grid-cols-4">
             <div className="border border-gray-800 p-2 md:p-3">
-              <div className="text-[10px] text-gray-500 truncate">
+              <div className="text-xs text-gray-500 truncate">
                 {entityA.name} 총예산
               </div>
               <div
-                className="text-sm md:text-base font-mono font-bold"
+                className="text-base md:text-base font-mono font-bold"
                 style={{ color: colorA }}
               >
                 {formatKoreanWon(entityA.totalAmount)}
               </div>
             </div>
             <div className="border border-gray-800 p-2 md:p-3">
-              <div className="text-[10px] text-gray-500 truncate">
+              <div className="text-xs text-gray-500 truncate">
                 {entityB.name} 총예산
               </div>
               <div
-                className="text-sm md:text-base font-mono font-bold"
+                className="text-base md:text-base font-mono font-bold"
                 style={{ color: colorB }}
               >
                 {formatKoreanWon(entityB.totalAmount)}
               </div>
             </div>
             <div className="border border-gray-800 p-2 md:p-3">
-              <div className="text-[10px] text-gray-500">차이</div>
+              <div className="text-xs text-gray-500">차이</div>
               <div
-                className={`text-sm md:text-base font-mono font-bold ${
+                className={`text-base md:text-base font-mono font-bold ${
                   delta >= 0 ? 'text-emerald-400' : 'text-red-400'
                 }`}
               >
@@ -587,8 +587,8 @@ export function RegionalCompareDashboard({
               </div>
             </div>
             <div className="border border-gray-800 p-2 md:p-3">
-              <div className="text-[10px] text-gray-500">배율</div>
-              <div className="text-sm md:text-base font-mono font-bold text-amber-400">
+              <div className="text-xs text-gray-500">배율</div>
+              <div className="text-base md:text-base font-mono font-bold text-amber-400">
                 {ratio > 0 ? `${ratio.toFixed(2)}배` : '-'}
               </div>
             </div>
@@ -598,43 +598,43 @@ export function RegionalCompareDashboard({
           {entityA.population > 0 && entityB.population > 0 && (
             <>
               <div className="px-3 py-1.5 bg-gray-900 border-b border-gray-800">
-                <span className="text-[10px] md:text-xs font-semibold text-orange-400 uppercase tracking-widest">
+                <span className="text-xs md:text-sm font-semibold text-orange-400 uppercase tracking-widest">
                   1인당 예산 비교
                 </span>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6">
                 <div className="border border-gray-800 p-2 md:p-3">
-                  <div className="text-[10px] text-gray-500 truncate">{entityA.name} 인구</div>
-                  <div className="text-sm md:text-base font-mono font-bold text-gray-300">
+                  <div className="text-xs text-gray-500 truncate">{entityA.name} 인구</div>
+                  <div className="text-base md:text-base font-mono font-bold text-gray-300">
                     {(entityA.population / 10_000).toFixed(1)}만명
                   </div>
                 </div>
                 <div className="border border-gray-800 p-2 md:p-3">
-                  <div className="text-[10px] text-gray-500 truncate">{entityB.name} 인구</div>
-                  <div className="text-sm md:text-base font-mono font-bold text-gray-300">
+                  <div className="text-xs text-gray-500 truncate">{entityB.name} 인구</div>
+                  <div className="text-base md:text-base font-mono font-bold text-gray-300">
                     {(entityB.population / 10_000).toFixed(1)}만명
                   </div>
                 </div>
                 <div className="border border-gray-800 p-2 md:p-3">
-                  <div className="text-[10px] text-gray-500 truncate">{entityA.name} 1인당</div>
-                  <div className="text-sm md:text-base font-mono font-bold" style={{ color: colorA }}>
+                  <div className="text-xs text-gray-500 truncate">{entityA.name} 1인당</div>
+                  <div className="text-base md:text-base font-mono font-bold" style={{ color: colorA }}>
                     {formatPerCapita(entityA.totalAmount, entityA.population)}
                   </div>
                 </div>
                 <div className="border border-gray-800 p-2 md:p-3">
-                  <div className="text-[10px] text-gray-500 truncate">{entityB.name} 1인당</div>
-                  <div className="text-sm md:text-base font-mono font-bold" style={{ color: colorB }}>
+                  <div className="text-xs text-gray-500 truncate">{entityB.name} 1인당</div>
+                  <div className="text-base md:text-base font-mono font-bold" style={{ color: colorB }}>
                     {formatPerCapita(entityB.totalAmount, entityB.population)}
                   </div>
                 </div>
                 <div className="border border-gray-800 p-2 md:p-3">
-                  <div className="text-[10px] text-gray-500">1인당 차이</div>
+                  <div className="text-xs text-gray-500">1인당 차이</div>
                   {(() => {
                     const pcA = (entityA.totalAmount * 1_000_000) / entityA.population;
                     const pcB = (entityB.totalAmount * 1_000_000) / entityB.population;
                     const pcDelta = pcB - pcA;
                     return (
-                      <div className={`text-sm md:text-base font-mono font-bold ${pcDelta >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                      <div className={`text-base md:text-base font-mono font-bold ${pcDelta >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
                         {pcDelta >= 0 ? '+' : ''}{Math.abs(pcDelta) >= 10_000
                           ? `${Math.round(pcDelta / 10_000).toLocaleString('ko-KR')}만원`
                           : `${Math.round(pcDelta).toLocaleString('ko-KR')}원`}
@@ -643,13 +643,13 @@ export function RegionalCompareDashboard({
                   })()}
                 </div>
                 <div className="border border-gray-800 p-2 md:p-3">
-                  <div className="text-[10px] text-gray-500">1인당 배율</div>
+                  <div className="text-xs text-gray-500">1인당 배율</div>
                   {(() => {
                     const pcA = (entityA.totalAmount * 1_000_000) / entityA.population;
                     const pcB = (entityB.totalAmount * 1_000_000) / entityB.population;
                     const pcRatio = Math.min(pcA, pcB) > 0 ? Math.max(pcA, pcB) / Math.min(pcA, pcB) : 0;
                     return (
-                      <div className="text-sm md:text-base font-mono font-bold text-amber-400">
+                      <div className="text-base md:text-base font-mono font-bold text-amber-400">
                         {pcRatio > 0 ? `${pcRatio.toFixed(2)}배` : '-'}
                       </div>
                     );
@@ -660,7 +660,7 @@ export function RegionalCompareDashboard({
           )}
         </>
       ) : (
-        <div className="px-4 py-8 text-center text-gray-500 text-sm">
+        <div className="px-4 py-8 text-center text-gray-500 text-base">
           비교할 두 개의 항목을 선택하세요
         </div>
       )}
@@ -669,7 +669,7 @@ export function RegionalCompareDashboard({
       {comparisons.length > 0 && (
         <>
           <div className="px-3 py-1.5 bg-gray-900 border-b border-gray-800">
-            <span className="text-[10px] md:text-xs font-semibold text-cyan-400 uppercase tracking-widest">
+            <span className="text-xs md:text-sm font-semibold text-cyan-400 uppercase tracking-widest">
               기능별 세출 비교
             </span>
           </div>
@@ -701,14 +701,14 @@ export function RegionalCompareDashboard({
               className="w-3 h-3 rounded-full"
               style={{ backgroundColor: colorA }}
             />
-            <span className="text-xs text-gray-400">{entityA.name}</span>
+            <span className="text-sm text-gray-400">{entityA.name}</span>
           </div>
           <div className="flex items-center gap-1.5">
             <span
               className="w-3 h-3 rounded-full"
               style={{ backgroundColor: colorB }}
             />
-            <span className="text-xs text-gray-400">{entityB.name}</span>
+            <span className="text-sm text-gray-400">{entityB.name}</span>
           </div>
         </div>
       )}

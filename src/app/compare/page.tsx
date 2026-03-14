@@ -7,13 +7,13 @@ import {
   loadEducationByOffice,
   loadEducationMetadata,
 } from "@/lib/data/load-budget";
-import { ComparePage } from "@/components/comparison/ComparePage";
+import { UnifiedComparePage } from "@/components/comparison/UnifiedComparePage";
 import type { BudgetTreeNode } from "@/types/budget";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "연도별 비교 | 나라살림",
-  description: "한국 정부 예산을 연도별로 비교합니다.",
+  title: "예산 비교 | 나라살림",
+  description: "한국 정부 예산을 연도별·지역별로 비교합니다.",
 };
 
 export default function CompareRoute() {
@@ -53,7 +53,7 @@ export default function CompareRoute() {
   const defaultYearB = allYears[allYears.length - 1];
 
   return (
-    <ComparePage
+    <UnifiedComparePage
       domainDataByYear={domainDataByYear}
       metroDataByYear={metroDataByYear}
       districtDataByYear={districtDataByYear}
@@ -61,6 +61,8 @@ export default function CompareRoute() {
       metadata={mergedMetadata}
       defaultYearA={defaultYearA}
       defaultYearB={defaultYearB}
+      availableYears={allYears}
+      defaultYear={allYears[allYears.length - 1]}
     />
   );
 }

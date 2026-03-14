@@ -40,7 +40,7 @@ export function UnitConverter({ selectedUnit, onSelectUnit }: UnitConverterProps
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          'px-3 py-1.5 text-sm rounded-lg border transition-colors',
+          'px-3 py-1.5 text-base rounded-lg border transition-colors',
           selectedUnit
             ? 'bg-primary text-primary-foreground border-primary'
             : 'border-border bg-background text-muted-foreground hover:text-foreground'
@@ -55,12 +55,17 @@ export function UnitConverter({ selectedUnit, onSelectUnit }: UnitConverterProps
           <div className="fixed inset-0 z-40" onClick={() => { setIsOpen(false); setCustomMode(false); }} />
 
           {/* Dropdown */}
-          <div className="absolute top-full left-0 mt-1 z-50 bg-card border border-border rounded-lg shadow-lg py-1 min-w-[200px] max-h-[320px] overflow-y-auto">
+          <div className="absolute top-full left-0 mt-1 z-50 bg-card border border-border rounded-lg shadow-lg py-1 min-w-[220px] max-h-[380px] overflow-y-auto">
+            {/* 설명 */}
+            <div className="px-3 py-2 text-xs text-muted-foreground border-b border-border mb-1">
+              예산 금액을 일상 물건 가격으로 환산합니다. 항목을 선택하면 트리맵에 &ldquo;치킨 몇 마리&rdquo; 등으로 표시됩니다.
+            </div>
+
             {/* Clear option */}
             {selectedUnit && (
               <button
                 onClick={() => handleSelect(null)}
-                className="w-full text-left px-3 py-1.5 text-sm text-muted-foreground hover:bg-muted transition-colors"
+                className="w-full text-left px-3 py-1.5 text-base text-muted-foreground hover:bg-muted transition-colors"
               >
                 단위 해제
               </button>
@@ -72,7 +77,7 @@ export function UnitConverter({ selectedUnit, onSelectUnit }: UnitConverterProps
                 key={unit.id}
                 onClick={() => handleSelect(unit)}
                 className={cn(
-                  'w-full text-left px-3 py-1.5 text-sm hover:bg-muted transition-colors',
+                  'w-full text-left px-3 py-1.5 text-base hover:bg-muted transition-colors',
                   selectedUnit?.id === unit.id ? 'bg-muted font-medium' : ''
                 )}
               >
@@ -89,7 +94,7 @@ export function UnitConverter({ selectedUnit, onSelectUnit }: UnitConverterProps
             {!customMode ? (
               <button
                 onClick={() => setCustomMode(true)}
-                className="w-full text-left px-3 py-1.5 text-sm text-primary hover:bg-muted transition-colors"
+                className="w-full text-left px-3 py-1.5 text-base text-primary hover:bg-muted transition-colors"
               >
                 + 사용자 정의 단위
               </button>
@@ -100,32 +105,32 @@ export function UnitConverter({ selectedUnit, onSelectUnit }: UnitConverterProps
                   placeholder="단위명 (예: 금반지)"
                   value={customName}
                   onChange={e => setCustomName(e.target.value)}
-                  className="w-full px-2 py-1 text-sm border border-border rounded bg-background"
+                  className="w-full px-2 py-1 text-base border border-border rounded bg-background"
                 />
                 <input
                   type="text"
                   placeholder="양사 (예: 개)"
                   value={customCounter}
                   onChange={e => setCustomCounter(e.target.value)}
-                  className="w-full px-2 py-1 text-sm border border-border rounded bg-background"
+                  className="w-full px-2 py-1 text-base border border-border rounded bg-background"
                 />
                 <input
                   type="number"
                   placeholder="단가 (원)"
                   value={customPrice}
                   onChange={e => setCustomPrice(e.target.value)}
-                  className="w-full px-2 py-1 text-sm border border-border rounded bg-background"
+                  className="w-full px-2 py-1 text-base border border-border rounded bg-background"
                 />
                 <div className="flex gap-2">
                   <button
                     onClick={() => setCustomMode(false)}
-                    className="flex-1 px-2 py-1 text-xs rounded border border-border hover:bg-muted"
+                    className="flex-1 px-2 py-1 text-sm rounded border border-border hover:bg-muted"
                   >
                     취소
                   </button>
                   <button
                     onClick={handleCustomSubmit}
-                    className="flex-1 px-2 py-1 text-xs rounded bg-primary text-primary-foreground"
+                    className="flex-1 px-2 py-1 text-sm rounded bg-primary text-primary-foreground"
                   >
                     적용
                   </button>

@@ -53,7 +53,7 @@ export function SearchPage({ dataByYear, metadata }: SearchPageProps) {
         <select
           value={year}
           onChange={(e) => setYear(Number(e.target.value))}
-          className="px-3 py-1.5 text-sm rounded-lg border border-border bg-background"
+          className="px-3 py-1.5 text-base rounded-lg border border-border bg-background"
         >
           {availableYears.map((y) => (
             <option key={y} value={y}>
@@ -77,7 +77,7 @@ export function SearchPage({ dataByYear, metadata }: SearchPageProps) {
           className={cn(
             'w-full pl-10 pr-10 py-3 rounded-lg border border-border',
             'bg-background text-foreground placeholder:text-muted-foreground',
-            'focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-sm'
+            'focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-base'
           )}
           autoFocus
         />
@@ -99,20 +99,20 @@ export function SearchPage({ dataByYear, metadata }: SearchPageProps) {
             <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
           </svg>
           <p>검색어를 입력하세요</p>
-          <p className="text-sm mt-1 opacity-70">전체 {items.length.toLocaleString('ko-KR')}개 항목에서 검색</p>
+          <p className="text-base mt-1 opacity-70">전체 {items.length.toLocaleString('ko-KR')}개 항목에서 검색</p>
         </div>
       )}
 
       {debouncedQuery && results.length === 0 && (
         <div className="text-center py-16 text-muted-foreground">
           <p>검색 결과가 없습니다</p>
-          <p className="text-sm mt-1 opacity-70">다른 검색어를 시도해 보세요</p>
+          <p className="text-base mt-1 opacity-70">다른 검색어를 시도해 보세요</p>
         </div>
       )}
 
       {results.length > 0 && (
         <>
-          <p className="text-sm text-muted-foreground mb-3">
+          <p className="text-base text-muted-foreground mb-3">
             검색 결과 <span className="font-semibold text-foreground">{results.length}</span>건
           </p>
           <ul className="space-y-2">
@@ -122,21 +122,21 @@ export function SearchPage({ dataByYear, metadata }: SearchPageProps) {
                 <li key={idx} className="rounded-lg border border-border bg-card px-4 py-3 hover:border-primary/40 hover:bg-muted/40 transition-colors">
                   <div className="flex items-start justify-between gap-4">
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm font-semibold truncate">
+                      <p className="text-base font-semibold truncate">
                         {r.item.detailProjectName || r.item.unitProjectName || r.item.programName}
                       </p>
-                      <p className="text-xs text-muted-foreground mt-0.5">
+                      <p className="text-sm text-muted-foreground mt-0.5">
                         {r.item.ministryName} · {r.item.domainName} · {r.item.sectorName}
                       </p>
                       {r.item.detailProjectName && r.item.unitProjectName && (
-                        <p className="text-xs text-muted-foreground/70 mt-0.5 truncate">
+                        <p className="text-sm text-muted-foreground/70 mt-0.5 truncate">
                           {r.item.programName} &rsaquo; {r.item.unitProjectName}
                         </p>
                       )}
                     </div>
                     <div className="text-right shrink-0">
-                      <p className="text-sm font-bold tabular-nums">{formatKoreanWon(r.item.amount)}</p>
-                      <p className="text-xs text-muted-foreground mt-0.5">{pct < 0.01 ? '<0.01' : pct.toFixed(2)}%</p>
+                      <p className="text-base font-bold tabular-nums">{formatKoreanWon(r.item.amount)}</p>
+                      <p className="text-sm text-muted-foreground mt-0.5">{pct < 0.01 ? '<0.01' : pct.toFixed(2)}%</p>
                     </div>
                   </div>
                   <div className="mt-2 h-1 bg-muted rounded-full overflow-hidden">

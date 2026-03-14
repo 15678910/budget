@@ -13,7 +13,7 @@ export function Breadcrumb({ items, onNavigate }: BreadcrumbProps) {
 
   return (
     <nav
-      className="flex items-center gap-1 text-sm mb-3 overflow-x-auto py-1"
+      className="flex items-center gap-1 text-base mb-3 overflow-x-auto py-1"
       aria-label="breadcrumb"
     >
       {items.map((item, index) => {

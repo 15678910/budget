@@ -103,7 +103,7 @@ export function BudgetTable({ items }: BudgetTableProps) {
   };
 
   const SortIcon = ({ col }: { col: SortKey }) => (
-    <span className="ml-1 inline-flex flex-col text-[10px] leading-none">
+    <span className="ml-1 inline-flex flex-col text-xs leading-none">
       <span className={cn(sortKey === col && sortDir === 'asc' ? 'text-primary' : 'text-muted-foreground/40')}>&#9650;</span>
       <span className={cn(sortKey === col && sortDir === 'desc' ? 'text-primary' : 'text-muted-foreground/40')}>&#9660;</span>
     </span>
@@ -124,14 +124,14 @@ export function BudgetTable({ items }: BudgetTableProps) {
               type="text" value={filter}
               onChange={(e) => { setFilter(e.target.value); setPage(1); }}
               placeholder="필터..."
-              className={cn('pl-8 pr-3 py-1.5 text-sm rounded-md border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 w-48')}
+              className={cn('pl-8 pr-3 py-1.5 text-base rounded-md border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 w-48')}
             />
           </div>
           <ExportButton items={filtered} />
         </div>
       </div>
 
-      <div className="flex gap-4 mb-4 text-sm text-muted-foreground">
+      <div className="flex gap-4 mb-4 text-base text-muted-foreground">
         <span>전체 <span className="font-semibold text-foreground">{sorted.length}</span> 분야</span>
         <span>|</span>
         <span>합계 <span className="font-semibold text-foreground">{formatKoreanWon(totalBudget)}</span></span>
@@ -139,7 +139,7 @@ export function BudgetTable({ items }: BudgetTableProps) {
 
       <div className="rounded-lg border border-border overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <table className="w-full text-base">
             <thead>
               <tr className="bg-muted/60 border-b border-border">
                 <th className="w-8 px-4 py-2.5"></th>
@@ -159,13 +159,13 @@ export function BudgetTable({ items }: BudgetTableProps) {
                 const dPct = grandTotal > 0 ? (domain.amount / grandTotal) * 100 : 0;
                 return [
                   <tr key={`d-${domain.domainCode}`} className="border-b border-border hover:bg-muted/30 cursor-pointer" onClick={() => toggle(expandedDomains, domain.domainCode, setExpandedDomains)}>
-                    <td className="px-4 py-2.5 text-muted-foreground text-xs">{dExp ? '▾' : '▸'}</td>
-                    <td className="px-4 py-2.5 font-semibold">{domain.domainName} <span className="ml-2 text-xs text-muted-foreground font-normal">({domain.sectors.length}개 부문)</span></td>
-                    <td className="px-4 py-2.5 hidden md:table-cell text-muted-foreground text-xs">—</td>
+                    <td className="px-4 py-2.5 text-muted-foreground text-sm">{dExp ? '▾' : '▸'}</td>
+                    <td className="px-4 py-2.5 font-semibold">{domain.domainName} <span className="ml-2 text-sm text-muted-foreground font-normal">({domain.sectors.length}개 부문)</span></td>
+                    <td className="px-4 py-2.5 hidden md:table-cell text-muted-foreground text-sm">—</td>
                     <td className="px-4 py-2.5 text-right font-bold tabular-nums">{formatKoreanWon(domain.amount)}</td>
                     <td className="px-4 py-2.5 text-right hidden sm:table-cell">
                       <div className="flex items-center justify-end gap-2">
-                        <span className="text-xs text-muted-foreground tabular-nums">{dPct.toFixed(1)}%</span>
+                        <span className="text-sm text-muted-foreground tabular-nums">{dPct.toFixed(1)}%</span>
                         <div className="w-16 h-1.5 bg-muted rounded-full overflow-hidden"><div className="h-full bg-primary/70 rounded-full" style={{ width: `${Math.min(dPct, 100)}%` }} /></div>
                       </div>
                     </td>
@@ -175,30 +175,30 @@ export function BudgetTable({ items }: BudgetTableProps) {
                     const sExp = expandedSectors.has(sKey);
                     return [
                       <tr key={`s-${sKey}`} className="border-b border-border hover:bg-muted/20 cursor-pointer bg-muted/5" onClick={() => toggle(expandedSectors, sKey, setExpandedSectors)}>
-                        <td className="px-4 py-2 pl-8 text-muted-foreground text-xs">{sExp ? '▾' : '▸'}</td>
-                        <td className="px-4 py-2 pl-8">{sector.sectorName} <span className="ml-2 text-xs text-muted-foreground">({sector.programs.length}개 프로그램)</span></td>
-                        <td className="px-4 py-2 hidden md:table-cell text-muted-foreground text-xs">—</td>
+                        <td className="px-4 py-2 pl-8 text-muted-foreground text-sm">{sExp ? '▾' : '▸'}</td>
+                        <td className="px-4 py-2 pl-8">{sector.sectorName} <span className="ml-2 text-sm text-muted-foreground">({sector.programs.length}개 프로그램)</span></td>
+                        <td className="px-4 py-2 hidden md:table-cell text-muted-foreground text-sm">—</td>
                         <td className="px-4 py-2 text-right font-semibold tabular-nums">{formatKoreanWon(sector.amount)}</td>
-                        <td className="px-4 py-2 text-right hidden sm:table-cell"><span className="text-xs text-muted-foreground tabular-nums">{grandTotal > 0 ? ((sector.amount / grandTotal) * 100).toFixed(1) : 0}%</span></td>
+                        <td className="px-4 py-2 text-right hidden sm:table-cell"><span className="text-sm text-muted-foreground tabular-nums">{grandTotal > 0 ? ((sector.amount / grandTotal) * 100).toFixed(1) : 0}%</span></td>
                       </tr>,
                       ...(sExp ? sector.programs.map(program => {
                         const pKey = `${sKey}-${program.programName}`;
                         const pExp = expandedPrograms.has(pKey);
                         return [
                           <tr key={`p-${pKey}`} className="border-b border-border hover:bg-muted/20 cursor-pointer bg-muted/10" onClick={() => toggle(expandedPrograms, pKey, setExpandedPrograms)}>
-                            <td className="px-4 py-2 pl-12 text-muted-foreground text-xs">{pExp ? '▾' : '▸'}</td>
-                            <td className="px-4 py-2 pl-12 text-xs">{program.programName} <span className="text-muted-foreground">({program.projects.length}개)</span></td>
-                            <td className="px-4 py-2 hidden md:table-cell text-muted-foreground text-xs">—</td>
-                            <td className="px-4 py-2 text-right tabular-nums text-xs font-medium">{formatKoreanWon(program.amount)}</td>
-                            <td className="px-4 py-2 text-right hidden sm:table-cell"><span className="text-xs text-muted-foreground tabular-nums">{grandTotal > 0 ? ((program.amount / grandTotal) * 100).toFixed(2) : 0}%</span></td>
+                            <td className="px-4 py-2 pl-12 text-muted-foreground text-sm">{pExp ? '▾' : '▸'}</td>
+                            <td className="px-4 py-2 pl-12 text-sm">{program.programName} <span className="text-muted-foreground">({program.projects.length}개)</span></td>
+                            <td className="px-4 py-2 hidden md:table-cell text-muted-foreground text-sm">—</td>
+                            <td className="px-4 py-2 text-right tabular-nums text-sm font-medium">{formatKoreanWon(program.amount)}</td>
+                            <td className="px-4 py-2 text-right hidden sm:table-cell"><span className="text-sm text-muted-foreground tabular-nums">{grandTotal > 0 ? ((program.amount / grandTotal) * 100).toFixed(2) : 0}%</span></td>
                           </tr>,
                           ...(pExp ? program.projects.map((proj, i) => (
                             <tr key={`pr-${pKey}-${i}`} className="border-b border-border/60 bg-muted/20 hover:bg-muted/30">
                               <td className="px-4 py-1.5 pl-16"></td>
-                              <td className="px-4 py-1.5 pl-16 text-xs text-foreground/80">{proj.detailProjectName || proj.unitProjectName}</td>
-                              <td className="px-4 py-1.5 hidden md:table-cell text-muted-foreground text-xs">{proj.ministryName}</td>
-                              <td className="px-4 py-1.5 text-right tabular-nums text-xs">{formatKoreanWon(proj.amount)}</td>
-                              <td className="px-4 py-1.5 text-right hidden sm:table-cell"><span className="text-xs text-muted-foreground tabular-nums">{grandTotal > 0 ? ((proj.amount / grandTotal) * 100) < 0.01 ? '<0.01' : ((proj.amount / grandTotal) * 100).toFixed(3) : 0}%</span></td>
+                              <td className="px-4 py-1.5 pl-16 text-sm text-foreground/80">{proj.detailProjectName || proj.unitProjectName}</td>
+                              <td className="px-4 py-1.5 hidden md:table-cell text-muted-foreground text-sm">{proj.ministryName}</td>
+                              <td className="px-4 py-1.5 text-right tabular-nums text-sm">{formatKoreanWon(proj.amount)}</td>
+                              <td className="px-4 py-1.5 text-right hidden sm:table-cell"><span className="text-sm text-muted-foreground tabular-nums">{grandTotal > 0 ? ((proj.amount / grandTotal) * 100) < 0.01 ? '<0.01' : ((proj.amount / grandTotal) * 100).toFixed(3) : 0}%</span></td>
                             </tr>
                           )) : []),
                         ];
@@ -218,10 +218,10 @@ export function BudgetTable({ items }: BudgetTableProps) {
       {totalPages > 1 && (
         <div className="flex items-center justify-center gap-2 mt-4">
           <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1}
-            className={cn('px-3 py-1.5 rounded-md text-sm border border-border', page === 1 ? 'text-muted-foreground/40 cursor-not-allowed' : 'hover:bg-muted')}>이전</button>
-          <span className="text-sm text-muted-foreground">{page} / {totalPages}</span>
+            className={cn('px-3 py-1.5 rounded-md text-base border border-border', page === 1 ? 'text-muted-foreground/40 cursor-not-allowed' : 'hover:bg-muted')}>이전</button>
+          <span className="text-base text-muted-foreground">{page} / {totalPages}</span>
           <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages}
-            className={cn('px-3 py-1.5 rounded-md text-sm border border-border', page === totalPages ? 'text-muted-foreground/40 cursor-not-allowed' : 'hover:bg-muted')}>다음</button>
+            className={cn('px-3 py-1.5 rounded-md text-base border border-border', page === totalPages ? 'text-muted-foreground/40 cursor-not-allowed' : 'hover:bg-muted')}>다음</button>
         </div>
       )}
     </div>

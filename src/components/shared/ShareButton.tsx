@@ -1,48 +1,29 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { cn } from "@/lib/utils/format";
+import { ShareModal } from "./ShareModal";
 
 /**
- * A minimal share button that copies the current page URL to the clipboard.
- * Shows a "copied" tooltip for 2 seconds after a successful copy.
+ * Share button that opens a modal with multiple sharing options:
+ * URL copy, image save, embed code, and native share.
  */
 export function ShareButton() {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = useCallback(async () => {
-    try {
-      await navigator.clipboard.writeText(window.location.href);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      // Fallback for older browsers / insecure contexts
-      const textarea = document.createElement("textarea");
-      textarea.value = window.location.href;
-      textarea.style.position = "fixed";
-      textarea.style.opacity = "0";
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand("copy");
-      document.body.removeChild(textarea);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }
-  }, []);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div className="relative inline-block">
+    <>
       <button
-        onClick={handleCopy}
+        onClick={() => setIsModalOpen(true)}
         className={cn(
           "p-2 rounded-md transition-colors",
           "text-muted-foreground hover:text-foreground hover:bg-muted",
           "border border-border"
         )}
-        aria-label="URL 복사"
-        title="URL 복사"
+        aria-label="공유하기"
+        title="공유하기"
       >
-        {/* Clipboard icon (Heroicons outline) */}
+        {/* Share icon */}
         <svg
           width="16"
           height="16"
@@ -53,24 +34,15 @@ export function ShareButton() {
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+          <circle cx="18" cy="5" r="3" />
+          <circle cx="6" cy="12" r="3" />
+          <circle cx="18" cy="19" r="3" />
+          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+          <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
         </svg>
       </button>
 
-      {/* Tooltip */}
-      {copied && (
-        <span
-          className={cn(
-            "absolute -top-9 left-1/2 -translate-x-1/2",
-            "px-2 py-1 text-xs rounded-md whitespace-nowrap",
-            "bg-foreground text-background",
-            "animate-in fade-in slide-in-from-bottom-1 duration-200"
-          )}
-        >
-          복사됨!
-        </span>
-      )}
-    </div>
+      <ShareModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+    </>
   );
 }

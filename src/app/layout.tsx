@@ -3,6 +3,7 @@ import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { Header } from "@/components/layout/Header";
+import { GuidedTour } from "@/components/shared/GuidedTour";
 
 const notoSansKR = Noto_Sans_KR({
   variable: "--font-sans",
@@ -24,11 +25,12 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning>
       <body className={`${notoSansKR.variable} font-sans antialiased bg-background text-foreground min-h-screen`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <Header />
           <main className="max-w-[1600px] mx-auto px-4 py-4">
             {children}
           </main>
+          <GuidedTour />
         </ThemeProvider>
       </body>
     </html>

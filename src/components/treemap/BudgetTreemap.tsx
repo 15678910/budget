@@ -62,7 +62,7 @@ export function BudgetTreemap({ data, onNodeClick, domainContext, viewMode }: Bu
       >
         <div className="text-center text-muted-foreground">
           <p className="text-lg font-medium mb-1">하위 항목이 없습니다</p>
-          <p className="text-sm">이 항목은 최하위 세부사업입니다.</p>
+          <p className="text-base">이 항목은 최하위 세부사업입니다.</p>
         </div>
       </div>
     );

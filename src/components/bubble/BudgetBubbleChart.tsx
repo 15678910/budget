@@ -131,7 +131,7 @@ export function BudgetBubbleChart({
       >
         <div className="text-center text-muted-foreground">
           <p className="text-lg font-medium mb-1">하위 항목이 없습니다</p>
-          <p className="text-sm">이 항목은 최하위 세부사업입니다.</p>
+          <p className="text-base">이 항목은 최하위 세부사업입니다.</p>
         </div>
       </div>
     );
@@ -196,7 +196,7 @@ export function BudgetBubbleChart({
       {/* Tooltip */}
       {hoveredBubble && (
         <div
-          className="fixed z-50 pointer-events-none bg-card text-card-foreground border border-border rounded-lg shadow-lg px-3 py-2 text-sm max-w-xs"
+          className="fixed z-50 pointer-events-none bg-card text-card-foreground border border-border rounded-lg shadow-lg px-3 py-2 text-base max-w-xs"
           style={{
             left: tooltipPos.x + 12,
             top: tooltipPos.y + 12,

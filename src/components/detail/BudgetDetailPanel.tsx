@@ -74,12 +74,12 @@ export function BudgetDetailPanel({
   const permalink = `/explore/${encodedPath}`;
 
   return (
-    <div className="bg-card border border-border rounded-lg p-4 space-y-4 text-sm">
+    <div className="bg-card border border-border rounded-lg p-4 space-y-4 text-base">
       {/* Header */}
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
           <h3 className="font-bold text-base text-foreground truncate">{node.name}</h3>
-          <p className="text-xs text-muted-foreground mt-0.5">{hierarchyPath}</p>
+          <p className="text-sm text-muted-foreground mt-0.5">{hierarchyPath}</p>
         </div>
         <button
           onClick={onClose}
@@ -98,12 +98,12 @@ export function BudgetDetailPanel({
           {formatKoreanWon(amount)}
         </div>
         {changePercent !== null && (
-          <div className={`text-sm font-medium ${changePercent >= 0 ? 'text-red-500' : 'text-blue-500'}`}>
+          <div className={`text-base font-medium ${changePercent >= 0 ? 'text-red-500' : 'text-blue-500'}`}>
             전년대비 {formatPercent(changePercent)}
           </div>
         )}
         {unitText && (
-          <div className="text-xs text-muted-foreground mt-1">
+          <div className="text-sm text-muted-foreground mt-1">
             {unitText}
           </div>
         )}
@@ -111,7 +111,7 @@ export function BudgetDetailPanel({
 
       {/* Meta info */}
       {(node.meta?.ministryName || node.meta?.accountType) && (
-        <div className="space-y-0.5 text-xs text-muted-foreground">
+        <div className="space-y-0.5 text-sm text-muted-foreground">
           {node.meta?.ministryName && <div>소관: {node.meta.ministryName}</div>}
           {node.meta?.accountType && <div>회계: {node.meta.accountType}</div>}
         </div>
@@ -119,7 +119,7 @@ export function BudgetDetailPanel({
 
       {/* Permalink */}
       {path.length > 0 && (
-        <div className="text-xs">
+        <div className="text-sm">
           <button
             onClick={() => {
               navigator.clipboard.writeText(window.location.origin + permalink);
@@ -134,14 +134,14 @@ export function BudgetDetailPanel({
       {/* Year trend chart */}
       {trendData.length > 1 && (
         <div>
-          <div className="text-xs font-medium text-muted-foreground mb-1">연도별 추이</div>
+          <div className="text-sm font-medium text-muted-foreground mb-1">연도별 추이</div>
           <YearTrendChart data={trendData} />
         </div>
       )}
 
       {/* Vote buttons */}
       <div>
-        <div className="text-xs font-medium text-muted-foreground mb-2">이 예산에 대한 의견</div>
+        <div className="text-sm font-medium text-muted-foreground mb-2">이 예산에 대한 의견</div>
         <VoteButtons itemId={node.id} />
       </div>
     </div>

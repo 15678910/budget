@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import {
   getMetroFiscalData,
   getDistrictFiscalData,
@@ -9,6 +9,8 @@ import {
   type DistrictFiscalData,
 } from '@/lib/data/fiscal-health-data';
 import { DataSources } from '@/components/shared/DataSources';
+import { PDFExportButton } from '@/components/shared/PDFExportButton';
+import { AICatalog } from './AICatalog';
 
 // ============================================================
 // Constants
@@ -45,12 +47,12 @@ function Slider({
   return (
     <div className="py-3">
       <div className="flex items-center justify-between mb-2">
-        <span className="text-sm md:text-base text-gray-400">{label}</span>
+        <span className="text-base md:text-base text-gray-400">{label}</span>
         <div className="flex items-center gap-2">
           <span className={`text-lg md:text-xl font-mono font-bold ${color}`}>
             {value}{unit}
           </span>
-          {subLabel && <span className="text-xs md:text-sm text-gray-500">({subLabel})</span>}
+          {subLabel && <span className="text-sm md:text-base text-gray-500">({subLabel})</span>}
         </div>
       </div>
       <input
@@ -73,11 +75,11 @@ function Slider({
 function Cell({ label, value, color, sub }: { label: string; value: string; color: string; sub?: string }) {
   return (
     <div className="border border-gray-800 p-3 md:p-4 min-w-0">
-      <div className="text-xs md:text-sm text-gray-500 leading-tight truncate">{label}</div>
+      <div className="text-sm md:text-base text-gray-500 leading-tight truncate">{label}</div>
       <div className={`text-lg md:text-xl font-mono font-bold tabular-nums leading-tight truncate ${color}`}>
         {value}
       </div>
-      {sub && <div className="text-[10px] md:text-xs text-gray-600 leading-tight truncate">{sub}</div>}
+      {sub && <div className="text-xs md:text-sm text-gray-600 leading-tight truncate">{sub}</div>}
     </div>
   );
 }
@@ -85,7 +87,7 @@ function Cell({ label, value, color, sub }: { label: string; value: string; colo
 function SectionHeader({ title, color }: { title: string; color: string }) {
   return (
     <div className={`col-span-full border border-gray-800 px-4 py-2 ${color}`}>
-      <span className="text-xs md:text-sm font-semibold uppercase tracking-widest">
+      <span className="text-sm md:text-base font-semibold uppercase tracking-widest">
         {title}
       </span>
     </div>
@@ -100,11 +102,11 @@ function InfoSection({ title, color, children, defaultOpen = false }: { title: s
         onClick={() => setOpen(!open)}
         className={`w-full flex items-center justify-between px-4 py-3 ${color} hover:bg-gray-900/50 transition-colors text-left`}
       >
-        <span className="text-xs md:text-sm font-semibold uppercase tracking-widest">{title}</span>
+        <span className="text-sm md:text-base font-semibold uppercase tracking-widest">{title}</span>
         <span className="text-gray-500 text-lg leading-none">{open ? '−' : '+'}</span>
       </button>
       {open && (
-        <div className="px-4 py-4 md:px-5 md:py-5 border-t border-gray-800 bg-gray-950/50 space-y-4 text-sm md:text-base text-gray-400 leading-relaxed">
+        <div className="px-4 py-4 md:px-5 md:py-5 border-t border-gray-800 bg-gray-950/50 space-y-4 text-base md:text-base text-gray-400 leading-relaxed">
           {children}
         </div>
       )}
@@ -140,10 +142,10 @@ function formatManWon(value: number): string {
 // ============================================================
 
 const SELECT_CLASS =
-  'bg-gray-800 border border-gray-700 text-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500';
+  'bg-gray-800 border border-gray-700 text-gray-200 rounded px-3 py-2 text-base focus:outline-none focus:ring-1 focus:ring-blue-500';
 
 const TAB_BASE =
-  'px-4 py-2 text-sm font-medium transition-colors';
+  'px-4 py-2 text-base font-medium transition-colors';
 
 const TAB_ACTIVE =
   'bg-blue-600 text-white';
@@ -330,21 +332,28 @@ export function LocalFundSimulator() {
   const thresholdPct = Math.ceil(simulation.debtServiceThreshold * 10) / 10;
   const debtBudgetRatio = regionData.budget > 0 ? (regionData.debt / regionData.budget) * 100 : 0;
 
+  const contentRef = useRef<HTMLDivElement>(null);
+
   return (
-    <div className="bg-gray-950 text-gray-300 w-full min-h-screen p-2 md:p-4 space-y-1">
+    <div ref={contentRef} className="bg-gray-950 text-gray-300 w-full min-h-screen p-2 md:p-4 space-y-1">
       {/* ====== TITLE BAR ====== */}
       <div className="border border-gray-800 px-4 py-3 flex items-center justify-between">
-        <h1 className="text-base md:text-lg font-bold tracking-[0.2em] uppercase text-gray-400">
-          지방 AI기본사회 시뮬레이터
-        </h1>
-        <span className="text-xs md:text-sm text-gray-600">
-          광역·자치구별 효율화 계산기
-        </span>
+        <div>
+          <h1 className="text-base md:text-lg font-bold tracking-[0.2em] uppercase text-gray-400">
+            지역 AI기본사회 시뮬레이터
+          </h1>
+        </div>
+        <div className="flex items-center gap-2">
+          <PDFExportButton targetRef={contentRef} filename="자치구AI" />
+          <span className="text-sm md:text-base text-gray-600">
+            광역·자치구별 효율화 계산기
+          </span>
+        </div>
       </div>
 
       {/* ====== REGION SELECTOR ====== */}
       <div className="border border-gray-800 p-4 md:p-5">
-        <div className="text-xs md:text-sm font-semibold uppercase tracking-widest text-teal-400 mb-3">
+        <div className="text-sm md:text-base font-semibold uppercase tracking-widest text-teal-400 mb-3">
           지역 선택 Region Selector
         </div>
 
@@ -398,7 +407,7 @@ export function LocalFundSimulator() {
         </div>
 
         {tab === 'district' && districts.length === 0 && (
-          <p className="text-xs text-amber-400/70 mt-2">
+          <p className="text-sm text-amber-400/70 mt-2">
             해당 광역시도의 시군구 데이터가 없습니다. 광역시도 단위로 시뮬레이션됩니다.
           </p>
         )}
@@ -414,7 +423,7 @@ export function LocalFundSimulator() {
           sub={tab === 'district' && selectedDistrict ? '추정치 (1인당 광역예산 기준)' : '당초예산 기준'}
         />
         <Cell
-          label="지방채무"
+          label="지역채무"
           value={formatEok(regionData.debt)}
           color="text-red-400"
           sub={`채무/예산 ${debtBudgetRatio.toFixed(1)}%`}
@@ -441,7 +450,7 @@ export function LocalFundSimulator() {
 
       {/* ====== SECTION 2: 시뮬레이션 설정 ====== */}
       <div className="border border-gray-800 p-4 md:p-5">
-        <div className="text-xs md:text-sm font-semibold uppercase tracking-widest text-blue-400 mb-3">
+        <div className="text-sm md:text-base font-semibold uppercase tracking-widest text-blue-400 mb-3">
           시뮬레이션 설정 Simulation Parameters
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
@@ -490,6 +499,20 @@ export function LocalFundSimulator() {
         </div>
       </div>
 
+      {/* ====== AI 활동 카탈로그 ====== */}
+      <div className="space-y-1">
+        <div className="border border-gray-800 px-4 py-3">
+          <p className="text-sm text-gray-500">
+            아래 카탈로그에서 AI 활동을 선택하면 전국 기준 효율화율(%)이 계산됩니다.
+            이 비율을 {regionData.name} 예산에 동일하게 적용하여 시뮬레이션합니다.
+          </p>
+        </div>
+        <AICatalog
+          onApplyEfficiency={(rate) => setEfficiencyRate(Math.max(1, Math.min(15, Math.round(rate * 10) / 10)))}
+          currentEfficiencyRate={efficiencyRate}
+        />
+      </div>
+
       {/* ====== SECTION 3: 효율화 결과 ====== */}
       <div className="grid grid-cols-2 md:grid-cols-3">
         <SectionHeader title="효율화 결과 Efficiency Results" color="text-blue-400" />
@@ -516,12 +539,12 @@ export function LocalFundSimulator() {
       {/* Contextual threshold message */}
       <div className="border border-gray-800 px-4 py-3">
         {!hasFundContribution ? (
-          <p className="text-sm md:text-base text-amber-400/80">
+          <p className="text-base md:text-base text-amber-400/80">
             효율화 {efficiencyRate}%로는 채무상환({formatEok(simulation.annualDebtService)})에 모두 사용됩니다.{' '}
             <span className="text-blue-400 font-semibold">{thresholdPct}% 이상</span>이면 펀드 적립이 시작됩니다.
           </p>
         ) : (
-          <p className="text-sm md:text-base text-emerald-400/80">
+          <p className="text-base md:text-base text-emerald-400/80">
             채무상환 {formatEok(simulation.debtServiceCoverage)} 후 연간{' '}
             <span className="text-emerald-400 font-semibold">{formatEok(simulation.fundContribution)}</span>을
             지역펀드에 적립합니다.
@@ -563,10 +586,10 @@ export function LocalFundSimulator() {
 
       {/* ====== SECTION 5: 핵심 메시지 ====== */}
       <div className="border border-blue-900/50 bg-blue-950/30 p-4 md:p-5 rounded">
-        <div className="text-xs md:text-sm font-semibold uppercase tracking-widest text-blue-400 mb-3">
+        <div className="text-sm md:text-base font-semibold uppercase tracking-widest text-blue-400 mb-3">
           핵심 메시지 Key Takeaway
         </div>
-        <p className="text-sm md:text-base text-gray-300 leading-relaxed">
+        <p className="text-base md:text-base text-gray-300 leading-relaxed">
           {regionData.name} 예산 {formatEok(regionData.budget)}의{' '}
           <span className="text-blue-400 font-bold">{efficiencyRate}%</span>를 효율화하면,
           연간 <span className="text-blue-400 font-bold">{formatEok(simulation.annualSavings)}</span>을
@@ -586,30 +609,30 @@ export function LocalFundSimulator() {
 
       {/* ====== SECTION 6: 연도별 성장 그래프 ====== */}
       <div className="border border-gray-800 p-4 md:p-5">
-        <div className="text-xs md:text-sm font-semibold uppercase tracking-widest text-purple-400 mb-4">
+        <div className="text-sm md:text-base font-semibold uppercase tracking-widest text-purple-400 mb-4">
           연도별 성장 추이 Fund Growth Timeline
         </div>
         <div className="space-y-2">
           {chartData.map((d) => (
             <div key={d.year} className="flex items-center gap-3 py-1">
-              <span className="text-xs md:text-sm text-gray-500 w-12 text-right font-mono">{d.year}</span>
+              <span className="text-sm md:text-base text-gray-500 w-12 text-right font-mono">{d.year}</span>
               <div className="flex-1 h-4 bg-gray-800 rounded-full overflow-hidden">
                 <div
                   className="h-full rounded-full bg-gradient-to-r from-blue-600 to-cyan-400"
                   style={{ width: `${(d.fundSize / maxFund) * 100}%` }}
                 />
               </div>
-              <span className="text-xs md:text-sm text-gray-400 w-24 text-right font-mono">
+              <span className="text-sm md:text-base text-gray-400 w-24 text-right font-mono">
                 {formatEok(d.fundSize)}
               </span>
-              <span className="text-xs md:text-sm text-emerald-400 w-28 text-right font-mono">
+              <span className="text-sm md:text-base text-emerald-400 w-28 text-right font-mono">
                 월 {d.basicIncomeManWon > 0 ? formatManWon(d.basicIncomeManWon) : '0원'}
               </span>
             </div>
           ))}
         </div>
         {!hasFundContribution && (
-          <p className="text-xs md:text-sm text-gray-600 mt-3 text-center">
+          <p className="text-sm md:text-base text-gray-600 mt-3 text-center">
             현재 효율화율({efficiencyRate}%)에서는 펀드 적립이 없어 그래프가 표시되지 않습니다.
           </p>
         )}
@@ -657,48 +680,48 @@ export function LocalFundSimulator() {
       {/* ====== SECTION 8: 시뮬레이션 조건 해설 ====== */}
       <InfoSection title="시뮬레이션 전제 조건 Simulation Assumptions" color="text-blue-400">
         <div>
-          <h4 className="text-sm md:text-base font-bold text-gray-300 mb-1.5">지방 시뮬레이션 기본 가정</h4>
+          <h4 className="text-base md:text-base font-bold text-gray-300 mb-1.5">지역 시뮬레이션 기본 가정</h4>
           <div className="space-y-2">
             <div className="flex items-start gap-3">
-              <span className="text-blue-400 font-mono text-sm mt-0.5 flex-shrink-0">01</span>
+              <span className="text-blue-400 font-mono text-base mt-0.5 flex-shrink-0">01</span>
               <div>
                 <span className="text-gray-300 font-semibold">지역 예산을 효율화 대상으로 설정</span>
-                <p className="text-gray-500 text-sm">국가 시뮬레이터가 공공부문 1,500조원을 대상으로 하는 것과 달리, 해당 광역/자치구의 자체 예산규모를 기준으로 합니다.</p>
+                <p className="text-gray-500 text-base">국가 시뮬레이터가 공공부문 1,500조원을 대상으로 하는 것과 달리, 해당 광역/자치구의 자체 예산규모를 기준으로 합니다.</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <span className="text-blue-400 font-mono text-sm mt-0.5 flex-shrink-0">02</span>
+              <span className="text-blue-400 font-mono text-base mt-0.5 flex-shrink-0">02</span>
               <div>
                 <span className="text-gray-300 font-semibold">채무 상환 우선 (연간 채무의 5%)</span>
-                <p className="text-gray-500 text-sm">지방채무 × 5%를 연간 채무상환비(이자+원금상환)로 추정합니다. 효율화 절감액은 먼저 이 채무상환에 사용되고, 나머지만 펀드에 적립됩니다.</p>
+                <p className="text-gray-500 text-base">지역채무 × 5%를 연간 채무상환비(이자+원금상환)로 추정합니다. 효율화 절감액은 먼저 이 채무상환에 사용되고, 나머지만 펀드에 적립됩니다.</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <span className="text-blue-400 font-mono text-sm mt-0.5 flex-shrink-0">03</span>
+              <span className="text-blue-400 font-mono text-base mt-0.5 flex-shrink-0">03</span>
               <div>
                 <span className="text-gray-300 font-semibold">시군구 예산은 추정치</span>
-                <p className="text-gray-500 text-sm">시군구별 예산 데이터가 별도로 제공되지 않으므로, 상위 광역시도의 1인당 예산 비율을 적용하여 추정합니다. 실제 예산과 차이가 있을 수 있습니다.</p>
+                <p className="text-gray-500 text-base">시군구별 예산 데이터가 별도로 제공되지 않으므로, 상위 광역시도의 1인당 예산 비율을 적용하여 추정합니다. 실제 예산과 차이가 있을 수 있습니다.</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <span className="text-blue-400 font-mono text-sm mt-0.5 flex-shrink-0">04</span>
+              <span className="text-blue-400 font-mono text-base mt-0.5 flex-shrink-0">04</span>
               <div>
                 <span className="text-gray-300 font-semibold">복리 성장 + 지역별 인출</span>
-                <p className="text-gray-500 text-sm">적립된 펀드는 복리로 성장하며, 인출률에 따라 해당 지역 주민에게만 기본소득으로 분배됩니다. 지역 인구가 적을수록 1인당 분배액이 커집니다.</p>
+                <p className="text-gray-500 text-base">적립된 펀드는 복리로 성장하며, 인출률에 따라 해당 지역 주민에게만 기본소득으로 분배됩니다. 지역 인구가 적을수록 1인당 분배액이 커집니다.</p>
               </div>
             </div>
           </div>
         </div>
 
         <div className="border-t border-gray-800 pt-3">
-          <h4 className="text-sm md:text-base font-bold text-gray-300 mb-1.5">국가 vs 지방 시뮬레이션 차이</h4>
+          <h4 className="text-base md:text-base font-bold text-gray-300 mb-1.5">국가 vs 지역 시뮬레이션 차이</h4>
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="w-full text-base">
               <thead>
                 <tr className="border-b border-gray-800">
                   <th className="text-left py-2 text-gray-500 font-normal">항목</th>
                   <th className="text-left py-2 text-cyan-400 font-normal">국가 (AI기본사회)</th>
-                  <th className="text-left py-2 text-teal-400 font-normal">지방 (지방AI)</th>
+                  <th className="text-left py-2 text-teal-400 font-normal">지역 (지역AI)</th>
                 </tr>
               </thead>
               <tbody className="text-gray-500">
@@ -710,7 +733,7 @@ export function LocalFundSimulator() {
                 <tr className="border-b border-gray-800/50">
                   <td className="py-1.5">우선 배분</td>
                   <td className="py-1.5">관리재정적자 109조원</td>
-                  <td className="py-1.5">지방채무 상환비 (채무×5%)</td>
+                  <td className="py-1.5">지역채무 상환비 (채무×5%)</td>
                 </tr>
                 <tr className="border-b border-gray-800/50">
                   <td className="py-1.5">분배 대상</td>
@@ -728,10 +751,10 @@ export function LocalFundSimulator() {
         </div>
 
         <div className="border-t border-gray-800 pt-3">
-          <h4 className="text-sm md:text-base font-bold text-gray-300 mb-1.5">한계 및 유의사항</h4>
-          <ul className="list-disc list-inside space-y-1.5 text-gray-500 text-sm">
-            <li>실제 지방 효율화율은 중앙정부 방침, 지자체 역량 등에 따라 크게 달라질 수 있습니다</li>
-            <li>지방채무 상환비 5%는 평균적 추정치이며, 금리·상환 조건에 따라 다릅니다</li>
+          <h4 className="text-base md:text-base font-bold text-gray-300 mb-1.5">한계 및 유의사항</h4>
+          <ul className="list-disc list-inside space-y-1.5 text-gray-500 text-base">
+            <li>실제 지역 효율화율은 중앙정부 방침, 지자체 역량 등에 따라 크게 달라질 수 있습니다</li>
+            <li>지역채무 상환비 5%는 평균적 추정치이며, 금리·상환 조건에 따라 다릅니다</li>
             <li>지역 인구 이동(전입·전출)은 미반영하며, 현재 주민등록 인구 기준입니다</li>
             <li>인플레이션 미반영 명목 수치입니다</li>
             <li>지역 간 재정 이전(교부세, 보조금 등)의 변화는 고려하지 않습니다</li>
@@ -749,30 +772,30 @@ export function LocalFundSimulator() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           <div className="border border-gray-800 p-3 rounded text-center">
-            <div className="text-xs text-gray-500 mb-1">펀드 규모</div>
+            <div className="text-sm text-gray-500 mb-1">펀드 규모</div>
             <div className="text-lg font-mono font-bold text-teal-400">$1.7조</div>
-            <div className="text-[10px] text-gray-600">약 2,300조원</div>
+            <div className="text-xs text-gray-600">약 2,300조원</div>
           </div>
           <div className="border border-gray-800 p-3 rounded text-center">
-            <div className="text-xs text-gray-500 mb-1">1인당</div>
+            <div className="text-sm text-gray-500 mb-1">1인당</div>
             <div className="text-lg font-mono font-bold text-teal-400">$310K</div>
-            <div className="text-[10px] text-gray-600">인구 550만명</div>
+            <div className="text-xs text-gray-600">인구 550만명</div>
           </div>
           <div className="border border-gray-800 p-3 rounded text-center">
-            <div className="text-xs text-gray-500 mb-1">연평균 수익률</div>
+            <div className="text-sm text-gray-500 mb-1">연평균 수익률</div>
             <div className="text-lg font-mono font-bold text-teal-400">6.3%</div>
-            <div className="text-[10px] text-gray-600">1998~2023 실질</div>
+            <div className="text-xs text-gray-600">1998~2023 실질</div>
           </div>
           <div className="border border-gray-800 p-3 rounded text-center">
-            <div className="text-xs text-gray-500 mb-1">재정 인출률</div>
+            <div className="text-sm text-gray-500 mb-1">재정 인출률</div>
             <div className="text-lg font-mono font-bold text-amber-400">3%</div>
-            <div className="text-[10px] text-gray-600">원금 보존 규칙</div>
+            <div className="text-xs text-gray-600">원금 보존 규칙</div>
           </div>
         </div>
 
         <div>
-          <h4 className="text-sm md:text-base font-bold text-gray-300 mb-1.5">핵심 운용 원칙</h4>
-          <ul className="list-disc list-inside space-y-1.5 text-gray-500 text-sm">
+          <h4 className="text-base md:text-base font-bold text-gray-300 mb-1.5">핵심 운용 원칙</h4>
+          <ul className="list-disc list-inside space-y-1.5 text-gray-500 text-base">
             <li><span className="text-gray-300 font-semibold">세대 간 형평성:</span> 현 세대의 자원을 미래 세대와 공유. 원금을 유지하며 수익분만 인출</li>
             <li><span className="text-gray-300 font-semibold">글로벌 분산투자:</span> 70개국 9,000개+ 기업에 분산. 노르웨이 자국 투자 금지</li>
             <li><span className="text-gray-300 font-semibold">투명성:</span> 모든 보유 종목, 수익률, 의결권 행사 내역 실시간 공개</li>
@@ -787,25 +810,25 @@ export function LocalFundSimulator() {
         <div className="space-y-4">
           <div>
             <span className="text-blue-400 font-bold">효율화율 (1~15%)</span>
-            <p className="text-gray-500 text-sm mt-1">
+            <p className="text-gray-500 text-base mt-1">
               지역 예산 대비 AI·자동화로 절감 가능한 비율. 보수적(3~5%): 단순 행정 자동화. 중간(7~10%): AI 도입, 디지털 전환. 적극적(10~15%): 전면 AI 행정.
             </p>
           </div>
           <div>
             <span className="text-emerald-400 font-bold">펀드 수익률 (3~12%)</span>
-            <p className="text-gray-500 text-sm mt-1">
+            <p className="text-gray-500 text-base mt-1">
               글로벌 분산투자 기준 연간 수익률. 보수적(3~5%): 채권 중심. 노르웨이 GPFG 실적: ~6.3%. 적극적(8~12%): 주식·대체투자 확대.
             </p>
           </div>
           <div>
             <span className="text-purple-400 font-bold">운용 기간 (5~50년)</span>
-            <p className="text-gray-500 text-sm mt-1">
+            <p className="text-gray-500 text-base mt-1">
               복리 효과는 시간이 길수록 극적. 노르웨이 GPFG도 28년간 운용하여 현재 규모 달성.
             </p>
           </div>
           <div>
             <span className="text-amber-400 font-bold">인출률 (2~6%)</span>
-            <p className="text-gray-500 text-sm mt-1">
+            <p className="text-gray-500 text-base mt-1">
               3% = 노르웨이 방식 (원금 보존, 영구 지속). 4% = 미국 &quot;4% 룰&quot; (30년 지속). 5~6% = 높은 분배, 원금 소진 위험.
             </p>
           </div>

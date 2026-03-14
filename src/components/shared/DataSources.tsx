@@ -40,8 +40,8 @@ const SOURCES = [
     date: '2025.11',
   },
   {
-    name: '지방재정365',
-    description: '광역시도·시군구 지방재정 데이터',
+    name: '지역재정365',
+    description: '광역시도·시군구 지역재정 데이터',
     url: 'https://lofin.mois.go.kr',
     date: '상시',
   },
@@ -54,7 +54,7 @@ export function DataSources() {
     <div className="mt-8 border-t border-border pt-4">
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground transition-colors"
+        className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
       >
         <svg
           width="14"
@@ -82,17 +82,17 @@ export function DataSources() {
               className="block p-3 rounded-lg border border-border bg-muted/30 hover:bg-muted/60 transition-colors group"
             >
               <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-foreground group-hover:text-primary transition-colors">
+                <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
                   {source.name}
                 </span>
-                <span className="text-[10px] text-muted-foreground">{source.date}</span>
+                <span className="text-xs text-muted-foreground">{source.date}</span>
               </div>
-              <p className="text-[11px] text-muted-foreground mt-1">{source.description}</p>
+              <p className="text-xs text-muted-foreground mt-1">{source.description}</p>
             </a>
           ))}
         </div>
       )}
-      <p className="mt-3 text-[10px] text-muted-foreground">
+      <p className="mt-3 text-xs text-muted-foreground">
         * 본 사이트의 예산 데이터는 위 공공 데이터를 기반으로 구성되었습니다.
         세부 금액은 예산안 기준이며 실제 집행액과 다를 수 있습니다.
       </p>

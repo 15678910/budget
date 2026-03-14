@@ -9,7 +9,7 @@ import {
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: '지방재정 비교 | 나라살림',
+  title: '지역재정 비교 | 나라살림',
   description: '광역시도, 자치구, 교육청별 예산 비교 대시보드',
 };
 

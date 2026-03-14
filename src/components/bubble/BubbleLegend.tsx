@@ -22,7 +22,7 @@ export function BubbleLegend({ maxAmount }: BubbleLegendProps) {
   ].filter(v => v > 0);
 
   return (
-    <div className="flex flex-wrap items-end gap-6 px-3 py-2 text-xs text-muted-foreground">
+    <div className="flex flex-wrap items-end gap-6 px-3 py-2 text-sm text-muted-foreground">
       {/* Color legend */}
       <div className="flex items-center gap-1">
         <span className="mr-1 font-medium">변동률:</span>
@@ -40,7 +40,7 @@ export function BubbleLegend({ maxAmount }: BubbleLegendProps) {
               title={stop.label}
             />
             {i === 0 || i === 3 || i === CHANGE_COLOR_SCALE.length - 1 ? (
-              <span className="text-[10px]">{stop.label}</span>
+              <span className="text-xs">{stop.label}</span>
             ) : null}
           </div>
         ))}
@@ -61,7 +61,7 @@ export function BubbleLegend({ maxAmount }: BubbleLegendProps) {
                   backgroundColor: 'hsl(var(--muted))',
                 }}
               />
-              <span className="text-[10px]">{shortLabel(amount)}</span>
+              <span className="text-xs">{shortLabel(amount)}</span>
             </div>
           );
         })}

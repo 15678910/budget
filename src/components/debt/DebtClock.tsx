@@ -52,7 +52,7 @@ const TOTAL_SPENDING = 728_000_000_000_000; // 728조원
 const SPENDING_ITEMS: { name: string; amount: number }[] = [
   { name: '사회복지', amount: 244_200_000_000_000 },
   { name: '교육', amount: 106_600_000_000_000 },
-  { name: '일반·지방행정', amount: 98_800_000_000_000 },
+  { name: '일반·지역행정', amount: 98_800_000_000_000 },
   { name: '국방', amount: 65_800_000_000_000 },
   { name: '산업·중소기업·에너지', amount: 32_200_000_000_000 },
   { name: '교통·물류', amount: 28_900_000_000_000 },
@@ -94,7 +94,7 @@ const GLOSSARY: Record<string, string> = {
   '국가채무(D1)':
     '중앙정부가 직접 상환 의무를 지는 채무. 국채, 차입금, 국고채무부담행위를 포함. 한국 정부 공식 기준.',
   '일반정부 부채(D2)':
-    'IMF/OECD 국제비교 기준. 중앙정부+지방정부+사회보장기금의 부채를 모두 포함하므로 D1보다 큰 값.',
+    'IMF/OECD 국제비교 기준. 중앙정부+지역정부+사회보장기금의 부채를 모두 포함하므로 D1보다 큰 값.',
   '국세수입':
     '중앙정부가 국세기본법에 따라 징수하는 세금의 총액. 소득세, 법인세, 부가가치세, 상속증여세 등을 포함.',
   '세외수입':
@@ -222,7 +222,7 @@ function Cell({ label, value, color, sub, glossaryKey }: CellProps) {
       onMouseEnter={() => tooltip && setShowTooltip(true)}
       onMouseLeave={() => setShowTooltip(false)}
     >
-      <div className="text-[10px] md:text-xs text-gray-500 leading-tight truncate flex items-center gap-1">
+      <div className="text-xs md:text-sm text-gray-500 leading-tight truncate flex items-center gap-1">
         {label}
         {tooltip && (
           <span className="inline-flex items-center justify-center w-3 h-3 rounded-full border border-gray-600 text-[8px] text-gray-500 cursor-help flex-shrink-0">
@@ -231,19 +231,19 @@ function Cell({ label, value, color, sub, glossaryKey }: CellProps) {
         )}
       </div>
       <div
-        className={`text-sm md:text-base font-mono font-bold tabular-nums leading-tight truncate ${color}`}
+        className={`text-base md:text-base font-mono font-bold tabular-nums leading-tight truncate ${color}`}
       >
         {value}
       </div>
       {sub && (
-        <div className="text-[9px] md:text-[10px] text-gray-600 leading-tight truncate">
+        <div className="text-[9px] md:text-xs text-gray-600 leading-tight truncate">
           {sub}
         </div>
       )}
       {/* Tooltip */}
       {showTooltip && tooltip && (
-        <div className="absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 md:w-72 p-2.5 bg-gray-800 border border-gray-600 rounded-lg shadow-xl text-[11px] text-gray-300 leading-relaxed pointer-events-none">
-          <div className="font-semibold text-gray-100 mb-1 text-xs">{glossaryKey}</div>
+        <div className="absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 md:w-72 p-2.5 bg-gray-800 border border-gray-600 rounded-lg shadow-xl text-xs text-gray-300 leading-relaxed pointer-events-none">
+          <div className="font-semibold text-gray-100 mb-1 text-sm">{glossaryKey}</div>
           {tooltip}
           <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-gray-800" />
         </div>
@@ -262,7 +262,7 @@ function SectionHeader({ title, color }: SectionHeaderProps) {
     <div
       className={`col-span-full border border-gray-800 px-3 py-1.5 ${color}`}
     >
-      <span className="text-[10px] md:text-xs font-semibold uppercase tracking-widest">
+      <span className="text-xs md:text-sm font-semibold uppercase tracking-widest">
         {title}
       </span>
     </div>
@@ -333,17 +333,17 @@ export function DebtClock() {
     <div className="bg-gray-950 text-gray-300 w-full min-h-screen p-2 md:p-4 space-y-1">
       {/* ====== TITLE BAR ====== */}
       <div className="border border-gray-800 px-3 py-2 text-center">
-        <h1 className="text-xs md:text-sm font-bold tracking-[0.3em] uppercase text-gray-400">
+        <h1 className="text-sm md:text-base font-bold tracking-[0.3em] uppercase text-gray-400">
           대한민국 국가재정 실시간 현황판
         </h1>
-        <p className="text-[10px] text-gray-600 mt-0.5">
+        <p className="text-xs text-gray-600 mt-0.5">
           Republic of Korea National Fiscal Dashboard &mdash; 2026
         </p>
       </div>
 
       {/* ====== HERO: 국가채무 총액 ====== */}
       <div className="border border-gray-800 p-3 md:p-5 text-center">
-        <div className="text-[10px] md:text-xs text-gray-500 uppercase tracking-widest mb-1">
+        <div className="text-xs md:text-sm text-gray-500 uppercase tracking-widest mb-1">
           국가채무 총액(D1) &middot; National Debt
         </div>
         <div
@@ -354,7 +354,7 @@ export function DebtClock() {
         >
           {heroString}
         </div>
-        <div className="text-[10px] md:text-xs text-gray-600 mt-1.5">
+        <div className="text-xs md:text-sm text-gray-600 mt-1.5">
           ≈ {formatKRW(debt)}
         </div>
       </div>
@@ -591,7 +591,7 @@ export function DebtClock() {
 
       {/* ====== FOOTER: 데이터 출처 ====== */}
       <div className="border border-gray-800 px-3 py-2">
-        <div className="text-[9px] md:text-[10px] text-gray-600 text-center space-y-0.5">
+        <div className="text-[9px] md:text-xs text-gray-600 text-center space-y-0.5">
           <p className="text-gray-500 font-semibold uppercase tracking-widest text-[8px] md:text-[9px] mb-1">
             데이터 출처 Sources
           </p>

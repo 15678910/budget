@@ -104,7 +104,7 @@ export function ComparePage({
           <select
             value={yearA}
             onChange={(e) => setYearA(Number(e.target.value))}
-            className="px-3 py-1.5 text-sm rounded-lg border border-border bg-background text-foreground"
+            className="px-3 py-1.5 text-base rounded-lg border border-border bg-background text-foreground"
           >
             {metadata.availableYears.map((y) => (
               <option key={y} value={y}>
@@ -113,13 +113,13 @@ export function ComparePage({
             ))}
           </select>
 
-          <span className="text-muted-foreground text-sm">vs</span>
+          <span className="text-muted-foreground text-base">vs</span>
 
           {/* Year B selector */}
           <select
             value={yearB}
             onChange={(e) => setYearB(Number(e.target.value))}
-            className="px-3 py-1.5 text-sm rounded-lg border border-border bg-background text-foreground"
+            className="px-3 py-1.5 text-base rounded-lg border border-border bg-background text-foreground"
           >
             {metadata.availableYears.map((y) => (
               <option key={y} value={y}>
@@ -138,7 +138,7 @@ export function ComparePage({
               key={key}
               onClick={() => setCompareView(key)}
               className={cn(
-                "px-3 py-1.5 text-sm rounded-md transition-colors",
+                "px-3 py-1.5 text-base rounded-md transition-colors",
                 compareView === key
                   ? "bg-background shadow text-foreground"
                   : "text-muted-foreground hover:text-foreground"
@@ -168,7 +168,7 @@ export function ComparePage({
 
       {/* Sort controls */}
       <div className="flex items-center gap-2 mb-4">
-        <span className="text-sm text-muted-foreground">정렬:</span>
+        <span className="text-base text-muted-foreground">정렬:</span>
         <div className="flex bg-muted rounded-lg p-1">
           {([
             ["amount", "예산규모"],
@@ -179,7 +179,7 @@ export function ComparePage({
               key={key}
               onClick={() => setSortKey(key)}
               className={cn(
-                "px-3 py-1 text-sm rounded-md transition-colors",
+                "px-3 py-1 text-base rounded-md transition-colors",
                 sortKey === key
                   ? "bg-background shadow text-foreground"
                   : "text-muted-foreground hover:text-foreground"
@@ -194,7 +194,7 @@ export function ComparePage({
       {/* Comparison table */}
       <div className="border border-border rounded-lg overflow-hidden">
         {/* Table header */}
-        <div className="hidden md:grid md:grid-cols-[2fr_1fr_1fr_1fr_100px_2fr] gap-2 px-4 py-3 bg-muted text-sm font-medium text-muted-foreground border-b border-border">
+        <div className="hidden md:grid md:grid-cols-[2fr_1fr_1fr_1fr_100px_2fr] gap-2 px-4 py-3 bg-muted text-base font-medium text-muted-foreground border-b border-border">
           <div>{headerLabel}</div>
           <div className="text-right">{yearA}년</div>
           <div className="text-right">{yearB}년</div>
@@ -216,7 +216,7 @@ export function ComparePage({
         ))}
 
         {sorted.length === 0 && (
-          <div className="px-4 py-8 text-center text-muted-foreground text-sm">
+          <div className="px-4 py-8 text-center text-muted-foreground text-base">
             선택한 연도에 데이터가 없습니다.
           </div>
         )}
@@ -243,7 +243,7 @@ function SummaryCard({
 }) {
   return (
     <div className="rounded-lg border border-border bg-card p-4">
-      <div className="text-xs text-muted-foreground mb-1">{label}</div>
+      <div className="text-sm text-muted-foreground mb-1">{label}</div>
       <div
         className={cn(
           "text-lg font-bold",
@@ -286,25 +286,25 @@ function ComparisonRow({
           className="w-3 h-3 rounded-sm shrink-0"
           style={{ backgroundColor: itemColor }}
         />
-        <span className="font-medium text-foreground text-sm">{item.name}</span>
+        <span className="font-medium text-foreground text-base">{item.name}</span>
       </div>
 
       {/* Year A amount */}
-      <div className="text-right text-sm text-muted-foreground">
-        <span className="md:hidden text-xs mr-1">{yearA}년:</span>
+      <div className="text-right text-base text-muted-foreground">
+        <span className="md:hidden text-sm mr-1">{yearA}년:</span>
         {formatKoreanWon(item.yearA.amount)}
       </div>
 
       {/* Year B amount */}
-      <div className="text-right text-sm text-foreground font-medium">
-        <span className="md:hidden text-xs mr-1 font-normal text-muted-foreground">{yearB}년:</span>
+      <div className="text-right text-base text-foreground font-medium">
+        <span className="md:hidden text-sm mr-1 font-normal text-muted-foreground">{yearB}년:</span>
         {formatKoreanWon(item.yearB.amount)}
       </div>
 
       {/* Delta */}
       <div
         className={cn(
-          "text-right text-sm font-medium",
+          "text-right text-base font-medium",
           isIncrease && "text-red-500 dark:text-red-400",
           isDecrease && "text-blue-500 dark:text-blue-400",
           !isIncrease && !isDecrease && "text-muted-foreground"
@@ -316,7 +316,7 @@ function ComparisonRow({
       {/* Delta percent */}
       <div
         className={cn(
-          "text-right text-sm font-bold",
+          "text-right text-base font-bold",
           isIncrease && "text-red-500 dark:text-red-400",
           isDecrease && "text-blue-500 dark:text-blue-400",
           !isIncrease && !isDecrease && "text-muted-foreground"
@@ -329,7 +329,7 @@ function ComparisonRow({
       <div className="flex flex-col gap-1 justify-center min-w-0">
         {/* Year A bar */}
         <div className="flex items-center gap-1.5">
-          <span className="text-[10px] text-muted-foreground w-6 shrink-0">
+          <span className="text-xs text-muted-foreground w-6 shrink-0">
             {String(yearA).slice(2)}
           </span>
           <div className="flex-1 h-3 bg-muted rounded-sm overflow-hidden">
@@ -344,7 +344,7 @@ function ComparisonRow({
         </div>
         {/* Year B bar */}
         <div className="flex items-center gap-1.5">
-          <span className="text-[10px] text-muted-foreground w-6 shrink-0">
+          <span className="text-xs text-muted-foreground w-6 shrink-0">
             {String(yearB).slice(2)}
           </span>
           <div className="flex-1 h-3 bg-muted rounded-sm overflow-hidden">

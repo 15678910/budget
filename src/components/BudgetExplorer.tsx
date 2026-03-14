@@ -124,13 +124,13 @@ export function BudgetExplorer({
       <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
         <div className="flex flex-wrap items-center gap-2">
           {/* View toggle */}
-          <div className="flex bg-muted rounded-lg p-1">
+          <div data-tour="view-tabs" className="flex bg-muted rounded-lg p-1">
             {VIEW_MODES.map(({ key, label }) => (
               <button
                 key={key}
                 onClick={() => { setViewMode(key); }}
                 className={cn(
-                  'px-3 py-1.5 text-sm rounded-md transition-colors',
+                  'px-3 py-1.5 text-base rounded-md transition-colors',
                   viewMode === key ? 'bg-background shadow text-foreground' : 'text-muted-foreground hover:text-foreground'
                 )}
               >
@@ -143,7 +143,7 @@ export function BudgetExplorer({
           <select
             value={year}
             onChange={(e) => { setYear(Number(e.target.value)); navigateTo([]); setSelectedNodeName(null); }}
-            className="px-3 py-1.5 text-sm rounded-lg border border-border bg-background"
+            className="px-3 py-1.5 text-base rounded-lg border border-border bg-background"
           >
             {metadata.availableYears.map(y => (
               <option key={y} value={y}>{y}년</option>
@@ -152,9 +152,10 @@ export function BudgetExplorer({
 
           {/* Per capita toggle */}
           <button
+            data-tour="per-capita"
             onClick={() => setShowPerCapita(prev => !prev)}
             className={cn(
-              'px-3 py-1.5 text-sm rounded-lg border transition-colors',
+              'px-3 py-1.5 text-base rounded-lg border transition-colors',
               showPerCapita
                 ? 'bg-primary text-primary-foreground border-primary'
                 : 'border-border bg-background text-muted-foreground hover:text-foreground'
@@ -164,14 +165,16 @@ export function BudgetExplorer({
           </button>
 
           {/* Unit converter */}
-          <UnitConverter selectedUnit={selectedUnit} onSelectUnit={setSelectedUnit} />
+          <div data-tour="unit-convert">
+            <UnitConverter selectedUnit={selectedUnit} onSelectUnit={setSelectedUnit} />
+          </div>
 
           {/* Visualization mode toggle */}
           <div className="flex bg-muted rounded-lg p-1">
             <button
               onClick={() => setVizMode('treemap')}
               className={cn(
-                'px-3 py-1.5 text-sm rounded-md transition-colors',
+                'px-3 py-1.5 text-base rounded-md transition-colors',
                 vizMode === 'treemap' ? 'bg-background shadow text-foreground' : 'text-muted-foreground hover:text-foreground'
               )}
             >
@@ -180,7 +183,7 @@ export function BudgetExplorer({
             <button
               onClick={() => setVizMode('bubble')}
               className={cn(
-                'px-3 py-1.5 text-sm rounded-md transition-colors',
+                'px-3 py-1.5 text-base rounded-md transition-colors',
                 vizMode === 'bubble' ? 'bg-background shadow text-foreground' : 'text-muted-foreground hover:text-foreground'
               )}
             >
@@ -193,7 +196,7 @@ export function BudgetExplorer({
             <button
               onClick={() => setColorMode(prev => prev === 'category' ? 'change' : 'category')}
               className={cn(
-                'px-3 py-1.5 text-sm rounded-lg border transition-colors',
+                'px-3 py-1.5 text-base rounded-lg border transition-colors',
                 colorMode === 'change'
                   ? 'bg-primary text-primary-foreground border-primary'
                   : 'border-border bg-background text-muted-foreground hover:text-foreground'
@@ -206,16 +209,24 @@ export function BudgetExplorer({
 
         {/* Total amount display */}
         <div className="text-right">
-          <div className="text-sm font-medium">
+          <div className="text-base font-medium">
             총 {formatKoreanWon(totalValue)}
           </div>
           {showPerCapita && (
-            <div className="text-xs text-muted-foreground">
+            <div className="text-sm text-muted-foreground">
               1인당 {formatPerCapita(totalValue, population)}
+              {currentNode.children && currentNode.children.length > 0 && (() => {
+                const top = [...currentNode.children].sort((a, b) => calculateTotal(b) - calculateTotal(a))[0];
+                return (
+                  <span className="text-xs text-muted-foreground/70 ml-2">
+                    ({top.name}: {formatPerCapita(calculateTotal(top), population)})
+                  </span>
+                );
+              })()}
             </div>
           )}
           {totalUnitText && (
-            <div className="text-xs text-muted-foreground">
+            <div className="text-sm text-muted-foreground">
               {totalUnitText}
             </div>
           )}
@@ -233,7 +244,7 @@ export function BudgetExplorer({
       {/* Main content: Visualization + optional Detail Panel */}
       <div className={cn('flex gap-4', selectedNode ? 'flex-col lg:flex-row' : '')}>
         {/* Visualization */}
-        <div className={cn('flex-1 min-w-0', selectedNode ? 'lg:flex-[2]' : '')}>
+        <div data-tour="treemap" className={cn('flex-1 min-w-0', selectedNode ? 'lg:flex-[2]' : '')}>
           {vizMode === 'treemap' ? (
             <BudgetTreemap
               data={shallowData}

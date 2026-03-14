@@ -97,8 +97,8 @@ export default async function ExplorePage({ params }: ExplorePageProps) {
       <div className="mb-4 p-3 rounded-lg border border-border bg-card">
         <div className="flex items-center justify-between">
           <div>
-            <div className="text-xs text-muted-foreground mb-1">탐색 경로</div>
-            <div className="flex items-center gap-1 text-sm font-medium text-foreground">
+            <div className="text-sm text-muted-foreground mb-1">탐색 경로</div>
+            <div className="flex items-center gap-1 text-base font-medium text-foreground">
               {decoded.map((segment, i) => (
                 <span key={i} className="flex items-center gap-1">
                   {i > 0 && (
@@ -111,7 +111,7 @@ export default async function ExplorePage({ params }: ExplorePageProps) {
           </div>
           <a
             href="/"
-            className="text-xs text-primary hover:underline shrink-0"
+            className="text-sm text-primary hover:underline shrink-0"
           >
             트리맵에서 보기
           </a>

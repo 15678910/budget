@@ -96,7 +96,7 @@ export function RegionalExplorer({ metroDataByYear, districtDataByYear, metadata
             <button
               onClick={() => setViewMode('metro')}
               className={cn(
-                'px-3 py-1.5 text-sm rounded-md transition-colors',
+                'px-3 py-1.5 text-base rounded-md transition-colors',
                 viewMode === 'metro' ? 'bg-background shadow text-foreground' : 'text-muted-foreground hover:text-foreground'
               )}
             >
@@ -105,7 +105,7 @@ export function RegionalExplorer({ metroDataByYear, districtDataByYear, metadata
             <button
               onClick={() => setViewMode('district')}
               className={cn(
-                'px-3 py-1.5 text-sm rounded-md transition-colors',
+                'px-3 py-1.5 text-base rounded-md transition-colors',
                 viewMode === 'district' ? 'bg-background shadow text-foreground' : 'text-muted-foreground hover:text-foreground'
               )}
             >
@@ -117,7 +117,7 @@ export function RegionalExplorer({ metroDataByYear, districtDataByYear, metadata
           <select
             value={year}
             onChange={(e) => { setYear(Number(e.target.value)); navigateTo([]); setSelectedNodeName(null); }}
-            className="px-3 py-1.5 text-sm rounded-lg border border-border bg-background"
+            className="px-3 py-1.5 text-base rounded-lg border border-border bg-background"
           >
             {metadata.availableYears.map(y => (
               <option key={y} value={y}>{y}년</option>
@@ -132,7 +132,7 @@ export function RegionalExplorer({ metroDataByYear, districtDataByYear, metadata
             <button
               onClick={() => setVizMode('treemap')}
               className={cn(
-                'px-3 py-1.5 text-sm rounded-md transition-colors',
+                'px-3 py-1.5 text-base rounded-md transition-colors',
                 vizMode === 'treemap' ? 'bg-background shadow text-foreground' : 'text-muted-foreground hover:text-foreground'
               )}
             >
@@ -141,7 +141,7 @@ export function RegionalExplorer({ metroDataByYear, districtDataByYear, metadata
             <button
               onClick={() => setVizMode('bubble')}
               className={cn(
-                'px-3 py-1.5 text-sm rounded-md transition-colors',
+                'px-3 py-1.5 text-base rounded-md transition-colors',
                 vizMode === 'bubble' ? 'bg-background shadow text-foreground' : 'text-muted-foreground hover:text-foreground'
               )}
             >
@@ -154,7 +154,7 @@ export function RegionalExplorer({ metroDataByYear, districtDataByYear, metadata
             <button
               onClick={() => setColorMode(prev => prev === 'category' ? 'change' : 'category')}
               className={cn(
-                'px-3 py-1.5 text-sm rounded-lg border transition-colors',
+                'px-3 py-1.5 text-base rounded-lg border transition-colors',
                 colorMode === 'change'
                   ? 'bg-primary text-primary-foreground border-primary'
                   : 'border-border bg-background text-muted-foreground hover:text-foreground'
@@ -167,11 +167,11 @@ export function RegionalExplorer({ metroDataByYear, districtDataByYear, metadata
 
         {/* Total amount display */}
         <div className="text-right">
-          <div className="text-sm font-medium">
+          <div className="text-base font-medium">
             총 {formatKoreanWon(totalValue)}
           </div>
           {totalUnitText && (
-            <div className="text-xs text-muted-foreground">
+            <div className="text-sm text-muted-foreground">
               {totalUnitText}
             </div>
           )}

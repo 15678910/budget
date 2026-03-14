@@ -115,7 +115,7 @@ export function VoteButtons({ itemId }: VoteButtonsProps) {
             key={type}
             onClick={() => castVote(itemId, type)}
             className={cn(
-              'flex flex-col items-center gap-1 p-2 rounded-lg border transition-colors cursor-pointer text-xs',
+              'flex flex-col items-center gap-1 p-2 rounded-lg border transition-colors cursor-pointer text-sm',
               isActive
                 ? cn(activeBg, activeBorder, activeColor)
                 : 'border-gray-200 text-gray-500 hover:border-gray-300 hover:bg-gray-50'

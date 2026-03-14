@@ -27,7 +27,7 @@ export function TreemapTooltip({ node, parentTotal }: TreemapTooltipProps) {
   const accountType = node.data?.meta?.accountType;
 
   return (
-    <div className="bg-card text-card-foreground border border-border rounded-lg shadow-lg px-3 py-2 text-sm max-w-xs">
+    <div className="bg-card text-card-foreground border border-border rounded-lg shadow-lg px-3 py-2 text-base max-w-xs">
       <div className="flex items-center gap-2 mb-1">
         <div
           className="w-3 h-3 rounded-sm shrink-0"
@@ -35,7 +35,7 @@ export function TreemapTooltip({ node, parentTotal }: TreemapTooltipProps) {
         />
         <span className="font-semibold truncate">{node.data?.name ?? node.id}</span>
       </div>
-      <div className="space-y-0.5 text-xs">
+      <div className="space-y-0.5 text-sm">
         <div className="text-foreground font-medium">
           {formatKoreanWon(node.value)}
         </div>
