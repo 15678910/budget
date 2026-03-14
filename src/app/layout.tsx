@@ -6,7 +6,6 @@ import { UserProvider } from "@/components/providers/UserProvider";
 import { Header } from "@/components/layout/Header";
 import { GuidedTour } from "@/components/shared/GuidedTour";
 import { AnalyticsTracker } from "@/components/analytics/AnalyticsTracker";
-import { SurveyPopup } from "@/components/analytics/SurveyPopup";
 
 const notoSansKR = Noto_Sans_KR({
   variable: "--font-sans",
@@ -36,7 +35,6 @@ export default function RootLayout({
             </main>
             <GuidedTour />
             <AnalyticsTracker />
-            <SurveyPopup />
           </UserProvider>
         </ThemeProvider>
       </body>

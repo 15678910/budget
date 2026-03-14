@@ -9,13 +9,12 @@ import { createUser, getUserByEmail } from '@/lib/analytics/db';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { email, password, nickname, ageRange, gender, interest } = body as {
+    const { name, email, password, birthdate, address } = body as {
+      name?: string;
       email?: string;
       password?: string;
-      nickname?: string;
-      ageRange?: string;
-      gender?: string;
-      interest?: string;
+      birthdate?: string;
+      address?: string;
     };
 
     // --- Validation ---
@@ -26,16 +25,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!password || password.length < 6) {
+    if (!name || name.trim().length < 1) {
       return NextResponse.json(
-        { error: '비밀번호는 6자 이상이어야 합니다.' },
+        { error: '이름을 입력해주세요.' },
         { status: 400 },
       );
     }
 
-    if (!nickname || nickname.length < 2) {
+    if (!password || password.length < 6) {
       return NextResponse.json(
-        { error: '닉네임은 2자 이상이어야 합니다.' },
+        { error: '비밀번호는 6자 이상이어야 합니다.' },
         { status: 400 },
       );
     }
@@ -51,13 +50,14 @@ export async function POST(request: NextRequest) {
 
     // --- Create user ---
     const passwordHash = await hashPassword(password);
+    const nickname = name.trim();
     const user = await createUser({
       email,
       passwordHash,
       nickname,
-      ageRange: ageRange ?? '',
-      gender: gender ?? '',
-      interest: interest ?? '',
+      birthdate: birthdate ?? '',
+      address: address ?? '',
+      interest: '',
     });
 
     // --- Issue JWT ---

@@ -49,8 +49,8 @@ export async function POST(request: NextRequest) {
       user: {
         id: user.id,
         nickname: user.nickname,
-        ageRange: user.age_range,
-        gender: user.gender,
+        birthdate: user.birthdate,
+        address: user.address,
       },
     });
 

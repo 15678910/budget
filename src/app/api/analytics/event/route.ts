@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { insertEvent, insertSurvey } from '@/lib/analytics/db';
+import { insertEvent } from '@/lib/analytics/db';
 
 // ---------------------------------------------------------------------------
 // POST /api/analytics/event
@@ -29,16 +29,6 @@ export async function POST(request: NextRequest) {
       eventData: eventData ?? {},
       pagePath: pagePath ?? '',
     });
-
-    // If the event is a survey, also persist to user_surveys
-    if (eventType === 'survey' && eventData) {
-      await insertSurvey({
-        sessionId,
-        ageRange: (eventData.ageRange as string) ?? '',
-        gender: (eventData.gender as string) ?? '',
-        interest: (eventData.interest as string) ?? '',
-      });
-    }
 
     return NextResponse.json({ ok: true });
   } catch (error) {

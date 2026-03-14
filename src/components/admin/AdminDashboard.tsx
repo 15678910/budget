@@ -52,16 +52,6 @@ interface HeatmapCell {
   count: number;
 }
 
-interface SurveyAgeEntry {
-  age_range: string;
-  count: number;
-}
-
-interface SurveyGenderEntry {
-  gender: string;
-  count: number;
-}
-
 interface StatsData {
   total_views: number;
   today_views: number;
@@ -75,8 +65,6 @@ interface StatsData {
   regions: RegionStat[];
   referrers: ReferrerStat[];
   heatmap: HeatmapCell[];
-  survey_ages: SurveyAgeEntry[];
-  survey_genders: SurveyGenderEntry[];
 }
 
 // ---------------------------------------------------------------------------
@@ -284,13 +272,6 @@ export function AdminDashboard() {
     });
     return grid;
   }, [data?.heatmap]);
-
-  // Survey
-  const surveyAges = data?.survey_ages ?? [];
-  const surveyGenders = data?.survey_genders ?? [];
-  const maxSurveyAge = Math.max(1, ...surveyAges.map((a) => a.count));
-  const maxSurveyGender = Math.max(1, ...surveyGenders.map((g) => g.count));
-  const hasSurveyData = surveyAges.length > 0 || surveyGenders.length > 0;
 
   // -----------------------------------------------------------------------
   // Render
@@ -708,76 +689,6 @@ export function AdminDashboard() {
             </div>
           </SectionCard>
 
-          {/* Section 9: Survey Results */}
-          <SectionCard title="설문 결과">
-            {hasSurveyData ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Age Distribution */}
-                <div>
-                  <h3 className="text-sm font-medium text-muted-foreground mb-3">
-                    연령대
-                  </h3>
-                  <div className="space-y-2">
-                    {surveyAges.map((a) => (
-                      <div
-                        key={a.age_range}
-                        className="flex items-center gap-3"
-                      >
-                        <span className="text-sm text-foreground w-16 shrink-0">
-                          {a.age_range}
-                        </span>
-                        <div className="flex-1 h-5 bg-muted rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-blue-500 rounded-full"
-                            style={{
-                              width: `${(a.count / maxSurveyAge) * 100}%`,
-                            }}
-                          />
-                        </div>
-                        <span className="text-xs font-mono text-muted-foreground w-8 text-right tabular-nums">
-                          {a.count}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Gender Distribution */}
-                <div>
-                  <h3 className="text-sm font-medium text-muted-foreground mb-3">
-                    성별
-                  </h3>
-                  <div className="space-y-2">
-                    {surveyGenders.map((g) => (
-                      <div
-                        key={g.gender}
-                        className="flex items-center gap-3"
-                      >
-                        <span className="text-sm text-foreground w-16 shrink-0">
-                          {g.gender}
-                        </span>
-                        <div className="flex-1 h-5 bg-muted rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-emerald-500 rounded-full"
-                            style={{
-                              width: `${(g.count / maxSurveyGender) * 100}%`,
-                            }}
-                          />
-                        </div>
-                        <span className="text-xs font-mono text-muted-foreground w-8 text-right tabular-nums">
-                          {g.count}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <p className="text-muted-foreground text-sm text-center py-8">
-                아직 설문 데이터가 없습니다.
-              </p>
-            )}
-          </SectionCard>
         </>
       )}
     </div>

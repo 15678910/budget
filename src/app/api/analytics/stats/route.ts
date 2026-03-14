@@ -10,7 +10,6 @@ import {
   getGeoStats,
   getReferrerStats,
   getHourlyHeatmap,
-  getSurveyStats,
   getUserStats,
 } from '@/lib/analytics/db';
 
@@ -47,7 +46,6 @@ type SectionKey =
   | 'geo'
   | 'referrers'
   | 'heatmap'
-  | 'surveys'
   | 'users';
 
 const SECTION_FETCHERS: Record<SectionKey, (days: number) => Promise<unknown>> = {
@@ -60,7 +58,6 @@ const SECTION_FETCHERS: Record<SectionKey, (days: number) => Promise<unknown>> =
   geo:       (d) => getGeoStats(d),
   referrers: (d) => getReferrerStats(d),
   heatmap:   (d) => getHourlyHeatmap(d),
-  surveys:   ()  => getSurveyStats(),
   users:     (d) => getUserStats(d),
 };
 
@@ -101,7 +98,6 @@ export async function GET(request: NextRequest) {
       geo,
       referrers,
       heatmap,
-      surveys,
       users,
     ] = await Promise.all([
       getOverviewStats(days),
@@ -113,7 +109,6 @@ export async function GET(request: NextRequest) {
       getGeoStats(days),
       getReferrerStats(days),
       getHourlyHeatmap(days),
-      getSurveyStats(),
       getUserStats(days),
     ]);
 
@@ -127,7 +122,6 @@ export async function GET(request: NextRequest) {
       geo,
       referrers,
       heatmap,
-      surveys,
       users,
     });
   } catch (error) {

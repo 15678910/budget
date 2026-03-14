@@ -6,9 +6,8 @@ interface User {
   id: number;
   email: string;
   nickname: string;
-  ageRange: string;
-  gender: string;
-  interest: string;
+  birthdate: string;
+  address: string;
 }
 
 interface UserContextType {

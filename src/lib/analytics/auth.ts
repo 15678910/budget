@@ -1,7 +1,10 @@
 import bcrypt from 'bcryptjs';
 import { SignJWT, jwtVerify } from 'jose';
 
-const JWT_SECRET = new TextEncoder().encode(process.env.ADMIN_JWT_SECRET || 'fallback-secret');
+if (!process.env.ADMIN_JWT_SECRET) {
+  throw new Error('ADMIN_JWT_SECRET environment variable is required');
+}
+const JWT_SECRET = new TextEncoder().encode(process.env.ADMIN_JWT_SECRET);
 const COOKIE_NAME = 'user_token';
 
 export async function hashPassword(password: string): Promise<string> {

@@ -37,13 +37,6 @@ export interface EventInput {
   pagePath?: string;
 }
 
-export interface SurveyInput {
-  sessionId: string;
-  ageRange?: string;
-  gender?: string;
-  interest?: string;
-}
-
 // ---------------------------------------------------------------------------
 // Overview stats
 // ---------------------------------------------------------------------------
@@ -97,20 +90,6 @@ export async function insertEvent(data: EventInput) {
       ${JSON.stringify(data.eventData ?? {})},
       ${data.pagePath ?? ''}
     )
-  `;
-}
-
-export async function insertSurvey(data: SurveyInput) {
-  const sql = getSQL();
-  await sql`
-    INSERT INTO user_surveys (session_id, age_range, gender, interest)
-    VALUES (
-      ${data.sessionId},
-      ${data.ageRange ?? ''},
-      ${data.gender ?? ''},
-      ${data.interest ?? ''}
-    )
-    ON CONFLICT (session_id) DO NOTHING
   `;
 }
 
@@ -272,31 +251,6 @@ export async function getHourlyHeatmap(days: number = 30) {
   return rows as { dow: number; hour: number; count: number }[];
 }
 
-export async function getSurveyStats() {
-  const sql = getSQL();
-
-  const ageRows = await sql`
-    SELECT age_range, COUNT(*)::int AS count
-    FROM user_surveys
-    WHERE age_range <> ''
-    GROUP BY age_range
-    ORDER BY age_range
-  `;
-
-  const genderRows = await sql`
-    SELECT gender, COUNT(*)::int AS count
-    FROM user_surveys
-    WHERE gender <> ''
-    GROUP BY gender
-    ORDER BY count DESC
-  `;
-
-  return {
-    age: ageRows as { age_range: string; count: number }[],
-    gender: genderRows as { gender: string; count: number }[],
-  };
-}
-
 // ---------------------------------------------------------------------------
 // Schema initialisation (runs CREATE TABLE IF NOT EXISTS)
 // ---------------------------------------------------------------------------
@@ -336,17 +290,6 @@ export async function initializeSchema() {
     )
   `;
 
-  await sql`
-    CREATE TABLE IF NOT EXISTS user_surveys (
-      id         BIGSERIAL PRIMARY KEY,
-      session_id VARCHAR(36)  NOT NULL UNIQUE,
-      age_range  VARCHAR(20)  DEFAULT '',
-      gender     VARCHAR(10)  DEFAULT '',
-      interest   VARCHAR(200) DEFAULT '',
-      created_at TIMESTAMPTZ  NOT NULL DEFAULT NOW()
-    )
-  `;
-
   // Indexes -- page_views
   await sql`CREATE INDEX IF NOT EXISTS idx_page_views_created_at ON page_views (created_at)`;
   await sql`CREATE INDEX IF NOT EXISTS idx_page_views_page_path  ON page_views (page_path)`;
@@ -359,22 +302,30 @@ export async function initializeSchema() {
   await sql`CREATE INDEX IF NOT EXISTS idx_events_event_type ON analytics_events (event_type)`;
   await sql`CREATE INDEX IF NOT EXISTS idx_events_page_path  ON analytics_events (page_path)`;
 
-  // Indexes -- user_surveys
-  await sql`CREATE INDEX IF NOT EXISTS idx_surveys_created_at ON user_surveys (created_at)`;
-  await sql`CREATE INDEX IF NOT EXISTS idx_surveys_session_id ON user_surveys (session_id)`;
-
   // Users table
   await sql`CREATE TABLE IF NOT EXISTS users (
     id            SERIAL PRIMARY KEY,
     email         VARCHAR(255) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     nickname      VARCHAR(50)  NOT NULL,
-    age_range     VARCHAR(20)  DEFAULT '',
-    gender        VARCHAR(10)  DEFAULT '',
+    birthdate     VARCHAR(10)  DEFAULT '',
+    address       VARCHAR(500) DEFAULT '',
     interest      VARCHAR(200) DEFAULT '',
     created_at    TIMESTAMPTZ  DEFAULT NOW()
   )`;
   await sql`CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)`;
+
+  // Migrate existing users table: add birthdate/address columns if they don't exist
+  await sql`DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='users' AND column_name='birthdate') THEN
+      ALTER TABLE users ADD COLUMN birthdate VARCHAR(10) DEFAULT '';
+    END IF;
+  END $$`;
+  await sql`DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='users' AND column_name='address') THEN
+      ALTER TABLE users ADD COLUMN address VARCHAR(500) DEFAULT '';
+    END IF;
+  END $$`;
 
   // Add user_id column to existing tables
   await sql`DO $$ BEGIN
@@ -393,8 +344,8 @@ export interface UserInput {
   email: string;
   passwordHash: string;
   nickname: string;
-  ageRange: string;
-  gender: string;
+  birthdate: string;
+  address: string;
   interest: string;
 }
 
@@ -403,8 +354,8 @@ export interface UserRow {
   email: string;
   password_hash: string;
   nickname: string;
-  age_range: string;
-  gender: string;
+  birthdate: string;
+  address: string;
   interest: string;
   created_at: string;
 }
@@ -416,8 +367,8 @@ export interface UserRow {
 export async function createUser(data: UserInput): Promise<UserRow> {
   const sql = getSQL();
   const rows = await sql`
-    INSERT INTO users (email, password_hash, nickname, age_range, gender, interest)
-    VALUES (${data.email}, ${data.passwordHash}, ${data.nickname}, ${data.ageRange}, ${data.gender}, ${data.interest})
+    INSERT INTO users (email, password_hash, nickname, birthdate, address, interest)
+    VALUES (${data.email}, ${data.passwordHash}, ${data.nickname}, ${data.birthdate}, ${data.address}, ${data.interest})
     RETURNING *
   `;
   return rows[0] as UserRow;
@@ -435,6 +386,11 @@ export async function getUserById(id: number): Promise<UserRow | null> {
   return (rows[0] as UserRow) || null;
 }
 
+export async function updateUserNickname(id: number, nickname: string): Promise<void> {
+  const sql = getSQL();
+  await sql`UPDATE users SET nickname = ${nickname} WHERE id = ${id}`;
+}
+
 export async function getUserStats(days: number = 30) {
   const sql = getSQL();
   const startDate = new Date();
@@ -442,8 +398,30 @@ export async function getUserStats(days: number = 30) {
 
   const total = await sql`SELECT COUNT(*) as count FROM users`;
   const recent = await sql`SELECT COUNT(*) as count FROM users WHERE created_at >= ${startDate.toISOString()}`;
-  const ageDistribution = await sql`SELECT age_range, COUNT(*) as count FROM users WHERE age_range != '' GROUP BY age_range ORDER BY age_range`;
-  const genderDistribution = await sql`SELECT gender, COUNT(*) as count FROM users WHERE gender != '' GROUP BY gender`;
+  const ageDistribution = await sql`
+    SELECT
+      CASE
+        WHEN AGE(CURRENT_DATE, birthdate::date) < INTERVAL '20 years' THEN '10대'
+        WHEN AGE(CURRENT_DATE, birthdate::date) < INTERVAL '30 years' THEN '20대'
+        WHEN AGE(CURRENT_DATE, birthdate::date) < INTERVAL '40 years' THEN '30대'
+        WHEN AGE(CURRENT_DATE, birthdate::date) < INTERVAL '50 years' THEN '40대'
+        WHEN AGE(CURRENT_DATE, birthdate::date) < INTERVAL '60 years' THEN '50대'
+        ELSE '60대 이상'
+      END AS age_range,
+      COUNT(*) as count
+    FROM users
+    WHERE birthdate != '' AND birthdate IS NOT NULL
+    GROUP BY age_range
+    ORDER BY age_range
+  `;
+  const addressDistribution = await sql`
+    SELECT address, COUNT(*) as count
+    FROM users
+    WHERE address != '' AND address IS NOT NULL
+    GROUP BY address
+    ORDER BY count DESC
+    LIMIT 10
+  `;
   const loggedInViews = await sql`SELECT COUNT(*) as count FROM page_views WHERE user_id IS NOT NULL AND created_at >= ${startDate.toISOString()}`;
   const totalViews = await sql`SELECT COUNT(*) as count FROM page_views WHERE created_at >= ${startDate.toISOString()}`;
 
@@ -451,7 +429,7 @@ export async function getUserStats(days: number = 30) {
     totalUsers: Number(total[0]?.count || 0),
     recentUsers: Number(recent[0]?.count || 0),
     ageDistribution: ageDistribution as { age_range: string; count: string }[],
-    genderDistribution: genderDistribution as { gender: string; count: string }[],
+    addressDistribution: addressDistribution as { address: string; count: string }[],
     loggedInViewRate: Number(totalViews[0]?.count) > 0
       ? (Number(loggedInViews[0]?.count || 0) / Number(totalViews[0]?.count)) * 100
       : 0,
