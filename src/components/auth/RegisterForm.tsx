@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Script from 'next/script';
 import { useUser } from '@/components/providers/UserProvider';
+import { GoogleLoginButton } from './GoogleLoginButton';
 
 /* ------------------------------------------------------------------ */
 /* Kakao Postcode TypeScript declarations                              */
@@ -251,6 +252,16 @@ export function RegisterForm() {
       >
         {submitting ? '처리 중...' : '회원가입'}
       </button>
+
+      {/* Divider */}
+      <div className="flex items-center gap-3 my-5">
+        <div className="flex-1 h-px bg-border" />
+        <span className="text-xs text-muted-foreground">또는</span>
+        <div className="flex-1 h-px bg-border" />
+      </div>
+
+      {/* Google Login */}
+      <GoogleLoginButton />
 
       {/* Login Link */}
       <p className="text-center text-sm text-muted-foreground mt-4">

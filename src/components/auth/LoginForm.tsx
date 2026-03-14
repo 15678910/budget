@@ -4,6 +4,7 @@ import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useUser } from '@/components/providers/UserProvider';
+import { GoogleLoginButton } from './GoogleLoginButton';
 
 export function LoginForm() {
   const router = useRouter();
@@ -89,6 +90,16 @@ export function LoginForm() {
       >
         {submitting ? '처리 중...' : '로그인'}
       </button>
+
+      {/* Divider */}
+      <div className="flex items-center gap-3 my-5">
+        <div className="flex-1 h-px bg-border" />
+        <span className="text-xs text-muted-foreground">또는</span>
+        <div className="flex-1 h-px bg-border" />
+      </div>
+
+      {/* Google Login */}
+      <GoogleLoginButton />
 
       {/* Register Link */}
       <p className="text-center text-sm text-muted-foreground mt-4">

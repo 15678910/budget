@@ -306,14 +306,19 @@ export async function initializeSchema() {
   await sql`CREATE TABLE IF NOT EXISTS users (
     id            SERIAL PRIMARY KEY,
     email         VARCHAR(255) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
+    password_hash VARCHAR(255) DEFAULT '',
     nickname      VARCHAR(50)  NOT NULL,
+    google_id     VARCHAR(255) DEFAULT '',
     birthdate     VARCHAR(10)  DEFAULT '',
     address       VARCHAR(500) DEFAULT '',
     interest      VARCHAR(200) DEFAULT '',
     created_at    TIMESTAMPTZ  DEFAULT NOW()
   )`;
   await sql`CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)`;
+
+  // Migration: allow Google OAuth users (no password)
+  await sql`ALTER TABLE users ALTER COLUMN password_hash SET DEFAULT ''`;
+  await sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS google_id VARCHAR(255) DEFAULT ''`;
 
   // Migrate existing users table: add birthdate/address columns if they don't exist
   await sql`DO $$ BEGIN
@@ -354,6 +359,7 @@ export interface UserRow {
   email: string;
   password_hash: string;
   nickname: string;
+  google_id: string;
   birthdate: string;
   address: string;
   interest: string;
@@ -384,6 +390,30 @@ export async function getUserById(id: number): Promise<UserRow | null> {
   const sql = getSQL();
   const rows = await sql`SELECT * FROM users WHERE id = ${id} LIMIT 1`;
   return (rows[0] as UserRow) || null;
+}
+
+export async function createOrGetGoogleUser(data: {
+  email: string;
+  nickname: string;
+  googleId: string;
+}): Promise<UserRow> {
+  const sql = getSQL();
+  // Check if user already exists
+  const existing = await sql`SELECT * FROM users WHERE email = ${data.email} LIMIT 1`;
+  if (existing[0]) {
+    // Update google_id if not set
+    if (!(existing[0] as UserRow).google_id) {
+      await sql`UPDATE users SET google_id = ${data.googleId} WHERE id = ${(existing[0] as UserRow).id}`;
+    }
+    return existing[0] as UserRow;
+  }
+  // Create new user
+  const rows = await sql`
+    INSERT INTO users (email, password_hash, nickname, google_id, birthdate, address, interest)
+    VALUES (${data.email}, '', ${data.nickname}, ${data.googleId}, '', '', '')
+    RETURNING *
+  `;
+  return rows[0] as UserRow;
 }
 
 export async function updateUserNickname(id: number, nickname: string): Promise<void> {
