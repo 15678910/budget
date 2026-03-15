@@ -10,6 +10,24 @@ import {
   COURT_DATA, COURT_SOURCES, COURT_ASSUMPTIONS,
 } from '@/lib/data/ai-efficiency-data';
 
+// ─── Daily Rate Limiter (prevent exceeding free tier 250 RPD) ───
+const DAILY_LIMIT = 230;
+let dailyCount = 0;
+let dailyDate = new Date().toISOString().slice(0, 10);
+
+function checkAndIncrementLimit(): boolean {
+  const today = new Date().toISOString().slice(0, 10);
+  if (today !== dailyDate) {
+    dailyDate = today;
+    dailyCount = 0;
+  }
+  if (dailyCount >= DAILY_LIMIT) {
+    return false;
+  }
+  dailyCount++;
+  return true;
+}
+
 // 부처별 컨텍스트 생성
 function getDepartmentContext(departmentId: DepartmentId): string {
   const contexts: Record<DepartmentId, () => string> = {
@@ -62,6 +80,14 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  // Rate limit check
+  if (!checkAndIncrementLimit()) {
+    return NextResponse.json(
+      { error: '오늘의 AI 챗봇 사용량(250건)을 초과했습니다. 내일 다시 이용해주세요.' },
+      { status: 429 }
+    );
+  }
+
   try {
     const { question, departmentId } = await request.json();
 
@@ -96,6 +122,12 @@ ${context}`;
     if (!response.ok) {
       const errBody = await response.text();
       console.error('Gemini API error:', response.status, errBody);
+      if (response.status === 429) {
+        return NextResponse.json(
+          { error: '오늘의 AI 챗봇 사용량을 초과했습니다. 내일 다시 이용해주세요.' },
+          { status: 429 }
+        );
+      }
       let detail = '';
       try {
         const errJson = JSON.parse(errBody);

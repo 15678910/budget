@@ -2,6 +2,24 @@ import { NextRequest, NextResponse } from 'next/server';
 import { loadFlatBudget, loadMetadata } from '@/lib/data/load-budget';
 import type { BudgetRawItem } from '@/types/budget';
 
+// ─── Daily Rate Limiter (prevent exceeding free tier 250 RPD) ───
+const DAILY_LIMIT = 230; // Buffer before the 250 hard limit
+let dailyCount = 0;
+let dailyDate = new Date().toISOString().slice(0, 10); // YYYY-MM-DD in UTC
+
+function checkAndIncrementLimit(): boolean {
+  const today = new Date().toISOString().slice(0, 10);
+  if (today !== dailyDate) {
+    dailyDate = today;
+    dailyCount = 0;
+  }
+  if (dailyCount >= DAILY_LIMIT) {
+    return false; // limit reached
+  }
+  dailyCount++;
+  return true; // ok to proceed
+}
+
 // Korean stop words to filter out when extracting keywords
 const STOP_WORDS = new Set([
   '은', '는', '이', '가', '의', '를', '을', '에', '에서', '로', '으로',
@@ -114,6 +132,14 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  // Rate limit check
+  if (!checkAndIncrementLimit()) {
+    return NextResponse.json(
+      { error: '오늘의 AI 챗봇 사용량(250건)을 초과했습니다. 내일 다시 이용해주세요.' },
+      { status: 429 }
+    );
+  }
+
   try {
     const { question, year = 2026 } = await request.json();
 
@@ -182,6 +208,12 @@ ${budgetContext || '관련 데이터를 찾지 못했습니다.'}`;
     if (!response.ok) {
       const errBody = await response.text();
       console.error('Gemini API error:', response.status, errBody);
+      if (response.status === 429) {
+        return NextResponse.json(
+          { error: '오늘의 AI 챗봇 사용량을 초과했습니다. 내일 다시 이용해주세요.' },
+          { status: 429 }
+        );
+      }
       let detail = '';
       try {
         const errJson = JSON.parse(errBody);
