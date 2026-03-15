@@ -12,6 +12,7 @@ const MAIN_TABS = [
   { href: "/", label: "트리맵" },
   { href: "/table", label: "테이블" },
   { href: "/compare", label: "비교" },
+  { href: "/regional", label: "지역지도" },
   { href: "/fiscal-health", label: "재정건전성" },
   { href: "/debt-clock", label: "국채시계" },
   { href: "/promise-check", label: "공약검증" },

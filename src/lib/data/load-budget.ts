@@ -48,3 +48,9 @@ export function loadEducationMetadata(): DatasetMetadata {
   const filePath = path.join(DATA_DIR, 'education-metadata.json');
   return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 }
+
+export function loadKoreaGeoData() {
+  const filePath = path.join(process.cwd(), 'data', 'geo', 'korea-provinces-topo.json');
+  const raw = fs.readFileSync(filePath, 'utf-8');
+  return JSON.parse(raw);
+}
