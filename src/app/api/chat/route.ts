@@ -53,11 +53,11 @@ function getDepartmentContext(departmentId: DepartmentId): string {
 }
 
 export async function POST(request: NextRequest) {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const apiKey = process.env.GEMINI_API_KEY;
 
   if (!apiKey) {
     return NextResponse.json(
-      { error: 'API 키가 설정되지 않았습니다.' },
+      { error: 'Gemini API 키가 설정되지 않았습니다.' },
       { status: 503 }
     );
   }
@@ -74,28 +74,28 @@ export async function POST(request: NextRequest) {
 
     const context = getDepartmentContext(departmentId);
 
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model: 'claude-haiku-4-5',
-        max_tokens: 500,
-        system: `당신은 한국 정부 AI 효율화 분석 전문가입니다. 아래 부처 데이터를 기반으로 질문에 답변하세요.
+    const systemPrompt = `당신은 한국 정부 AI 효율화 분석 전문가입니다. 아래 부처 데이터를 기반으로 질문에 답변하세요.
 답변은 한국어로, 간결하게(3~5문장), 구체적 수치를 포함하여 작성하세요.
 데이터에 없는 내용은 추정이라고 명시하세요.
 
-${context}`,
-        messages: [{ role: 'user', content: question }],
-      }),
-    });
+${context}`;
+
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          system_instruction: { parts: [{ text: systemPrompt }] },
+          contents: [{ parts: [{ text: question }] }],
+          generationConfig: { maxOutputTokens: 500 },
+        }),
+      }
+    );
 
     if (!response.ok) {
       const errBody = await response.text();
-      console.error('Anthropic API error:', response.status, errBody);
+      console.error('Gemini API error:', response.status, errBody);
       let detail = '';
       try {
         const errJson = JSON.parse(errBody);
@@ -110,7 +110,7 @@ ${context}`,
     }
 
     const data = await response.json();
-    const answer = data.content?.[0]?.text ?? '답변을 생성하지 못했습니다.';
+    const answer = data.candidates?.[0]?.content?.parts?.[0]?.text ?? '답변을 생성하지 못했습니다.';
 
     return NextResponse.json({ answer });
   } catch (error) {

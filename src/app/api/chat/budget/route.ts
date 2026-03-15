@@ -80,11 +80,11 @@ function formatBudgetContext(items: BudgetRawItem[]): string {
 }
 
 export async function POST(request: NextRequest) {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const apiKey = process.env.GEMINI_API_KEY;
 
   if (!apiKey) {
     return NextResponse.json(
-      { error: 'API 키가 설정되지 않았습니다. AI 챗봇을 사용하려면 관리자에게 문의하세요.' },
+      { error: 'Gemini API 키가 설정되지 않았습니다. AI 챗봇을 사용하려면 관리자에게 문의하세요.' },
       { status: 503 }
     );
   }
@@ -140,24 +140,22 @@ export async function POST(request: NextRequest) {
 [관련 예산 데이터]
 ${budgetContext || '관련 데이터를 찾지 못했습니다.'}`;
 
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model: 'claude-haiku-4-5',
-        max_tokens: 800,
-        system: systemPrompt,
-        messages: [{ role: 'user', content: question }],
-      }),
-    });
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          system_instruction: { parts: [{ text: systemPrompt }] },
+          contents: [{ parts: [{ text: question }] }],
+          generationConfig: { maxOutputTokens: 800 },
+        }),
+      }
+    );
 
     if (!response.ok) {
       const errBody = await response.text();
-      console.error('Anthropic API error:', response.status, errBody);
+      console.error('Gemini API error:', response.status, errBody);
       let detail = '';
       try {
         const errJson = JSON.parse(errBody);
@@ -172,7 +170,7 @@ ${budgetContext || '관련 데이터를 찾지 못했습니다.'}`;
     }
 
     const data = await response.json();
-    const answer = data.content?.[0]?.text ?? '답변을 생성하지 못했습니다.';
+    const answer = data.candidates?.[0]?.content?.parts?.[0]?.text ?? '답변을 생성하지 못했습니다.';
 
     return NextResponse.json({ answer });
   } catch (error) {
