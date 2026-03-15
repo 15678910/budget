@@ -339,6 +339,20 @@ export async function initializeSchema() {
     END IF;
   END $$`;
   await sql`CREATE INDEX IF NOT EXISTS idx_page_views_user_id ON page_views(user_id)`;
+
+  // Votes table
+  await sql`
+    CREATE TABLE IF NOT EXISTS votes (
+      id             SERIAL PRIMARY KEY,
+      budget_item_id VARCHAR(500) NOT NULL,
+      vote_type      VARCHAR(20)  NOT NULL,
+      user_id        INTEGER REFERENCES users(id),
+      session_id     VARCHAR(100),
+      created_at     TIMESTAMPTZ  DEFAULT NOW()
+    )
+  `;
+  await sql`CREATE INDEX IF NOT EXISTS idx_votes_item ON votes(budget_item_id)`;
+  await sql`CREATE INDEX IF NOT EXISTS idx_votes_user ON votes(user_id)`;
 }
 
 // ---------------------------------------------------------------------------
@@ -414,6 +428,57 @@ export async function createOrGetGoogleUser(data: {
     RETURNING *
   `;
   return rows[0] as UserRow;
+}
+
+// ---------------------------------------------------------------------------
+// Votes helpers
+// ---------------------------------------------------------------------------
+
+export async function castVote(
+  budgetItemId: string,
+  voteType: string,
+  userId?: number,
+  sessionId?: string,
+): Promise<void> {
+  const sql = getSQL();
+  if (userId) {
+    const existing = await sql`
+      SELECT id FROM votes WHERE budget_item_id = ${budgetItemId} AND user_id = ${userId} LIMIT 1
+    `;
+    if (existing.length > 0) {
+      await sql`
+        UPDATE votes SET vote_type = ${voteType} WHERE budget_item_id = ${budgetItemId} AND user_id = ${userId}
+      `;
+      return;
+    }
+  }
+  await sql`
+    INSERT INTO votes (budget_item_id, vote_type, user_id, session_id)
+    VALUES (${budgetItemId}, ${voteType}, ${userId ?? null}, ${sessionId ?? null})
+  `;
+}
+
+export async function getVoteCounts(budgetItemId: string): Promise<Record<string, number>> {
+  const sql = getSQL();
+  const rows = await sql`
+    SELECT vote_type, COUNT(*)::int AS count
+    FROM votes
+    WHERE budget_item_id = ${budgetItemId}
+    GROUP BY vote_type
+  `;
+  const counts: Record<string, number> = {};
+  for (const row of rows) {
+    counts[row.vote_type as string] = row.count as number;
+  }
+  return counts;
+}
+
+export async function getUserVote(budgetItemId: string, userId: number): Promise<string | null> {
+  const sql = getSQL();
+  const rows = await sql`
+    SELECT vote_type FROM votes WHERE budget_item_id = ${budgetItemId} AND user_id = ${userId} LIMIT 1
+  `;
+  return rows.length > 0 ? (rows[0].vote_type as string) : null;
 }
 
 export async function updateUserNickname(id: number, nickname: string): Promise<void> {

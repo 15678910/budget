@@ -1,81 +1,109 @@
 "use client";
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useRef } from 'react';
 
 export type VoteType = 'add' | 'confused' | 'reduce' | 'remove';
 
 export interface VoteData {
-  [itemId: string]: {
-    vote?: VoteType;        // user's own vote (one per item)
-    counts: Record<VoteType, number>;  // aggregated counts
+  vote?: VoteType;
+  counts: Record<VoteType, number>;
+}
+
+type VoteCache = {
+  [itemId: string]: VoteData;
+};
+
+const emptyVoteData = (): VoteData => ({
+  counts: { add: 0, confused: 0, reduce: 0, remove: 0 },
+});
+
+function mergeApiCounts(raw: Record<string, number>): Record<VoteType, number> {
+  return {
+    add: raw['add'] ?? 0,
+    confused: raw['confused'] ?? 0,
+    reduce: raw['reduce'] ?? 0,
+    remove: raw['remove'] ?? 0,
   };
 }
 
-const STORAGE_KEY = 'narasalim-votes';
-
-function loadVotes(): VoteData {
-  if (typeof window === 'undefined') return {};
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    return stored ? JSON.parse(stored) : {};
-  } catch {
-    return {};
-  }
-}
-
-function saveVotes(data: VoteData): void {
-  if (typeof window === 'undefined') return;
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  } catch {
-    // localStorage full or unavailable
-  }
-}
-
 export function useVotes() {
-  const [votes, setVotes] = useState<VoteData>({});
+  const [cache, setCache] = useState<VoteCache>({});
+  // Track in-flight fetches so we don't double-fetch
+  const fetchingRef = useRef<Set<string>>(new Set());
 
-  // Load from localStorage on mount
-  useEffect(() => {
-    setVotes(loadVotes());
-  }, []);
-
-  const castVote = useCallback((itemId: string, voteType: VoteType) => {
-    setVotes(prev => {
-      const itemVotes = prev[itemId] || { counts: { add: 0, confused: 0, reduce: 0, remove: 0 } };
-      const previousVote = itemVotes.vote;
-
-      // If clicking same vote type, toggle off
-      if (previousVote === voteType) {
-        const newCounts = { ...itemVotes.counts };
-        newCounts[voteType] = Math.max(0, newCounts[voteType] - 1);
-        const newData = {
-          ...prev,
-          [itemId]: { counts: newCounts },
-        };
-        saveVotes(newData);
-        return newData;
-      }
-
-      // Otherwise, switch vote
-      const newCounts = { ...itemVotes.counts };
-      if (previousVote) {
-        newCounts[previousVote] = Math.max(0, newCounts[previousVote] - 1);
-      }
-      newCounts[voteType] = (newCounts[voteType] || 0) + 1;
-
-      const newData = {
+  const fetchVoteData = useCallback(async (itemId: string) => {
+    if (fetchingRef.current.has(itemId)) return;
+    fetchingRef.current.add(itemId);
+    try {
+      const res = await fetch(`/api/votes?itemId=${encodeURIComponent(itemId)}`);
+      if (!res.ok) return;
+      const data = (await res.json()) as { counts: Record<string, number>; userVote: string | null };
+      setCache(prev => ({
         ...prev,
-        [itemId]: { vote: voteType, counts: newCounts },
-      };
-      saveVotes(newData);
-      return newData;
-    });
+        [itemId]: {
+          vote: (data.userVote as VoteType) ?? undefined,
+          counts: mergeApiCounts(data.counts),
+        },
+      }));
+    } catch {
+      // API unavailable — leave defaults in place (graceful degradation)
+    } finally {
+      fetchingRef.current.delete(itemId);
+    }
   }, []);
 
-  const getVoteData = useCallback((itemId: string) => {
-    return votes[itemId] || { counts: { add: 0, confused: 0, reduce: 0, remove: 0 } };
-  }, [votes]);
+  const castVote = useCallback(async (itemId: string, voteType: VoteType) => {
+    // Optimistic update
+    setCache(prev => {
+      const current = prev[itemId] ?? emptyVoteData();
+      const prevVote = current.vote;
+      const newCounts = { ...current.counts };
+
+      if (prevVote === voteType) {
+        // Toggle off
+        newCounts[voteType] = Math.max(0, newCounts[voteType] - 1);
+        return { ...prev, [itemId]: { counts: newCounts } };
+      }
+
+      if (prevVote) {
+        newCounts[prevVote] = Math.max(0, newCounts[prevVote] - 1);
+      }
+      newCounts[voteType] = (newCounts[voteType] ?? 0) + 1;
+      return { ...prev, [itemId]: { vote: voteType, counts: newCounts } };
+    });
+
+    try {
+      const res = await fetch('/api/votes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ itemId, voteType }),
+      });
+      if (!res.ok) return;
+      const data = (await res.json()) as { counts: Record<string, number>; userVote: string | null };
+      // Reconcile with server response
+      setCache(prev => ({
+        ...prev,
+        [itemId]: {
+          vote: (data.userVote as VoteType) ?? undefined,
+          counts: mergeApiCounts(data.counts),
+        },
+      }));
+    } catch {
+      // API unavailable — optimistic update stays
+    }
+  }, []);
+
+  const getVoteData = useCallback(
+    (itemId: string): VoteData => {
+      if (!(itemId in cache)) {
+        // Kick off a fetch without blocking render
+        fetchVoteData(itemId);
+        return emptyVoteData();
+      }
+      return cache[itemId];
+    },
+    [cache, fetchVoteData],
+  );
 
   return { castVote, getVoteData };
 }

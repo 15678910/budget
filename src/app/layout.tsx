@@ -6,6 +6,7 @@ import { UserProvider } from "@/components/providers/UserProvider";
 import { Header } from "@/components/layout/Header";
 import { GuidedTour } from "@/components/shared/GuidedTour";
 import { AnalyticsTracker } from "@/components/analytics/AnalyticsTracker";
+import { BudgetChatbot } from "@/components/chat/BudgetChatbot";
 
 const notoSansKR = Noto_Sans_KR({
   variable: "--font-sans",
@@ -35,6 +36,7 @@ export default function RootLayout({
             </main>
             <GuidedTour />
             <AnalyticsTracker />
+            <BudgetChatbot />
           </UserProvider>
         </ThemeProvider>
       </body>

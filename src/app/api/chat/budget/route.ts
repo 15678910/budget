@@ -1,0 +1,178 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { loadFlatBudget, loadMetadata } from '@/lib/data/load-budget';
+import type { BudgetRawItem } from '@/types/budget';
+
+// Korean stop words to filter out when extracting keywords
+const STOP_WORDS = new Set([
+  '은', '는', '이', '가', '의', '를', '을', '에', '에서', '로', '으로',
+  '한', '할', '하는', '하고', '하면', '했', '된', '되는', '되어', '합니다',
+  '얼마', '예산', '얼마나', '대한', '어떤', '무엇', '어디', '몇',
+  '그', '그리고', '또는', '및', '등', '약', '총', '가장', '많은', '적은',
+  '있는', '없는', '있나요', '인가요', '인지', '나요', '대해', '알려',
+  '관련', '현황', '내역', '규모', '비교', '분석', '설명', '정도',
+  '해주세요', '주세요', '알려주세요', '보여주세요',
+]);
+
+/**
+ * Extract meaningful Korean keywords from a question.
+ * Keeps words of 2+ characters that aren't stop words.
+ */
+function extractKeywords(question: string): string[] {
+  // Remove punctuation and split on whitespace
+  const words = question.replace(/[?!.,;:'"()（）【】\[\]{}]/g, '').split(/\s+/);
+  return words.filter((w) => w.length >= 2 && !STOP_WORDS.has(w));
+}
+
+/**
+ * Score a budget item by how many keyword matches it has across its fields.
+ */
+function scoreBudgetItem(item: BudgetRawItem, keywords: string[]): number {
+  const searchFields = [
+    item.ministryName,
+    item.domainName,
+    item.sectorName,
+    item.programName,
+    item.unitProjectName,
+    item.detailProjectName,
+  ];
+
+  let score = 0;
+  for (const keyword of keywords) {
+    for (const field of searchFields) {
+      if (field && field.includes(keyword)) {
+        score += 1;
+      }
+    }
+  }
+  return score;
+}
+
+/**
+ * Search flat budget data for items matching the question keywords.
+ * Returns top 20 items sorted by relevance score, then by budget amount.
+ */
+function searchBudgetItems(items: BudgetRawItem[], question: string): BudgetRawItem[] {
+  const keywords = extractKeywords(question);
+  if (keywords.length === 0) return [];
+
+  const scored = items
+    .map((item) => ({ item, score: scoreBudgetItem(item, keywords) }))
+    .filter((entry) => entry.score > 0);
+
+  scored.sort((a, b) => {
+    if (b.score !== a.score) return b.score - a.score;
+    return b.item.amount - a.item.amount;
+  });
+
+  return scored.slice(0, 20).map((entry) => entry.item);
+}
+
+/**
+ * Format budget items as a readable context string for the LLM.
+ */
+function formatBudgetContext(items: BudgetRawItem[]): string {
+  return items
+    .map((item, i) => {
+      const amountBillion = (item.amount / 100).toFixed(1); // 백만원 -> 억원
+      return `${i + 1}. [${item.ministryName}] ${item.domainName} > ${item.sectorName} > ${item.programName} > ${item.unitProjectName} > ${item.detailProjectName} | ${amountBillion}억원 (${item.amount.toLocaleString()}백만원)`;
+    })
+    .join('\n');
+}
+
+export async function POST(request: NextRequest) {
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+
+  if (!apiKey) {
+    return NextResponse.json(
+      { error: 'API 키가 설정되지 않았습니다. AI 챗봇을 사용하려면 관리자에게 문의하세요.' },
+      { status: 503 }
+    );
+  }
+
+  try {
+    const { question, year = 2026 } = await request.json();
+
+    if (!question) {
+      return NextResponse.json(
+        { error: '질문을 입력해주세요.' },
+        { status: 400 }
+      );
+    }
+
+    // Validate year
+    const validYears = [2023, 2024, 2025, 2026];
+    const selectedYear = validYears.includes(year) ? year : 2026;
+
+    // Load budget data and metadata
+    let flatBudget: BudgetRawItem[];
+    let metadata;
+    try {
+      flatBudget = loadFlatBudget(selectedYear);
+      metadata = loadMetadata();
+    } catch {
+      return NextResponse.json(
+        { error: '예산 데이터를 불러올 수 없습니다.' },
+        { status: 500 }
+      );
+    }
+
+    // RAG: search for relevant budget items
+    const relevantItems = searchBudgetItems(flatBudget, question);
+    const budgetContext = formatBudgetContext(relevantItems);
+
+    // Summary stats
+    const totalBudget = metadata.totalsByYear[selectedYear] ?? 0;
+    const totalBudgetTrillion = (totalBudget / 1000000).toFixed(1);
+    const uniqueMinistries = new Set(flatBudget.map((item) => item.ministryName)).size;
+    const uniquePrograms = new Set(flatBudget.map((item) => item.programName)).size;
+
+    const systemPrompt = `당신은 대한민국 정부 예산 전문가입니다. 아래 예산 데이터를 기반으로 질문에 답변하세요.
+- 답변은 한국어로, 구체적 수치를 포함하여 3~5문장으로 작성하세요.
+- 금액은 억원 또는 조원 단위로 표시하세요. (1조 = 1,000,000백만원, 1억 = 100백만원)
+- 데이터에 없는 내용은 "해당 데이터를 찾을 수 없습니다"라고 답하세요.
+- 연도: ${selectedYear}년 예산 기준
+
+[요약 통계]
+총 예산: ${totalBudgetTrillion}조원 (${totalBudget.toLocaleString()}백만원)
+부처 수: ${uniqueMinistries}개
+프로그램 수: ${uniquePrograms}개
+
+[관련 예산 데이터]
+${budgetContext || '관련 데이터를 찾지 못했습니다.'}`;
+
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 800,
+        system: systemPrompt,
+        messages: [{ role: 'user', content: question }],
+      }),
+    });
+
+    if (!response.ok) {
+      const errBody = await response.text();
+      console.error('Anthropic API error:', response.status, errBody);
+      return NextResponse.json(
+        { error: 'AI 답변 생성에 실패했습니다.' },
+        { status: 502 }
+      );
+    }
+
+    const data = await response.json();
+    const answer = data.content?.[0]?.text ?? '답변을 생성하지 못했습니다.';
+
+    return NextResponse.json({ answer });
+  } catch (error) {
+    console.error('Budget Chat API error:', error);
+    return NextResponse.json(
+      { error: '서버 오류가 발생했습니다.' },
+      { status: 500 }
+    );
+  }
+}
