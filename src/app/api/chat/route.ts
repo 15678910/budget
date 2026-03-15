@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
+        model: 'claude-haiku-4-5',
         max_tokens: 500,
         system: `당신은 한국 정부 AI 효율화 분석 전문가입니다. 아래 부처 데이터를 기반으로 질문에 답변하세요.
 답변은 한국어로, 간결하게(3~5문장), 구체적 수치를 포함하여 작성하세요.
@@ -96,8 +96,15 @@ ${context}`,
     if (!response.ok) {
       const errBody = await response.text();
       console.error('Anthropic API error:', response.status, errBody);
+      let detail = '';
+      try {
+        const errJson = JSON.parse(errBody);
+        detail = errJson.error?.message || errBody.slice(0, 200);
+      } catch {
+        detail = errBody.slice(0, 200);
+      }
       return NextResponse.json(
-        { error: 'AI 답변 생성에 실패했습니다.' },
+        { error: `AI 답변 생성에 실패했습니다. (${response.status}: ${detail})` },
         { status: 502 }
       );
     }

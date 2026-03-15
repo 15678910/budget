@@ -148,7 +148,7 @@ ${budgetContext || '관련 데이터를 찾지 못했습니다.'}`;
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
+        model: 'claude-haiku-4-5',
         max_tokens: 800,
         system: systemPrompt,
         messages: [{ role: 'user', content: question }],
@@ -158,8 +158,15 @@ ${budgetContext || '관련 데이터를 찾지 못했습니다.'}`;
     if (!response.ok) {
       const errBody = await response.text();
       console.error('Anthropic API error:', response.status, errBody);
+      let detail = '';
+      try {
+        const errJson = JSON.parse(errBody);
+        detail = errJson.error?.message || errBody.slice(0, 200);
+      } catch {
+        detail = errBody.slice(0, 200);
+      }
       return NextResponse.json(
-        { error: 'AI 답변 생성에 실패했습니다.' },
+        { error: `AI 답변 생성에 실패했습니다. (${response.status}: ${detail})` },
         { status: 502 }
       );
     }
