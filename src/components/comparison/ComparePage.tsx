@@ -41,6 +41,7 @@ export function ComparePage({
   const [yearB, setYearB] = useState(defaultYearB);
   const [sortKey, setSortKey] = useState<SortKey>("amount");
   const [compareView, setCompareView] = useState<CompareViewMode>("domain");
+  const [selectedMetro, setSelectedMetro] = useState('서울특별시');
 
   const dataMap: Record<CompareViewMode, Record<number, BudgetTreeNode>> = {
     domain: domainDataByYear,
@@ -52,14 +53,39 @@ export function ComparePage({
   const activeDataByYear = dataMap[compareView];
   const viewModeForColor: ViewMode = compareView;
 
-  const headerLabel = COMPARE_VIEWS.find(v => v.key === compareView)?.headerLabel ?? '분야';
+  // Get available metro names from district data
+  const metroNames = useMemo(() => {
+    const years = Object.keys(districtDataByYear).map(Number);
+    if (years.length === 0) return [];
+    const firstData = districtDataByYear[years[0]];
+    return (firstData?.children ?? []).map(c => c.name);
+  }, [districtDataByYear]);
+
+  // For district mode, extract the selected metro's subtree
+  const effectiveDataByYear = useMemo(() => {
+    if (compareView !== 'district') return activeDataByYear;
+
+    const result: Record<number, BudgetTreeNode> = {};
+    for (const [yearStr, tree] of Object.entries(districtDataByYear)) {
+      const year = Number(yearStr);
+      const metroNode = tree.children?.find(c => c.name === selectedMetro);
+      if (metroNode) {
+        result[year] = metroNode;
+      }
+    }
+    return result;
+  }, [compareView, districtDataByYear, selectedMetro, activeDataByYear]);
+
+  const headerLabel = compareView === 'district'
+    ? `${selectedMetro} 자치구`
+    : (COMPARE_VIEWS.find(v => v.key === compareView)?.headerLabel ?? '분야');
 
   const comparisons = useMemo(() => {
-    const dataA = activeDataByYear[yearA];
-    const dataB = activeDataByYear[yearB];
+    const dataA = effectiveDataByYear[yearA];
+    const dataB = effectiveDataByYear[yearB];
     if (!dataA || !dataB) return [];
     return buildComparison(dataA, dataB, yearA, yearB);
-  }, [activeDataByYear, yearA, yearB]);
+  }, [effectiveDataByYear, yearA, yearB]);
 
   // Sort the comparisons based on sortKey
   const sorted = useMemo(() => {
@@ -149,6 +175,22 @@ export function ComparePage({
           ))}
         </div>
       </div>
+
+      {/* Metro selector for district mode */}
+      {compareView === 'district' && metroNames.length > 0 && (
+        <div className="flex items-center gap-2 mb-4">
+          <span className="text-base text-muted-foreground">광역시도:</span>
+          <select
+            value={selectedMetro}
+            onChange={(e) => setSelectedMetro(e.target.value)}
+            className="px-3 py-1.5 text-base rounded-lg border border-border bg-background text-foreground"
+          >
+            {metroNames.map((name) => (
+              <option key={name} value={name}>{name}</option>
+            ))}
+          </select>
+        </div>
+      )}
 
       {/* Summary cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
