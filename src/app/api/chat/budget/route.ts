@@ -15,16 +15,34 @@ const STOP_WORDS = new Set([
 
 /**
  * Extract meaningful Korean keywords from a question.
- * Keeps words of 2+ characters that aren't stop words.
+ * Also generates 2-char sub-keywords from compound words (e.g. "초등학교" → "초등", "학교").
  */
 function extractKeywords(question: string): string[] {
-  // Remove punctuation and split on whitespace
   const words = question.replace(/[?!.,;:'"()（）【】\[\]{}]/g, '').split(/\s+/);
-  return words.filter((w) => w.length >= 2 && !STOP_WORDS.has(w));
+  const filtered = words.filter((w) => w.length >= 2 && !STOP_WORDS.has(w));
+
+  const expanded = new Set<string>();
+  for (const word of filtered) {
+    expanded.add(word);
+    // For compound words (4+ chars), generate 2-char sliding sub-keywords
+    // e.g. "초등학교" → "초등", "등학", "학교"
+    // e.g. "교육분야" → "교육", "육분", "분야"
+    if (word.length >= 4) {
+      for (let i = 0; i <= word.length - 2; i++) {
+        const sub = word.slice(i, i + 2);
+        if (!STOP_WORDS.has(sub)) {
+          expanded.add(sub);
+        }
+      }
+    }
+  }
+
+  return Array.from(expanded);
 }
 
 /**
  * Score a budget item by how many keyword matches it has across its fields.
+ * Longer keyword matches score higher.
  */
 function scoreBudgetItem(item: BudgetRawItem, keywords: string[]): number {
   const searchFields = [
@@ -40,7 +58,8 @@ function scoreBudgetItem(item: BudgetRawItem, keywords: string[]): number {
   for (const keyword of keywords) {
     for (const field of searchFields) {
       if (field && field.includes(keyword)) {
-        score += 1;
+        // Longer keywords get higher weight (full word match > 2-char sub-keyword)
+        score += keyword.length >= 3 ? 3 : 1;
       }
     }
   }
@@ -50,10 +69,11 @@ function scoreBudgetItem(item: BudgetRawItem, keywords: string[]): number {
 /**
  * Search flat budget data for items matching the question keywords.
  * Returns top 20 items sorted by relevance score, then by budget amount.
+ * Falls back to top items by amount if keyword search finds nothing.
  */
 function searchBudgetItems(items: BudgetRawItem[], question: string): BudgetRawItem[] {
   const keywords = extractKeywords(question);
-  if (keywords.length === 0) return [];
+  if (keywords.length === 0) return items.slice().sort((a, b) => b.amount - a.amount).slice(0, 20);
 
   const scored = items
     .map((item) => ({ item, score: scoreBudgetItem(item, keywords) }))
@@ -63,6 +83,11 @@ function searchBudgetItems(items: BudgetRawItem[], question: string): BudgetRawI
     if (b.score !== a.score) return b.score - a.score;
     return b.item.amount - a.item.amount;
   });
+
+  // If no results, fallback to top items by budget amount
+  if (scored.length === 0) {
+    return items.slice().sort((a, b) => b.amount - a.amount).slice(0, 20);
+  }
 
   return scored.slice(0, 20).map((entry) => entry.item);
 }
