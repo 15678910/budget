@@ -12,6 +12,8 @@ interface RegionDetailPanelProps {
   prevYearData?: BudgetTreeNode;
   year: number;
   onClose: () => void;
+  /** When set, we're in district drill-down mode. metroData is the district root. */
+  parentMetroName?: string;
 }
 
 function calculateTotal(node: BudgetTreeNode): number {
@@ -26,9 +28,26 @@ export function RegionDetailPanel({
   prevYearData,
   year,
   onClose,
+  parentMetroName,
 }: RegionDetailPanelProps) {
-  const regionNode = metroData.children?.find((c) => c.name === regionName);
-  const prevRegionNode = prevYearData?.children?.find((c) => c.name === regionName);
+  // In district mode: metroData is the district root (지방재정 총계)
+  // We need to find: root → parentMetro → regionName
+  const regionNode = useMemo(() => {
+    if (parentMetroName) {
+      const metroNode = metroData.children?.find((c) => c.name === parentMetroName);
+      return metroNode?.children?.find((c) => c.name === regionName) ?? null;
+    }
+    return metroData.children?.find((c) => c.name === regionName) ?? null;
+  }, [metroData, regionName, parentMetroName]);
+
+  const prevRegionNode = useMemo(() => {
+    if (!prevYearData) return null;
+    if (parentMetroName) {
+      const prevMetroNode = prevYearData.children?.find((c) => c.name === parentMetroName);
+      return prevMetroNode?.children?.find((c) => c.name === regionName) ?? null;
+    }
+    return prevYearData.children?.find((c) => c.name === regionName) ?? null;
+  }, [prevYearData, regionName, parentMetroName]);
 
   const { totalBudget, population, perCapita, yoyChange, categories } = useMemo(() => {
     if (!regionNode) {
@@ -40,7 +59,18 @@ export function RegionDetailPanel({
       value: calculateTotal(c),
     }));
     const total = cats.reduce((sum, c) => sum + c.value, 0);
-    const pop = METRO_POPULATION[regionName] ?? 0;
+
+    // Population: for district mode, approximate from metro population
+    let pop: number;
+    if (parentMetroName) {
+      const metroPop = METRO_POPULATION[parentMetroName] ?? 0;
+      // Find the metro node to count districts (excluding 본청)
+      const metroNode = metroData.children?.find((c) => c.name === parentMetroName);
+      const numDistricts = (metroNode?.children ?? []).filter((c) => c.name !== '본청').length || 1;
+      pop = Math.round(metroPop / numDistricts);
+    } else {
+      pop = METRO_POPULATION[regionName] ?? 0;
+    }
     const perCap = pop > 0 ? Math.round((total * 1_000_000) / pop) : 0;
 
     let yoy: number | null = null;
@@ -56,7 +86,7 @@ export function RegionDetailPanel({
     cats.sort((a, b) => b.value - a.value);
 
     return { totalBudget: total, population: pop, perCapita: perCap, yoyChange: yoy, categories: cats };
-  }, [regionNode, prevRegionNode, regionName]);
+  }, [regionNode, prevRegionNode, regionName, parentMetroName, metroData]);
 
   if (!regionNode) {
     return null;
@@ -70,7 +100,10 @@ export function RegionDetailPanel({
       <div className="flex items-start justify-between">
         <div>
           <h3 className="text-lg font-bold text-foreground">{regionName}</h3>
-          <p className="text-xs text-muted-foreground">{year}년 예산</p>
+          <p className="text-xs text-muted-foreground">
+            {parentMetroName && <span>{parentMetroName} · </span>}
+            {year}년 예산
+          </p>
         </div>
         <button
           onClick={onClose}
@@ -95,7 +128,7 @@ export function RegionDetailPanel({
           <div className="text-sm font-semibold text-foreground">{perCapita.toLocaleString('ko-KR')}원</div>
         </div>
         <div className="bg-muted rounded-md p-2">
-          <div className="text-xs text-muted-foreground">인구</div>
+          <div className="text-xs text-muted-foreground">인구{parentMetroName ? ' (추정)' : ''}</div>
           <div className="text-sm font-semibold text-foreground">{population.toLocaleString('ko-KR')}명</div>
         </div>
         <div className="bg-muted rounded-md p-2">

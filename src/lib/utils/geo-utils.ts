@@ -83,3 +83,76 @@ export function computeRegionMetrics(
 
   return result;
 }
+
+// ---------------------------------------------------------------------------
+// Province code <-> Budget name mapping (for district drill-down)
+// ---------------------------------------------------------------------------
+
+/** Maps budget metro name to province code (used in TopoJSON municipality data) */
+export const BUDGET_NAME_TO_PROVINCE_CODE: Record<string, string> = {
+  '서울특별시': '11',
+  '부산광역시': '21',
+  '대구광역시': '22',
+  '인천광역시': '23',
+  '광주광역시': '24',
+  '대전광역시': '25',
+  '울산광역시': '26',
+  '세종특별자치시': '29',
+  '경기도': '31',
+  '강원특별자치도': '32',
+  '충청북도': '33',
+  '충청남도': '34',
+  '전북특별자치도': '35',
+  '전라남도': '36',
+  '경상북도': '37',
+  '경상남도': '38',
+  '제주특별자치도': '39',
+};
+
+/**
+ * Explicit geo-name -> budget-name mapping for districts with name changes.
+ * Key format: "provinceCode::geoName" -> budgetName
+ * Handles:
+ * - 인천 남구 → 미추홀구 (renamed 2018)
+ * - 청원군 → 청주시 (merged into 청주시 in 2014)
+ */
+const DISTRICT_RENAME_MAP: Record<string, string> = {
+  '23::남구': '미추홀구',
+  '33::청원군': '청주시',
+};
+
+/**
+ * Match a TopoJSON municipality name to a budget district name.
+ * Handles:
+ * 1. Exact match (종로구 → 종로구)
+ * 2. Explicit rename (남구 → 미추홀구 for Incheon)
+ * 3. Prefix match for split cities (용인시수지구 → 용인시, 포항시북구 → 포항시)
+ *
+ * @param geoName - Name from TopoJSON (e.g., "종로구", "용인시수지구")
+ * @param provinceCode - 2-digit province code (e.g., "11", "31")
+ * @param budgetDistrictNames - Array of budget district names for this metro
+ * @returns Matched budget district name, or null if no match
+ */
+export function matchDistrictName(
+  geoName: string,
+  provinceCode: string,
+  budgetDistrictNames: string[],
+): string | null {
+  // 1. Exact match
+  if (budgetDistrictNames.includes(geoName)) return geoName;
+
+  // 2. Explicit rename mapping
+  const renameKey = `${provinceCode}::${geoName}`;
+  const renamed = DISTRICT_RENAME_MAP[renameKey];
+  if (renamed && budgetDistrictNames.includes(renamed)) return renamed;
+
+  // 3. Prefix match: TopoJSON "용인시수지구" → budget "용인시"
+  // Find budget name that is a prefix of the geo name
+  for (const budgetName of budgetDistrictNames) {
+    if (budgetName !== '본청' && geoName.startsWith(budgetName)) {
+      return budgetName;
+    }
+  }
+
+  return null;
+}
