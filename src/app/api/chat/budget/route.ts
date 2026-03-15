@@ -153,12 +153,13 @@ export async function POST(request: NextRequest) {
 
     const systemPrompt = `당신은 대한민국 정부 예산 전문가입니다. 아래 예산 데이터를 기반으로 질문에 답변하세요.
 - 답변은 한국어로, 구체적 수치를 포함하여 3~5문장으로 작성하세요.
-- 금액은 억원 또는 조원 단위로 표시하세요. (1조 = 1,000,000백만원, 1억 = 100백만원)
+- 금액은 억원 또는 조원 단위로만 표시하세요. 같은 금액을 다른 단위로 중복 표기하지 마세요.
+- 데이터의 백만원 단위는 참고용이며, 답변에는 억원/조원만 사용하세요. (100백만원 = 1억원, 1,000,000백만원 = 1조원)
 - 데이터에 없는 내용은 "해당 데이터를 찾을 수 없습니다"라고 답하세요.
 - 연도: ${selectedYear}년 예산 기준
 
 [요약 통계]
-총 예산: ${totalBudgetTrillion}조원 (${totalBudget.toLocaleString()}백만원)
+총 예산: ${totalBudgetTrillion}조원
 부처 수: ${uniqueMinistries}개
 프로그램 수: ${uniquePrograms}개
 
