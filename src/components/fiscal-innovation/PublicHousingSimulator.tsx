@@ -50,7 +50,7 @@ function Slider({
         <span className="text-base text-gray-400 relative group/tip cursor-help">
           {label}
           {tooltip && (
-            <span className="invisible group-hover/tip:visible absolute left-0 top-full mt-1 z-50 w-64 p-2 text-xs text-gray-300 bg-gray-800 border border-gray-700 rounded-lg shadow-lg leading-relaxed whitespace-normal">
+            <span className="invisible group-hover/tip:visible absolute left-0 top-full mt-1 z-50 w-72 p-2.5 text-sm text-gray-300 bg-gray-800 border border-gray-700 rounded-lg shadow-lg leading-relaxed whitespace-normal">
               {tooltip}
             </span>
           )}
