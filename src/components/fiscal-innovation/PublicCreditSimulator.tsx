@@ -255,7 +255,7 @@ export function PublicCreditSimulator() {
               <div className="flex rounded overflow-hidden border border-gray-700">
                 <button
                   onClick={() => setRegionTab('metro')}
-                  className={`px-3 py-1.5 text-sm transition-colors ${
+                  className={`px-4 py-2 text-base font-medium transition-colors ${
                     regionTab === 'metro'
                       ? 'bg-blue-600 text-white'
                       : 'bg-gray-800 text-gray-400 hover:text-gray-200'
@@ -265,7 +265,7 @@ export function PublicCreditSimulator() {
                 </button>
                 <button
                   onClick={() => setRegionTab('district')}
-                  className={`px-3 py-1.5 text-sm transition-colors ${
+                  className={`px-4 py-2 text-base font-medium transition-colors ${
                     regionTab === 'district'
                       ? 'bg-blue-600 text-white'
                       : 'bg-gray-800 text-gray-400 hover:text-gray-200'
