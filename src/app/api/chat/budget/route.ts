@@ -177,11 +177,76 @@ export async function POST(request: NextRequest) {
     const uniqueMinistries = new Set(flatBudget.map((item) => item.ministryName)).size;
     const uniquePrograms = new Set(flatBudget.map((item) => item.programName)).size;
 
-    const systemPrompt = `당신은 대한민국 정부 예산 전문가입니다. 아래 예산 데이터를 기반으로 질문에 답변하세요.
+    // Detect if question is about monetary theory / currency revolution topics
+    const monetaryKeywords = [
+      '화폐', '배당', '달러', 'dividend', '이자 추출', '이자 부과', '화폐 발행', '화폐발행',
+      '국채', '시뇨리지', '부분준비금', '중앙은행', '공공은행', '공공신용', '신용조합',
+      'g-money', 'gmoney', 'G-Money', '디지털화폐', 'CBDC', '지역화폐',
+      '주권부기금', 'SWF', 'sovereign', '노르웨이', '알래스카', 'BND',
+      'Richard Duncan', '리처드 던컨', '화폐 혁명', '화폐혁명',
+      '배당 환원', '이자 추출', '부채 기반', '자산 담보',
+      '인플레이션', '양적완화', '통화정책', '금융시스템',
+    ];
+    const isMonetaryQuestion = monetaryKeywords.some(kw =>
+      question.toLowerCase().includes(kw.toLowerCase())
+    );
+
+    const monetaryKnowledge = isMonetaryQuestion ? `
+
+[화폐혁명 지식베이스]
+아래 내용은 Richard Duncan의 "The Money Revolution"(2022) 및 관련 화폐 이론을 기반으로 합니다.
+
+1. 현행 화폐 시스템의 구조 (이자 추출 시스템):
+- 화폐 발행 과정: 정부가 국채를 발행 → 중앙은행(한국은행/미국 Fed)이 국채를 매입하여 화폐 공급
+- 이 과정에서 국채 이자가 발생하며, 이자는 궁극적으로 세금으로 충당됨
+- 즉, 화폐 = 빚(국채), 빚 = 원금 + 이자 → 화폐가 존재하는 한 이자가 계속 발생
+- 한국의 경우 2026년 국채 이자만 연 약 30조원 이상
+- 시중은행의 부분준비금 제도: 예금의 일부만 준비금으로 보유, 나머지를 대출 → 신용 창출 과정에서도 이자 발생
+- 대출자가 갚아야 할 이자분의 화폐는 원래 존재하지 않으므로, 누군가 다른 곳에서 빚을 져야 충당 가능
+
+2. 배당 달러(Dividend Dollar) - 대안 시스템:
+- 현행: 화폐 발행 = 빚(국채) 기반, 이자가 국민에서 금융시스템으로 추출됨
+- 대안: 화폐 발행 = 자산 담보 기반, 배당이 시스템에서 국민에게 환원됨
+- USDebtClock.org 2030년 시나리오에서 제시된 개념
+- 미국 재무부가 직접 발행하는 자산담보형 배당 달러, 연 약 3% 가치 상승 전망
+- 화폐 발행 이익(시뇨리지)을 금융기관이 아닌 화폐 보유자에게 직접 배당
+- 비교표: 현행(빚 기반, 이자 추출, 인플레이션 하락, 금융기관 수혜) vs 배당 달러(자산 담보, 배당 환원, 연 3% 상승, 국민 수혜)
+
+3. 공공신용조합(Public Credit Union) / 50 State Credit Unions:
+- 모델: 미국 노스다코타주 은행(BND, 1919년 설립), 미국 유일의 주립 공공은행
+- 100년 이상 운영, 주 정부에 누적 19억 달러 이상 수익 환원
+- "50 State Credit Unions"는 BND 모델을 미국 50개 주 전체로 확대하는 제안
+- 이자 절감: 시중 가계대출 금리 5% → 공공은행 금리 2%로 전환 시 가구당 연간 수십~수백만원 절감
+- 한국 적용: 자치구별 지역공공은행 설립 → 가계부채 이자 부담 절감 + 순수익 지역사회 환원
+
+4. G-Money(Government Money):
+- 정부 발행 디지털 화폐, 모든 공공 재정 거래를 블록체인/분산원장으로 기록
+- CBDC(중앙은행 디지털화폐)의 지방정부 버전
+- 효과: 행정비용 절감(에스토니아 사례: GDP 2% 절감), 재정 누수 방지(2~3%), 세수 증대(1%)
+- 시민이 스마트폰으로 세금 사용처를 실시간 확인 가능 → 재정 민주주의 실현
+
+5. 주권부기금(SWF, Sovereign Wealth Fund):
+- 정부가 장기적으로 국가/지역의 부를 축적·운용하는 투자 기금
+- 주요 사례: 노르웨이 GPFG(1.7조 달러), 싱가포르 GIC/테마섹, UAE 아부다비투자청
+- 알래스카 영구기금: 석유 수입 적립, 주민 1인당 연 $1,000~$2,000 배당
+- 지방 적용: 자치구 예산의 일정비율 장기 적립 → 복리효과 → 위기 시 완충 + 운용수익 복지 재투입
+- 예시: 예산 1조원 자치구, 매년 3% 적립, 연 5% 수익률 → 15년 후 약 647억원 기금(197억원 순수익)
+
+6. Richard Duncan 저자 정보:
+- 아시아 18년 이상 활동한 금융 분석가/경제학자, IMF·세계은행 컨설턴트
+- 저서: The Dollar Crisis(2003, 2008년 금융위기 5년 전 예측), The Money Revolution(2022)
+- 핵심 주장: 미국 SWF 설립, 배당형 화폐, 공공 신용 시스템
+- 2025년 트럼프 행정부 SWF 설립 공식화로 그의 15년간 주장이 현실 정책화
+
+위 지식을 바탕으로 화폐 시스템, 배당 달러, 공공은행, G-Money, SWF 관련 질문에 구체적으로 답변하세요.
+예산 데이터와 함께 답변할 경우, 실제 자치구 재정 데이터와 연결지어 설명하세요.` : '';
+
+    const systemPrompt = `당신은 대한민국 정부 예산 전문가이자 재정혁신 분석가입니다. 아래 데이터를 기반으로 질문에 답변하세요.
 - 답변은 한국어로, 구체적 수치를 포함하여 3~5문장으로 작성하세요.
 - 금액은 억원 또는 조원 단위로만 표시하세요. 같은 금액을 다른 단위로 중복 표기하지 마세요.
 - 데이터의 백만원 단위는 참고용이며, 답변에는 억원/조원만 사용하세요. (100백만원 = 1억원, 1,000,000백만원 = 1조원)
-- 데이터에 없는 내용은 "해당 데이터를 찾을 수 없습니다"라고 답하세요.
+- 예산 데이터에 없는 내용이지만 화폐혁명 지식베이스에 있는 질문에는 해당 지식으로 답변하세요.
+- 어떤 데이터에도 없는 내용은 "해당 데이터를 찾을 수 없습니다"라고 답하세요.
 - 연도: ${selectedYear}년 예산 기준
 
 [요약 통계]
@@ -190,7 +255,7 @@ export async function POST(request: NextRequest) {
 프로그램 수: ${uniquePrograms}개
 
 [관련 예산 데이터]
-${budgetContext || '관련 데이터를 찾지 못했습니다.'}`;
+${budgetContext || '관련 데이터를 찾지 못했습니다.'}${monetaryKnowledge}`;
 
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
@@ -200,7 +265,7 @@ ${budgetContext || '관련 데이터를 찾지 못했습니다.'}`;
         body: JSON.stringify({
           system_instruction: { parts: [{ text: systemPrompt }] },
           contents: [{ parts: [{ text: question }] }],
-          generationConfig: { maxOutputTokens: 800 },
+          generationConfig: { maxOutputTokens: isMonetaryQuestion ? 1500 : 800 },
         }),
       }
     );

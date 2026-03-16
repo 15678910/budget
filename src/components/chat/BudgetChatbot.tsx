@@ -10,8 +10,8 @@ interface ChatMessage {
 const SUGGESTED_QUESTIONS = [
   '2026년 국방 예산은 얼마인가요?',
   '교육 분야 예산이 가장 많은 부처는?',
-  '올해 복지 예산은 전년 대비 얼마나 늘었나요?',
-  '과학기술 R&D 예산 현황을 알려주세요',
+  '배당 달러(Dividend Dollar)란 무엇인가요?',
+  '현행 화폐 시스템의 이자 추출 구조를 설명해주세요',
 ];
 
 const AVAILABLE_YEARS = [2023, 2024, 2025, 2026];
