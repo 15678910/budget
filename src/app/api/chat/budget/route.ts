@@ -194,6 +194,7 @@ export async function POST(request: NextRequest) {
       '복리', '기금', '적립', '준비금',
       '발행', '자치구', '지방채', '공공발행', '화폐제도', '금융개혁',
       '은행', '대출', '금리', '이자',
+      '시군구', '기초자치단체', '광역자치단체', '지방자치', '지방정부', '지방재정',
     ];
     const isMonetaryQuestion = monetaryKeywords.some(kw =>
       question.toLowerCase().includes(kw.toLowerCase())
