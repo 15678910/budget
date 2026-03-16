@@ -18,6 +18,7 @@ function Slider({
   unit,
   subLabel,
   color,
+  tooltip,
   onChange,
 }: {
   label: string;
@@ -28,12 +29,20 @@ function Slider({
   unit: string;
   subLabel?: string;
   color: string;
+  tooltip?: string;
   onChange: (v: number) => void;
 }) {
   return (
     <div className="py-3">
       <div className="flex items-center justify-between mb-2">
-        <span className="text-base md:text-base text-gray-400">{label}</span>
+        <span className="text-base md:text-base text-gray-400 relative group/tip cursor-help">
+          {label}
+          {tooltip && (
+            <span className="invisible group-hover/tip:visible absolute left-0 top-full mt-1 z-50 w-64 p-2 text-xs text-gray-300 bg-gray-800 border border-gray-700 rounded-lg shadow-lg leading-relaxed whitespace-normal">
+              {tooltip}
+            </span>
+          )}
+        </span>
         <div className="flex items-center gap-2">
           <span className={`text-lg md:text-xl font-mono font-bold ${color}`}>
             {value}{unit}
@@ -310,6 +319,7 @@ export function EstablishmentRoadmapSimulator({ regionTab, selectedMetroName, se
             unit="%"
             subLabel={`${formatEok(regionBudget * (initialCapitalRate / 100))}`}
             color="text-cyan-400"
+            tooltip="지역 예산 대비 공공은행 초기 자본금 비율. BND는 $2M으로 시작하여 $10.8B까지 성장"
             onChange={setInitialCapitalRate}
           />
           <Slider
@@ -320,6 +330,7 @@ export function EstablishmentRoadmapSimulator({ regionTab, selectedMetroName, se
             step={5}
             unit="%"
             color="text-emerald-400"
+            tooltip="지방세 수입 중 공공은행에 의무 예치하는 비율. BND 모델의 핵심 자금 원천"
             onChange={setMandatoryDepositRate}
           />
           <Slider
@@ -331,6 +342,7 @@ export function EstablishmentRoadmapSimulator({ regionTab, selectedMetroName, se
             unit="년"
             subLabel={`총 ${phaseYears * 3}년`}
             color="text-purple-400"
+            tooltip="Phase 1(신용보증) → Phase 2(은행전환) → Phase 3(BND성숙) 각 단계의 기간"
             onChange={setPhaseYears}
           />
           <Slider
@@ -341,6 +353,7 @@ export function EstablishmentRoadmapSimulator({ regionTab, selectedMetroName, se
             step={0.1}
             unit="%"
             color="text-amber-400"
+            tooltip="공공은행이 적용할 대출금리. 낮을수록 지역 경제에 유리하나 수익 감소"
             onChange={setTargetLendingRate}
           />
         </div>

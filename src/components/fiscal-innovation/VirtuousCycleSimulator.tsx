@@ -26,6 +26,7 @@ function Slider({
   unit,
   subLabel,
   color,
+  tooltip,
   onChange,
 }: {
   label: string;
@@ -36,12 +37,20 @@ function Slider({
   unit: string;
   subLabel?: string;
   color: string;
+  tooltip?: string;
   onChange: (v: number) => void;
 }) {
   return (
     <div className="py-3">
       <div className="flex items-center justify-between mb-2">
-        <span className="text-base text-gray-400">{label}</span>
+        <span className="text-base text-gray-400 relative group/tip cursor-help">
+          {label}
+          {tooltip && (
+            <span className="invisible group-hover/tip:visible absolute left-0 top-full mt-1 z-50 w-64 p-2 text-xs text-gray-300 bg-gray-800 border border-gray-700 rounded-lg shadow-lg leading-relaxed whitespace-normal">
+              {tooltip}
+            </span>
+          )}
+        </span>
         <div className="flex items-center gap-2">
           <span className={`text-lg md:text-xl font-mono font-bold ${color}`}>
             {value}{unit}
@@ -434,6 +443,7 @@ export function VirtuousCycleSimulator({ regionTab, selectedMetroName, selectedD
             step={0.5}
             unit="%"
             color="text-cyan-400"
+            tooltip="AI 도입으로 절감되는 지역 예산 비율. 절감액의 일부가 공공은행 자본으로 전환"
             onChange={setAiEfficiencyRate}
           />
           <Slider
@@ -444,6 +454,7 @@ export function VirtuousCycleSimulator({ regionTab, selectedMetroName, selectedD
             step={0.1}
             unit="%"
             color="text-emerald-400"
+            tooltip="공공은행이 적용하는 대출금리. 대출수익이 기본소득 재원으로 활용"
             onChange={setBankLendingRate}
           />
           <Slider
@@ -454,6 +465,7 @@ export function VirtuousCycleSimulator({ regionTab, selectedMetroName, selectedD
             step={0.1}
             unit="배"
             color="text-purple-400"
+            tooltip="지역화폐 유통 시 경제적 승수효과. Phase 4에서 서비스예산의 30%를 지역화폐로 발행"
             onChange={setCurrencyMultiplier}
           />
           <Slider
@@ -464,6 +476,7 @@ export function VirtuousCycleSimulator({ regionTab, selectedMetroName, selectedD
             step={5}
             unit="%"
             color="text-amber-400"
+            tooltip="은행 순수익 중 자본으로 재투자하는 비율. 나머지는 주민 서비스/기본소득으로 배분"
             onChange={setReinvestmentRate}
           />
         </div>
@@ -483,6 +496,7 @@ export function VirtuousCycleSimulator({ regionTab, selectedMetroName, selectedD
             unit="%"
             subLabel={`GDP의 ${centralAITaxRate}%`}
             color="text-blue-400"
+            tooltip="GDP 대비 AI/디지털/로봇세 부과 비율. 전 국민 기본소득의 핵심 재원"
             onChange={setCentralAITaxRate}
           />
           <Slider
@@ -494,6 +508,7 @@ export function VirtuousCycleSimulator({ regionTab, selectedMetroName, selectedD
             unit="%"
             subLabel="AI세 중 UBI 배분"
             color="text-indigo-400"
+            tooltip="AI세 수입 중 기본소득으로 배분하는 비율. 나머지는 기타 공공지출에 사용"
             onChange={setCentralBIRate}
           />
         </div>
@@ -513,6 +528,7 @@ export function VirtuousCycleSimulator({ regionTab, selectedMetroName, selectedD
             unit="MW"
             subLabel={energyCapacityMW >= 1000 ? `${(energyCapacityMW / 1000).toFixed(1)}GW` : `${energyCapacityMW}MW`}
             color="text-yellow-400"
+            tooltip="태양광·풍력 혼합 설비 용량. 수익의 50%가 에너지 기본소득, 20%가 은행 자본으로 투입"
             onChange={setEnergyCapacityMW}
           />
         </div>

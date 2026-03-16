@@ -22,6 +22,7 @@ function Slider({
   unit,
   subLabel,
   color,
+  tooltip,
   onChange,
 }: {
   label: string;
@@ -32,12 +33,20 @@ function Slider({
   unit: string;
   subLabel?: string;
   color: string;
+  tooltip?: string;
   onChange: (v: number) => void;
 }) {
   return (
     <div className="py-3">
       <div className="flex items-center justify-between mb-2">
-        <span className="text-base text-gray-400">{label}</span>
+        <span className="text-base text-gray-400 relative group/tip cursor-help">
+          {label}
+          {tooltip && (
+            <span className="invisible group-hover/tip:visible absolute left-0 top-full mt-1 z-50 w-64 p-2 text-xs text-gray-300 bg-gray-800 border border-gray-700 rounded-lg shadow-lg leading-relaxed whitespace-normal">
+              {tooltip}
+            </span>
+          )}
+        </span>
         <div className="flex items-center gap-2">
           <span className={`text-lg md:text-xl font-mono font-bold ${color}`}>
             {value}{unit}
@@ -426,6 +435,7 @@ export function CurrencyRevolutionSimulator({ regionTab, selectedMetroName, sele
             step={1}
             unit="%"
             color="text-yellow-400"
+            tooltip="지역 예산 대비 배당형 지역화폐 발행 규모. 발행액에 배당률을 적용해 배당금 산출"
             onChange={setDividendIssuanceRate}
           />
           <Slider
@@ -436,6 +446,7 @@ export function CurrencyRevolutionSimulator({ regionTab, selectedMetroName, sele
             step={0.5}
             unit="%"
             color="text-yellow-400"
+            tooltip="배당형 지역화폐 보유자에게 지급하는 연간 배당률. 보유 자체에 경제적 인센티브 제공"
             onChange={setDividendRate}
           />
           <Slider
@@ -446,6 +457,7 @@ export function CurrencyRevolutionSimulator({ regionTab, selectedMetroName, sele
             step={5}
             unit="%"
             color="text-yellow-400"
+            tooltip="발행된 지역화폐의 지역 내 소비 비율. 높을수록 승수효과가 극대화됨"
             onChange={setLocalCirculationRate}
           />
         </div>
@@ -490,6 +502,7 @@ export function CurrencyRevolutionSimulator({ regionTab, selectedMetroName, sele
             step={1}
             unit="%"
             color="text-emerald-400"
+            tooltip="시중 가계대출을 공공신용조합 저리대출로 전환하는 비율"
             onChange={setLoanConversionRate}
           />
           <Slider
@@ -500,6 +513,7 @@ export function CurrencyRevolutionSimulator({ regionTab, selectedMetroName, sele
             step={0.1}
             unit="%"
             color="text-emerald-400"
+            tooltip="공공신용조합이 적용하는 대출금리. 시중 5% 대비 절감액이 가계에 환원"
             onChange={setPublicBankRate}
           />
           <Slider
@@ -510,6 +524,7 @@ export function CurrencyRevolutionSimulator({ regionTab, selectedMetroName, sele
             step={1}
             unit="%"
             color="text-emerald-400"
+            tooltip="공공신용조합 총수익 중 운영비 비율. 나머지가 지역 사회 투자에 활용되는 순수익"
             onChange={setOpCostRate}
           />
         </div>
@@ -555,6 +570,7 @@ export function CurrencyRevolutionSimulator({ regionTab, selectedMetroName, sele
             step={5}
             unit="%"
             color="text-blue-400"
+            tooltip="정부 재정의 G-Money(디지털 화폐) 전환 비율. 투명성 확보로 재정 누수 방지"
             onChange={setGMoneyConversionRate}
           />
           <Slider
@@ -565,6 +581,7 @@ export function CurrencyRevolutionSimulator({ regionTab, selectedMetroName, sele
             step={1}
             unit="%"
             color="text-blue-400"
+            tooltip="G-Money 전환으로 인한 행정비용 절감 비율. 에스토니아 사례: GDP의 ~2% 절감"
             onChange={setAdminEfficiencyRate}
           />
         </div>
@@ -610,6 +627,7 @@ export function CurrencyRevolutionSimulator({ regionTab, selectedMetroName, sele
             step={0.5}
             unit="%"
             color="text-purple-400"
+            tooltip="매년 예산에서 주권부기금(SWF)으로 적립하는 비율. 복리로 장기 자산 축적"
             onChange={setReserveRate}
           />
           <Slider
@@ -620,6 +638,7 @@ export function CurrencyRevolutionSimulator({ regionTab, selectedMetroName, sele
             step={0.5}
             unit="%"
             color="text-purple-400"
+            tooltip="SWF의 연간 투자 운용수익률. 노르웨이 GPFG 장기평균 약 6%"
             onChange={setInvestReturnRate}
           />
           <Slider
@@ -630,6 +649,7 @@ export function CurrencyRevolutionSimulator({ regionTab, selectedMetroName, sele
             step={1}
             unit="년"
             color="text-purple-400"
+            tooltip="SWF 적립을 지속하는 기간. 장기 운용 시 복리 효과로 기하급수적 성장"
             onChange={setReserveYears}
           />
         </div>

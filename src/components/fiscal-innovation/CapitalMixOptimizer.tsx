@@ -25,6 +25,7 @@ function Slider({
   unit,
   subLabel,
   color,
+  tooltip,
   onChange,
 }: {
   label: string;
@@ -35,12 +36,20 @@ function Slider({
   unit: string;
   subLabel?: string;
   color: string;
+  tooltip?: string;
   onChange: (v: number) => void;
 }) {
   return (
     <div className="py-3">
       <div className="flex items-center justify-between mb-2">
-        <span className="text-base md:text-base text-gray-400">{label}</span>
+        <span className="text-base md:text-base text-gray-400 relative group/tip cursor-help">
+          {label}
+          {tooltip && (
+            <span className="invisible group-hover/tip:visible absolute left-0 top-full mt-1 z-50 w-64 p-2 text-xs text-gray-300 bg-gray-800 border border-gray-700 rounded-lg shadow-lg leading-relaxed whitespace-normal">
+              {tooltip}
+            </span>
+          )}
+        </span>
         <div className="flex items-center gap-2">
           <span className={`text-lg md:text-xl font-mono font-bold ${color}`}>
             {value}{unit}
@@ -366,6 +375,7 @@ export function CapitalMixOptimizer({ regionTab, selectedMetroName, selectedDist
             step={1}
             unit="%"
             color="text-cyan-400"
+            tooltip="지역 예산에서 직접 출연하는 비율. BND 모델처럼 정부가 직접 자본 투자"
             onChange={setBudgetAlloc}
           />
           <Slider
@@ -376,6 +386,7 @@ export function CapitalMixOptimizer({ regionTab, selectedMetroName, selectedDist
             step={1}
             unit="%"
             color="text-purple-400"
+            tooltip="지방채 발행을 통한 자본 조달 비율. 캘리포니아 AB 857 모델 참조"
             onChange={setBondAlloc}
           />
           <Slider
@@ -386,6 +397,7 @@ export function CapitalMixOptimizer({ regionTab, selectedMetroName, selectedDist
             step={1}
             unit="%"
             color="text-emerald-400"
+            tooltip="자체세입 중 공공은행에 의무 예치하는 비율. 예치금의 5%가 Tier 2 자본으로 기여"
             onChange={setMandatoryDeposit}
           />
           <Slider
@@ -396,6 +408,7 @@ export function CapitalMixOptimizer({ regionTab, selectedMetroName, selectedDist
             step={1}
             unit="%"
             color="text-amber-400"
+            tooltip="근로자 급여에서 자동 기여하는 비율. 코스타리카 BPDC 모델 참조"
             onChange={setCitizenContrib}
           />
           <Slider
@@ -406,6 +419,7 @@ export function CapitalMixOptimizer({ regionTab, selectedMetroName, selectedDist
             step={1}
             unit="%"
             color="text-orange-400"
+            tooltip="공유재산, 공공데이터, 재생에너지 등 지역자원을 수익화하여 자본금 전환"
             onChange={setLocalResource}
           />
           <Slider
@@ -416,6 +430,7 @@ export function CapitalMixOptimizer({ regionTab, selectedMetroName, selectedDist
             step={1}
             unit="%"
             color="text-teal-400"
+            tooltip="은행 수익 중 자본으로 유보하는 비율. 독일 저축은행(Sparkassen) 모델"
             onChange={setRetainedEarnings}
           />
         </div>
@@ -428,6 +443,7 @@ export function CapitalMixOptimizer({ regionTab, selectedMetroName, selectedDist
             step={100}
             unit="억원"
             color="text-rose-400"
+            tooltip="공공은행이 달성할 목표 자본금. BIS 10배 레버리지 기준 대출 규모 결정"
             onChange={setTargetCapital}
           />
         </div>

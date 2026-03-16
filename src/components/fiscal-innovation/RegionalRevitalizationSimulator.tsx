@@ -35,6 +35,7 @@ function Slider({
   unit,
   subLabel,
   color,
+  tooltip,
   onChange,
 }: {
   label: string;
@@ -45,12 +46,20 @@ function Slider({
   unit: string;
   subLabel?: string;
   color: string;
+  tooltip?: string;
   onChange: (v: number) => void;
 }) {
   return (
     <div className="py-3">
       <div className="flex items-center justify-between mb-2">
-        <span className="text-base text-gray-400">{label}</span>
+        <span className="text-base text-gray-400 relative group/tip cursor-help">
+          {label}
+          {tooltip && (
+            <span className="invisible group-hover/tip:visible absolute left-0 top-full mt-1 z-50 w-64 p-2 text-xs text-gray-300 bg-gray-800 border border-gray-700 rounded-lg shadow-lg leading-relaxed whitespace-normal">
+              {tooltip}
+            </span>
+          )}
+        </span>
         <div className="flex items-center gap-2">
           <span className={`text-lg md:text-xl font-mono font-bold ${color}`}>
             {value}{unit}
@@ -361,6 +370,7 @@ export function RegionalRevitalizationSimulator({ regionTab, selectedMetroName, 
             unit="%"
             subLabel={`${Math.round(SNU_STUDENTS * deptTransferRate / 100).toLocaleString()}명`}
             color="text-cyan-400"
+            tooltip="서울대 전체 학과 중 지역으로 이전하는 비율. 5년에 걸쳐 단계적 이전"
             onChange={setDeptTransferRate}
           />
           <Slider
@@ -371,6 +381,7 @@ export function RegionalRevitalizationSimulator({ regionTab, selectedMetroName, 
             step={5}
             unit="%"
             color="text-emerald-400"
+            tooltip="비수도권 악성 미분양을 학생주택으로 전환하는 비율. 신축 대비 33% 저렴"
             onChange={setUnsoldConversionRate}
           />
           <Slider
@@ -381,6 +392,7 @@ export function RegionalRevitalizationSimulator({ regionTab, selectedMetroName, 
             step={0.1}
             unit="조원"
             color="text-amber-400"
+            tooltip="지역 거점 국립대에 추가 투자하는 금액. 1조원당 지역 취업률 약 3%p 상승 효과"
             onChange={setRegionalInvestment}
           />
           <Slider
@@ -391,6 +403,7 @@ export function RegionalRevitalizationSimulator({ regionTab, selectedMetroName, 
             step={100}
             unit="억원"
             color="text-purple-400"
+            tooltip="관악캠퍼스 자유시민대학 운영 예산. 명예교수 기반 평생학습 프로그램 운영"
             onChange={setCitizenUniBudget}
           />
           <Slider
@@ -401,6 +414,7 @@ export function RegionalRevitalizationSimulator({ regionTab, selectedMetroName, 
             step={1}
             unit="%"
             color="text-rose-400"
+            tooltip="이전 학과 학생 수 대비 산학협력으로 유치하는 기업 비율. 기업당 연 30명 고용"
             onChange={setIndustryRate}
           />
         </div>
