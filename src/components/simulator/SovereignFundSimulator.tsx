@@ -152,6 +152,7 @@ function formatManWon(value: number): string {
 
 export function SovereignFundSimulator() {
   // === Slider states ===
+  const paramsRef = useRef<HTMLDivElement>(null);
   const [efficiencyRate, setEfficiencyRate] = useState(5);    // 효율화율 1~15%
   const [fundReturnRate, setFundReturnRate] = useState(7);     // 펀드 수익률 3~12%
   const [years, setYears] = useState(20);                      // 운용기간 5~50년
@@ -262,7 +263,7 @@ export function SovereignFundSimulator() {
       </div>
 
       {/* ====== SECTION 2: 시뮬레이션 설정 (Sliders) ====== */}
-      <div className="border border-gray-800 p-4 md:p-5">
+      <div ref={paramsRef} className="border border-gray-800 p-4 md:p-5">
         <div className="text-sm md:text-base font-semibold uppercase tracking-widest text-blue-400 mb-3">
           시뮬레이션 설정 Simulation Parameters
         </div>
@@ -318,6 +319,7 @@ export function SovereignFundSimulator() {
           setEfficiencyRate(Math.min(15, Math.max(1, Math.round(rate * 2) / 2)));
         }}
         currentEfficiencyRate={efficiencyRate}
+        onScrollToParams={() => paramsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
       />
 
       {/* ====== SECTION 3: 효율화 결과 ====== */}

@@ -242,6 +242,7 @@ export function LocalFundSimulator() {
     };
   }, [tab, selectedMetro, selectedDistrict]);
 
+  const paramsRef = useRef<HTMLDivElement>(null);
   // === Slider states ===
   const [efficiencyRate, setEfficiencyRate] = useState(5);
   const [fundReturnRate, setFundReturnRate] = useState(7);
@@ -449,7 +450,7 @@ export function LocalFundSimulator() {
       </div>
 
       {/* ====== SECTION 2: 시뮬레이션 설정 ====== */}
-      <div className="border border-gray-800 p-4 md:p-5">
+      <div ref={paramsRef} className="border border-gray-800 p-4 md:p-5">
         <div className="text-sm md:text-base font-semibold uppercase tracking-widest text-blue-400 mb-3">
           시뮬레이션 설정 Simulation Parameters
         </div>
@@ -510,6 +511,7 @@ export function LocalFundSimulator() {
         <AICatalog
           onApplyEfficiency={(rate) => setEfficiencyRate(Math.max(1, Math.min(15, Math.round(rate * 10) / 10)))}
           currentEfficiencyRate={efficiencyRate}
+          onScrollToParams={() => paramsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
         />
       </div>
 

@@ -21,6 +21,7 @@ import { DataDownload } from '@/components/shared/DataDownload';
 interface AICatalogProps {
   onApplyEfficiency: (rate: number) => void;
   currentEfficiencyRate: number;
+  onScrollToParams?: () => void;
 }
 
 // ─── StatusBadge ───
@@ -42,7 +43,7 @@ function StatusBadge({ status }: { status: AIActivityStatus }) {
 
 // ─── Main Component ───
 
-export function AICatalog({ onApplyEfficiency, currentEfficiencyRate }: AICatalogProps) {
+export function AICatalog({ onApplyEfficiency, currentEfficiencyRate, onScrollToParams }: AICatalogProps) {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [filterDept, setFilterDept] = useState<string>('전체');
   const [filterSDG, setFilterSDG] = useState<number>(0);
@@ -243,7 +244,7 @@ export function AICatalog({ onApplyEfficiency, currentEfficiencyRate }: AICatalo
             </span>
           </div>
           <button
-            onClick={() => onApplyEfficiency(efficiencyRate)}
+            onClick={() => { onApplyEfficiency(efficiencyRate); onScrollToParams?.(); }}
             disabled={selectedIds.size === 0}
             className="px-4 py-2 bg-blue-600 hover:bg-blue-500 disabled:bg-gray-700 disabled:text-gray-500 text-white text-sm font-bold rounded transition-colors"
           >
