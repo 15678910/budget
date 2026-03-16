@@ -55,9 +55,9 @@ export default function PublicBankPage() {
     }
   };
 
-  // Which tabs need the region selector
-  const REGION_TABS: TabKey[] = ['roadmap', 'capital', 'cycle', 'currency'];
-  const showRegionSelector = REGION_TABS.includes(activeTab);
+  // Which tabs hide the region selector (only non-region tabs)
+  const NO_REGION_TABS: TabKey[] = ['legal', 'faq'];
+  const showRegionSelector = !NO_REGION_TABS.includes(activeTab);
 
   return (
     <div className="w-full max-w-7xl mx-auto">
