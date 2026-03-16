@@ -153,8 +153,8 @@ export default function PublicBankPage() {
         {activeTab === 'roadmap' && <EstablishmentRoadmapSimulator regionTab={regionTab} selectedMetroName={selectedMetroName} selectedDistrictName={selectedDistrictName} />}
         {activeTab === 'capital' && <CapitalMixOptimizer regionTab={regionTab} selectedMetroName={selectedMetroName} selectedDistrictName={selectedDistrictName} />}
         {activeTab === 'cycle' && <VirtuousCycleSimulator regionTab={regionTab} selectedMetroName={selectedMetroName} selectedDistrictName={selectedDistrictName} />}
-        {activeTab === 'housing' && <PublicHousingSimulator />}
-        {activeTab === 'regional' && <RegionalRevitalizationSimulator />}
+        {activeTab === 'housing' && <PublicHousingSimulator regionTab={regionTab} selectedMetroName={selectedMetroName} selectedDistrictName={selectedDistrictName} />}
+        {activeTab === 'regional' && <RegionalRevitalizationSimulator regionTab={regionTab} selectedMetroName={selectedMetroName} selectedDistrictName={selectedDistrictName} />}
         {activeTab === 'currency' && <CurrencyRevolutionSimulator regionTab={regionTab} selectedMetroName={selectedMetroName} selectedDistrictName={selectedDistrictName} />}
         {activeTab === 'legal' && <LegalFrameworkGuide />}
         {activeTab === 'faq' && <PublicBankFAQ />}

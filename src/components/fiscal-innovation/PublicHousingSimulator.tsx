@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useMemo, useRef } from 'react';
+import { getMetroFiscalData, getDistrictFiscalData } from '@/lib/data/fiscal-health-data';
 import { DataSources } from '@/components/shared/DataSources';
 import { PDFExportButton } from '@/components/shared/PDFExportButton';
 
@@ -147,9 +148,44 @@ interface YearData {
 // Main Component
 // ============================================================
 
-export function PublicHousingSimulator() {
+interface RegionProps {
+  regionTab: 'metro' | 'district';
+  selectedMetroName: string;
+  selectedDistrictName: string;
+}
+
+export function PublicHousingSimulator({ regionTab, selectedMetroName, selectedDistrictName }: RegionProps) {
+  // === Region data ===
+  const allMetros = useMemo(() => getMetroFiscalData(), []);
+  const districts = useMemo(
+    () => getDistrictFiscalData(selectedMetroName).sort((a, b) => a.name.localeCompare(b.name, 'ko')),
+    [selectedMetroName],
+  );
+  const selectedMetro = allMetros.find(m => m.name === selectedMetroName);
+  const selectedDistrict = useMemo(() => {
+    if (regionTab !== 'district' || districts.length === 0) return undefined;
+    const found = districts.find(d => d.name === selectedDistrictName);
+    return found ?? districts[0];
+  }, [regionTab, districts, selectedDistrictName]);
+
+  const regionBudget = regionTab === 'metro'
+    ? (selectedMetro?.budget ?? 0)
+    : (selectedDistrict?.budget ?? 0);
+  const regionPopulation = regionTab === 'metro'
+    ? (selectedMetro?.population ?? 0)
+    : (selectedDistrict?.population ?? 0);
+  const regionName = regionTab === 'metro'
+    ? selectedMetroName
+    : (selectedDistrict?.name ?? selectedDistrictName);
+
+  const NATIONAL_POPULATION = useMemo(
+    () => allMetros.reduce((sum, m) => sum + m.population, 0),
+    [allMetros],
+  );
+  const populationShare = NATIONAL_POPULATION > 0 ? regionPopulation / NATIONAL_POPULATION : 0;
+
   // === Slider states ===
-  const [annualBudget, setAnnualBudget] = useState(50);
+  const [housingBudgetRate, setHousingBudgetRate] = useState(15);
   const [conversionRate, setConversionRate] = useState(50);
   const [costPerUnit, setCostPerUnit] = useState(3.0);
   const [bankDiscount, setBankDiscount] = useState(15);
@@ -161,8 +197,11 @@ export function PublicHousingSimulator() {
     let cumulativeUnits = 0;
 
     for (let y = 1; y <= 30; y++) {
-      // Budget calculation
-      const housingBudget = annualBudget * (conversionRate / 100) * 10000; // 조원 -> 억원
+      // Scale national constants to region
+      const regionalHousingStock = Math.round(TOTAL_HOUSING_STOCK * populationShare);
+      const regionalPublicHousing = Math.round(CURRENT_PUBLIC_HOUSING * populationShare);
+
+      const housingBudget = regionBudget * (housingBudgetRate / 100); // 억원 (regionBudget is already in 억원)
       const effectiveCost = costPerUnit * (1 - bankDiscount / 100); // 억원
 
       // Ramp-up: 3-year gradual implementation
@@ -173,10 +212,10 @@ export function PublicHousingSimulator() {
       cumulativeUnits += unitsBuilt;
 
       // Housing stock grows naturally
-      const totalHousingStock = TOTAL_HOUSING_STOCK * Math.pow(1 + HOUSING_GROWTH_RATE, y);
+      const totalHousingStock = regionalHousingStock * Math.pow(1 + HOUSING_GROWTH_RATE, y);
 
       // Public housing ratio
-      const publicRatio = ((CURRENT_PUBLIC_HOUSING + cumulativeUnits) / totalHousingStock) * 100;
+      const publicRatio = ((regionalPublicHousing + cumulativeUnits) / totalHousingStock) * 100;
 
       // PIR dampening: each 1% increase in public ratio -> PIR decreases by ~0.3 for Seoul
       const ratioIncrease = publicRatio - CURRENT_PUBLIC_RATIO;
@@ -208,7 +247,7 @@ export function PublicHousingSimulator() {
     }
 
     return yearlyData;
-  }, [annualBudget, conversionRate, costPerUnit, bankDiscount, metroAllocation]);
+  }, [regionBudget, regionPopulation, populationShare, housingBudgetRate, conversionRate, costPerUnit, bankDiscount, metroAllocation, regionName]);
 
   // === Derived metrics ===
   const finalData = data[29];
@@ -271,6 +310,14 @@ export function PublicHousingSimulator() {
         </div>
       </div>
 
+      {/* ====== REGION INFO ====== */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-px">
+        <SectionHeader title={`선택 지역: ${regionName}`} color="text-teal-400" />
+        <Cell label="지역 예산" value={`${(regionBudget / 10000).toFixed(1)}조원`} color="text-teal-300" />
+        <Cell label="지역 인구" value={`${(regionPopulation / 10000).toFixed(0)}만명`} color="text-teal-300" />
+        <Cell label="전국 인구 비율" value={`${(populationShare * 100).toFixed(1)}%`} color="text-teal-300" />
+      </div>
+
       {/* ====== SLIDERS ====== */}
       <div className="border border-gray-800 p-4 md:p-5">
         <div className="text-sm md:text-base font-semibold uppercase tracking-widest text-blue-400 mb-3">
@@ -278,14 +325,14 @@ export function PublicHousingSimulator() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
           <Slider
-            label="연간 저출산 예산"
-            value={annualBudget}
-            min={20}
-            max={100}
-            step={5}
-            unit="조원"
-            color="text-cyan-400"
-            onChange={setAnnualBudget}
+            label="공공주택 예산 비율"
+            value={housingBudgetRate}
+            min={5}
+            max={30}
+            step={1}
+            unit="%"
+            color="text-blue-400"
+            onChange={setHousingBudgetRate}
           />
           <Slider
             label="공공주택 전환율"

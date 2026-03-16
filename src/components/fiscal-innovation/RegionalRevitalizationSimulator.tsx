@@ -3,6 +3,7 @@
 import React, { useState, useMemo, useRef } from 'react';
 import { DataSources } from '@/components/shared/DataSources';
 import { PDFExportButton } from '@/components/shared/PDFExportButton';
+import { getMetroFiscalData, getDistrictFiscalData } from '@/lib/data/fiscal-health-data';
 
 // ============================================================
 // Constants
@@ -148,7 +149,53 @@ interface YearData {
 // Main Component
 // ============================================================
 
-export function RegionalRevitalizationSimulator() {
+interface RegionProps {
+  regionTab: 'metro' | 'district';
+  selectedMetroName: string;
+  selectedDistrictName: string;
+}
+
+export function RegionalRevitalizationSimulator({ regionTab, selectedMetroName, selectedDistrictName }: RegionProps) {
+  // === Region data ===
+  const allMetros = useMemo(() => getMetroFiscalData(), []);
+  const districts = useMemo(
+    () => getDistrictFiscalData(selectedMetroName).sort((a, b) => a.name.localeCompare(b.name, 'ko')),
+    [selectedMetroName],
+  );
+  const selectedMetro = allMetros.find(m => m.name === selectedMetroName);
+  const selectedDistrict = useMemo(() => {
+    if (regionTab !== 'district' || districts.length === 0) return undefined;
+    const found = districts.find(d => d.name === selectedDistrictName);
+    return found ?? districts[0];
+  }, [regionTab, districts, selectedDistrictName]);
+
+  const regionBudget = regionTab === 'metro'
+    ? (selectedMetro?.budget ?? 0)
+    : (selectedDistrict?.budget ?? 0);
+  const regionPopulation = regionTab === 'metro'
+    ? (selectedMetro?.population ?? 0)
+    : (selectedDistrict?.population ?? 0);
+  const regionName = regionTab === 'metro'
+    ? selectedMetroName
+    : (selectedDistrict?.name ?? selectedDistrictName);
+
+  // Dynamic population calculations (replacing hardcoded constants)
+  const TOTAL_POPULATION = useMemo(
+    () => allMetros.reduce((sum, m) => sum + m.population, 0),
+    [allMetros],
+  );
+  const METRO_AREA_NAMES = ['서울특별시', '인천광역시', '경기도'];
+  const metroAreaPopulation = useMemo(
+    () => allMetros.filter(m => METRO_AREA_NAMES.includes(m.name)).reduce((sum, m) => sum + m.population, 0),
+    [allMetros],
+  );
+  const nonMetroPopulation = TOTAL_POPULATION - metroAreaPopulation;
+  const dynamicMetroPopRatio = TOTAL_POPULATION > 0 ? (metroAreaPopulation / TOTAL_POPULATION) * 100 : 50.4;
+
+  // Scale unsold housing to selected region's share of non-metro population
+  const regionalUnsoldScale = nonMetroPopulation > 0 ? regionPopulation / nonMetroPopulation : 0;
+  const scaledUnsoldNonmetro = Math.round(UNSOLD_NONMETRO * regionalUnsoldScale);
+
   // === Slider states ===
   const [deptTransferRate, setDeptTransferRate] = useState(50);
   const [unsoldConversionRate, setUnsoldConversionRate] = useState(50);
@@ -174,8 +221,8 @@ export function RegionalRevitalizationSimulator() {
       // 미분양 흡수
       const directConversion = Math.round(UNSOLD_NONMETRO * (unsoldConversionRate / 100) * ramp);
       const populationAbsorption = Math.round(relatedPopulation / 2.5);
-      const unsoldAbsorbed = Math.min(directConversion + populationAbsorption, UNSOLD_NONMETRO);
-      const unsoldRemaining = Math.max(UNSOLD_NONMETRO - unsoldAbsorbed, 0);
+      const unsoldAbsorbed = Math.min(directConversion + populationAbsorption, scaledUnsoldNonmetro);
+      const unsoldRemaining = Math.max(scaledUnsoldNonmetro - unsoldAbsorbed, 0);
 
       // 지역 취업률 개선
       const investmentEffect = (regionalInvestment * 10000 / SNU_GOV_GRANT) * 3.0 * ramp;
@@ -183,12 +230,12 @@ export function RegionalRevitalizationSimulator() {
       const regionalEmployRate = Math.min(REGIONAL_EMPLOYMENT_RATE + investmentEffect + industryEffect, 75);
 
       // 수도권 인구 비중 감소
-      const popShift = (relatedPopulation / 51_350_000) * 100;
+      const popShift = (relatedPopulation / TOTAL_POPULATION) * 100;
       const indirectShift = investmentEffect * 0.1 * ramp;
-      const metroPopRatio = Math.max(METRO_POPULATION_RATIO - popShift - indirectShift, 38);
+      const metroPopRatio = Math.max(dynamicMetroPopRatio - popShift - indirectShift, 38);
 
       // 출산율
-      const housingEffect = (unsoldAbsorbed / UNSOLD_NONMETRO) * 0.08;
+      const housingEffect = scaledUnsoldNonmetro > 0 ? (unsoldAbsorbed / scaledUnsoldNonmetro) * 0.08 : 0;
       const employEffect = ((regionalEmployRate - REGIONAL_EMPLOYMENT_RATE) / 100) * 0.5;
       const estimatedTFR = Math.min(BASE_TFR + housingEffect + employEffect, 1.5);
 
@@ -224,7 +271,7 @@ export function RegionalRevitalizationSimulator() {
     }
 
     return yearlyData;
-  }, [deptTransferRate, unsoldConversionRate, regionalInvestment, citizenUniBudget, industryRate]);
+  }, [deptTransferRate, unsoldConversionRate, regionalInvestment, citizenUniBudget, industryRate, TOTAL_POPULATION, dynamicMetroPopRatio, scaledUnsoldNonmetro]);
 
   // === Derived metrics ===
   const finalData = data[14];
@@ -232,9 +279,9 @@ export function RegionalRevitalizationSimulator() {
 
   // === Verdict ===
   const verdict: 'success' | 'partial' | 'insufficient' =
-    finalData.unsoldRemaining <= UNSOLD_NONMETRO * 0.3 && finalData.regionalEmployRate >= 55
+    finalData.unsoldRemaining <= scaledUnsoldNonmetro * 0.3 && finalData.regionalEmployRate >= 55
       ? 'success'
-      : finalData.unsoldRemaining <= UNSOLD_NONMETRO * 0.5
+      : finalData.unsoldRemaining <= scaledUnsoldNonmetro * 0.5
         ? 'partial'
         : 'insufficient';
 
@@ -289,6 +336,14 @@ export function RegionalRevitalizationSimulator() {
             학과 이전 &rarr; 미분양 해소 &rarr; 지역 자립
           </span>
         </div>
+      </div>
+
+      {/* Region Info */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-px">
+        <SectionHeader title={`선택 지역: ${regionName}`} color="text-teal-400" />
+        <Cell label="지역 예산" value={`${(regionBudget / 10000).toFixed(1)}조원`} color="text-teal-300" />
+        <Cell label="지역 인구" value={`${(regionPopulation / 10000).toFixed(0)}만명`} color="text-teal-300" />
+        <Cell label="지역 미분양 추정" value={`${scaledUnsoldNonmetro.toLocaleString()}호`} color="text-orange-300" />
       </div>
 
       {/* ====== SLIDERS ====== */}
