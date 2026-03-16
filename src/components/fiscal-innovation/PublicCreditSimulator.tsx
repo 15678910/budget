@@ -245,56 +245,58 @@ export function PublicCreditSimulator() {
 
       {/* ====== SECTION 1: 지역 현황 + Region Selector ====== */}
       <div className="grid grid-cols-2 md:grid-cols-4">
-        <SectionHeader title="지역 현황 Regional Overview" color="text-cyan-400" />
+        <div className="col-span-full border border-gray-800 px-4 py-2 text-cyan-400">
+          <div className="flex items-center justify-between overflow-x-auto gap-3">
+            <span className="text-sm md:text-base font-semibold uppercase tracking-widest shrink-0">
+              지역 현황 Regional Overview
+            </span>
+            <div className="flex items-center gap-2 shrink-0">
+              {/* Tab: 광역시도 | 시군구 */}
+              <div className="flex rounded overflow-hidden border border-gray-700">
+                <button
+                  onClick={() => setRegionTab('metro')}
+                  className={`px-3 py-1.5 text-sm transition-colors ${
+                    regionTab === 'metro'
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-gray-800 text-gray-400 hover:text-gray-200'
+                  }`}
+                >
+                  광역시도
+                </button>
+                <button
+                  onClick={() => setRegionTab('district')}
+                  className={`px-3 py-1.5 text-sm transition-colors ${
+                    regionTab === 'district'
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-gray-800 text-gray-400 hover:text-gray-200'
+                  }`}
+                >
+                  시군구
+                </button>
+              </div>
 
-        {/* Region selector */}
-        <div className="col-span-full border border-gray-800 p-3 md:p-4">
-          <div className="flex items-center gap-3 overflow-x-auto">
-            {/* Tab: 광역시도 | 시군구 */}
-            <div className="flex rounded overflow-hidden border border-gray-700 shrink-0">
-              <button
-                onClick={() => setRegionTab('metro')}
-                className={`px-3 py-1.5 text-sm rounded-none transition-colors ${
-                  regionTab === 'metro'
-                    ? 'bg-cyan-900/50 text-cyan-300 border-none'
-                    : 'bg-gray-900 text-gray-500 border-none hover:text-gray-300'
-                }`}
-              >
-                광역시도
-              </button>
-              <button
-                onClick={() => setRegionTab('district')}
-                className={`px-3 py-1.5 text-sm rounded-none transition-colors ${
-                  regionTab === 'district'
-                    ? 'bg-cyan-900/50 text-cyan-300 border-none'
-                    : 'bg-gray-900 text-gray-500 border-none hover:text-gray-300'
-                }`}
-              >
-                시군구
-              </button>
-            </div>
-
-            {/* Dropdowns */}
-            <select
-              value={selectedMetroName}
-              onChange={(e) => handleMetroChange(e.target.value)}
-              className="bg-gray-900 border border-gray-700 text-gray-300 text-sm rounded px-3 py-2 focus:outline-none focus:border-cyan-600 shrink-0"
-            >
-              {metroNames.map(name => (
-                <option key={name} value={name}>{name}</option>
-              ))}
-            </select>
-            {regionTab === 'district' && (
+              {/* Dropdowns */}
               <select
-                value={selectedDistrictName}
-                onChange={(e) => setSelectedDistrictName(e.target.value)}
-                className="bg-gray-900 border border-gray-700 text-gray-300 text-sm rounded px-3 py-2 focus:outline-none focus:border-cyan-600 shrink-0"
+                value={selectedMetroName}
+                onChange={(e) => handleMetroChange(e.target.value)}
+                className="bg-gray-900 border border-gray-700 text-gray-300 text-sm rounded px-3 py-2 focus:outline-none focus:border-cyan-600"
               >
-                {districts.map(d => (
-                  <option key={d.name} value={d.name}>{d.name}</option>
+                {metroNames.map(name => (
+                  <option key={name} value={name}>{name}</option>
                 ))}
               </select>
-            )}
+              {regionTab === 'district' && (
+                <select
+                  value={selectedDistrictName}
+                  onChange={(e) => setSelectedDistrictName(e.target.value)}
+                  className="bg-gray-900 border border-gray-700 text-gray-300 text-sm rounded px-3 py-2 focus:outline-none focus:border-cyan-600"
+                >
+                  {districts.map(d => (
+                    <option key={d.name} value={d.name}>{d.name}</option>
+                  ))}
+                </select>
+              )}
+            </div>
           </div>
         </div>
 
