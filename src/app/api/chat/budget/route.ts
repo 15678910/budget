@@ -192,6 +192,8 @@ export async function POST(request: NextRequest) {
       '공공화폐', '주권화폐', '국가화폐', '화폐주권', '정부화폐',
       '이자부담', '국가부채', '가계부채', '부채', '빚',
       '복리', '기금', '적립', '준비금',
+      '발행', '자치구', '지방채', '공공발행', '화폐제도', '금융개혁',
+      '은행', '대출', '금리', '이자',
     ];
     const isMonetaryQuestion = monetaryKeywords.some(kw =>
       question.toLowerCase().includes(kw.toLowerCase())
@@ -283,7 +285,7 @@ ${budgetContext || '관련 데이터를 찾지 못했습니다.'}${monetaryKnowl
         body: JSON.stringify({
           system_instruction: { parts: [{ text: systemPrompt }] },
           contents: [{ parts: [{ text: question }] }],
-          generationConfig: { maxOutputTokens: isMonetaryQuestion ? 1500 : 800 },
+          generationConfig: { maxOutputTokens: isMonetaryQuestion ? 2500 : 1200 },
         }),
       }
     );
