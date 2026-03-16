@@ -30,7 +30,7 @@ export async function generateMetadata({
     }
   });
 
-  const title = decoded.length > 0 ? `${decoded.join(" > ")} | 나라살림` : "예산 탐색 | 나라살림";
+  const title = decoded.length > 0 ? `${decoded.join(" > ")} | 마을살림/나라살림` : "예산 탐색 | 마을살림/나라살림";
 
   return {
     title,

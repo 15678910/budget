@@ -222,7 +222,7 @@ export function SovereignFundSimulator() {
         <div className="flex items-center gap-2">
           <PDFExportButton targetRef={contentRef} filename="AI기본사회" />
           <span className="text-sm md:text-base text-gray-600">
-            나라살림 효율화 계산기
+            마을살림/나라살림 효율화 계산기
           </span>
         </div>
       </div>

@@ -35,7 +35,7 @@ export function ShareModal({ isOpen, onClose }: ShareModalProps) {
         logging: false,
       });
       const link = document.createElement('a');
-      link.download = `나라살림-${document.title.split('|')[0].trim()}-${new Date().toISOString().split('T')[0]}.png`;
+      link.download = `마을살림_나라살림-${document.title.split('|')[0].trim()}-${new Date().toISOString().split('T')[0]}.png`;
       link.href = canvas.toDataURL('image/png');
       link.click();
     } catch (error) {

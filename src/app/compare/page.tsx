@@ -12,7 +12,7 @@ import type { BudgetTreeNode } from "@/types/budget";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "예산 비교 | 나라살림",
+  title: "예산 비교 | 마을살림/나라살림",
   description: "한국 정부 예산을 연도별·지역별로 비교합니다.",
 };
 

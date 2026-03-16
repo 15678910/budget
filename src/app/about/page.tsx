@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: '플랫폼 소개 | 나라살림',
+  title: '플랫폼 소개 | 마을살림/나라살림',
   description:
-    '대한민국 재정 시각화 & 정책 시뮬레이션 플랫폼 나라살림의 핵심 기능과 차별점을 소개합니다.',
+    '대한민국 재정 시각화 & 정책 시뮬레이션 플랫폼 마을살림/나라살림의 핵심 기능과 차별점을 소개합니다.',
 };
 
 // ─── Feature card data ───
@@ -171,11 +171,11 @@ export default function AboutPage() {
           마을살림/나라살림의 특징
         </h1>
         <p className="max-w-3xl mx-auto text-base md:text-lg text-gray-400 leading-relaxed">
-          나라살림은 <strong className="text-gray-200">대한민국 재정 데이터 시각화와 정책 시뮬레이션</strong>을
+          마을살림/나라살림은 <strong className="text-gray-200">대한민국 재정 데이터 시각화와 정책 시뮬레이션</strong>을
           위해 설계된 시민 참여형 플랫폼입니다.
-          일반적인 재정 공개 시스템과 달리 나라살림은 예산 탐색부터 정책 효과 시뮬레이션,
+          일반적인 재정 공개 시스템과 달리 마을살림/나라살림은 예산 탐색부터 정책 효과 시뮬레이션,
           AI 효율화 분석, 공약 검증에 이르기까지 재정 민주주의의 전 과정을 지원합니다.
-          나라살림을 통해 시민, 공무원, 연구자 모두가 데이터에 기반한 정책 판단을
+          마을살림/나라살림을 통해 시민, 공무원, 연구자 모두가 데이터에 기반한 정책 판단을
           더 빠르고 투명하게 내릴 수 있습니다.
         </p>
       </section>
@@ -218,7 +218,7 @@ export default function AboutPage() {
             <thead>
               <tr className="bg-gray-900/60 text-gray-400">
                 <th className="px-4 py-3 font-medium">기능</th>
-                <th className="px-4 py-3 font-medium text-center text-blue-400">나라살림</th>
+                <th className="px-4 py-3 font-medium text-center text-blue-400">마을살림/나라살림</th>
                 <th className="px-4 py-3 font-medium text-center">지방재정365</th>
                 <th className="px-4 py-3 font-medium text-center">열린재정</th>
                 <th className="px-4 py-3 font-medium text-center">국민참여예산</th>

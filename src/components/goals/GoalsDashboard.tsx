@@ -331,7 +331,7 @@ export function GoalsDashboard() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `나라살림_목표설정_${new Date().toISOString().slice(0, 10)}.json`;
+    a.download = `마을살림_나라살림_목표설정_${new Date().toISOString().slice(0, 10)}.json`;
     a.click();
     URL.revokeObjectURL(url);
   }, [exportGoals]);

@@ -42,7 +42,7 @@ export function PDFExportButton({ targetRef, filename }: PDFExportButtonProps) {
       pdf.setFontSize(10);
       pdf.setTextColor(150);
       const today = new Date().toISOString().split('T')[0];
-      pdf.text(`나라살림 | ${filename} | ${today}`, margin, 7);
+      pdf.text(`마을살림/나라살림 | ${filename} | ${today}`, margin, 7);
 
       // If content fits in one page
       if (scaledHeight + 10 <= pdfHeight - margin) {
@@ -59,7 +59,7 @@ export function PDFExportButton({ targetRef, filename }: PDFExportButtonProps) {
             pdf.addPage();
             pdf.setFontSize(10);
             pdf.setTextColor(150);
-            pdf.text(`나라살림 | ${filename} | ${today}`, margin, 7);
+            pdf.text(`마을살림/나라살림 | ${filename} | ${today}`, margin, 7);
           }
 
           // Create a canvas slice
@@ -80,7 +80,7 @@ export function PDFExportButton({ targetRef, filename }: PDFExportButtonProps) {
         }
       }
 
-      pdf.save(`나라살림-${filename}-${today}.pdf`);
+      pdf.save(`마을살림_나라살림-${filename}-${today}.pdf`);
     } catch (error) {
       console.error('PDF generation failed:', error);
     } finally {

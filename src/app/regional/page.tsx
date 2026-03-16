@@ -5,7 +5,7 @@ import { KoreaMap } from '@/components/map/KoreaMap';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: '지역지도 - 마을살림나라살림',
+  title: '지역지도 - 마을살림/나라살림',
   description: '대한민국 17개 광역시도의 예산을 지도에서 비교하세요. 클릭하면 시군구별 예산을 볼 수 있습니다.',
 };
 

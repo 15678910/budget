@@ -3,7 +3,7 @@ import type { BudgetRawItem } from '@/types/budget';
 import { TablePageWrapper } from '@/components/table/TablePageWrapper';
 
 export const metadata = {
-  title: '예산 테이블 | 나라살림',
+  title: '예산 테이블 | 마을살림/나라살림',
   description: '대한민국 정부 예산 계층 구조를 테이블로 확인하세요.',
 };
 

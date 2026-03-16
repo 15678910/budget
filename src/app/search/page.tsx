@@ -3,7 +3,7 @@ import type { BudgetRawItem, DatasetMetadata } from '@/types/budget';
 import { SearchPage } from '@/components/search/SearchPage';
 
 export const metadata = {
-  title: '예산 검색 | 나라살림',
+  title: '예산 검색 | 마을살림/나라살림',
   description: '대한민국 정부 예산 항목을 검색하세요.',
 };
 
