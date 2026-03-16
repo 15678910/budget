@@ -249,36 +249,36 @@ export function PublicCreditSimulator() {
 
         {/* Region selector */}
         <div className="col-span-full border border-gray-800 p-3 md:p-4">
-          {/* Tab: 광역시도 | 시군구 */}
-          <div className="flex gap-2 mb-3">
-            <button
-              onClick={() => setRegionTab('metro')}
-              className={`px-3 py-1.5 text-sm rounded transition-colors ${
-                regionTab === 'metro'
-                  ? 'bg-cyan-900/50 text-cyan-300 border border-cyan-700/50'
-                  : 'bg-gray-900 text-gray-500 border border-gray-800 hover:text-gray-300'
-              }`}
-            >
-              광역시도
-            </button>
-            <button
-              onClick={() => setRegionTab('district')}
-              className={`px-3 py-1.5 text-sm rounded transition-colors ${
-                regionTab === 'district'
-                  ? 'bg-cyan-900/50 text-cyan-300 border border-cyan-700/50'
-                  : 'bg-gray-900 text-gray-500 border border-gray-800 hover:text-gray-300'
-              }`}
-            >
-              시군구
-            </button>
-          </div>
+          <div className="flex items-center gap-3 overflow-x-auto">
+            {/* Tab: 광역시도 | 시군구 */}
+            <div className="flex rounded overflow-hidden border border-gray-700 shrink-0">
+              <button
+                onClick={() => setRegionTab('metro')}
+                className={`px-3 py-1.5 text-sm rounded-none transition-colors ${
+                  regionTab === 'metro'
+                    ? 'bg-cyan-900/50 text-cyan-300 border-none'
+                    : 'bg-gray-900 text-gray-500 border-none hover:text-gray-300'
+                }`}
+              >
+                광역시도
+              </button>
+              <button
+                onClick={() => setRegionTab('district')}
+                className={`px-3 py-1.5 text-sm rounded-none transition-colors ${
+                  regionTab === 'district'
+                    ? 'bg-cyan-900/50 text-cyan-300 border-none'
+                    : 'bg-gray-900 text-gray-500 border-none hover:text-gray-300'
+                }`}
+              >
+                시군구
+              </button>
+            </div>
 
-          {/* Dropdowns */}
-          <div className="flex flex-col md:flex-row gap-2">
+            {/* Dropdowns */}
             <select
               value={selectedMetroName}
               onChange={(e) => handleMetroChange(e.target.value)}
-              className="flex-1 bg-gray-900 border border-gray-700 text-gray-300 text-sm rounded px-3 py-2 focus:outline-none focus:border-cyan-600"
+              className="bg-gray-900 border border-gray-700 text-gray-300 text-sm rounded px-3 py-2 focus:outline-none focus:border-cyan-600 shrink-0"
             >
               {metroNames.map(name => (
                 <option key={name} value={name}>{name}</option>
@@ -288,7 +288,7 @@ export function PublicCreditSimulator() {
               <select
                 value={selectedDistrictName}
                 onChange={(e) => setSelectedDistrictName(e.target.value)}
-                className="flex-1 bg-gray-900 border border-gray-700 text-gray-300 text-sm rounded px-3 py-2 focus:outline-none focus:border-cyan-600"
+                className="bg-gray-900 border border-gray-700 text-gray-300 text-sm rounded px-3 py-2 focus:outline-none focus:border-cyan-600 shrink-0"
               >
                 {districts.map(d => (
                   <option key={d.name} value={d.name}>{d.name}</option>

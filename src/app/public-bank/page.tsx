@@ -90,13 +90,13 @@ export default function PublicBankPage() {
         {/* Shared Region Selector */}
         {showRegionSelector && (
           <div className="border border-gray-800 p-4 md:p-5">
-            <div className="flex flex-wrap items-center gap-4">
-              <div className="text-sm md:text-base font-semibold uppercase tracking-widest text-teal-400">
+            <div className="flex items-center gap-4 overflow-x-auto">
+              <div className="text-sm md:text-base font-semibold uppercase tracking-widest text-teal-400 shrink-0">
                 지역 선택
               </div>
 
               {/* Tab buttons */}
-              <div className="flex rounded overflow-hidden border border-gray-700 w-fit">
+              <div className="flex rounded overflow-hidden border border-gray-700 shrink-0">
                 <button
                   className={`px-4 py-2 text-base font-medium transition-colors ${regionTab === 'metro' ? 'bg-blue-600 text-white' : 'bg-gray-800 text-gray-400 hover:text-gray-200'}`}
                   onClick={() => handleRegionTabChange('metro')}
@@ -112,36 +112,34 @@ export default function PublicBankPage() {
               </div>
 
               {/* Dropdowns */}
-              <div className="flex flex-wrap gap-3">
-                <select
-                  className="bg-gray-800 border border-gray-700 text-gray-200 rounded px-3 py-2 text-base focus:outline-none focus:ring-1 focus:ring-blue-500"
-                  value={selectedMetroName}
-                  onChange={(e) => handleMetroChange(e.target.value)}
-                >
-                  {metroNames.map((name) => (
-                    <option key={name} value={name}>{name}</option>
-                  ))}
-                </select>
+              <select
+                className="bg-gray-800 border border-gray-700 text-gray-200 rounded px-3 py-2 text-base focus:outline-none focus:ring-1 focus:ring-blue-500 shrink-0"
+                value={selectedMetroName}
+                onChange={(e) => handleMetroChange(e.target.value)}
+              >
+                {metroNames.map((name) => (
+                  <option key={name} value={name}>{name}</option>
+                ))}
+              </select>
 
-                {regionTab === 'district' && (
-                  <select
-                    className="bg-gray-800 border border-gray-700 text-gray-200 rounded px-3 py-2 text-base focus:outline-none focus:ring-1 focus:ring-blue-500"
-                    value={selectedDistrictName}
-                    onChange={(e) => setSelectedDistrictName(e.target.value)}
-                  >
-                    {districts.length === 0 ? (
-                      <option value="">데이터 없음</option>
-                    ) : (
-                      districts.map((d) => (
-                        <option key={d.name} value={d.name}>{d.name}</option>
-                      ))
-                    )}
-                  </select>
-                )}
-              </div>
+              {regionTab === 'district' && (
+                <select
+                  className="bg-gray-800 border border-gray-700 text-gray-200 rounded px-3 py-2 text-base focus:outline-none focus:ring-1 focus:ring-blue-500 shrink-0"
+                  value={selectedDistrictName}
+                  onChange={(e) => setSelectedDistrictName(e.target.value)}
+                >
+                  {districts.length === 0 ? (
+                    <option value="">데이터 없음</option>
+                  ) : (
+                    districts.map((d) => (
+                      <option key={d.name} value={d.name}>{d.name}</option>
+                    ))
+                  )}
+                </select>
+              )}
 
               {regionTab === 'district' && districts.length === 0 && (
-                <p className="text-sm text-amber-400/70">
+                <p className="text-sm text-amber-400/70 shrink-0">
                   해당 광역시도의 시군구 데이터가 없습니다.
                 </p>
               )}

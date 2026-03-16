@@ -310,30 +310,30 @@ export function InterestBurdenSimulator() {
 
       {/* ====== REGION SELECTOR ====== */}
       <div className="border border-gray-800 p-4 md:p-5">
-        <div className="text-sm md:text-base font-semibold uppercase tracking-widest text-teal-400 mb-3">
-          지역 선택 Region Selector
-        </div>
+        <div className="flex items-center gap-4 overflow-x-auto">
+          <span className="text-sm md:text-base font-semibold uppercase tracking-widest text-teal-400 shrink-0">
+            지역 선택
+          </span>
 
-        {/* Tab buttons */}
-        <div className="flex mb-4 rounded overflow-hidden border border-gray-700 w-fit">
-          <button
-            className={`${TAB_BASE} ${tab === 'metro' ? TAB_ACTIVE : TAB_INACTIVE}`}
-            onClick={() => handleTabChange('metro')}
-          >
-            광역시도
-          </button>
-          <button
-            className={`${TAB_BASE} ${tab === 'district' ? TAB_ACTIVE : TAB_INACTIVE}`}
-            onClick={() => handleTabChange('district')}
-          >
-            시군구
-          </button>
-        </div>
+          {/* Tab buttons */}
+          <div className="flex rounded overflow-hidden border border-gray-700 shrink-0">
+            <button
+              className={`${TAB_BASE} ${tab === 'metro' ? TAB_ACTIVE : TAB_INACTIVE}`}
+              onClick={() => handleTabChange('metro')}
+            >
+              광역시도
+            </button>
+            <button
+              className={`${TAB_BASE} ${tab === 'district' ? TAB_ACTIVE : TAB_INACTIVE}`}
+              onClick={() => handleTabChange('district')}
+            >
+              시군구
+            </button>
+          </div>
 
-        {/* Dropdowns */}
-        <div className="flex flex-wrap gap-3">
+          {/* Dropdowns */}
           <select
-            className={SELECT_CLASS}
+            className={`${SELECT_CLASS} shrink-0`}
             value={selectedMetroName}
             onChange={(e) => handleMetroChange(e.target.value)}
           >
@@ -346,7 +346,7 @@ export function InterestBurdenSimulator() {
 
           {tab === 'district' && (
             <select
-              className={SELECT_CLASS}
+              className={`${SELECT_CLASS} shrink-0`}
               value={selectedDistrict?.name ?? ''}
               onChange={(e) => setSelectedDistrictName(e.target.value)}
             >
