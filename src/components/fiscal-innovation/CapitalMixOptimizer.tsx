@@ -4,11 +4,9 @@ import React, { useState, useMemo, useRef } from 'react';
 import {
   getMetroFiscalData,
   getDistrictFiscalData,
-  getMetroNames,
   BND_REFERENCE,
   SPARKASSEN_REFERENCE,
   BPDC_REFERENCE,
-  type MetroFiscalData,
   type DistrictFiscalData,
 } from '@/lib/data/fiscal-health-data';
 import { DataSources } from '@/components/shared/DataSources';
@@ -128,36 +126,19 @@ function formatPopLocal(pop: number): string {
 // Styling
 // ============================================================
 
-const SELECT_CLASS =
-  'bg-gray-800 border border-gray-700 text-gray-200 rounded px-3 py-2 text-base focus:outline-none focus:ring-1 focus:ring-blue-500';
-
-const TAB_BASE =
-  'px-4 py-2 text-base font-medium transition-colors';
-
-const TAB_ACTIVE =
-  'bg-blue-600 text-white';
-
-const TAB_INACTIVE =
-  'bg-gray-800 text-gray-400 hover:text-gray-200';
-
 // ============================================================
 // Main Component
 // ============================================================
 
-export function CapitalMixOptimizer() {
+interface RegionProps {
+  regionTab: 'metro' | 'district';
+  selectedMetroName: string;
+  selectedDistrictName: string;
+}
+
+export function CapitalMixOptimizer({ regionTab, selectedMetroName, selectedDistrictName }: RegionProps) {
   // === Data ===
   const allMetros = useMemo(() => getMetroFiscalData(), []);
-  const metroNames = useMemo(
-    () => allMetros.map((m) => m.name).sort((a, b) => a.localeCompare(b, 'ko')),
-    [allMetros],
-  );
-
-  // === Tab state ===
-  const [tab, setTab] = useState<'metro' | 'district'>('metro');
-
-  // === Selection state ===
-  const [selectedMetroName, setSelectedMetroName] = useState('서울특별시');
-  const [selectedDistrictName, setSelectedDistrictName] = useState('');
 
   // Derived metro
   const selectedMetro = useMemo(
@@ -173,28 +154,14 @@ export function CapitalMixOptimizer() {
 
   // Auto-select first district when metro changes or switching to district tab
   const selectedDistrict = useMemo(() => {
-    if (tab !== 'district' || districts.length === 0) return null;
+    if (regionTab !== 'district' || districts.length === 0) return null;
     const found = districts.find((d) => d.name === selectedDistrictName);
     return found ?? districts[0];
-  }, [tab, districts, selectedDistrictName]);
-
-  // When metro changes, reset district selection
-  const handleMetroChange = (name: string) => {
-    setSelectedMetroName(name);
-    setSelectedDistrictName('');
-  };
-
-  // When tab changes to district, auto-set first district
-  const handleTabChange = (t: 'metro' | 'district') => {
-    setTab(t);
-    if (t === 'district' && districts.length > 0 && !selectedDistrictName) {
-      setSelectedDistrictName(districts[0].name);
-    }
-  };
+  }, [regionTab, districts, selectedDistrictName]);
 
   // === Computed region data ===
   const regionData = useMemo(() => {
-    if (tab === 'metro') {
+    if (regionTab === 'metro') {
       return {
         name: selectedMetro.name,
         budget: selectedMetro.budget,
@@ -218,7 +185,7 @@ export function CapitalMixOptimizer() {
       population: selectedDistrict.population,
       independence: selectedDistrict.independence,
     };
-  }, [tab, selectedMetro, selectedDistrict]);
+  }, [regionTab, selectedMetro, selectedDistrict]);
 
   const regionBudget = regionData.budget;
   const regionPopulation = regionData.population;
@@ -385,68 +352,6 @@ export function CapitalMixOptimizer() {
             공공은행 자본금 시뮬레이터
           </span>
         </div>
-      </div>
-
-      {/* ====== REGION SELECTOR ====== */}
-      <div className="border border-gray-800 p-4 md:p-5">
-        <div className="text-sm md:text-base font-semibold uppercase tracking-widest text-teal-400 mb-3">
-          지역 선택 Region Selector
-        </div>
-
-        {/* Tab buttons */}
-        <div className="flex mb-4 rounded overflow-hidden border border-gray-700 w-fit">
-          <button
-            className={`${TAB_BASE} ${tab === 'metro' ? TAB_ACTIVE : TAB_INACTIVE}`}
-            onClick={() => handleTabChange('metro')}
-          >
-            광역시도
-          </button>
-          <button
-            className={`${TAB_BASE} ${tab === 'district' ? TAB_ACTIVE : TAB_INACTIVE}`}
-            onClick={() => handleTabChange('district')}
-          >
-            시군구
-          </button>
-        </div>
-
-        {/* Dropdowns */}
-        <div className="flex flex-wrap gap-3">
-          <select
-            className={SELECT_CLASS}
-            value={selectedMetroName}
-            onChange={(e) => handleMetroChange(e.target.value)}
-          >
-            {metroNames.map((name) => (
-              <option key={name} value={name}>
-                {name}
-              </option>
-            ))}
-          </select>
-
-          {tab === 'district' && (
-            <select
-              className={SELECT_CLASS}
-              value={selectedDistrict?.name ?? ''}
-              onChange={(e) => setSelectedDistrictName(e.target.value)}
-            >
-              {districts.length === 0 ? (
-                <option value="">데이터 없음</option>
-              ) : (
-                districts.map((d) => (
-                  <option key={d.name} value={d.name}>
-                    {d.name}
-                  </option>
-                ))
-              )}
-            </select>
-          )}
-        </div>
-
-        {tab === 'district' && districts.length === 0 && (
-          <p className="text-sm text-amber-400/70 mt-2">
-            해당 광역시도의 시군구 데이터가 없습니다. 광역시도 단위로 시뮬레이션됩니다.
-          </p>
-        )}
       </div>
 
       {/* ====== SECTION: 자본 조달 원천 설정 ====== */}
