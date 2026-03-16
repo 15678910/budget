@@ -385,6 +385,58 @@ export function PublicHousingSimulator({ regionTab, selectedMetroName, selectedD
         <p className="text-base text-gray-300 leading-relaxed">{v.desc}</p>
       </div>
 
+      {/* ====== INTERPRETATION GUIDE ====== */}
+      <InfoSection title="시뮬레이터 해석 가이드" color="text-blue-400" defaultOpen={true}>
+        <div className="space-y-2">
+          <div className="flex items-start gap-3">
+            <span className="text-blue-400 font-mono text-base mt-0.5 flex-shrink-0">01</span>
+            <div>
+              <span className="text-gray-300 font-semibold">슬라이더 설정값 해석</span>
+              <div className="text-gray-500 text-base mt-1 space-y-1">
+                <p><span className="text-gray-400">공공주택 예산 비율</span> — 지역 예산 중 공공주택 건설에 투입하는 비율 (5~30%)</p>
+                <p><span className="text-gray-400">공공주택 전환율</span> — 저출산 예산의 공공주택 전환 비중</p>
+                <p><span className="text-gray-400">호당 건설비용</span> — 공공주택 1호 건설 비용 (토지+건축+부대비, 60㎡ 기준 2~5억원)</p>
+                <p><span className="text-gray-400">공공은행 금리할인 효과</span> — 공공은행 저리대출로 인한 건설비 절감율</p>
+                <p><span className="text-gray-400">수도권 배정 비율</span> — 건설된 공공주택의 수도권 vs 비수도권 배분 비율</p>
+              </div>
+            </div>
+          </div>
+          <div className="flex items-start gap-3">
+            <span className="text-blue-400 font-mono text-base mt-0.5 flex-shrink-0">02</span>
+            <div>
+              <span className="text-gray-300 font-semibold">계산 흐름</span>
+              <div className="text-gray-500 text-base mt-1 space-y-1">
+                <p>연간 투자액 = 지역 예산 × 예산 비율</p>
+                <p>실효 건설비 = 호당 비용 × (1 - 금리할인율)</p>
+                <p>연간 건설 호수 = 투자액 ÷ 실효 건설비</p>
+                <p>&rarr; 30년 누적으로 공공주택 비율 상승 &rarr; PIR(주택가격/소득 비율) 하락 &rarr; 출산율 회복</p>
+                <p className="text-gray-600">※ 처음 3년은 점진적 확대 적용 (1년차 33%, 2년차 67%, 3년차 100%)</p>
+              </div>
+            </div>
+          </div>
+          <div className="flex items-start gap-3">
+            <span className="text-blue-400 font-mono text-base mt-0.5 flex-shrink-0">03</span>
+            <div>
+              <span className="text-gray-300 font-semibold">판정 기준</span>
+              <div className="text-gray-500 text-base mt-1 space-y-1">
+                <p><span className="text-emerald-400">구조적 안정 (녹색)</span> — 30년차 공공주택 비율 25% 이상 — 시장 구조 자체의 안정</p>
+                <p><span className="text-amber-400">부분 안정 (황색)</span> — 15~25% — 시장 안정 효과는 있으나 구조적 전환에 미흡</p>
+                <p><span className="text-red-400">효과 미흡 (적색)</span> — 15% 미만 — 예산·전환율·건설비 절감 등 복합 정책 필요</p>
+              </div>
+            </div>
+          </div>
+          <div className="flex items-start gap-3">
+            <span className="text-blue-400 font-mono text-base mt-0.5 flex-shrink-0">04</span>
+            <div>
+              <span className="text-gray-300 font-semibold">구조적 안정 달성 방법</span>
+              <p className="text-gray-500 text-base mt-1">
+                예산 비율 확대, 전환율 상향, 건설비 절감, 금리할인 확대 등 슬라이더를 조합하여 조절하면 판정이 변동됩니다. 핵심은 현금 수당 위주의 저출산 예산을 공공주택 건설로 전환하면, 부동산 안정 &rarr; PIR 하락 &rarr; 출산율 회복의 경로를 만들 수 있다는 점입니다.
+              </p>
+            </div>
+          </div>
+        </div>
+      </InfoSection>
+
       {/* ====== KEY METRICS ====== */}
       <div className="grid grid-cols-2 md:grid-cols-3">
         <SectionHeader title="주요 성과" color="text-emerald-400" />
