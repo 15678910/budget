@@ -19,7 +19,7 @@ const FEATURES = [
       </svg>
     ),
     iconBg: 'bg-blue-500/15 text-blue-400',
-    title: '728조 예산을 한눈에',
+    title: '728조+공공기업 예산을 한눈에',
     description:
       '트리맵과 버블차트로 국가 예산을 비례 면적으로 시각화합니다. 분야별 · 부처별 · 광역별 · 시군구별 5가지 뷰를 제공하며, 클릭만으로 하위 항목까지 드릴다운할 수 있습니다.',
   },
@@ -84,7 +84,7 @@ const FEATURES = [
     iconBg: 'bg-rose-500/15 text-rose-400',
     title: '해외 모델 벤치마킹 내장',
     description:
-      '독일 BND(공공은행), 노르웨이 GPFG(국부펀드), 스위스 칸톤은행 등 해외 성공 사례와의 비교 데이터가 시뮬레이터에 내장되어 정책 설계의 근거를 제공합니다.',
+      '독일 BND(공공은행), 노르웨이 GPFG(국부펀드), 스위스 칸톤은행, 미국 노스다코타 은행(BND), 코스타리카 국립은행 등 해외 성공 사례와의 비교 데이터가 시뮬레이터에 내장되어 정책 설계의 근거를 제공합니다.',
   },
 ];
 
@@ -168,7 +168,7 @@ export default function AboutPage() {
       {/* ── Hero ── */}
       <section className="text-center space-y-6">
         <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-gray-100">
-          나라살림의 특징
+          마을살림/나라살림의 특징
         </h1>
         <p className="max-w-3xl mx-auto text-base md:text-lg text-gray-400 leading-relaxed">
           나라살림은 <strong className="text-gray-200">대한민국 재정 데이터 시각화와 정책 시뮬레이션</strong>을
