@@ -8,8 +8,9 @@ import { VirtuousCycleSimulator } from '@/components/fiscal-innovation/VirtuousC
 import { PublicBankFAQ } from '@/components/fiscal-innovation/PublicBankFAQ';
 import { PublicHousingSimulator } from '@/components/fiscal-innovation/PublicHousingSimulator';
 import { RegionalRevitalizationSimulator } from '@/components/fiscal-innovation/RegionalRevitalizationSimulator';
+import { CurrencyRevolutionSimulator } from '@/components/fiscal-innovation/CurrencyRevolutionSimulator';
 
-type TabKey = 'roadmap' | 'capital' | 'legal' | 'cycle' | 'housing' | 'regional' | 'faq';
+type TabKey = 'roadmap' | 'capital' | 'legal' | 'cycle' | 'housing' | 'regional' | 'currency' | 'faq';
 
 const TABS: { key: TabKey; label: string; color: string }[] = [
   { key: 'roadmap', label: '설립로드맵', color: 'text-cyan-400' },
@@ -18,6 +19,7 @@ const TABS: { key: TabKey; label: string; color: string }[] = [
   { key: 'cycle', label: 'AI선순환', color: 'text-rose-400' },
   { key: 'housing', label: '공공주택', color: 'text-blue-400' },
   { key: 'regional', label: '지역활성화', color: 'text-orange-400' },
+  { key: 'currency', label: '화폐혁명', color: 'text-yellow-400' },
   { key: 'faq', label: '질의응답', color: 'text-amber-400' },
 ];
 
@@ -59,6 +61,7 @@ export default function PublicBankPage() {
         {activeTab === 'cycle' && <VirtuousCycleSimulator />}
         {activeTab === 'housing' && <PublicHousingSimulator />}
         {activeTab === 'regional' && <RegionalRevitalizationSimulator />}
+        {activeTab === 'currency' && <CurrencyRevolutionSimulator />}
         {activeTab === 'faq' && <PublicBankFAQ />}
       </div>
     </div>
