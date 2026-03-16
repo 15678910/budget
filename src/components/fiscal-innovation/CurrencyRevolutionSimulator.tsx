@@ -282,7 +282,7 @@ export function CurrencyRevolutionSimulator() {
   const [gMoneyConversionRate, setGMoneyConversionRate] = useState(30);
   const [adminEfficiencyRate, setAdminEfficiencyRate] = useState(10);
 
-  // Section 5: 주권부준비금
+  // Section 5: 주권부기금(SWF)
   const [reserveRate, setReserveRate] = useState(3);
   const [investReturnRate, setInvestReturnRate] = useState(5);
   const [reserveYears, setReserveYears] = useState(15);
@@ -321,7 +321,7 @@ export function CurrencyRevolutionSimulator() {
     const taxIncrease = transparentBudget * 0.01;
     const gMoneyTotal = adminSaving + fraudPrevention + taxIncrease;
 
-    // 5 주권부준비금
+    // 5 주권부기금(SWF)
     const annualReserve = regionBudget * (reserveRate / 100);
     const r = investReturnRate / 100;
     const accumulatedReserve = r > 0
@@ -351,7 +351,7 @@ export function CurrencyRevolutionSimulator() {
       { label: '배당수익', value: annualDividendTotal, color: 'bg-yellow-500' },
       { label: '신용조합', value: netCreditRevenue, color: 'bg-emerald-500' },
       { label: 'G-Money', value: gMoneyTotal, color: 'bg-blue-500' },
-      { label: '준비금수익', value: annualReturn, color: 'bg-purple-500' },
+      { label: 'SWF수익', value: annualReturn, color: 'bg-purple-500' },
     ];
 
     return {
@@ -685,7 +685,7 @@ export function CurrencyRevolutionSimulator() {
       {/* ====== SECTION 5: 주권부준비금 ====== */}
       <div className="border border-gray-800 p-4 md:p-5">
         <div className="text-sm md:text-base font-semibold uppercase tracking-widest text-purple-400 mb-3">
-          ⑤ 주권부준비금 Sovereign Wealth Reserve
+          ⑤ 주권부기금 Sovereign Wealth Fund
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
           <Slider
@@ -864,27 +864,167 @@ export function CurrencyRevolutionSimulator() {
       </div>
 
       {/* ====== INFO SECTIONS ====== */}
+      <InfoSection title="화폐 혁명의 핵심: 이자 추출에서 배당 환원으로" color="text-rose-400" defaultOpen={true}>
+        <p>
+          Richard Duncan의 {'"'}The Money Revolution{'"'}(2022)에서 제시된 핵심 명제는,
+          현대 화폐 시스템이 근본적으로 {'"'}이자 추출 구조{'"'}라는 점입니다.
+          중앙은행이 화폐를 발행하면 그 과정에서 이자가 부과되고, 이 이자는 경제 전체에서
+          지속적으로 빠져나가는 비용이 됩니다.
+        </p>
+        <p>
+          이 시뮬레이터가 제시하는 대안은 이 구조를 역전시키는 것입니다.
+          화폐가 이자를 추출하는 대신, 보유자에게 배당을 환원하는 시스템으로의 전환입니다.
+          구체적으로 5가지 정책 도구를 통해 지역 경제의 부를 외부로 유출시키지 않고
+          지역 내에서 순환·증식시키는 모델을 시뮬레이션합니다.
+        </p>
+        <div className="border-l-2 border-rose-700 pl-4 mt-2 text-gray-500 text-sm">
+          <p><strong className="text-gray-400">참고문헌</strong></p>
+          <p>Richard Duncan, {'"'}The Money Revolution: How to Finance the Next American Century{'"'} (Wiley, 2022)</p>
+          <p>Richard Duncan, {'"'}The Dollar Crisis: Causes, Consequences, Cures{'"'} (Wiley, 2003)</p>
+          <p>USDebtClock.org 2030 Future Scenario (Treasury Dividend Dollar 개념)</p>
+        </div>
+      </InfoSection>
+
       <InfoSection title="배당 달러(Dividend Dollar)란?" color="text-yellow-400">
         <p>
-          기존 화폐 시스템에서는 화폐 발행 시 이자가 부과되어 경제 주체들이 지속적으로 이자를 지불합니다.
-          배당 달러는 이 구조를 역전시켜, 화폐 보유자에게 배당금을 지급하는 새로운 패러다임입니다.
-          지역화폐에 적용하면, 지역 내 화폐 유통이 활성화되고 주민들이 직접적인 경제적 혜택을 받습니다.
+          <strong className="text-yellow-400">현행 시스템의 문제:</strong>{' '}
+          현재 화폐 시스템에서는 정부가 국채를 발행하고 중앙은행이 이를 매입하여 화폐를 공급합니다.
+          이 과정에서 국채 이자가 발생하며, 이는 궁극적으로 세금으로 충당됩니다.
+          즉, 화폐가 존재하는 한 이자가 계속 추출되는 구조입니다.
+        </p>
+        <p>
+          <strong className="text-yellow-400">배당 달러의 원리:</strong>{' '}
+          배당 달러(Dividend Dollar)는 이 구조를 역전시킵니다.
+          화폐 발행 이익(시뇨리지)을 금융기관이 아닌 화폐 보유자에게 직접 배당하는 방식입니다.
+          USDebtClock.org의 2030년 시나리오에서는 미국 재무부가 직접 발행하는
+          자산담보형 배당 달러를 제시하며, 연 약 3% 가치 상승을 전망합니다.
+        </p>
+        <p>
+          <strong className="text-yellow-400">지역화폐 적용:</strong>{' '}
+          한국의 자치구 맥락에서는 지역화폐에 배당 기능을 결합합니다.
+          예를 들어, 서울특별시 강남구가 예산의 10%에 해당하는 지역화폐를 발행하고
+          보유자에게 연 3%의 배당을 지급하면, 화폐 유통이 촉진되고
+          지역 소비가 활성화되는 선순환 구조가 형성됩니다.
+          기존 지역화폐(경기도 지역화폐, 서울사랑상품권 등)가 단순 할인 혜택에 그치는 것과 달리,
+          배당형 지역화폐는 보유 자체에 경제적 인센티브를 부여합니다.
+        </p>
+      </InfoSection>
+
+      <InfoSection title="공공신용조합(Public Credit Union)의 역할" color="text-emerald-400">
+        <p>
+          <strong className="text-emerald-400">모델:</strong>{' '}
+          미국 노스다코타주 은행(BND, Bank of North Dakota)은 1919년 설립된 미국 유일의 주립 공공은행입니다.
+          100년 이상 운영되며 주 정부에 연간 수억 달러의 수익을 환원하고 있습니다.
+          {'"'}50 State Credit Unions{'"'} 구상은 이 BND 모델을 미국 50개 주 전체로 확대하자는 제안입니다.
+        </p>
+        <p>
+          <strong className="text-emerald-400">이자 절감 메커니즘:</strong>{' '}
+          현재 가계대출 시중금리는 평균 5% 내외입니다. 공공신용조합이 2% 금리로 대출을 전환하면,
+          가구당 연간 수십~수백만 원의 이자 절감이 발생합니다.
+          이 절감액은 소비·저축으로 전환되어 지역 경제에 재투입됩니다.
+        </p>
+        <p>
+          <strong className="text-emerald-400">수익 환원:</strong>{' '}
+          공공신용조합은 영리 목적이 아니므로, 운영비를 제외한 순수익을
+          지역 사회 투자(공공주택, 소상공인 지원, 교육 등)에 직접 환원합니다.
+          BND의 경우, 2023년 기준 누적 19억 달러 이상을 노스다코타 주 일반기금에 이전했습니다.
+        </p>
+        <p>
+          <strong className="text-emerald-400">한국 적용:</strong>{' '}
+          한국에서는 {'"'}지역공공은행{'"'} 형태로 논의되고 있으며,
+          자치구 단위로 설립하면 해당 지역의 가계부채 이자 부담을 획기적으로 줄이고
+          지역 재정자립도를 높일 수 있습니다.
         </p>
       </InfoSection>
 
       <InfoSection title="G-Money와 디지털 투명성" color="text-blue-400">
         <p>
-          G-Money는 정부 화폐의 디지털화를 통해 모든 공공 재정 흐름을 실시간으로 추적할 수 있는 시스템입니다.
-          블록체인 기반의 투명한 거래 기록으로 행정 비용을 절감하고, 재정 누수와 부정을 방지합니다.
-          시민들은 자신의 세금이 어디에 쓰이는지 실시간으로 확인할 수 있습니다.
+          <strong className="text-blue-400">G-Money 개념:</strong>{' '}
+          G-Money(Government Money)는 정부가 발행하는 디지털 화폐로,
+          모든 공공 재정 거래를 블록체인 또는 분산원장 기술로 기록하여
+          실시간 추적이 가능한 시스템입니다.
+          이는 CBDC(Central Bank Digital Currency, 중앙은행 디지털화폐)의 지방정부 버전으로 볼 수 있습니다.
+        </p>
+        <p>
+          <strong className="text-blue-400">투명성의 경제적 효과:</strong>{' '}
+          세계은행 연구에 따르면, 개발도상국의 공공 지출 중 평균 5~10%가
+          비효율이나 부정으로 손실됩니다. 선진국도 2~3% 수준의 재정 누수가 존재합니다.
+          G-Money를 통한 완전한 투명성은 이러한 누수를 원천 차단합니다.
+        </p>
+        <p>
+          <strong className="text-blue-400">행정 효율화:</strong>{' '}
+          종이 기반 행정 처리, 중복 검증, 수동 감사 등의 비용이 디지털화로 대폭 절감됩니다.
+          에스토니아의 전자정부 시스템은 GDP의 약 2%에 해당하는 행정 비용을 절감한 사례가 있습니다.
+        </p>
+        <p>
+          <strong className="text-blue-400">시민 참여:</strong>{' '}
+          시민들은 스마트폰 앱을 통해 자신의 세금이 어떤 사업에, 얼마나 집행되었는지
+          실시간으로 확인할 수 있습니다. 이는 재정 민주주의를 실현하고
+          주민 참여형 예산 편성의 기반이 됩니다.
         </p>
       </InfoSection>
 
-      <InfoSection title="주권부준비금(SWR)의 역할" color="text-purple-400">
+      <InfoSection title="주권부기금(SWF, Sovereign Wealth Fund)의 역할" color="text-purple-400">
         <p>
-          주권부준비금은 노르웨이 국부펀드와 유사한 개념으로, 지방정부가 예산의 일부를 장기 적립하여 운용하는 기금입니다.
-          경제 위기 시 완충 역할을 하며, 운용 수익은 주민 복지와 지역 투자에 재투입됩니다.
-          장기적으로 지방 재정의 자립도와 안정성을 크게 높일 수 있습니다.
+          <strong className="text-purple-400">SWF란?</strong>{' '}
+          주권부기금(Sovereign Wealth Fund)은 정부가 장기적으로 국가·지역의 부를 축적하고
+          운용하기 위해 설립하는 투자 기금입니다.
+          가장 유명한 사례는 노르웨이 정부연기금(GPFG)으로,
+          2024년 기준 운용자산 약 1.7조 달러(약 2,200조원)에 달하며
+          노르웨이 국민 1인당 약 32만 달러의 자산을 보유하고 있습니다.
+        </p>
+        <p>
+          <strong className="text-purple-400">세계 주요 SWF 사례:</strong>{' '}
+          노르웨이 GPFG(석유 수입 적립), 싱가포르 GIC·테마섹(무역흑자 운용),
+          UAE 아부다비투자청(석유 수입), 알래스카 영구기금(석유 배당금 지급, 주민 1인당 연 $1,000~$2,000 배당) 등이 있습니다.
+          특히 알래스카 모델은 기금 운용 수익을 주민에게 직접 배당하는 점에서
+          본 시뮬레이터의 개념과 가장 유사합니다.
+        </p>
+        <p>
+          <strong className="text-purple-400">지방 SWF의 의미:</strong>{' '}
+          자치구 단위로 예산의 일정 비율을 장기 적립하면,
+          복리 효과로 10~20년 후 상당한 규모의 기금이 형성됩니다.
+          이 기금은 경제 위기 시 완충 역할을 하고,
+          운용 수익은 주민 복지·인프라 투자에 재투입되어
+          세금 인상 없이도 공공 서비스를 확대할 수 있습니다.
+        </p>
+        <p>
+          <strong className="text-purple-400">시뮬레이션 해석:</strong>{' '}
+          예를 들어, 예산 1조원 규모의 자치구가 매년 3%를 적립하고 연 5% 수익률로 운용하면,
+          15년 후 약 647억원의 기금이 형성되며, 이 중 197억원은 순수 운용수익입니다.
+          이는 세금을 한 푼도 추가 징수하지 않고 만들어낸 {'"'}새로운 돈{'"'}입니다.
+        </p>
+      </InfoSection>
+
+      <InfoSection title="Richard Duncan과 화폐 혁명 이론" color="text-gray-400">
+        <p>
+          <strong className="text-gray-300">저자 소개:</strong>{' '}
+          Richard Duncan은 아시아에서 18년 이상 활동한 금융 분석가이자 경제학자로,
+          IMF와 세계은행 컨설턴트를 역임했습니다.
+          그의 첫 저서 {'"'}The Dollar Crisis{'"'}(2003)는 국제 베스트셀러로,
+          2008년 금융위기를 5년 전에 예측한 것으로 유명합니다.
+        </p>
+        <p>
+          <strong className="text-gray-300">The Money Revolution(2022):</strong>{' '}
+          이 책에서 Duncan은 미국이 현재의 초저금리와 양적완화 환경을 활용하여
+          대규모 공공 투자를 해야 한다고 주장합니다.
+          정부가 미래 기술(AI, 바이오, 신재생에너지)에 투자하고
+          그 수익을 국민에게 환원하는 {'"'}국가 자본주의 2.0{'"'} 모델을 제시합니다.
+        </p>
+        <p>
+          <strong className="text-gray-300">주요 제안:</strong>{' '}
+          ① 미국 주권부기금(SWF) 설립 — 정부가 전략 산업에 투자하여 국민 배당 실현 /
+          ② 배당형 화폐 시스템 — 화폐 발행 이익을 시민에게 직접 환원 /
+          ③ 공공 신용 시스템 — 가계 금융 비용을 획기적으로 절감.
+          2025년 트럼프 행정부가 미국 주권부기금 설립을 공식화하면서,
+          그의 15년간의 주장이 현실 정책으로 이어지고 있습니다.
+        </p>
+        <p>
+          <strong className="text-gray-300">한국 적용의 의의:</strong>{' '}
+          본 시뮬레이터는 Duncan의 국가 단위 제안을 한국의 자치구 단위로 축소 적용한 것입니다.
+          한국의 지방 재정은 중앙 의존도가 높고(평균 재정자립도 30~40%),
+          가계부채 규모가 GDP 대비 세계 최고 수준입니다.
+          이러한 구조적 문제를 지역 단위의 화폐 혁명으로 해결하려는 시도입니다.
         </p>
       </InfoSection>
 
