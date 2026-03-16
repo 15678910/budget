@@ -9,6 +9,7 @@ import { startTour } from "@/components/shared/GuidedTour";
 import { useUser } from "@/components/providers/UserProvider";
 
 const MAIN_TABS = [
+  { href: "/about", label: "소개" },
   { href: "/", label: "트리맵" },
   { href: "/table", label: "테이블" },
   { href: "/compare", label: "비교" },
