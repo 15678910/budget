@@ -44,3 +44,6 @@ next-env.d.ts
 /pdf_pages
 
 .vercel
+
+# Large PDF reference files
+public/*.pdf
