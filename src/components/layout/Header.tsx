@@ -27,6 +27,8 @@ const AI_SUB_TABS = [
   { href: "/ai-efficiency", label: "AI효율화" },
   { href: "/fiscal-innovation", label: "재정혁신" },
   { href: "/public-bank", label: "공공은행" },
+  { href: "/ai-law", label: "AI기본법" },
+  { href: "/fiscal-doctor", label: "AI정책진단" },
 ];
 
 export function Header() {

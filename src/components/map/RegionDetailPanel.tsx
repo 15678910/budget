@@ -172,13 +172,25 @@ export function RegionDetailPanel({
         </div>
       </div>
 
-      {/* Compare link */}
-      <Link
-        href="/regional-compare"
-        className="block text-center text-sm text-primary hover:text-primary/80 border border-primary/30 rounded-md py-2 mt-auto transition-colors"
-      >
-        비교하기
-      </Link>
+      {/* Action links */}
+      <div className="flex flex-col gap-2 mt-auto">
+        <Link
+          href={
+            parentMetroName
+              ? `/fiscal-doctor?type=district&metro=${encodeURIComponent(parentMetroName)}&district=${encodeURIComponent(regionName)}`
+              : `/fiscal-doctor?type=metro&metro=${encodeURIComponent(regionName)}`
+          }
+          className="block text-center text-sm bg-blue-600 hover:bg-blue-700 text-white rounded px-4 py-2 transition-colors"
+        >
+          AI 정책진단
+        </Link>
+        <Link
+          href="/regional-compare"
+          className="block text-center text-sm text-primary hover:text-primary/80 border border-primary/30 rounded-md py-2 transition-colors"
+        >
+          비교하기
+        </Link>
+      </div>
     </div>
   );
 }
