@@ -262,6 +262,11 @@ export function CurrencyRevolutionSimulator({ regionTab, selectedMetroName, sele
   const [investReturnRate, setInvestReturnRate] = useState(5);
   const [reserveYears, setReserveYears] = useState(15);
 
+  // Section 6: 블록체인 지역화폐
+  const [blockchainCost, setBlockchainCost] = useState(0.5);
+  const [tokenTurnover, setTokenTurnover] = useState(2.5);
+  const [merchantRate, setMerchantRate] = useState(50);
+
   // === Calculation ===
   const result = useMemo(() => {
     const MARKET_RATE = 0.035; // 시중금리 3.5%
@@ -307,7 +312,24 @@ export function CurrencyRevolutionSimulator({ regionTab, selectedMetroName, sele
     const annualReturn = accumulatedReserve * r;
     const crisisResistance = regionBudget > 0 ? (accumulatedReserve / regionBudget) * 100 : 0;
 
-    // 6 종합 평가
+    // 6 블록체인 지역화폐 효과
+    // 배당형 지역화폐 발행규모를 블록체인 거래액 기준으로 사용
+    const blockchainTxVolume = issuanceVolume * (merchantRate / 100);
+    const annualOperatingCost = blockchainTxVolume * (blockchainCost / 100);
+    const leakagePrevention = blockchainTxVolume * 0.025; // 투명성으로 인한 누수방지 2.5%
+    const multiplierBonus = issuanceVolume * (localCirculationRate / 100) * 1.5 * (tokenTurnover / 2.5 - 1); // 기준 순환율 대비 추가 승수
+    const effectiveCirculation = merchantRate / 100;
+    const blockchainNetEffect = leakagePrevention + multiplierBonus - annualOperatingCost;
+
+    // 기존 지역화폐 대비 비교 (운영비 2%, 누수율 3%, 순환율 1.5회, 참여율 70% 가정)
+    const legacyTxVolume = issuanceVolume * 0.70;
+    const legacyOperatingCost = legacyTxVolume * 0.02;
+    const legacyLeakage = legacyTxVolume * 0.03;
+    const legacyNetEffect = -legacyOperatingCost - legacyLeakage;
+    const blockchainVsLegacy = blockchainNetEffect - legacyNetEffect;
+    const fullMerchantPotential = issuanceVolume * (blockchainCost / 100) * (-1) + issuanceVolume * 0.025 + issuanceVolume * (localCirculationRate / 100) * 1.5 * (tokenTurnover / 2.5 - 1);
+
+    // 7 종합 평가
     const totalAnnualBenefit = interestSaving + annualDividendTotal + netCreditRevenue + gMoneyTotal + annualReturn;
     const netBenefit = totalAnnualBenefit - currentInterestBurden;
     const perCapitaNetBenefit = regionPopulation > 0 ? Math.round((netBenefit / regionPopulation) * 100000000) : 0;
@@ -340,7 +362,12 @@ export function CurrencyRevolutionSimulator({ regionTab, selectedMetroName, sele
       transparentBudget, adminSaving, fraudPrevention, taxIncrease, gMoneyTotal,
       // Section 5
       annualReserve, accumulatedReserve, cumulativeReturn, annualReturn, crisisResistance,
-      // Section 6
+      // Section 6 블록체인
+      blockchainTxVolume, annualOperatingCost, leakagePrevention, multiplierBonus,
+      effectiveCirculation, blockchainNetEffect,
+      legacyOperatingCost, legacyLeakage, legacyNetEffect,
+      blockchainVsLegacy, fullMerchantPotential,
+      // Section 7
       totalAnnualBenefit, netBenefit, perCapitaNetBenefit, benefitRatio,
       verdict, steps,
     };
@@ -348,7 +375,8 @@ export function CurrencyRevolutionSimulator({ regionTab, selectedMetroName, sele
       dividendIssuanceRate, dividendRate, localCirculationRate,
       loanConversionRate, publicBankRate, opCostRate,
       gMoneyConversionRate, adminEfficiencyRate,
-      reserveRate, investReturnRate, reserveYears]);
+      reserveRate, investReturnRate, reserveYears,
+      blockchainCost, tokenTurnover, merchantRate]);
 
   const vConfig = verdictConfig[result.verdict];
   const contentRef = useRef<HTMLDivElement>(null);
@@ -680,7 +708,166 @@ export function CurrencyRevolutionSimulator({ regionTab, selectedMetroName, sele
         />
       </div>
 
-      {/* ====== SECTION 6: 종합 평가 (Verdict Banner) ====== */}
+      {/* ====== SECTION 6: 블록체인 지역화폐 설정 ====== */}
+      <div className="border border-gray-800 p-4 md:p-5">
+        <div className="text-sm md:text-base font-semibold uppercase tracking-widest text-indigo-400 mb-3">
+          ⑥ 블록체인 지역화폐 설정 Blockchain Local Currency
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+          <Slider
+            label="블록체인 운영비용"
+            value={blockchainCost}
+            min={0.1}
+            max={2.0}
+            step={0.1}
+            unit="%"
+            color="text-indigo-400"
+            tooltip="거래액 대비 블록체인 인프라 운영 비용 비율. 이더리움 기반 0.5~1%, 프라이빗 체인 0.1~0.3%가 일반적입니다."
+            onChange={setBlockchainCost}
+          />
+          <Slider
+            label="토큰 순환율"
+            value={tokenTurnover}
+            min={1.0}
+            max={5.0}
+            step={0.1}
+            unit="회"
+            color="text-teal-400"
+            tooltip="지역화폐 토큰이 연간 순환하는 횟수. 순환율이 높을수록 지역 경제 승수효과가 커집니다."
+            onChange={setTokenTurnover}
+          />
+          <Slider
+            label="가맹점 참여율"
+            value={merchantRate}
+            min={10}
+            max={90}
+            step={5}
+            unit="%"
+            color="text-pink-400"
+            tooltip="지역 내 사업체 중 블록체인 지역화폐를 수용하는 비율. 참여율이 높을수록 화폐의 유용성과 순환이 활발해집니다."
+            onChange={setMerchantRate}
+          />
+        </div>
+      </div>
+
+      {/* ====== SECTION 6 결과: 블록체인 지역화폐 비교 ====== */}
+      <div className="grid grid-cols-1">
+        <SectionHeader title="블록체인 효과 분석 Blockchain Effect Analysis" color="text-indigo-400" />
+      </div>
+      <div className="border border-gray-800 p-4 md:p-5 space-y-4">
+        {/* 2-column comparison cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* 기존 지역화폐 카드 */}
+          <div className="border border-gray-700 rounded p-4 space-y-2">
+            <div className="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-3">기존 지역화폐</div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-500">운영비</span>
+              <span className="text-base font-mono text-red-400">2.0%</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-500">누수율</span>
+              <span className="text-base font-mono text-red-400">3%</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-500">순환율</span>
+              <span className="text-base font-mono text-gray-300">1.5회</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-500">가맹점 참여율</span>
+              <span className="text-base font-mono text-gray-300">70%</span>
+            </div>
+            <div className="border-t border-gray-700 pt-2 mt-2">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-500">순효과</span>
+                <span className="text-base font-mono font-bold text-red-400">
+                  {formatEok(result.legacyNetEffect)}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* 블록체인 지역화폐 카드 */}
+          <div className="border border-indigo-800 rounded p-4 space-y-2 bg-indigo-950/20">
+            <div className="text-sm font-semibold text-indigo-400 uppercase tracking-widest mb-3">블록체인 화폐</div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-500">운영비</span>
+              <span className={`text-base font-mono ${blockchainCost <= 0.5 ? 'text-emerald-400' : blockchainCost <= 1.0 ? 'text-amber-400' : 'text-red-400'}`}>
+                {blockchainCost.toFixed(1)}%
+              </span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-500">누수율</span>
+              <span className="text-base font-mono text-emerald-400">0.5%</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-500">순환율</span>
+              <span className={`text-base font-mono ${tokenTurnover >= 2.5 ? 'text-emerald-400' : 'text-amber-400'}`}>
+                {tokenTurnover.toFixed(1)}회
+              </span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-500">가맹점 참여율</span>
+              <span className={`text-base font-mono ${merchantRate >= 50 ? 'text-emerald-400' : 'text-amber-400'}`}>
+                {merchantRate}%
+              </span>
+            </div>
+            <div className="border-t border-indigo-800 pt-2 mt-2">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-500">순효과</span>
+                <span className={`text-base font-mono font-bold ${result.blockchainNetEffect >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                  {result.blockchainNetEffect >= 0 ? '+' : ''}{formatEok(result.blockchainNetEffect)}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 순효과 요약 */}
+        <div className="border-t border-gray-800 pt-4 space-y-2">
+          <div className="flex items-center justify-between">
+            <span className="text-sm md:text-base text-gray-400">블록체인 도입 시 기존 대비 순효과</span>
+            <span className={`text-lg md:text-xl font-mono font-bold ${result.blockchainVsLegacy >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+              {result.blockchainVsLegacy >= 0 ? '+' : ''}{formatEok(result.blockchainVsLegacy)} / 년
+            </span>
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="text-sm md:text-base text-gray-400">가맹점 100% 참여 시 잠재 효과</span>
+            <span className={`text-base font-mono font-bold ${result.fullMerchantPotential >= 0 ? 'text-teal-400' : 'text-red-400'}`}>
+              {result.fullMerchantPotential >= 0 ? '+' : ''}{formatEok(result.fullMerchantPotential)}
+            </span>
+          </div>
+        </div>
+
+        {/* 세부 항목 */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-0">
+          <Cell
+            label="블록체인 운영비"
+            value={formatEok(result.annualOperatingCost)}
+            color="text-red-400"
+            sub={`거래액 × ${blockchainCost}%`}
+          />
+          <Cell
+            label="누수방지 효과"
+            value={formatEok(result.leakagePrevention)}
+            color="text-emerald-400"
+            sub="거래액의 2.5%"
+          />
+          <Cell
+            label="순환 승수 추가"
+            value={formatEok(result.multiplierBonus)}
+            color={result.multiplierBonus >= 0 ? 'text-teal-400' : 'text-red-400'}
+            sub={`순환율 ${tokenTurnover}회 기준`}
+          />
+          <Cell
+            label="실효 유통 비율"
+            value={`${(result.effectiveCirculation * 100).toFixed(0)}%`}
+            color="text-pink-400"
+            sub={`가맹점 ${merchantRate}% 참여`}
+          />
+        </div>
+      </div>
+
+      {/* ====== SECTION 7: 종합 평가 (Verdict Banner) ====== */}
       <div className={`border ${vConfig.border} ${vConfig.bg} p-4 md:p-5 rounded`}>
         <div className="flex items-center gap-3 mb-3">
           <div className="text-sm md:text-base font-semibold uppercase tracking-widest text-gray-400">

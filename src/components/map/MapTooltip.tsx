@@ -10,9 +10,10 @@ interface MapTooltipProps {
   population: number;
   x: number;
   y: number;
+  healthGrade?: string | null;
 }
 
-export function MapTooltip({ regionName, value, metric, population, x, y }: MapTooltipProps) {
+export function MapTooltip({ regionName, value, metric, population, x, y, healthGrade }: MapTooltipProps) {
   const formattedValue = (() => {
     switch (metric) {
       case 'totalBudget':
@@ -21,6 +22,9 @@ export function MapTooltip({ regionName, value, metric, population, x, y }: MapT
         return `${Math.round(value).toLocaleString('ko-KR')}원/인`;
       case 'yoyChange':
         return formatPercent(value);
+      case 'healthScore':
+        if (value === 0) return '데이터 없음';
+        return `등급: ${healthGrade ?? '-'} (${Math.round(value)}점)`;
     }
   })();
 
@@ -32,6 +36,8 @@ export function MapTooltip({ regionName, value, metric, population, x, y }: MapT
         return '1인당 예산';
       case 'yoyChange':
         return '전년 대비';
+      case 'healthScore':
+        return '건전성 점수';
     }
   })();
 

@@ -1,6 +1,6 @@
 'use client';
 
-export type MapMetric = 'totalBudget' | 'perCapita' | 'yoyChange';
+export type MapMetric = 'totalBudget' | 'perCapita' | 'yoyChange' | 'healthScore';
 
 interface MapControlsProps {
   year: number;
@@ -14,6 +14,7 @@ const METRIC_LABELS: Record<MapMetric, string> = {
   totalBudget: '총예산',
   perCapita: '1인당 예산',
   yoyChange: '전년 대비 증감률',
+  healthScore: '건전성 점수',
 };
 
 export function MapControls({

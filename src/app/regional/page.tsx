@@ -1,4 +1,5 @@
 import { loadRegionalByMetro, loadRegionalByDistrict, loadRegionalMetadata } from '@/lib/data/load-budget';
+import { getMetroFiscalData, getAllDistrictFiscalData, calculateFiscalHealthScore, calculateDistrictHealthScore } from '@/lib/data/fiscal-health-data';
 import fs from 'fs';
 import path from 'path';
 import { KoreaMap } from '@/components/map/KoreaMap';
@@ -33,6 +34,21 @@ export default function RegionalMapPage() {
     districtDataByYear[y] = loadRegionalByDistrict(y);
   }
 
+  // Calculate fiscal health scores for all metro regions
+  const metroFiscalData = getMetroFiscalData();
+  const healthScores: Record<string, { score: number; grade: string }> = {};
+  for (const metro of metroFiscalData) {
+    const result = calculateFiscalHealthScore(metro);
+    healthScores[metro.name] = { score: result.total, grade: result.grade };
+  }
+
+  // Also calculate health scores for all districts
+  const allDistrictData = getAllDistrictFiscalData();
+  for (const district of allDistrictData) {
+    const result = calculateDistrictHealthScore(district);
+    healthScores[district.name] = { score: result.total, grade: result.grade };
+  }
+
   return (
     <main className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-4 py-6">
@@ -44,6 +60,7 @@ export default function RegionalMapPage() {
           geoData={geoData}
           districtGeoData={districtGeoData}
           availableYears={years}
+          healthScores={healthScores}
         />
       </div>
     </main>

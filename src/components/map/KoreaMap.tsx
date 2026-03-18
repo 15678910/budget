@@ -23,6 +23,7 @@ interface KoreaMapProps {
   geoData: any; // Province TopoJSON
   districtGeoData: any; // Municipality TopoJSON
   availableYears: number[];
+  healthScores?: Record<string, { score: number; grade: string }>;
 }
 
 interface RegionMetricData {
@@ -96,6 +97,7 @@ export function KoreaMap({
   geoData,
   districtGeoData,
   availableYears,
+  healthScores,
 }: KoreaMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = useState({ width: 600, height: 500 });
@@ -293,13 +295,35 @@ export function KoreaMap({
         case 'yoyChange':
           values.set(name, data.yoyChange ?? 0);
           break;
+        case 'healthScore':
+          if (healthScores) {
+            const hs = healthScores[name];
+            if (hs) values.set(name, hs.score);
+          }
+          break;
       }
     }
     return values;
-  }, [regionMetrics, metric]);
+  }, [regionMetrics, metric, healthScores, drillMetro]);
 
   // ---------- Color scale ----------
   const { colorScale, minValue, maxValue } = useMemo(() => {
+    if (metric === 'healthScore') {
+      // Grade-based color mapping: no data → grey
+      const gradeToColor = (score: number): string => {
+        if (score >= 80) return '#22c55e'; // A - green-500
+        if (score >= 65) return '#3b82f6'; // B - blue-500
+        if (score >= 50) return '#eab308'; // C - yellow-500
+        if (score >= 35) return '#f97316'; // D - orange-500
+        return '#ef4444';                   // F - red-500
+      };
+      const colorFn = (value: number): string => {
+        if (value === 0) return '#6b7280'; // no data → grey
+        return gradeToColor(value);
+      };
+      return { colorScale: colorFn, minValue: 0, maxValue: 100 };
+    }
+
     const vals = Array.from(metricValues.values());
     if (vals.length === 0) {
       return {
@@ -463,6 +487,11 @@ export function KoreaMap({
               population={hoveredData.population}
               x={mousePos.x}
               y={mousePos.y}
+              healthGrade={
+                metric === 'healthScore' && hoveredBudgetName
+                  ? (healthScores?.[hoveredBudgetName]?.grade ?? null)
+                  : null
+              }
             />
           )}
 
