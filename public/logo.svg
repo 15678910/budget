@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 60" fill="none">
+
+  <!-- === ICON MARK (left, 48x48 centered in 60px tall row) === -->
+  <g transform="translate(6, 6)">
+    <!-- Icon background -->
+    <rect width="48" height="48" rx="8" fill="#2563EB"/>
+
+    <!-- Roof: pentagon pointing up -->
+    <!-- Ridge y=8, eaves y=24, left x=4, right x=44 -->
+    <polygon points="24,7 44,24 4,24" fill="white" opacity="0.95"/>
+
+    <!-- House body (tinted) -->
+    <rect x="7" y="24" width="34" height="18" rx="1" fill="white" opacity="0.12"/>
+
+    <!-- Bar 1: short -->
+    <rect x="11" y="33" width="6" height="8" rx="1" fill="#10B981"/>
+
+    <!-- Bar 2: medium -->
+    <rect x="21" y="28" width="6" height="13" rx="1" fill="#34D399"/>
+
+    <!-- Bar 3: tall -->
+    <rect x="31" y="24" width="6" height="17" rx="1" fill="#6EE7B7"/>
+
+    <!-- Floor line -->
+    <line x1="8" y1="42.5" x2="40" y2="42.5" stroke="white" stroke-width="1.2" stroke-linecap="round" opacity="0.35"/>
+
+    <!-- Chimney -->
+    <rect x="15" y="15" width="4" height="7" rx="0.8" fill="white" opacity="0.45"/>
+  </g>
+
+  <!-- === DIVIDER LINE === -->
+  <line x1="66" y1="14" x2="66" y2="46" stroke="#E5E7EB" stroke-width="1" stroke-linecap="round"/>
+
+  <!-- === WORDMARK (right of icon) === -->
+  <!-- Primary label: 마을살림 -->
+  <text
+    x="76"
+    y="26"
+    font-family="'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif"
+    font-size="15"
+    font-weight="700"
+    letter-spacing="-0.3"
+    fill="#1F2937"
+  >마을살림</text>
+
+  <!-- Separator slash -->
+  <text
+    x="148"
+    y="26"
+    font-family="'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif"
+    font-size="15"
+    font-weight="300"
+    fill="#9CA3AF"
+  >/</text>
+
+  <!-- Secondary label: 나라살림 -->
+  <text
+    x="161"
+    y="26"
+    font-family="'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif"
+    font-size="15"
+    font-weight="400"
+    letter-spacing="-0.3"
+    fill="#6B7280"
+  >나라살림</text>
+
+  <!-- Tagline: 예산 시각화 플랫폼 -->
+  <text
+    x="76"
+    y="43"
+    font-family="'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif"
+    font-size="9.5"
+    font-weight="400"
+    letter-spacing="0.8"
+    fill="#9CA3AF"
+  >예산 시각화 플랫폼</text>
+
+  <!-- Blue accent underline beneath 마을살림 -->
+  <rect x="76" y="29" width="62" height="2" rx="1" fill="#2563EB" opacity="0.18"/>
+
+</svg>

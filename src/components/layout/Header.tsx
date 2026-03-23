@@ -79,9 +79,12 @@ export function Header() {
           {/* Left: Logo */}
           <Link
             href="/"
-            className="text-base md:text-lg font-bold tracking-tight text-foreground hover:text-primary transition-colors whitespace-nowrap"
+            className="flex items-center gap-2 hover:opacity-80 transition-opacity"
           >
-            마을살림/나라살림
+            <img src="/logo-icon.svg" alt="마을살림" width={28} height={28} className="rounded-md" />
+            <span className="text-base md:text-lg font-bold tracking-tight text-foreground whitespace-nowrap">
+              마을살림/나라살림
+            </span>
           </Link>
 
           {/* Desktop nav (hidden on mobile) */}
