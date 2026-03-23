@@ -266,7 +266,7 @@ export function Header() {
 
       </div>
       {mobileMenuOpen && (
-        <div className="md:hidden overflow-y-auto bg-background" style={{ position: 'fixed', top: '49px', left: 0, right: 0, height: 'calc(100vh - 49px)', zIndex: 100 }}>
+        <div className="md:hidden overflow-y-auto bg-background border-t border-border" style={{ position: 'absolute', top: '100%', left: 0, right: 0, height: 'calc(100vh - 49px)', zIndex: 100 }}>
           <div className="px-4 py-4 space-y-1">
             <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider px-3 pb-1">메뉴</p>
             {MAIN_TABS.map((tab) => (
