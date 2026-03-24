@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* 앵커 이동 시 헤더 높이만큼 보정 */
+[id] {
+  scroll-margin-top: 5rem;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
