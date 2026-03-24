@@ -856,7 +856,7 @@ ${districtDataText}
       await new Promise(resolve => setTimeout(resolve, waitMs));
     }
 
-    // ─── Call Gemini API (single attempt, no retry) ───
+    // ─── Call Gemini API (with 429 retry) ───
     const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
     const geminiBody = JSON.stringify({
       system_instruction: {
@@ -870,17 +870,40 @@ ${districtDataText}
       },
     });
 
-    markGeminiCall(); // Record call time BEFORE fetch
+    // Retry helper: attempt up to 3 times with 5s delays on 429
+    async function fetchGeminiWithRetry(maxRetries = 3): Promise<Response> {
+      for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        markGeminiCall();
+        try {
+          const resp = await fetch(geminiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: geminiBody,
+          });
+          if (resp.status === 429 && attempt < maxRetries) {
+            const waitSec = 3 + attempt * 2; // 5s, 7s, 9s
+            console.warn(`Gemini 429 - retry ${attempt}/${maxRetries}, waiting ${waitSec}s...`);
+            await new Promise(resolve => setTimeout(resolve, waitSec * 1000));
+            continue;
+          }
+          return resp;
+        } catch (err) {
+          if (attempt < maxRetries) {
+            console.warn(`Gemini fetch error - retry ${attempt}/${maxRetries}...`);
+            await new Promise(resolve => setTimeout(resolve, 3000));
+            continue;
+          }
+          throw err;
+        }
+      }
+      throw new Error('Gemini max retries exceeded');
+    }
 
     let geminiResponse: Response;
     try {
-      geminiResponse = await fetch(geminiUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: geminiBody,
-      });
+      geminiResponse = await fetchGeminiWithRetry(3);
     } catch (fetchErr) {
-      console.error('Gemini fetch error:', fetchErr);
+      console.error('Gemini fetch error after retries:', fetchErr);
       const fallbackResult = generateLocalSimulation(regionName, regionData, score, enrichedPolicyText, natAvg);
       const fallbackResident = generateLocalResidentPerspective(regionName, enrichedPolicyText, regionData);
       const fallbackPolitical = generateLocalPoliticalPerspective(regionName, enrichedPolicyText, regionData);
@@ -898,7 +921,7 @@ ${districtDataText}
       const errText = await geminiResponse.text();
       console.error(`Gemini API error ${geminiResponse.status}:`, errText.slice(0, 300));
       if (geminiResponse.status === 429) {
-        console.warn('Gemini 429 - falling back to local simulation');
+        console.warn('Gemini 429 after all retries - falling back');
         const fallbackResult = generateLocalSimulation(regionName, regionData, score, enrichedPolicyText, natAvg);
         cache.set(cacheKey, { data: fallbackResult, timestamp: Date.now() });
         const fallbackResident = generateLocalResidentPerspective(regionName, enrichedPolicyText, regionData);
