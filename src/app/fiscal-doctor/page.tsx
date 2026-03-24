@@ -20,7 +20,7 @@ const PAGE_SECTIONS = [
 export default function FiscalDoctorPage() {
   return (
     <div className="flex min-h-screen">
-      <AISidebar sections={PAGE_SECTIONS} />
+      <AISidebar title="AI 정책진단" sections={PAGE_SECTIONS} />
 
       {/* Main Content */}
       <main className="flex-1 min-w-0">

@@ -353,7 +353,7 @@ export function LocalFundSimulator() {
       </div>
 
       {/* ====== REGION SELECTOR ====== */}
-      <div className="border border-gray-800 p-4 md:p-5">
+      <div id="region-select" className="border border-gray-800 p-4 md:p-5">
         <div className="text-sm md:text-base font-semibold uppercase tracking-widest text-teal-400 mb-3">
           지역 선택 Region Selector
         </div>
@@ -415,7 +415,7 @@ export function LocalFundSimulator() {
       </div>
 
       {/* ====== SECTION 1: 지역 현황 ====== */}
-      <div className="grid grid-cols-2 md:grid-cols-5">
+      <div id="region-overview" className="grid grid-cols-2 md:grid-cols-5">
         <SectionHeader title={`${regionData.name} 현황 Region Overview`} color="text-cyan-400" />
         <Cell
           label="예산규모"
@@ -450,7 +450,7 @@ export function LocalFundSimulator() {
       </div>
 
       {/* ====== SECTION 2: 시뮬레이션 설정 ====== */}
-      <div ref={paramsRef} className="border border-gray-800 p-4 md:p-5">
+      <div id="params" ref={paramsRef} className="border border-gray-800 p-4 md:p-5">
         <div className="text-sm md:text-base font-semibold uppercase tracking-widest text-blue-400 mb-3">
           시뮬레이션 설정 Simulation Parameters
         </div>
@@ -501,7 +501,7 @@ export function LocalFundSimulator() {
       </div>
 
       {/* ====== AI 활동 카탈로그 ====== */}
-      <div className="space-y-1">
+      <div id="catalog" className="space-y-1">
         <div className="border border-gray-800 px-4 py-3">
           <p className="text-sm text-gray-500">
             아래 카탈로그에서 AI 활동을 선택하면 전국 기준 효율화율(%)이 계산됩니다.
@@ -516,7 +516,7 @@ export function LocalFundSimulator() {
       </div>
 
       {/* ====== SECTION 3: 효율화 결과 ====== */}
-      <div className="grid grid-cols-2 md:grid-cols-3">
+      <div id="results" className="grid grid-cols-2 md:grid-cols-3">
         <SectionHeader title="효율화 결과 Efficiency Results" color="text-blue-400" />
         <Cell
           label="연간 절감액"
@@ -555,7 +555,7 @@ export function LocalFundSimulator() {
       </div>
 
       {/* ====== SECTION 4: N년 후 결과 ====== */}
-      <div className="grid grid-cols-2 md:grid-cols-4">
+      <div id="projection" className="grid grid-cols-2 md:grid-cols-4">
         <SectionHeader
           title={`${years}년 후 결과 (${2026 + years}년)`}
           color="text-emerald-400"
@@ -610,7 +610,7 @@ export function LocalFundSimulator() {
       </div>
 
       {/* ====== SECTION 6: 연도별 성장 그래프 ====== */}
-      <div className="border border-gray-800 p-4 md:p-5">
+      <div id="growth" className="border border-gray-800 p-4 md:p-5">
         <div className="text-sm md:text-base font-semibold uppercase tracking-widest text-purple-400 mb-4">
           연도별 성장 추이 Fund Growth Timeline
         </div>
@@ -641,7 +641,7 @@ export function LocalFundSimulator() {
       </div>
 
       {/* ====== SECTION 7: 전국 비교 ====== */}
-      <div className="grid grid-cols-2 md:grid-cols-3">
+      <div id="comparison" className="grid grid-cols-2 md:grid-cols-3">
         <SectionHeader title="전국 비교 National Comparison" color="text-gray-400" />
         <Cell
           label={`${regionData.name} 월 기본소득`}

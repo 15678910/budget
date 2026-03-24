@@ -23,12 +23,16 @@ export default function FiscalInnovationPage() {
 
   return (
     <div className="flex min-h-screen">
-      <AISidebar />
+      <AISidebar title="재정혁신" sections={[
+        { id: 'title', label: '개요' },
+        { id: 'tabs', label: '탭 선택' },
+        { id: 'content', label: '시뮬레이터' },
+      ]} />
       <main className="flex-1 min-w-0">
       <div className="w-full max-w-7xl mx-auto">
       <div className="bg-gray-950 text-gray-300 w-full min-h-screen p-2 md:p-4 space-y-1">
         {/* Title */}
-        <div className="border border-gray-800 px-4 py-3">
+        <div id="title" className="border border-gray-800 px-4 py-3">
           <h1 className="text-base md:text-lg font-bold tracking-[0.2em] uppercase text-gray-200">
             재정혁신 시뮬레이터
           </h1>
@@ -36,7 +40,7 @@ export default function FiscalInnovationPage() {
         </div>
 
         {/* Tab bar */}
-        <div className="flex items-center gap-1 overflow-x-auto border border-gray-800 p-1.5">
+        <div id="tabs" className="flex items-center gap-1 overflow-x-auto border border-gray-800 p-1.5">
           {TABS.map((tab) => (
             <button
               key={tab.key}
@@ -53,11 +57,13 @@ export default function FiscalInnovationPage() {
         </div>
 
         {/* Content */}
-        {activeTab === 'interest' && <InterestBurdenSimulator />}
-        {activeTab === 'credit' && <PublicCreditSimulator />}
-        {activeTab === 'currency' && <LocalCurrencySimulator />}
-        {activeTab === 'taxCompare' && <TaxVsLendingComparator />}
-        {activeTab === 'integrated' && <IntegratedScenarioSimulator />}
+        <div id="content">
+          {activeTab === 'interest' && <InterestBurdenSimulator />}
+          {activeTab === 'credit' && <PublicCreditSimulator />}
+          {activeTab === 'currency' && <LocalCurrencySimulator />}
+          {activeTab === 'taxCompare' && <TaxVsLendingComparator />}
+          {activeTab === 'integrated' && <IntegratedScenarioSimulator />}
+        </div>
       </div>
       </div>
       </main>

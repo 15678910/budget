@@ -20,8 +20,14 @@ export const metadata: Metadata = {
   keywords: ["정부예산", "예산시각화", "트리맵", "재정", "세출", "마을살림/나라살림"],
   manifest: "/manifest.json",
   icons: {
-    icon: "/logo-icon.svg",
-    apple: "/logo-icon.svg",
+    icon: [
+      { url: "/logo-icon.svg", type: "image/svg+xml" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+    ],
+    apple: [
+      { url: "/icon-192.png", sizes: "192x192" },
+      { url: "/icon-512.png", sizes: "512x512" },
+    ],
   },
   appleWebApp: {
     capable: true,

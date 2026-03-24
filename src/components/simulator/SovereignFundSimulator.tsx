@@ -228,7 +228,7 @@ export function SovereignFundSimulator() {
       </div>
 
       {/* ====== SECTION 1: 공공부문 현황 ====== */}
-      <div className="grid grid-cols-2 md:grid-cols-5">
+      <div id="overview" className="grid grid-cols-2 md:grid-cols-5">
         <SectionHeader title="공공부문 현황 Public Sector Overview" color="text-cyan-400" />
         <Cell
           label="공공부문 총규모"
@@ -263,7 +263,7 @@ export function SovereignFundSimulator() {
       </div>
 
       {/* ====== SECTION 2: 시뮬레이션 설정 (Sliders) ====== */}
-      <div ref={paramsRef} className="border border-gray-800 p-4 md:p-5">
+      <div id="params" ref={paramsRef} className="border border-gray-800 p-4 md:p-5">
         <div className="text-sm md:text-base font-semibold uppercase tracking-widest text-blue-400 mb-3">
           시뮬레이션 설정 Simulation Parameters
         </div>
@@ -314,16 +314,18 @@ export function SovereignFundSimulator() {
       </div>
 
       {/* ====== AI 활동 카탈로그 ====== */}
-      <AICatalog
-        onApplyEfficiency={(rate) => {
-          setEfficiencyRate(Math.min(15, Math.max(1, Math.round(rate * 2) / 2)));
-        }}
-        currentEfficiencyRate={efficiencyRate}
-        onScrollToParams={() => paramsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-      />
+      <div id="catalog">
+        <AICatalog
+          onApplyEfficiency={(rate) => {
+            setEfficiencyRate(Math.min(15, Math.max(1, Math.round(rate * 2) / 2)));
+          }}
+          currentEfficiencyRate={efficiencyRate}
+          onScrollToParams={() => paramsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+        />
+      </div>
 
       {/* ====== SECTION 3: 효율화 결과 ====== */}
-      <div className="grid grid-cols-2 md:grid-cols-3">
+      <div id="results" className="grid grid-cols-2 md:grid-cols-3">
         <SectionHeader title="효율화 결과 Efficiency Results" color="text-blue-400" />
         <Cell
           label="연간 절감액"
@@ -362,7 +364,7 @@ export function SovereignFundSimulator() {
       </div>
 
       {/* ====== SECTION 4: N년 후 결과 ====== */}
-      <div className="grid grid-cols-2 md:grid-cols-4">
+      <div id="projection" className="grid grid-cols-2 md:grid-cols-4">
         <SectionHeader
           title={`${years}년 후 결과 (${2026 + years}년)`}
           color="text-emerald-400"
@@ -418,14 +420,16 @@ export function SovereignFundSimulator() {
       </div>
 
       {/* ====== SDG 영향 분석 ====== */}
+      <div id="sdg">
       <SDGImpactDashboard
         monthlyBasicIncome={simulation.finalBasicIncome}
         annualSavings={simulation.annualSavings}
         years={years}
       />
+      </div>
 
       {/* ====== SECTION 6: 연도별 성장 그래프 ====== */}
-      <div className="border border-gray-800 p-4 md:p-5">
+      <div id="growth" className="border border-gray-800 p-4 md:p-5">
         <div className="text-sm md:text-base font-semibold uppercase tracking-widest text-purple-400 mb-4">
           연도별 성장 추이 Fund Growth Timeline
         </div>
@@ -456,7 +460,7 @@ export function SovereignFundSimulator() {
       </div>
 
       {/* ====== SECTION 7: 노르웨이 국부펀드 비교 ====== */}
-      <div className="grid grid-cols-2 md:grid-cols-3">
+      <div id="norway" className="grid grid-cols-2 md:grid-cols-3">
         <SectionHeader title="참고: 노르웨이 국부펀드 Norway GPFG" color="text-gray-400" />
         <Cell
           label="펀드 규모"

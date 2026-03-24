@@ -327,7 +327,7 @@ export function AILawDashboard() {
     <div className="w-full max-w-7xl mx-auto">
       <div className="bg-gray-950 text-gray-300 w-full min-h-screen p-2 md:p-4 space-y-1">
         {/* Title */}
-        <div className="border border-gray-800 px-4 py-3">
+        <div id="ai-law-title" className="border border-gray-800 px-4 py-3">
           <h1 className="text-base md:text-lg font-bold tracking-[0.2em] uppercase text-gray-200">
             AI 기본법 대응 가이드
           </h1>
@@ -337,7 +337,7 @@ export function AILawDashboard() {
         </div>
 
         {/* Tab bar */}
-        <div className="flex items-center gap-1 overflow-x-auto border border-gray-800 p-1.5">
+        <div id="ai-law-tabs" className="flex items-center gap-1 overflow-x-auto border border-gray-800 p-1.5">
           {TABS.map((tab) => (
             <button
               key={tab.key}
@@ -354,9 +354,11 @@ export function AILawDashboard() {
         </div>
 
         {/* Content */}
-        {activeTab === 'overview' && <OverviewTab />}
-        {activeTab === 'calculator' && <CostCalculator />}
-        {activeTab === 'benchmark' && <BenchmarkTab />}
+        <div id="ai-law-content">
+          {activeTab === 'overview' && <OverviewTab />}
+          {activeTab === 'calculator' && <CostCalculator />}
+          {activeTab === 'benchmark' && <BenchmarkTab />}
+        </div>
       </div>
     </div>
   );

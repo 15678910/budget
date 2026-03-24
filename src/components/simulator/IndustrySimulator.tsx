@@ -290,7 +290,7 @@ export function IndustrySimulator() {
       </div>
 
       {/* ====== METRO SELECTOR ====== */}
-      <div className="border border-border p-4 md:p-5">
+      <div id="metro-select" className="border border-border p-4 md:p-5">
         <div className="text-sm md:text-base font-semibold uppercase tracking-widest text-blue-400 mb-3">
           지역 선택
         </div>
@@ -338,7 +338,7 @@ export function IndustrySimulator() {
       )}
 
       {/* ====== CURRENT STATUS GRID ====== */}
-      <div className="grid grid-cols-2 md:grid-cols-5">
+      <div id="current-status" className="grid grid-cols-2 md:grid-cols-5">
         <SectionHeader title="📊 현재 현황" color="text-blue-400" />
         <Cell
           label="GRDP"
@@ -384,7 +384,9 @@ export function IndustrySimulator() {
       </div>
 
       {/* ====== INDUSTRY SELECTION ====== */}
+      <div id="industry-select">
       <SectionHeader title="🏭 산업 선택" color="text-blue-400" />
+      </div>
 
       {/* Existing Industries */}
       <div className="border border-border p-4 md:p-5">
@@ -468,7 +470,7 @@ export function IndustrySimulator() {
       </div>
 
       {/* ====== SIMULATION PARAMETERS ====== */}
-      <div className="border border-border p-4 md:p-5">
+      <div id="sim-params" className="border border-border p-4 md:p-5">
         <SectionHeader title="⚙️ 시뮬레이션 설정" color="text-purple-400" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 mt-3">
           <Slider
@@ -495,6 +497,7 @@ export function IndustrySimulator() {
       </div>
 
       {/* ====== SIMULATION RESULTS ====== */}
+      <div id="sim-results">
       {finalResult && (
         <>
           <SectionHeader title="📈 시뮬레이션 결과" color="text-emerald-400" />
@@ -683,6 +686,7 @@ export function IndustrySimulator() {
           <div className="text-base">산업을 선택하면 시뮬레이션 결과가 표시됩니다.</div>
         </div>
       )}
+      </div>
 
       {/* ====== MERGER EFFECT SECTION ====== */}
       {enableMerger && mergerScenario && mergerStats && (

@@ -64,12 +64,17 @@ export default function PublicBankPage() {
 
   return (
     <div className="flex min-h-screen">
-      <AISidebar />
+      <AISidebar title="지역공공은행" sections={[
+        { id: 'title', label: '개요' },
+        { id: 'tabs', label: '탭 선택' },
+        { id: 'region-select', label: '지역 선택' },
+        { id: 'content', label: '시뮬레이터' },
+      ]} />
       <main className="flex-1 min-w-0">
       <div className="w-full max-w-7xl mx-auto">
       <div className="bg-gray-950 text-gray-300 w-full min-h-screen p-2 md:p-4 space-y-1">
         {/* Title */}
-        <div className="border border-gray-800 px-4 py-3">
+        <div id="title" className="border border-gray-800 px-4 py-3">
           <h1 className="text-base md:text-lg font-bold tracking-[0.2em] uppercase text-gray-200">
             지역공공은행 시뮬레이터
           </h1>
@@ -77,7 +82,7 @@ export default function PublicBankPage() {
         </div>
 
         {/* Tab bar */}
-        <div className="flex items-center gap-1 overflow-x-auto border border-gray-800 p-1.5">
+        <div id="tabs" className="flex items-center gap-1 overflow-x-auto border border-gray-800 p-1.5">
           {TABS.map((tab) => (
             <button
               key={tab.key}
@@ -95,7 +100,7 @@ export default function PublicBankPage() {
 
         {/* Shared Region Selector */}
         {showRegionSelector && (
-          <div className="border border-gray-800 p-4 md:p-5">
+          <div id="region-select" className="border border-gray-800 p-4 md:p-5">
             <div className="flex items-center gap-4 overflow-x-auto">
               <div className="text-sm md:text-base font-semibold uppercase tracking-widest text-teal-400 shrink-0">
                 지역 선택
@@ -154,6 +159,7 @@ export default function PublicBankPage() {
         )}
 
         {/* Content */}
+        <div id="content">
         {activeTab === 'roadmap' && <EstablishmentRoadmapSimulator regionTab={regionTab} selectedMetroName={selectedMetroName} selectedDistrictName={selectedDistrictName} />}
         {activeTab === 'capital' && <CapitalMixOptimizer regionTab={regionTab} selectedMetroName={selectedMetroName} selectedDistrictName={selectedDistrictName} />}
         {activeTab === 'cycle' && <VirtuousCycleSimulator regionTab={regionTab} selectedMetroName={selectedMetroName} selectedDistrictName={selectedDistrictName} />}
@@ -163,6 +169,7 @@ export default function PublicBankPage() {
         {activeTab === 'apartment-tax' && <ApartmentTaxRevenueSimulator regionTab={regionTab} selectedMetroName={selectedMetroName} selectedDistrictName={selectedDistrictName} />}
         {activeTab === 'legal' && <LegalFrameworkGuide />}
         {activeTab === 'faq' && <PublicBankFAQ />}
+        </div>
       </div>
       </div>
       </main>
