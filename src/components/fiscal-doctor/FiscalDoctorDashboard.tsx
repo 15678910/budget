@@ -870,7 +870,7 @@ export function FiscalDoctorDashboard() {
 
         {/* ─── Diagnosis Results ─── */}
         {diagnosis && !loading && (
-          <div className="space-y-6">
+          <div id="diagnosis" className="space-y-6">
             {/* Grade Card + Radar + Score Bars */}
             <div className="border border-gray-800 rounded-xl p-6 bg-gray-900/50 space-y-6">
               <div className="flex items-center justify-between">
@@ -929,7 +929,7 @@ export function FiscalDoctorDashboard() {
 
             {/* Policy Simulation */}
             {diagnosis && (
-              <div className="border border-gray-800 rounded-xl p-6 bg-gray-900/50 space-y-4">
+              <div id="simulation" className="border border-gray-800 rounded-xl p-6 bg-gray-900/50 space-y-4">
                 <h2 className="text-lg font-semibold text-gray-200">
                   정책 시뮬레이션
                   <span className="ml-2 text-sm text-gray-500 font-normal">
@@ -971,7 +971,7 @@ export function FiscalDoctorDashboard() {
                 </div>
 
                 {/* National Assembly Bill Search */}
-                <div className="space-y-3">
+                <div id="bill-search" className="space-y-3">
                   <button
                     onClick={() => {
                       setShowBillSearch(!showBillSearch);
@@ -1084,7 +1084,7 @@ export function FiscalDoctorDashboard() {
                 </div>
 
                 {/* Ordinance (조례) Search */}
-                <div className="space-y-3">
+                <div id="ordinance-search" className="space-y-3">
                   <button
                     onClick={() => setShowOrdinanceSearch(!showOrdinanceSearch)}
                     className="flex items-center gap-2 text-sm text-purple-400 hover:text-purple-300 transition-colors"
@@ -1194,7 +1194,7 @@ export function FiscalDoctorDashboard() {
                 </div>
 
                 {/* Global Benchmarking & AI Policy Recommendation */}
-                <div className="border-t border-gray-700/50 pt-4">
+                <div id="benchmarking" className="border-t border-gray-700/50 pt-4">
                   <button
                     onClick={() => {
                       setShowBenchmark(!showBenchmark);
@@ -1448,7 +1448,7 @@ export function FiscalDoctorDashboard() {
                 </div>
 
                 {/* Policy AI Chatbot */}
-                <div className="border-t border-gray-700/50 pt-4">
+                <div id="ai-advisor" className="border-t border-gray-700/50 pt-4">
                   <button
                     onClick={() => setShowPolicyChat(!showPolicyChat)}
                     className="flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition-colors"
@@ -1587,7 +1587,7 @@ export function FiscalDoctorDashboard() {
                     </div>
 
                     {/* Fiscal Impact */}
-                    <div className="bg-gray-800/30 rounded-lg p-4 space-y-3">
+                    <div id="fiscal-impact" className="bg-gray-800/30 rounded-lg p-4 space-y-3">
                       <h3 className="text-sm font-semibold text-gray-300">재정 영향 분석</h3>
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                         <div className="bg-gray-800/50 rounded-lg p-3">
@@ -2059,7 +2059,7 @@ export function FiscalDoctorDashboard() {
 
                     {/* ═══ Multi-Perspective Analysis ═══ */}
                     {simResult.resident && (
-                      <div className="border-t border-gray-700 pt-6 mt-6 space-y-4">
+                      <div id="multi-perspective" className="border-t border-gray-700 pt-6 mt-6 space-y-4">
                         <div className="flex items-center gap-3 mb-2">
                           <h2 className="text-lg font-semibold text-gray-200">다관점 분석</h2>
                           <span className="text-xs px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-400">MiroFish-style</span>
