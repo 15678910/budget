@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { AILawDashboard } from '@/components/ai-law/AILawDashboard';
+import { AISidebar } from '@/components/layout/AISidebar';
 
 export const metadata: Metadata = {
   title: 'AI 기본법 | 마을살림/나라살림',
@@ -7,5 +8,12 @@ export const metadata: Metadata = {
 };
 
 export default function AILawPage() {
-  return <AILawDashboard />;
+  return (
+    <div className="flex min-h-screen">
+      <AISidebar />
+      <main className="flex-1 min-w-0">
+        <AILawDashboard />
+      </main>
+    </div>
+  );
 }

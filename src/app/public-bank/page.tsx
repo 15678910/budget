@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import { AISidebar } from '@/components/layout/AISidebar';
 import { getMetroFiscalData, getDistrictFiscalData, getMetroNames } from '@/lib/data/fiscal-health-data';
 import { EstablishmentRoadmapSimulator } from '@/components/fiscal-innovation/EstablishmentRoadmapSimulator';
 import { CapitalMixOptimizer } from '@/components/fiscal-innovation/CapitalMixOptimizer';
@@ -62,7 +63,10 @@ export default function PublicBankPage() {
   const showRegionSelector = !NO_REGION_TABS.includes(activeTab);
 
   return (
-    <div className="w-full max-w-7xl mx-auto">
+    <div className="flex min-h-screen">
+      <AISidebar />
+      <main className="flex-1 min-w-0">
+      <div className="w-full max-w-7xl mx-auto">
       <div className="bg-gray-950 text-gray-300 w-full min-h-screen p-2 md:p-4 space-y-1">
         {/* Title */}
         <div className="border border-gray-800 px-4 py-3">
@@ -160,6 +164,8 @@ export default function PublicBankPage() {
         {activeTab === 'legal' && <LegalFrameworkGuide />}
         {activeTab === 'faq' && <PublicBankFAQ />}
       </div>
+      </div>
+      </main>
     </div>
   );
 }

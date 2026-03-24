@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { AISidebar } from '@/components/layout/AISidebar';
 import { InterestBurdenSimulator } from '@/components/fiscal-innovation/InterestBurdenSimulator';
 import { PublicCreditSimulator } from '@/components/fiscal-innovation/PublicCreditSimulator';
 import { LocalCurrencySimulator } from '@/components/fiscal-innovation/LocalCurrencySimulator';
@@ -21,7 +22,10 @@ export default function FiscalInnovationPage() {
   const [activeTab, setActiveTab] = useState<TabKey>('interest');
 
   return (
-    <div className="w-full max-w-7xl mx-auto">
+    <div className="flex min-h-screen">
+      <AISidebar />
+      <main className="flex-1 min-w-0">
+      <div className="w-full max-w-7xl mx-auto">
       <div className="bg-gray-950 text-gray-300 w-full min-h-screen p-2 md:p-4 space-y-1">
         {/* Title */}
         <div className="border border-gray-800 px-4 py-3">
@@ -55,6 +59,8 @@ export default function FiscalInnovationPage() {
         {activeTab === 'taxCompare' && <TaxVsLendingComparator />}
         {activeTab === 'integrated' && <IntegratedScenarioSimulator />}
       </div>
+      </div>
+      </main>
     </div>
   );
 }
