@@ -955,7 +955,7 @@ export function FiscalDoctorDashboard() {
                           value={billSearchQuery}
                           onChange={(e) => setBillSearchQuery(e.target.value)}
                           onKeyDown={(e) => e.key === 'Enter' && handleBillSearch(1)}
-                          placeholder="법률안 이름으로 검색 (예: 지방재정, 주민세, 공공의료...)"
+                          placeholder="법률안 정식 명칭 일부로 검색 (예: 인공지능, 지방재정, 주민세, 공공의료...)"
                           className="flex-1 bg-gray-900 border border-gray-700 text-gray-200 text-sm rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500 placeholder:text-gray-600"
                         />
                         <button
