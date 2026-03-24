@@ -18,7 +18,8 @@ import {
 } from '@/lib/data/standard-costs';
 
 // ─── Daily Rate Limiter (separate counter for simulate) ───
-const DAILY_LIMIT = 150;
+// Gemini free tier: 1,500 RPD total, we reserve 1,000 for simulate
+const DAILY_LIMIT = 1000;
 let dailyCount = 0;
 let dailyDate = new Date().toISOString().slice(0, 10);
 

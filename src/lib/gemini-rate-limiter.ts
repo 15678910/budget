@@ -5,7 +5,7 @@
  * Gemini free tier: ~15 RPM → minimum ~4s gap, but we use 8s for safety.
  */
 
-const MIN_GAP_MS = 4_000; // minimum 4 seconds between Gemini API calls (15 RPM = 4s gap)
+const MIN_GAP_MS = 2_000; // minimum 2 seconds between Gemini API calls (15 RPM = 4s theoretical, 2s practical)
 let lastCallTime = 0;
 
 /**
