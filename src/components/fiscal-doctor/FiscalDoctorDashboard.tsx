@@ -8,6 +8,50 @@ import {
   getMetroNames,
 } from '@/lib/data/fiscal-health-data';
 
+// ─── Download Helpers ───
+function downloadAsCSV(data: Record<string, unknown>, filename: string) {
+  const rows: string[][] = [['항목', '값']];
+  function flatten(obj: Record<string, unknown>, prefix = '') {
+    for (const [key, val] of Object.entries(obj)) {
+      const label = prefix ? `${prefix} > ${key}` : key;
+      if (val && typeof val === 'object' && !Array.isArray(val)) {
+        flatten(val as Record<string, unknown>, label);
+      } else if (Array.isArray(val)) {
+        val.forEach((item, i) => {
+          if (typeof item === 'object') {
+            flatten(item as Record<string, unknown>, `${label}[${i + 1}]`);
+          } else {
+            rows.push([`${label}[${i + 1}]`, String(item)]);
+          }
+        });
+      } else {
+        rows.push([label, String(val ?? '')]);
+      }
+    }
+  }
+  flatten(data);
+  const bom = '\uFEFF';
+  const csv = rows.map(r => r.map(c => `"${c.replace(/"/g, '""')}"`).join(',')).join('\n');
+  const blob = new Blob([bom + csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function downloadAsJSON(data: unknown, filename: string) {
+  const json = JSON.stringify(data, null, 2);
+  const blob = new Blob([json], { type: 'application/json;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 // ─── Types ───
 interface DiagnosisResult {
   grade: 'A' | 'B' | 'C' | 'D' | 'F';
@@ -489,6 +533,27 @@ export function FiscalDoctorDashboard() {
   const [ordinanceTotal, setOrdinanceTotal] = useState(0);
   const [ordinancePage, setOrdinancePage] = useState(1);
 
+  // Simulation history state
+  const [showHistory, setShowHistory] = useState(false);
+  const [simHistory, setSimHistory] = useState<Array<{
+    id: string;
+    region: string;
+    policy: string;
+    date: string;
+    grade: string;
+    projectedGrade: string;
+    initialCost: string;
+    isFallback: boolean;
+  }>>([]);
+
+  // Load history from localStorage on mount
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('sim-history');
+      if (stored) setSimHistory(JSON.parse(stored));
+    } catch {}
+  }, []);
+
   // Global benchmarking state
   const [showBenchmark, setShowBenchmark] = useState(false);
   const [benchmarkLoading, setBenchmarkLoading] = useState(false);
@@ -755,6 +820,22 @@ export function FiscalDoctorDashboard() {
             isFallback: data.isFallback,
           });
         }
+        // Save to history
+        const historyEntry = {
+          id: Date.now().toString(36),
+          region: selectedMetroName,
+          policy: policyText,
+          date: new Date().toISOString().slice(0, 16).replace('T', ' '),
+          grade: data.fiscal?.currentGrade || data.currentGrade || '?',
+          projectedGrade: data.fiscal?.projectedGrade || data.projectedGrade || '?',
+          initialCost: data.fiscal?.costBreakdown?.totalInitialCost || data.costBreakdown?.totalInitialCost || '?',
+          isFallback: !!data.isFallback,
+        };
+        setSimHistory(prev => {
+          const updated = [historyEntry, ...prev].slice(0, 20); // Keep last 20
+          try { localStorage.setItem('sim-history', JSON.stringify(updated)); } catch {}
+          return updated;
+        });
         setCooldown(10); // 10s cooldown after success
         setSimulating(false);
         return;
@@ -969,6 +1050,52 @@ export function FiscalDoctorDashboard() {
                     </button>
                   ))}
                 </div>
+
+                {/* Simulation History */}
+                {simHistory.length > 0 && (
+                  <div className="space-y-2">
+                    <button
+                      onClick={() => setShowHistory(!showHistory)}
+                      className="flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition-colors"
+                    >
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      {showHistory ? '시뮬레이션 이력 닫기' : `시뮬레이션 이력 (${simHistory.length}건)`}
+                    </button>
+
+                    {showHistory && (
+                      <div className="border border-gray-700 rounded-lg bg-gray-800/50 p-3 space-y-1.5 max-h-48 overflow-y-auto">
+                        {simHistory.map((h) => (
+                          <button
+                            key={h.id}
+                            onClick={() => setPolicyText(h.policy)}
+                            className="w-full text-left px-3 py-2 rounded bg-gray-900/50 hover:bg-gray-700/50 border border-gray-700/30 transition-colors group"
+                          >
+                            <div className="flex items-center justify-between">
+                              <span className="text-sm text-gray-300 group-hover:text-cyan-300 truncate flex-1">{h.policy}</span>
+                              <div className="flex items-center gap-2 ml-2 shrink-0">
+                                <span className="text-xs text-gray-500">{h.grade}→{h.projectedGrade}</span>
+                                <span className="text-xs text-gray-600">{h.initialCost}</span>
+                                {h.isFallback && <span className="text-xs text-amber-500">규칙</span>}
+                              </div>
+                            </div>
+                            <div className="text-xs text-gray-600 mt-0.5">{h.region} | {h.date}</div>
+                          </button>
+                        ))}
+                        <button
+                          onClick={() => {
+                            setSimHistory([]);
+                            localStorage.removeItem('sim-history');
+                          }}
+                          className="text-xs text-red-400/60 hover:text-red-400 mt-1"
+                        >
+                          이력 삭제
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                )}
 
                 {/* National Assembly Bill Search */}
                 <div id="bill-search" className="space-y-3">
@@ -1565,6 +1692,45 @@ export function FiscalDoctorDashboard() {
                         <p className="text-amber-400/80 text-xs mt-1">AI API 할당량 초과로 로컬 규칙 기반 분석 결과를 표시합니다. AI 분석은 잠시 후 다시 시도해주세요.</p>
                       </div>
                     )}
+                    {/* Download Buttons */}
+                    <div className="flex justify-end gap-2 mb-4">
+                      <button
+                        onClick={() => {
+                          const exportData = {
+                            지역: simResult.fiscal?.regionData?.name || selectedMetroName,
+                            정책: policyText,
+                            분석일시: new Date().toISOString().slice(0, 10),
+                            ...simResult.fiscal,
+                            주민관점: simResult.resident,
+                            정치관점: simResult.political,
+                            종합평가: simResult.synthesis,
+                          };
+                          downloadAsCSV(exportData as Record<string, unknown>, `정책시뮬레이션_${selectedMetroName}_${new Date().toISOString().slice(0,10)}.csv`);
+                        }}
+                        className="flex items-center gap-1.5 px-3 py-1.5 text-xs bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg border border-gray-700 transition-colors"
+                      >
+                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                        CSV
+                      </button>
+                      <button
+                        onClick={() => {
+                          const exportData = {
+                            지역: simResult.fiscal?.regionData?.name || selectedMetroName,
+                            정책: policyText,
+                            분석일시: new Date().toISOString().slice(0, 10),
+                            fiscal: simResult.fiscal,
+                            resident: simResult.resident,
+                            political: simResult.political,
+                            synthesis: simResult.synthesis,
+                          };
+                          downloadAsJSON(exportData, `정책시뮬레이션_${selectedMetroName}_${new Date().toISOString().slice(0,10)}.json`);
+                        }}
+                        className="flex items-center gap-1.5 px-3 py-1.5 text-xs bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg border border-gray-700 transition-colors"
+                      >
+                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                        JSON
+                      </button>
+                    </div>
                     {/* Summary + Feasibility + Timeframe */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                       <div className="md:col-span-2 bg-gray-800/50 rounded-lg p-4">
