@@ -52,7 +52,7 @@ export function GoogleLoginButton() {
           router.push('/');
         }
       } catch {
-        console.error('Google login failed');
+        // login failed silently
       }
     },
     [refresh, router],

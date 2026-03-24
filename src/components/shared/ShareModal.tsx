@@ -39,7 +39,7 @@ export function ShareModal({ isOpen, onClose }: ShareModalProps) {
       link.href = canvas.toDataURL('image/png');
       link.click();
     } catch (error) {
-      console.error('Image save failed:', error);
+      void error;
     } finally {
       setSavingImage(false);
     }
