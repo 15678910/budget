@@ -46,7 +46,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   }
 
   // Build external API URL
-  const url = new URL('http://www.law.go.kr/DRF/lawSearch.do');
+  const url = new URL('https://www.law.go.kr/DRF/lawSearch.do');
   url.searchParams.set('OC', 'budgetai'); // service identifier
   url.searchParams.set('target', 'ordin');
   url.searchParams.set('type', 'JSON');
@@ -106,6 +106,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }));
 
     const response = { ordinances, total, page, size };
+    if (cache.size > 100) cache.clear();
     cache.set(cacheKey, { data: response, expiresAt: Date.now() + CACHE_TTL });
 
     return NextResponse.json(response, { headers: { 'X-Cache': 'MISS' } });

@@ -47,9 +47,9 @@ function simpleHash(str: string): string {
   return Math.abs(hash).toString(36);
 }
 
-// ─── In-memory cache (TTL 1h) ───
+// ─── In-memory cache (TTL 24h) ───
 interface CacheEntry {
-  data: PolicySimulationResult;
+  data: MultiPerspectiveResult;
   timestamp: number;
 }
 
@@ -923,15 +923,19 @@ ${districtDataText}
       if (geminiResponse.status === 429) {
         console.warn('Gemini 429 after all retries - falling back');
         const fallbackResult = generateLocalSimulation(regionName, regionData, score, enrichedPolicyText, natAvg);
-        cache.set(cacheKey, { data: fallbackResult, timestamp: Date.now() });
         const fallbackResident = generateLocalResidentPerspective(regionName, enrichedPolicyText, regionData);
         const fallbackPolitical = generateLocalPoliticalPerspective(regionName, enrichedPolicyText, regionData);
         const fallbackSynthesis = generateLocalSynthesis(regionName, enrichedPolicyText, fallbackResult, fallbackResident, fallbackPolitical);
-        return NextResponse.json({
+        const fallbackMultiResult: MultiPerspectiveResult = {
           fiscal: fallbackResult,
           resident: fallbackResident,
           political: fallbackPolitical,
           synthesis: fallbackSynthesis,
+        };
+        if (cache.size > 100) cache.clear();
+        cache.set(cacheKey, { data: fallbackMultiResult, timestamp: Date.now() });
+        return NextResponse.json({
+          ...fallbackMultiResult,
           isFallback: true,
         } as MultiPerspectiveResult & { isFallback: boolean });
       }
@@ -1100,7 +1104,8 @@ ${districtDataText}
     };
 
     // ─── Save to cache ───
-    cache.set(cacheKey, { data: fiscalResult, timestamp: Date.now() });
+    if (cache.size > 100) cache.clear();
+    cache.set(cacheKey, { data: multiResult, timestamp: Date.now() });
 
     return NextResponse.json(multiResult);
   } catch (error) {

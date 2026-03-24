@@ -74,6 +74,7 @@ function getFromCache(key: string): BillsResponse | null {
 }
 
 function setCache(key: string, data: BillsResponse): void {
+  if (cache.size > 100) cache.clear();
   cache.set(key, { data, expiresAt: Date.now() + CACHE_TTL_MS });
 }
 

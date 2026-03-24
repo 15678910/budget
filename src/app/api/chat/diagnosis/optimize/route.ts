@@ -152,6 +152,7 @@ export async function POST(request: NextRequest) {
       recommendation: `${regionName}(${score.grade}등급)에 가장 적합한 정책은 "${singleScores[0]?.policy}"(점수 ${singleScores[0]?.score}점)입니다. 복합 정책으로는 "${compoundScores[0]?.labels.join(' + ')}"(시너지 할인 15%)이 최적입니다.`,
     };
 
+    if (cache.size > 100) cache.clear();
     cache.set(key, { data: result, ts: Date.now() });
     return NextResponse.json(result);
   } catch (error) {

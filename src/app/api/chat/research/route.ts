@@ -66,6 +66,7 @@ export async function POST(request: NextRequest) {
       summary: `"${searchTerm}" 관련 조사 결과: 국회 법률안 ${bills.length}건, 지자체 조례 ${ordinances.length}건이 검색되었습니다.${bills.length > 0 ? ` 최근 법률안: "${bills[0].name}" (${bills[0].proposer}, ${bills[0].proposeDate})` : ''}${ordinances.length > 0 ? ` 관련 조례: "${ordinances[0].name}" (${ordinances[0].localGov})` : ''}`,
     };
 
+    if (cache.size > 100) cache.clear();
     cache.set(key, { data: result, ts: Date.now() });
     return NextResponse.json(result);
   } catch (error) {
