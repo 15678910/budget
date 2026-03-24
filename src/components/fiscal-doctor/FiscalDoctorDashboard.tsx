@@ -52,6 +52,55 @@ function downloadAsJSON(data: unknown, filename: string) {
   URL.revokeObjectURL(url);
 }
 
+function downloadAsPDF(data: Record<string, unknown>, filename: string) {
+  // Build HTML report
+  const rows: Array<[string, string]> = [];
+  function flatten(obj: Record<string, unknown>, prefix = '') {
+    for (const [key, val] of Object.entries(obj)) {
+      const label = prefix ? `${prefix} > ${key}` : key;
+      if (val && typeof val === 'object' && !Array.isArray(val)) {
+        flatten(val as Record<string, unknown>, label);
+      } else if (Array.isArray(val)) {
+        val.forEach((item, i) => {
+          if (typeof item === 'object') {
+            flatten(item as Record<string, unknown>, `${label}[${i + 1}]`);
+          } else {
+            rows.push([`${label}[${i + 1}]`, String(item)]);
+          }
+        });
+      } else {
+        rows.push([label, String(val ?? '')]);
+      }
+    }
+  }
+  flatten(data);
+
+  const tableRows = rows.map(([k, v]) =>
+    `<tr><td style="padding:6px 12px;border:1px solid #ddd;font-weight:500;white-space:nowrap;vertical-align:top;background:#f9f9f9">${k}</td><td style="padding:6px 12px;border:1px solid #ddd;word-break:break-all">${v}</td></tr>`
+  ).join('');
+
+  const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${filename}</title><style>
+    @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+    body { font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif; padding: 40px; color: #222; }
+    h1 { font-size: 20px; border-bottom: 2px solid #2563eb; padding-bottom: 8px; color: #2563eb; }
+    h2 { font-size: 14px; color: #666; margin-top: 4px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 20px; font-size: 13px; }
+    .footer { margin-top: 30px; font-size: 11px; color: #999; text-align: center; }
+  </style></head><body>
+    <h1>정책 시뮬레이션 보고서</h1>
+    <h2>${String(data['지역'] || '')} | ${String(data['정책'] || '')} | ${String(data['분석일시'] || '')}</h2>
+    <table>${tableRows}</table>
+    <div class="footer">마을살림/나라살림 (budget.ai.kr) | AI 정책진단 시뮬레이션 보고서</div>
+    <script>window.onload=function(){window.print();}</script>
+  </body></html>`;
+
+  const win = window.open('', '_blank');
+  if (win) {
+    win.document.write(html);
+    win.document.close();
+  }
+}
+
 // ─── Types ───
 interface DiagnosisResult {
   grade: 'A' | 'B' | 'C' | 'D' | 'F';
@@ -1729,6 +1778,24 @@ export function FiscalDoctorDashboard() {
                       >
                         <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                         JSON
+                      </button>
+                      <button
+                        onClick={() => {
+                          const exportData = {
+                            지역: simResult.fiscal?.regionData?.name || selectedMetroName,
+                            정책: policyText,
+                            분석일시: new Date().toISOString().slice(0, 10),
+                            ...simResult.fiscal,
+                            주민관점: simResult.resident,
+                            정치관점: simResult.political,
+                            종합평가: simResult.synthesis,
+                          };
+                          downloadAsPDF(exportData as Record<string, unknown>, `정책시뮬레이션_${selectedMetroName}_${new Date().toISOString().slice(0,10)}`);
+                        }}
+                        className="flex items-center gap-1.5 px-3 py-1.5 text-xs bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 rounded-lg border border-blue-600/30 transition-colors"
+                      >
+                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>
+                        PDF
                       </button>
                     </div>
                     {/* Summary + Feasibility + Timeframe */}
