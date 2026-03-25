@@ -33,7 +33,7 @@ const CATEGORY_RULES: CategoryKeywords[] = [
   { category: 'infrastructure', keywords: /도로|교통|철도|버스|인프라|교량|터널|지하철|트램|항만|공항|상하수도|전기|통신|광통신/, priority: 7 },
   { category: 'education', keywords: /교육|학교|어린이|보육|유치원|대학|도서관|평생교육|학원|학생|장학|방과후|학습|연구|과학관/, priority: 7 },
   { category: 'housing', keywords: /주택|아파트|주거|건설|임대|분양|재개발|재건축|뉴타운|행복주택|국민임대|전세|월세/, priority: 7 },
-  { category: 'welfare', keywords: /복지|돌봄|요양|노인|장애|기초생활|아동|수당|국민연금|보험|급식|센터|무상|출산|양육|육아|다문화|한부모|취약계층|저소득|사회보장/, priority: 6 },
+  { category: 'welfare', keywords: /복지|돌봄|요양|노인|장애|기초생활|아동|수당|국민연금|보험|급식|무상|출산|양육|육아|다문화|한부모|취약계층|저소득|사회보장|복지센터|돌봄센터/, priority: 6 },
   { category: 'environment', keywords: /환경|탄소|신재생|태양광|풍력|폐기물|하수|정수|공원|녹지|생태|기후|미세먼지|오염|재활용|에너지/, priority: 6 },
   { category: 'tourism', keywords: /관광|특구|축제|문화관광|테마파크|리조트|호텔|펜션|숙박|여행/, priority: 5 },
   { category: 'culture', keywords: /문화|예술|공연|박물관|미술관|체육|스포츠|경기장|도서관|극장|영화|음악|전시/, priority: 5 },
