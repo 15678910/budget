@@ -30,6 +30,14 @@ describe('detectPolicyCategory', () => {
     ['지역아동센터', 'welfare'],
     ['보육원 확충', 'education'],
     ['요양원 신설', 'welfare'],
+    // 단독 키워드 매칭 테스트 (근본 원인 수정)
+    ['화폐혁명', 'digitalCurrency'],
+    ['금융 개혁', 'bank'],
+    ['탄소중립 도시', 'environment'],
+    ['자동화 시스템', 'ai'],
+    ['일자리 창출', 'labor'],
+    ['헬스케어 혁신', 'hospital'],
+    ['부동산 정책', 'housing'],
   ];
 
   test.each(cases)('"%s" → %s', (input, expected) => {

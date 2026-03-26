@@ -26,18 +26,18 @@ interface CategoryKeywords {
 }
 
 const CATEGORY_RULES: CategoryKeywords[] = [
-  { category: 'hospital', keywords: /병원|의료|보건|진료|의원|클리닉|응급|공공의료|건강검진|치과|한의원|재활|정신건강|감염병/, priority: 10 },
-  { category: 'bank', keywords: /공공은행|지방은행|서민금융|마을은행|금고|신협|마이크로크레딧|소액대출/, priority: 9 },
-  { category: 'digitalCurrency', keywords: /지역화폐|블록체인|디지털화폐|가상화폐|토큰|CBDC|상품권|페이/, priority: 9 },
-  { category: 'ai', keywords: /AI|인공지능|디지털|스마트시티|빅데이터|자율주행|로봇|데이터|IoT|클라우드/, priority: 8 },
-  { category: 'infrastructure', keywords: /도로|교통|철도|버스|인프라|교량|터널|지하철|트램|항만|공항|상하수도|전기|통신|광통신/, priority: 7 },
-  { category: 'education', keywords: /교육|학교|어린이|보육|유치원|대학|도서관|평생교육|학원|학생|장학|방과후|학습|연구|과학관/, priority: 7 },
-  { category: 'housing', keywords: /주택|아파트|주거|건설|임대|분양|재개발|재건축|뉴타운|행복주택|국민임대|전세|월세/, priority: 7 },
-  { category: 'welfare', keywords: /복지|돌봄|요양|노인|장애|기초생활|아동|수당|국민연금|보험|급식|무상|출산|양육|육아|다문화|한부모|취약계층|저소득|사회보장|복지센터|돌봄센터/, priority: 6 },
-  { category: 'environment', keywords: /환경|탄소|신재생|태양광|풍력|폐기물|하수|정수|공원|녹지|생태|기후|미세먼지|오염|재활용|에너지/, priority: 6 },
-  { category: 'tourism', keywords: /관광|특구|축제|문화관광|테마파크|리조트|호텔|펜션|숙박|여행/, priority: 5 },
-  { category: 'culture', keywords: /문화|예술|공연|박물관|미술관|체육|스포츠|경기장|도서관|극장|영화|음악|전시/, priority: 5 },
-  { category: 'labor', keywords: /노동|근로|파업|임금|고용|해고|산재|노조|노동조합|최저임금|비정규|하청|원청|플랫폼노동|중대재해|일자리|실업|취업/, priority: 7 },
+  { category: 'hospital', keywords: /병원|의료|보건|진료|의원|클리닉|응급|공공의료|건강검진|치과|한의원|재활|정신건강|감염병|헬스케어|간호|약국|제약/, priority: 10 },
+  { category: 'bank', keywords: /은행|금융|서민금융|마을은행|금고|신협|마이크로크레딧|소액대출|저축|대출|예금|투자펀드|핀테크/, priority: 9 },
+  { category: 'digitalCurrency', keywords: /화폐|블록체인|디지털화폐|가상화폐|토큰|CBDC|상품권|페이|코인|암호화폐|NFT|핀테크결제|전자화폐/, priority: 9 },
+  { category: 'ai', keywords: /AI|인공지능|스마트시티|빅데이터|자율주행|로봇|IoT|클라우드|머신러닝|딥러닝|자동화|챗봇|메타버스/, priority: 8 },
+  { category: 'infrastructure', keywords: /도로|교통|철도|버스|인프라|교량|터널|지하철|트램|항만|공항|상하수도|전기|통신|광통신|고속도로|국도|시도|항로|물류/, priority: 7 },
+  { category: 'education', keywords: /교육|학교|어린이|보육|유치원|대학|평생교육|학원|학생|장학|방과후|학습|연구|과학관|캠퍼스|수업|교사|교수|입학/, priority: 7 },
+  { category: 'housing', keywords: /주택|아파트|주거|임대|분양|재개발|재건축|뉴타운|행복주택|국민임대|전세|월세|부동산|택지|단지|입주/, priority: 7 },
+  { category: 'welfare', keywords: /복지|돌봄|요양|노인|장애|기초생활|수당|국민연금|급식|무상|출산|양육|육아|다문화|한부모|취약계층|저소득|사회보장|복지센터|돌봄센터|아동센터|아동복지|연금|의료보험/, priority: 6 },
+  { category: 'environment', keywords: /환경|탄소|신재생|태양광|풍력|폐기물|하수|정수|공원|녹지|생태|기후|미세먼지|오염|재활용|에너지|전기차|수소|ESG|탄소중립/, priority: 6 },
+  { category: 'tourism', keywords: /관광|특구|축제|문화관광|테마파크|리조트|호텔|펜션|숙박|여행|투어|명소|랜드마크/, priority: 5 },
+  { category: 'culture', keywords: /문화센터|문화회관|예술|공연|박물관|미술관|체육|스포츠|경기장|극장|영화|음악|전시|콘서트|갤러리|문화재|유산/, priority: 5 },
+  { category: 'labor', keywords: /노동|근로|파업|임금|고용|해고|산재|노조|노동조합|최저임금|비정규|하청|원청|플랫폼노동|중대재해|일자리|실업|취업|직업훈련/, priority: 7 },
 ];
 
 export function detectPolicyCategory(policyText: string): PolicyCategory {
