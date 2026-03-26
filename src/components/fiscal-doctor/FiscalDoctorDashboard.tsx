@@ -288,6 +288,7 @@ export function FiscalDoctorDashboard() {
 
   // Policy simulation state
   const [policyText, setPolicyText] = useState('');
+  const [policyCategory, setPolicyCategory] = useState('auto');
   const [simulating, setSimulating] = useState(false);
   const [simResult, setSimResult] = useState<MultiPerspectiveResult | null>(null);
   const [simError, setSimError] = useState<string | null>(null);
@@ -572,8 +573,8 @@ export function FiscalDoctorDashboard() {
     setSimResult(null);
 
     const body = regionTab === 'metro'
-      ? { regionType: 'metro', regionName: selectedMetroName, policyText: policyText.trim() }
-      : { regionType: 'district', regionName: selectedDistrictName, policyText: policyText.trim() };
+      ? { regionType: 'metro', regionName: selectedMetroName, policyText: policyText.trim(), ...(policyCategory !== 'auto' && { category: policyCategory }) }
+      : { regionType: 'district', regionName: selectedDistrictName, policyText: policyText.trim(), ...(policyCategory !== 'auto' && { category: policyCategory }) };
 
     // Auto-retry: if 429, wait retryAfter seconds and try once more
     for (let attempt = 0; attempt < 2; attempt++) {
@@ -823,6 +824,26 @@ export function FiscalDoctorDashboard() {
                     maxLength={500}
                     className="flex-1 bg-gray-800 border border-gray-700 text-gray-200 text-sm rounded-lg px-4 py-2.5 focus:outline-none focus:border-blue-500 placeholder:text-gray-600"
                   />
+                  <select
+                    value={policyCategory}
+                    onChange={(e) => setPolicyCategory(e.target.value)}
+                    className="bg-gray-800 border border-gray-700 text-gray-300 text-sm rounded-lg px-3 py-2.5 focus:outline-none focus:border-blue-500"
+                  >
+                    <option value="auto">분야: 자동감지</option>
+                    <option value="hospital">병원/의료</option>
+                    <option value="bank">금융/은행</option>
+                    <option value="digitalCurrency">디지털화폐</option>
+                    <option value="ai">AI/디지털</option>
+                    <option value="infrastructure">도로/교통</option>
+                    <option value="education">교육</option>
+                    <option value="housing">주택/주거</option>
+                    <option value="welfare">복지/돌봄</option>
+                    <option value="environment">환경/에너지</option>
+                    <option value="tourism">관광</option>
+                    <option value="culture">문화/체육</option>
+                    <option value="labor">노동/고용</option>
+                    <option value="general">일반</option>
+                  </select>
                   <button
                     onClick={handleSimulate}
                     disabled={simulating || !policyText.trim() || cooldown > 0}

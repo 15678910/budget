@@ -2,6 +2,7 @@ import {
   detectMultipleCategories,
   calculateStandardCost,
   calculateCompoundCost,
+  type PolicyCategory,
 } from '@/lib/data/standard-costs';
 
 // ─── Types used by the simulation route ───
@@ -155,13 +156,21 @@ export function generateLocalSimulation(
   score: { grade: string; total: number },
   policyText: string,
   natAvg: { independence: number; autonomy: number },
+  userCategory?: string,
 ): PolicySimulationResult {
   const budget = regionData.budget;
   const pop = regionData.population;
   const indep = regionData.independence;
 
-  // Use standard cost module for scientific estimation
-  const categories = detectMultipleCategories(policyText);
+  // Use user-selected category if provided, otherwise auto-detect from keywords
+  const validCategories: PolicyCategory[] = [
+    'hospital', 'infrastructure', 'education', 'housing',
+    'bank', 'digitalCurrency', 'ai', 'welfare',
+    'environment', 'tourism', 'culture', 'labor', 'general',
+  ];
+  const categories = userCategory && validCategories.includes(userCategory as PolicyCategory)
+    ? [userCategory as PolicyCategory]
+    : detectMultipleCategories(policyText);
   const isCompound = categories.length > 1;
   const costEstimation = isCompound
     ? calculateCompoundCost(categories, { population: pop, budget, independence: indep })

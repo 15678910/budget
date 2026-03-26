@@ -74,10 +74,11 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const { regionType, regionName, policyText } = body as {
+    const { regionType, regionName, policyText, category: userCategory } = body as {
       regionType: 'metro' | 'district';
       regionName: string;
       policyText: string;
+      category?: string;
     };
 
     // ─── Input validation ───
@@ -233,7 +234,7 @@ export async function POST(request: NextRequest) {
     // ─── Rate limit check (only when cache miss) ── falls back to local simulation ───
     if (!checkAndIncrementLimit()) {
       console.warn('Daily limit exceeded - falling back to local simulation');
-      const fallbackResult = generateLocalSimulation(regionName, regionData, score, enrichedPolicyText, natAvg);
+      const fallbackResult = generateLocalSimulation(regionName, regionData, score, enrichedPolicyText, natAvg, userCategory);
       const fallbackResident = generateLocalResidentPerspective(regionName, enrichedPolicyText, regionData);
       const fallbackPolitical = generateLocalPoliticalPerspective(regionName, enrichedPolicyText, regionData);
       const fallbackSynthesis = generateLocalSynthesis(regionName, enrichedPolicyText, fallbackResult, fallbackResident, fallbackPolitical);
@@ -457,7 +458,7 @@ ${districtDataText}
       geminiResponse = await fetchGeminiWithRetry(3);
     } catch (fetchErr) {
       console.error('Gemini fetch error after retries:', fetchErr);
-      const fallbackResult = generateLocalSimulation(regionName, regionData, score, enrichedPolicyText, natAvg);
+      const fallbackResult = generateLocalSimulation(regionName, regionData, score, enrichedPolicyText, natAvg, userCategory);
       const fallbackResident = generateLocalResidentPerspective(regionName, enrichedPolicyText, regionData);
       const fallbackPolitical = generateLocalPoliticalPerspective(regionName, enrichedPolicyText, regionData);
       const fallbackSynthesis = generateLocalSynthesis(regionName, enrichedPolicyText, fallbackResult, fallbackResident, fallbackPolitical);
@@ -475,7 +476,7 @@ ${districtDataText}
       console.error(`Gemini API error ${geminiResponse.status}:`, errText.slice(0, 300));
       if (geminiResponse.status === 429) {
         console.warn('Gemini 429 after all retries - falling back');
-        const fallbackResult = generateLocalSimulation(regionName, regionData, score, enrichedPolicyText, natAvg);
+        const fallbackResult = generateLocalSimulation(regionName, regionData, score, enrichedPolicyText, natAvg, userCategory);
         const fallbackResident = generateLocalResidentPerspective(regionName, enrichedPolicyText, regionData);
         const fallbackPolitical = generateLocalPoliticalPerspective(regionName, enrichedPolicyText, regionData);
         const fallbackSynthesis = generateLocalSynthesis(regionName, enrichedPolicyText, fallbackResult, fallbackResident, fallbackPolitical);
