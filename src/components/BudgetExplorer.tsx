@@ -54,7 +54,6 @@ interface BudgetExplorerProps {
   metadata: DatasetMetadata;
   initialYear: number;
   /** SSR-rendered treemap fallback shown before JS hydrates the interactive chart */
-  ssrFallback?: React.ReactNode;
 }
 
 const VIEW_MODES: { key: ViewMode; label: string }[] = [
@@ -97,7 +96,6 @@ export function BudgetExplorer({
   educationDataByYear,
   metadata,
   initialYear,
-  ssrFallback,
 }: BudgetExplorerProps) {
   const [viewMode, setViewMode] = useState<ViewMode>('domain');
   const [year, setYear] = useState(initialYear);
@@ -295,7 +293,7 @@ export function BudgetExplorer({
         {/* Visualization */}
         <div ref={chartRef} data-tour="treemap" className={cn('flex-1 min-w-0', selectedNode ? 'lg:flex-[2]' : '')}>
           {!chartVisible ? (
-            ssrFallback ?? (
+            (
               <div className="w-full h-[500px] bg-muted/30 animate-pulse rounded-lg flex items-center justify-center">
                 <span className="text-muted-foreground text-sm">차트 준비 중...</span>
               </div>

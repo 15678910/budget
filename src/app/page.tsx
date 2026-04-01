@@ -9,16 +9,8 @@ import {
   loadEducationMetadata,
 } from '@/lib/data/load-budget';
 import { BudgetExplorer } from '@/components/BudgetExplorer';
-import { SSRTreemap } from '@/components/treemap/SSRTreemap';
 import { DEFAULT_YEAR } from '@/lib/constants';
-import { formatKoreanWon } from '@/lib/utils/format';
 import type { BudgetTreeNode } from '@/types/budget';
-
-function calculateTotal(node: BudgetTreeNode): number {
-  if (node.value !== undefined) return node.value;
-  if (!node.children) return 0;
-  return node.children.reduce((sum, child) => sum + calculateTotal(child), 0);
-}
 
 export default function Home() {
   const metadata = loadMetadata();
@@ -63,21 +55,6 @@ export default function Home() {
     availableYears: allYears,
   };
 
-  // SSR LCP optimization: pre-render treemap as HTML/CSS so it paints before JS loads
-  const initialDomainData = domainDataByYear[initialYear];
-  const totalBudget = initialDomainData ? calculateTotal(initialDomainData) : 0;
-
-  const ssrFallback = initialDomainData ? (
-    <>
-      <div className="text-right mb-2">
-        <div className="text-base font-medium">
-          총 {formatKoreanWon(totalBudget)}
-        </div>
-      </div>
-      <SSRTreemap data={initialDomainData} viewMode="domain" />
-    </>
-  ) : null;
-
   return (
     <BudgetExplorer
       domainDataByYear={domainDataByYear}
@@ -87,7 +64,6 @@ export default function Home() {
       educationDataByYear={educationDataByYear}
       metadata={mergedMetadata}
       initialYear={initialYear}
-      ssrFallback={ssrFallback}
     />
   );
 }
