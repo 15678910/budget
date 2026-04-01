@@ -39,9 +39,13 @@ export function squarify(
   let cx = x, cy = y, cw = width, ch = height;
 
   while (remaining.length > 0) {
+    // Safety guard: stop if remaining area is too small
+    if (cw <= 0.1 || ch <= 0.1) break;
+
     const isHorizontal = cw >= ch;
     const side = isHorizontal ? ch : cw;
     const remTotal = remaining.reduce((s, i) => s + i.value, 0);
+    if (remTotal <= 0) break;
 
     // Find the best row
     let row: typeof remaining = [];
@@ -110,6 +114,10 @@ export function squarify(
       ch -= rowSize;
     }
 
+    // Safety: if no items were placed in the row, force at least one
+    if (row.length === 0) {
+      row = [remaining[0]];
+    }
     remaining = remaining.slice(row.length);
   }
 
