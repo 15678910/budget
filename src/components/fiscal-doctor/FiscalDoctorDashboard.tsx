@@ -295,6 +295,18 @@ export function FiscalDoctorDashboard() {
   const [cooldown, setCooldown] = useState(0); // seconds remaining
   const cooldownRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
+  // AI Report & Multi-agent state
+  const [aiReport, setAiReport] = useState<string | null>(null);
+  const [aiReportLoading, setAiReportLoading] = useState(false);
+  const [agentResults, setAgentResults] = useState<{
+    agents: Array<{ id: string; name: string; role: string; emoji: string; stance: string; opinion: string; concern: string; suggestion: string }>;
+    consensus: string;
+    supportRate: number;
+    keyDebatePoints: string[];
+    source: string;
+  } | null>(null);
+  const [agentLoading, setAgentLoading] = useState(false);
+
   // Bill search state
   const [showBillSearch, setShowBillSearch] = useState(false);
   const [billSearchQuery, setBillSearchQuery] = useState('');
@@ -1563,7 +1575,110 @@ export function FiscalDoctorDashboard() {
                         <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>
                         PDF
                       </button>
+                      <button
+                        onClick={async () => {
+                          setAiReportLoading(true);
+                          setAiReport(null);
+                          try {
+                            const res = await fetch('/api/chat/diagnosis/report', {
+                              method: 'POST',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({ regionName: selectedMetroName, policyText, simResult: simResult.fiscal }),
+                            });
+                            const data = await res.json();
+                            setAiReport(data.report || '보고서 생성 실패');
+                          } catch { setAiReport('보고서 생성 중 오류'); }
+                          finally { setAiReportLoading(false); }
+                        }}
+                        disabled={aiReportLoading}
+                        className="flex items-center gap-1.5 px-3 py-1.5 text-xs bg-purple-600/20 hover:bg-purple-600/30 text-purple-400 rounded-lg border border-purple-600/30 transition-colors"
+                      >
+                        {aiReportLoading ? '생성 중...' : 'AI 보고서'}
+                      </button>
+                      <button
+                        onClick={async () => {
+                          setAgentLoading(true);
+                          setAgentResults(null);
+                          try {
+                            const res = await fetch('/api/chat/diagnosis/agents', {
+                              method: 'POST',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({ regionName: selectedMetroName, policyText, regionData: simResult.fiscal?.regionData }),
+                            });
+                            const data = await res.json();
+                            setAgentResults(data);
+                          } catch { /* ignore */ }
+                          finally { setAgentLoading(false); }
+                        }}
+                        disabled={agentLoading}
+                        className="flex items-center gap-1.5 px-3 py-1.5 text-xs bg-cyan-600/20 hover:bg-cyan-600/30 text-cyan-400 rounded-lg border border-cyan-600/30 transition-colors"
+                      >
+                        {agentLoading ? '시뮬레이션 중...' : '에이전트 시뮬레이션'}
+                      </button>
                     </div>
+
+                    {/* AI Report */}
+                    {aiReport && (
+                      <div className="bg-purple-900/20 border border-purple-500/30 rounded-lg p-4 mb-4">
+                        <div className="text-sm font-semibold text-purple-400 mb-2">AI 서술형 보고서</div>
+                        <div className="text-sm text-gray-300 whitespace-pre-wrap leading-relaxed">{aiReport}</div>
+                      </div>
+                    )}
+
+                    {/* Multi-Agent Results */}
+                    {agentResults && (
+                      <div className="bg-cyan-900/20 border border-cyan-500/30 rounded-lg p-4 mb-4 space-y-4">
+                        <div className="flex items-center justify-between">
+                          <div className="text-sm font-semibold text-cyan-400">멀티에이전트 시뮬레이션 (10명)</div>
+                          <div className="flex items-center gap-2">
+                            <div className="text-xs text-gray-400">찬성률</div>
+                            <div className={`text-lg font-bold ${agentResults.supportRate >= 60 ? 'text-emerald-400' : agentResults.supportRate >= 40 ? 'text-amber-400' : 'text-red-400'}`}>
+                              {agentResults.supportRate}%
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                          {agentResults.agents.map(agent => (
+                            <div key={agent.id} className={`rounded-lg p-3 border text-sm ${
+                              agent.stance === 'support' ? 'bg-emerald-900/20 border-emerald-500/30' :
+                              agent.stance === 'oppose' ? 'bg-red-900/20 border-red-500/30' :
+                              'bg-gray-800/50 border-gray-700/50'
+                            }`}>
+                              <div className="flex items-center gap-2 mb-1">
+                                <span>{agent.emoji}</span>
+                                <span className="font-semibold text-gray-200">{agent.name}</span>
+                                <span className="text-xs text-gray-500">{agent.role}</span>
+                                <span className={`ml-auto text-xs px-1.5 py-0.5 rounded ${
+                                  agent.stance === 'support' ? 'bg-emerald-500/20 text-emerald-400' :
+                                  agent.stance === 'oppose' ? 'bg-red-500/20 text-red-400' :
+                                  'bg-gray-500/20 text-gray-400'
+                                }`}>
+                                  {agent.stance === 'support' ? '찬성' : agent.stance === 'oppose' ? '반대' : '중립'}
+                                </span>
+                              </div>
+                              <p className="text-gray-300 text-xs">{agent.opinion}</p>
+                              {agent.concern && <p className="text-gray-500 text-xs mt-1">우려: {agent.concern}</p>}
+                            </div>
+                          ))}
+                        </div>
+
+                        {agentResults.keyDebatePoints.length > 0 && (
+                          <div className="bg-gray-800/50 rounded-lg p-3">
+                            <div className="text-xs font-semibold text-gray-400 mb-1">핵심 쟁점</div>
+                            {agentResults.keyDebatePoints.map((point, i) => (
+                              <div key={i} className="text-xs text-gray-300">• {point}</div>
+                            ))}
+                          </div>
+                        )}
+
+                        <div className="text-xs text-gray-400 italic">{agentResults.consensus}</div>
+                        {agentResults.source === 'local' && (
+                          <div className="text-xs text-amber-500">규칙 기반 시뮬레이션 결과입니다.</div>
+                        )}
+                      </div>
+                    )}
+
                     {/* Summary + Feasibility + Timeframe */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                       <div className="md:col-span-2 bg-gray-800/50 rounded-lg p-4">
