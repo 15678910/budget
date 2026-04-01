@@ -310,6 +310,7 @@ export function FiscalDoctorDashboard() {
   // Bill search state
   const [showBillSearch, setShowBillSearch] = useState(false);
   const [billSearchQuery, setBillSearchQuery] = useState('');
+  const [billSearchMode, setBillSearchMode] = useState<'name' | 'proposer'>('name');
   const [billResults, setBillResults] = useState<Array<{
     id: string;
     billNo: string;
@@ -432,7 +433,11 @@ export function FiscalDoctorDashboard() {
     try {
       const params = new URLSearchParams({ page: String(page), size: '8' });
       if (billSearchQuery.trim()) {
-        params.set('search', billSearchQuery.trim());
+        if (billSearchMode === 'proposer') {
+          params.set('proposer', billSearchQuery.trim());
+        } else {
+          params.set('search', billSearchQuery.trim());
+        }
       }
       const res = await fetch(`/api/nabo/bills?${params}`);
       if (!res.ok) throw new Error('API error');
@@ -446,7 +451,7 @@ export function FiscalDoctorDashboard() {
     } finally {
       setBillSearching(false);
     }
-  }, [billSearchQuery]);
+  }, [billSearchQuery, billSearchMode]);
 
   const handleSelectBill = useCallback((billName: string) => {
     setPolicyText(billName);
@@ -944,13 +949,27 @@ export function FiscalDoctorDashboard() {
 
                   {showBillSearch && (
                     <div className="border border-gray-700 rounded-lg bg-gray-800/50 p-4 space-y-3">
+                      <div className="flex gap-2 mb-2">
+                        <button
+                          onClick={() => setBillSearchMode('name')}
+                          className={`px-3 py-1 text-xs rounded-lg transition-colors ${billSearchMode === 'name' ? 'bg-blue-600 text-white' : 'bg-gray-800 text-gray-400 hover:bg-gray-700'}`}
+                        >
+                          법률안명
+                        </button>
+                        <button
+                          onClick={() => setBillSearchMode('proposer')}
+                          className={`px-3 py-1 text-xs rounded-lg transition-colors ${billSearchMode === 'proposer' ? 'bg-blue-600 text-white' : 'bg-gray-800 text-gray-400 hover:bg-gray-700'}`}
+                        >
+                          발의 의원명
+                        </button>
+                      </div>
                       <div className="flex gap-2">
                         <input
                           type="text"
                           value={billSearchQuery}
                           onChange={(e) => setBillSearchQuery(e.target.value)}
                           onKeyDown={(e) => e.key === 'Enter' && handleBillSearch(1)}
-                          placeholder="법률안 정식 명칭 일부로 검색 (예: 인공지능, 지방재정, 주민세, 공공의료...)"
+                          placeholder={billSearchMode === 'name' ? '법률안명 검색 (예: 인공지능, 지방재정...)' : '의원명 검색 (예: 이재명, 한동훈...)'}
                           className="flex-1 bg-gray-900 border border-gray-700 text-gray-200 text-sm rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500 placeholder:text-gray-600"
                         />
                         <button

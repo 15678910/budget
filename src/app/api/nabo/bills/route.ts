@@ -59,8 +59,8 @@ interface CacheEntry {
 const cache = new Map<string, CacheEntry>();
 const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
 
-function getCacheKey(search: string, page: number, size: number, committee: string): string {
-  return `${search}|${page}|${size}|${committee}`;
+function getCacheKey(search: string, proposer: string, page: number, size: number, committee: string): string {
+  return `${search}|${proposer}|${page}|${size}|${committee}`;
 }
 
 function getFromCache(key: string): BillsResponse | null {
@@ -91,12 +91,13 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
   const { searchParams } = request.nextUrl;
   const search = searchParams.get('search') ?? '';
+  const proposer = searchParams.get('proposer') ?? '';
   const committee = searchParams.get('committee') ?? '';
   const page = Math.max(1, parseInt(searchParams.get('page') ?? '1', 10));
   const rawSize = parseInt(searchParams.get('size') ?? '10', 10);
   const size = Math.min(20, Math.max(1, isNaN(rawSize) ? 10 : rawSize));
 
-  const cacheKey = getCacheKey(search, page, size, committee);
+  const cacheKey = getCacheKey(search, proposer, page, size, committee);
   const cached = getFromCache(cacheKey);
   if (cached) {
     return NextResponse.json(cached, {
@@ -113,6 +114,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   externalUrl.searchParams.set('AGE', '22');
   if (search) {
     externalUrl.searchParams.set('BILL_NAME', search);
+  }
+  if (proposer) {
+    externalUrl.searchParams.set('RST_PROPOSER', proposer);
   }
   if (committee) {
     externalUrl.searchParams.set('COMMITTEE', committee);
