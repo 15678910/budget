@@ -40,20 +40,15 @@ const BudgetDetailPanel = dynamic(
   () => import('./detail/BudgetDetailPanel').then(mod => ({ default: mod.BudgetDetailPanel })),
   { ssr: false }
 );
-import type { BudgetTreeNode, ViewMode, VisualizationMode, DatasetMetadata } from '@/types/budget';
+import type { BudgetTreeNode, ViewMode, VisualizationMode } from '@/types/budget';
 import { formatKoreanWon, formatPerCapita, cn } from '@/lib/utils/format';
 import { formatUnitConversion, type BudgetUnit } from '@/lib/utils/units';
 import { POPULATION_BY_YEAR } from '@/lib/constants';
 
 interface BudgetExplorerProps {
-  domainDataByYear: Record<number, BudgetTreeNode>;
-  ministryDataByYear: Record<number, BudgetTreeNode>;
-  metroDataByYear: Record<number, BudgetTreeNode>;
-  districtDataByYear: Record<number, BudgetTreeNode>;
-  educationDataByYear: Record<number, BudgetTreeNode>;
-  metadata: DatasetMetadata;
+  initialData: BudgetTreeNode;
   initialYear: number;
-  /** SSR-rendered treemap fallback shown before JS hydrates the interactive chart */
+  availableYears: number[];
 }
 
 const VIEW_MODES: { key: ViewMode; label: string }[] = [
@@ -88,14 +83,16 @@ function findChild(node: BudgetTreeNode, name: string): BudgetTreeNode | undefin
   return node.children?.find(c => c.name === name);
 }
 
+async function fetchBudgetData(view: ViewMode, year: number): Promise<BudgetTreeNode> {
+  const res = await fetch(`/api/budget/data?view=${view}&year=${year}`);
+  if (!res.ok) throw new Error(`Failed to fetch budget data: ${res.status}`);
+  return res.json() as Promise<BudgetTreeNode>;
+}
+
 export function BudgetExplorer({
-  domainDataByYear,
-  ministryDataByYear,
-  metroDataByYear,
-  districtDataByYear,
-  educationDataByYear,
-  metadata,
+  initialData,
   initialYear,
+  availableYears,
 }: BudgetExplorerProps) {
   const [viewMode, setViewMode] = useState<ViewMode>('domain');
   const [year, setYear] = useState(initialYear);
@@ -105,7 +102,16 @@ export function BudgetExplorer({
   const [selectedUnit, setSelectedUnit] = useState<BudgetUnit | null>(null);
   const [selectedNodeName, setSelectedNodeName] = useState<string | null>(null);
   const [chartVisible, setChartVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
   const chartRef = useRef<HTMLDivElement>(null);
+
+  // Client-side cache: "view:year" -> data
+  const [dataCache, setDataCache] = useState<Record<string, BudgetTreeNode>>(() => ({
+    [`domain:${initialYear}`]: initialData,
+  }));
+
+  // Active data for the current view+year
+  const [activeData, setActiveData] = useState<BudgetTreeNode>(initialData);
 
   // Defer chart rendering until viewport entry (reduce TBT)
   useEffect(() => {
@@ -119,16 +125,49 @@ export function BudgetExplorer({
     return () => observer.disconnect();
   }, []);
 
-  const dataMap: Record<ViewMode, Record<number, BudgetTreeNode>> = {
-    domain: domainDataByYear,
-    ministry: ministryDataByYear,
-    metro: metroDataByYear,
-    district: districtDataByYear,
-    education: educationDataByYear,
-  };
+  // Fetch data for a given view+year, with caching
+  const fetchData = useCallback(async (view: ViewMode, yr: number): Promise<BudgetTreeNode | null> => {
+    const key = `${view}:${yr}`;
+    // Check latest state via functional update pattern
+    const cached = dataCache[key];
+    if (cached) return cached;
 
-  const activeDataByYear = dataMap[viewMode];
-  const activeData = activeDataByYear[year];
+    try {
+      const data = await fetchBudgetData(view, yr);
+      setDataCache(prev => ({ ...prev, [key]: data }));
+      return data;
+    } catch {
+      return null;
+    }
+  }, [dataCache]);
+
+  // Load data when view or year changes
+  useEffect(() => {
+    const key = `${viewMode}:${year}`;
+    const cached = dataCache[key];
+    if (cached) {
+      setActiveData(cached);
+      return;
+    }
+
+    let cancelled = false;
+    setLoading(true);
+    fetchBudgetData(viewMode, year)
+      .then(data => {
+        if (cancelled) return;
+        setDataCache(prev => ({ ...prev, [key]: data }));
+        setActiveData(data);
+      })
+      .catch(() => {
+        // keep current data on error
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => { cancelled = true; };
+  }, [viewMode, year]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const { currentNode, breadcrumbs, path, drillDown, navigateTo } = useTreemapNavigation(activeData);
 
   // Reset navigation when viewMode or data changes
@@ -147,12 +186,50 @@ export function BudgetExplorer({
   const selectedNode = selectedNodeName ? findChild(currentNode, selectedNodeName) : null;
   const selectedPath = selectedNode ? [...path, selectedNodeName!] : null;
 
+  // Build allYearsData for the detail panel from cache (whatever is available)
+  const allYearsDataForPanel = useMemo(() => {
+    const result: Record<number, BudgetTreeNode> = {};
+    for (const yr of availableYears) {
+      const cached = dataCache[`${viewMode}:${yr}`];
+      if (cached) result[yr] = cached;
+    }
+    return result;
+  }, [dataCache, viewMode, availableYears]);
+
+  // When detail panel opens, prefetch all years for the current view (for trend chart)
+  useEffect(() => {
+    if (!selectedNodeName) return;
+    let cancelled = false;
+
+    const missingYears = availableYears.filter(yr => !dataCache[`${viewMode}:${yr}`]);
+    if (missingYears.length === 0) return;
+
+    Promise.all(
+      missingYears.map(yr =>
+        fetchBudgetData(viewMode, yr)
+          .then(data => ({ yr, data }))
+          .catch(() => null)
+      )
+    ).then(results => {
+      if (cancelled) return;
+      const newEntries: Record<string, BudgetTreeNode> = {};
+      for (const result of results) {
+        if (result) newEntries[`${viewMode}:${result.yr}`] = result.data;
+      }
+      if (Object.keys(newEntries).length > 0) {
+        setDataCache(prev => ({ ...prev, ...newEntries }));
+      }
+    });
+
+    return () => { cancelled = true; };
+  }, [selectedNodeName, viewMode, availableYears]); // eslint-disable-line react-hooks/exhaustive-deps
+
   // Previous year data for bubble chart change colors — traverse to same path
   const prevYear = year - 1;
-  const prevYearRoot = activeDataByYear[prevYear];
+  const prevYearRoot = dataCache[`${viewMode}:${prevYear}`] ?? null;
   const prevYearNode = useMemo(() => {
     if (!prevYearRoot) return undefined;
-    let current = prevYearRoot;
+    let current: BudgetTreeNode = prevYearRoot;
     for (const segment of path) {
       const child = current.children?.find(c => c.name === segment);
       if (!child) return undefined;
@@ -160,6 +237,21 @@ export function BudgetExplorer({
     }
     return current;
   }, [prevYearRoot, path]);
+
+  // Prefetch previous year data when bubble mode is active
+  useEffect(() => {
+    if (vizMode !== 'bubble') return;
+    const key = `${viewMode}:${prevYear}`;
+    if (dataCache[key]) return;
+
+    fetchBudgetData(viewMode, prevYear)
+      .then(data => {
+        setDataCache(prev => ({ ...prev, [key]: data }));
+      })
+      .catch(() => {
+        // ignore — bubble will just lack change data
+      });
+  }, [vizMode, viewMode, prevYear]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Unit conversion text for total
   const totalUnitText = selectedUnit ? formatUnitConversion(totalValue, selectedUnit) : '';
@@ -192,7 +284,7 @@ export function BudgetExplorer({
             className="px-3 py-1.5 text-base rounded-lg border border-border bg-background"
             aria-label="연도 선택"
           >
-            {metadata.availableYears.map(y => (
+            {availableYears.map(y => (
               <option key={y} value={y}>{y}년</option>
             ))}
           </select>
@@ -291,7 +383,12 @@ export function BudgetExplorer({
       {/* Main content: Visualization + optional Detail Panel */}
       <div className={cn('flex gap-4', selectedNode ? 'flex-col lg:flex-row' : '')}>
         {/* Visualization */}
-        <div ref={chartRef} data-tour="treemap" className={cn('flex-1 min-w-0', selectedNode ? 'lg:flex-[2]' : '')}>
+        <div ref={chartRef} data-tour="treemap" className={cn('relative flex-1 min-w-0', selectedNode ? 'lg:flex-[2]' : '')}>
+          {loading && (
+            <div className="absolute inset-0 bg-background/50 flex items-center justify-center z-10 rounded-lg">
+              <span className="text-muted-foreground">데이터 로딩 중...</span>
+            </div>
+          )}
           {!chartVisible ? (
             (
               <div className="w-full h-[500px] bg-muted/30 animate-pulse rounded-lg flex items-center justify-center">
@@ -339,8 +436,8 @@ export function BudgetExplorer({
             <BudgetDetailPanel
               node={selectedNode}
               path={selectedPath}
-              allYearsData={activeDataByYear}
-              availableYears={metadata.availableYears}
+              allYearsData={allYearsDataForPanel}
+              availableYears={availableYears}
               currentYear={year}
               selectedUnit={selectedUnit}
               onClose={() => setSelectedNodeName(null)}

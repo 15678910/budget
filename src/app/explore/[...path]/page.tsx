@@ -1,18 +1,13 @@
 import { redirect } from "next/navigation";
 import {
   loadBudgetByDomain,
-  loadBudgetByMinistry,
   loadMetadata,
-  loadRegionalByMetro,
-  loadRegionalByDistrict,
   loadRegionalMetadata,
-  loadEducationByOffice,
   loadEducationMetadata,
 } from "@/lib/data/load-budget";
 import { BudgetExplorer } from "@/components/BudgetExplorer";
 import { DEFAULT_YEAR } from "@/lib/constants";
 import type { Metadata } from "next";
-import type { BudgetTreeNode } from "@/types/budget";
 
 interface ExplorePageProps {
   params: Promise<{ path: string[] }>;
@@ -63,33 +58,12 @@ export default async function ExplorePage({ params }: ExplorePageProps) {
     ...educationMeta.availableYears,
   ])].sort((a, b) => a - b);
 
-  const year = allYears.includes(DEFAULT_YEAR)
+  const initialYear = allYears.includes(DEFAULT_YEAR)
     ? DEFAULT_YEAR
     : allYears[allYears.length - 1];
 
-  const domainDataByYear: Record<number, BudgetTreeNode> = {};
-  const ministryDataByYear: Record<number, BudgetTreeNode> = {};
-  for (const y of metadata.availableYears) {
-    domainDataByYear[y] = loadBudgetByDomain(y);
-    ministryDataByYear[y] = loadBudgetByMinistry(y);
-  }
-
-  const metroDataByYear: Record<number, BudgetTreeNode> = {};
-  const districtDataByYear: Record<number, BudgetTreeNode> = {};
-  for (const y of regionalMeta.availableYears) {
-    metroDataByYear[y] = loadRegionalByMetro(y);
-    districtDataByYear[y] = loadRegionalByDistrict(y);
-  }
-
-  const educationDataByYear: Record<number, BudgetTreeNode> = {};
-  for (const y of educationMeta.availableYears) {
-    educationDataByYear[y] = loadEducationByOffice(y);
-  }
-
-  const mergedMetadata = {
-    ...metadata,
-    availableYears: allYears,
-  };
+  // Only load initial view data — rest fetched on demand via API
+  const initialData = loadBudgetByDomain(initialYear);
 
   return (
     <div>
@@ -119,13 +93,9 @@ export default async function ExplorePage({ params }: ExplorePageProps) {
       </div>
 
       <BudgetExplorer
-        domainDataByYear={domainDataByYear}
-        ministryDataByYear={ministryDataByYear}
-        metroDataByYear={metroDataByYear}
-        districtDataByYear={districtDataByYear}
-        educationDataByYear={educationDataByYear}
-        metadata={mergedMetadata}
-        initialYear={year}
+        initialData={initialData}
+        initialYear={initialYear}
+        availableYears={allYears}
       />
     </div>
   );
