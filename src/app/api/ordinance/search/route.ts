@@ -47,7 +47,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
   // Build external API URL
   const url = new URL('https://www.law.go.kr/DRF/lawSearch.do');
-  url.searchParams.set('OC', 'budgetai'); // service identifier
+  url.searchParams.set('OC', 'lacoiffure828');
   url.searchParams.set('target', 'ordin');
   url.searchParams.set('type', 'JSON');
   url.searchParams.set('query', query.trim());
