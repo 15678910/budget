@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import dynamic from 'next/dynamic';
 import { Breadcrumb } from './layout/Breadcrumb';
 import { UnitConverter } from './shared/UnitConverter';
@@ -103,6 +103,20 @@ export function BudgetExplorer({
   const [colorMode, setColorMode] = useState<'category' | 'change'>('category');
   const [selectedUnit, setSelectedUnit] = useState<BudgetUnit | null>(null);
   const [selectedNodeName, setSelectedNodeName] = useState<string | null>(null);
+  const [chartVisible, setChartVisible] = useState(false);
+  const chartRef = useRef<HTMLDivElement>(null);
+
+  // Defer chart rendering until viewport entry (reduce TBT)
+  useEffect(() => {
+    const el = chartRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setChartVisible(true); observer.disconnect(); } },
+      { rootMargin: '200px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const dataMap: Record<ViewMode, Record<number, BudgetTreeNode>> = {
     domain: domainDataByYear,
@@ -276,8 +290,12 @@ export function BudgetExplorer({
       {/* Main content: Visualization + optional Detail Panel */}
       <div className={cn('flex gap-4', selectedNode ? 'flex-col lg:flex-row' : '')}>
         {/* Visualization */}
-        <div data-tour="treemap" className={cn('flex-1 min-w-0', selectedNode ? 'lg:flex-[2]' : '')}>
-          {vizMode === 'treemap' ? (
+        <div ref={chartRef} data-tour="treemap" className={cn('flex-1 min-w-0', selectedNode ? 'lg:flex-[2]' : '')}>
+          {!chartVisible ? (
+            <div className="w-full h-[500px] bg-muted/30 animate-pulse rounded-lg flex items-center justify-center">
+              <span className="text-muted-foreground text-sm">차트 준비 중...</span>
+            </div>
+          ) : vizMode === 'treemap' ? (
             <BudgetTreemap
               data={shallowData}
               domainContext={domainContext}
