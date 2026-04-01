@@ -5,9 +5,6 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.resolve(__dirname),
   },
-  experimental: {
-    optimizePackageImports: ['@nivo/treemap', '@nivo/bar', '@nivo/core', 'lodash', '@react-spring/web'],
-  },
   images: {
     formats: ['image/avif', 'image/webp'],
   },
