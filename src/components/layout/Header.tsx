@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 import { useEffect, useRef, useState } from "react";
@@ -10,6 +11,7 @@ import { useUser } from "@/components/providers/UserProvider";
 
 const MAIN_TABS = [
   { href: "/about", label: "소개" },
+  { href: "/guide", label: "가이드" },
   { href: "/", label: "트리맵" },
   { href: "/table", label: "테이블" },
   { href: "/compare", label: "비교" },
@@ -81,7 +83,7 @@ export function Header() {
             href="/"
             className="flex items-center gap-2 hover:opacity-80 transition-opacity"
           >
-            <img src="/logo-icon.svg" alt="마을살림" width={28} height={28} className="rounded-md" />
+            <Image src="/logo-icon.svg" alt="마을살림" width={28} height={28} className="rounded-md" priority />
             <span className="text-base md:text-lg font-bold tracking-tight text-foreground whitespace-nowrap">
               마을살림/나라살림
             </span>
@@ -189,6 +191,7 @@ export function Header() {
                   <button
                     onClick={() => setUserMenuOpen((v) => !v)}
                     className="flex items-center gap-1 px-2 md:px-3 py-1.5 text-sm rounded-md transition-colors text-muted-foreground hover:bg-muted hover:text-foreground"
+                    aria-label="사용자 메뉴"
                   >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />

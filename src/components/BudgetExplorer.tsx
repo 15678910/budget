@@ -1,14 +1,45 @@
 "use client";
 
 import { useState, useEffect, useMemo } from 'react';
-import { BudgetTreemap } from './treemap/BudgetTreemap';
-import { BudgetBubbleChart } from './bubble/BudgetBubbleChart';
-import { BubbleLegend } from './bubble/BubbleLegend';
+import dynamic from 'next/dynamic';
 import { Breadcrumb } from './layout/Breadcrumb';
-import { BudgetDetailPanel } from './detail/BudgetDetailPanel';
 import { UnitConverter } from './shared/UnitConverter';
 import { DataSources } from './shared/DataSources';
 import { useTreemapNavigation } from '@/hooks/useTreemapNavigation';
+
+const BudgetTreemap = dynamic(
+  () => import('./treemap/BudgetTreemap').then(mod => ({ default: mod.BudgetTreemap })),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="w-full h-[500px] bg-muted/30 animate-pulse rounded-lg flex items-center justify-center">
+        <span className="text-muted-foreground text-sm">트리맵 로딩 중...</span>
+      </div>
+    ),
+  }
+);
+
+const BudgetBubbleChart = dynamic(
+  () => import('./bubble/BudgetBubbleChart').then(mod => ({ default: mod.BudgetBubbleChart })),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="w-full h-[500px] bg-muted/30 animate-pulse rounded-lg flex items-center justify-center">
+        <span className="text-muted-foreground text-sm">버블차트 로딩 중...</span>
+      </div>
+    ),
+  }
+);
+
+const BubbleLegend = dynamic(
+  () => import('./bubble/BubbleLegend').then(mod => ({ default: mod.BubbleLegend })),
+  { ssr: false }
+);
+
+const BudgetDetailPanel = dynamic(
+  () => import('./detail/BudgetDetailPanel').then(mod => ({ default: mod.BudgetDetailPanel })),
+  { ssr: false }
+);
 import type { BudgetTreeNode, ViewMode, VisualizationMode, DatasetMetadata } from '@/types/budget';
 import { formatKoreanWon, formatPerCapita, cn } from '@/lib/utils/format';
 import { formatUnitConversion, type BudgetUnit } from '@/lib/utils/units';
@@ -144,6 +175,7 @@ export function BudgetExplorer({
             value={year}
             onChange={(e) => { setYear(Number(e.target.value)); navigateTo([]); setSelectedNodeName(null); }}
             className="px-3 py-1.5 text-base rounded-lg border border-border bg-background"
+            aria-label="연도 선택"
           >
             {metadata.availableYears.map(y => (
               <option key={y} value={y}>{y}년</option>

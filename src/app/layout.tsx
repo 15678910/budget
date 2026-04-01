@@ -1,18 +1,25 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { UserProvider } from "@/components/providers/UserProvider";
 import { Header } from "@/components/layout/Header";
-import { GuidedTour } from "@/components/shared/GuidedTour";
-import { AnalyticsTracker } from "@/components/analytics/AnalyticsTracker";
-import { BudgetChatbot } from "@/components/chat/BudgetChatbot";
+import { LazyOverlays } from "@/components/layout/LazyOverlays";
 
 const notoSansKR = Noto_Sans_KR({
   variable: "--font-sans",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+  ],
+};
 
 export const metadata: Metadata = {
   title: "대한민국 예산 시각화 | 마을살림/나라살림",
@@ -53,9 +60,7 @@ export default function RootLayout({
             <main className="max-w-[1600px] mx-auto px-4 py-4">
               {children}
             </main>
-            <GuidedTour />
-            <AnalyticsTracker />
-            <BudgetChatbot />
+            <LazyOverlays />
           </UserProvider>
         </ThemeProvider>
       </body>
