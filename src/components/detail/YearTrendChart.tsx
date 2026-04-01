@@ -1,6 +1,6 @@
 'use client';
 
-import { ResponsiveBar } from '@nivo/bar';
+import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { formatKoreanWon } from '@/lib/utils/format';
 
 interface YearTrendChartProps {
@@ -15,70 +15,42 @@ export function YearTrendChart({ data }: YearTrendChartProps) {
 
   return (
     <div className="w-full" style={{ height: 180 }}>
-      <ResponsiveBar
-        data={chartData}
-        keys={['amount']}
-        indexBy="year"
-        margin={{ top: 10, right: 10, bottom: 30, left: 10 }}
-        padding={0.3}
-        colors={['#4C72B0']}
-        axisBottom={{
-          tickSize: 0,
-          tickPadding: 5,
-          tickRotation: 0,
-          renderTick: ({ x, y, value }) => (
-            <g transform={`translate(${x},${y})`}>
-              <text
-                textAnchor="middle"
-                dominantBaseline="hanging"
-                style={{
-                  fontSize: 11,
-                  fill: 'hsl(var(--foreground))',
-                }}
-                y={6}
-              >
-                {value}
-              </text>
-            </g>
-          ),
-        }}
-        axisLeft={null}
-        enableGridY={false}
-        gridYValues={[]}
-        enableLabel={false}
-        animate={false}
-        theme={{
-          grid: {
-            line: {
-              stroke: 'hsl(var(--border))',
-            },
-          },
-          axis: {
-            ticks: {
-              text: {
-                fill: 'hsl(var(--foreground))',
-                fontSize: 11,
-              },
-            },
-          },
-        }}
-        tooltip={({ indexValue, value }) => (
-          <div
-            style={{
-              background: 'hsl(var(--background))',
-              color: 'hsl(var(--foreground))',
-              border: '1px solid hsl(var(--border))',
-              borderRadius: 4,
-              padding: '6px 10px',
-              fontSize: 12,
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={chartData} margin={{ top: 10, right: 10, bottom: 5, left: 10 }}>
+          <XAxis
+            dataKey="year"
+            tick={{ fontSize: 11, fill: 'hsl(var(--foreground))' }}
+            tickLine={false}
+            axisLine={false}
+          />
+          <Tooltip
+            content={({ active, payload, label }) => {
+              if (!active || !payload?.[0]) return null;
+              return (
+                <div
+                  style={{
+                    background: 'hsl(var(--background))',
+                    color: 'hsl(var(--foreground))',
+                    border: '1px solid hsl(var(--border))',
+                    borderRadius: 4,
+                    padding: '6px 10px',
+                    fontSize: 12,
+                  }}
+                >
+                  <strong>{label}년</strong>
+                  <br />
+                  {formatKoreanWon(payload[0].value as number)}
+                </div>
+              );
             }}
-          >
-            <strong>{indexValue}년</strong>
-            <br />
-            {formatKoreanWon(value as number)}
-          </div>
-        )}
-      />
+          />
+          <Bar dataKey="amount" radius={[3, 3, 0, 0]} isAnimationActive={false}>
+            {chartData.map((_, i) => (
+              <Cell key={i} fill="#4C72B0" />
+            ))}
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
     </div>
   );
 }

@@ -284,7 +284,7 @@ export default function AboutPage() {
       <section className="text-center space-y-4 pb-8">
         <h2 className="text-xl font-semibold text-gray-200">기술 스택</h2>
         <div className="flex flex-wrap justify-center gap-3 text-sm">
-          {['Next.js 16', 'React 19', 'TypeScript', 'Tailwind CSS', 'D3.js', '@nivo', 'Fuse.js', 'Gemini AI', 'Neon DB', 'Vercel'].map((t) => (
+          {['Next.js 16', 'React 19', 'TypeScript', 'Tailwind CSS', 'Recharts', 'Fuse.js', 'Gemini AI', 'Neon DB', 'Vercel'].map((t) => (
             <span key={t} className="px-3 py-1.5 rounded-full border border-gray-700 text-gray-400 bg-gray-900/50">
               {t}
             </span>

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { ResponsiveBar } from '@nivo/bar';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { StatCard } from './StatCard';
 
 // ---------------------------------------------------------------------------
@@ -364,57 +364,25 @@ export function AdminDashboard() {
           <SectionCard title="일별 방문 트렌드" className="col-span-full">
             <div className="h-72">
               {barChartData.length > 0 ? (
-                <ResponsiveBar
-                  data={barChartData}
-                  keys={['views', 'visitors']}
-                  indexBy="date"
-                  margin={{ top: 10, right: 20, bottom: 50, left: 50 }}
-                  padding={0.3}
-                  groupMode="grouped"
-                  colors={['#3b82f6', '#10b981']}
-                  borderRadius={2}
-                  enableLabel={false}
-                  axisBottom={{
-                    tickSize: 0,
-                    tickPadding: 8,
-                    tickRotation: -45,
-                  }}
-                  axisLeft={{
-                    tickSize: 0,
-                    tickPadding: 8,
-                  }}
-                  theme={{
-                    text: { fill: '#a3a3a3', fontSize: 11 },
-                    axis: {
-                      ticks: { text: { fill: '#a3a3a3' } },
-                    },
-                    grid: {
-                      line: { stroke: '#333', strokeWidth: 1 },
-                    },
-                    tooltip: {
-                      container: {
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={barChartData} margin={{ top: 10, right: 20, bottom: 50, left: 50 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+                    <XAxis dataKey="date" tick={{ fontSize: 11, fill: '#a3a3a3' }} tickLine={false} angle={-45} textAnchor="end" />
+                    <YAxis tick={{ fontSize: 11, fill: '#a3a3a3' }} tickLine={false} />
+                    <Tooltip
+                      contentStyle={{
                         background: '#171717',
                         color: '#ededed',
                         borderRadius: '8px',
                         border: '1px solid #333',
                         fontSize: '12px',
-                      },
-                    },
-                  }}
-                  legends={[
-                    {
-                      dataFrom: 'keys',
-                      anchor: 'bottom',
-                      direction: 'row',
-                      translateY: 48,
-                      itemWidth: 80,
-                      itemHeight: 18,
-                      itemTextColor: '#a3a3a3',
-                      symbolSize: 10,
-                      symbolShape: 'circle',
-                    },
-                  ]}
-                />
+                      }}
+                    />
+                    <Legend wrapperStyle={{ fontSize: 11, color: '#a3a3a3', paddingTop: 8 }} />
+                    <Bar dataKey="views" fill="#3b82f6" radius={[2, 2, 0, 0]} isAnimationActive={false} name="조회수" />
+                    <Bar dataKey="visitors" fill="#10b981" radius={[2, 2, 0, 0]} isAnimationActive={false} name="방문자" />
+                  </BarChart>
+                </ResponsiveContainer>
               ) : (
                 <div className="flex items-center justify-center h-full text-muted-foreground">
                   데이터가 없습니다.
