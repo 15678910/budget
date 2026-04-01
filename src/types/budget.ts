@@ -15,7 +15,7 @@ export interface BudgetRawItem {
   amount: number;                // 예산액 (백만원)
 }
 
-/** Nivo-compatible treemap node */
+/** Treemap node for hierarchical budget visualization */
 export interface BudgetTreeNode {
   id: string;
   name: string;
