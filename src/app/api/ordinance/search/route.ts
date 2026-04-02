@@ -67,12 +67,17 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     const text = await res.text();
-    let data: { OrdinSearch?: { totalCnt?: string; page?: string; 자치법규?: OrdinanceItem | OrdinanceItem[] } };
+    let data: { result?: string; msg?: string; OrdinSearch?: { totalCnt?: string; page?: string; 자치법규?: OrdinanceItem | OrdinanceItem[] } };
 
     try {
       data = JSON.parse(text);
     } catch {
-      return NextResponse.json({ error: '법령정보 API 응답 파싱 실패' }, { status: 502 });
+      return NextResponse.json({ error: '법령정보 API 응답 파싱 실패', raw: text.slice(0, 200) }, { status: 502 });
+    }
+
+    // Check for API-level error
+    if (data.result && !data.OrdinSearch) {
+      return NextResponse.json({ error: `법령정보 API: ${data.result} - ${data.msg || ''}` }, { status: 502 });
     }
 
     const total = parseInt(data.OrdinSearch?.totalCnt ?? '0', 10);
