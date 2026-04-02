@@ -555,6 +555,13 @@ export function FiscalDoctorDashboard() {
     setLoading(true);
     setError(null);
     setDiagnosis(null);
+    // Reset all sub-features on new diagnosis
+    setChatMessages([]);
+    setAiReport(null);
+    setAgentResults(null);
+    setShowPolicyChat(false);
+    setShowBenchmark(false);
+    setBenchmarkData(null);
 
     try {
       const body =
@@ -576,6 +583,8 @@ export function FiscalDoctorDashboard() {
       }
 
       setDiagnosis(data);
+      // Set short cooldown after diagnosis to avoid Gemini rate limit on immediate simulation
+      setCooldown(5);
     } catch {
       setError('네트워크 오류가 발생했습니다. 다시 시도해주세요.');
     } finally {
