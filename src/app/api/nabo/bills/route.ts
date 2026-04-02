@@ -115,8 +115,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   // Note: RST_PROPOSER is NOT a supported query parameter in this API.
   // For proposer search, we fetch a larger batch and filter server-side.
   if (proposer) {
-    // Fetch max batch for server-side filtering (API doesn't support proposer query)
-    externalUrl.searchParams.set('pSize', '1000');
+    // Fetch larger batch for server-side filtering (API max pSize varies, use safe value)
+    externalUrl.searchParams.set('pSize', '50');
   } else if (search) {
     externalUrl.searchParams.set('BILL_NAME', search);
   }
