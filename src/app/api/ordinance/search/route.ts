@@ -46,7 +46,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   }
 
   // Build external API URL
-  const url = new URL('https://www.law.go.kr/DRF/lawSearch.do');
+  const url = new URL('http://www.law.go.kr/DRF/lawSearch.do');
   url.searchParams.set('OC', 'lacoiffure828');
   url.searchParams.set('target', 'ordin');
   url.searchParams.set('type', 'JSON');
@@ -54,7 +54,6 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   url.searchParams.set('display', String(size));
   url.searchParams.set('page', String(page));
   url.searchParams.set('sort', 'ddes'); // 최신순
-  url.searchParams.set('knd', '조례'); // 조례만
 
   try {
     const res = await fetch(url.toString(), {
