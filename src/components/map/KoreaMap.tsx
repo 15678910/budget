@@ -367,12 +367,26 @@ export function KoreaMap({
       // In district view: select district for detail panel
       setSelectedRegion((prev) => (prev === budgetName ? null : budgetName));
     } else {
-      // In province view: drill down into the province
-      setDrillMetro(budgetName);
-      setSelectedRegion(null);
-      setHoveredRegion(null);
+      // Check if this metro has district data before drilling
+      const districtRoot = districtDataByYear[year];
+      const metroNode = districtRoot?.children?.find((c) => c.name === budgetName);
+      const hasDistricts = metroNode?.children && metroNode.children.filter(c => c.name !== '본청').length > 0;
+      const provinceCode = BUDGET_NAME_TO_PROVINCE_CODE[budgetName];
+      const hasGeoFeatures = provinceCode && allDistrictFeatures.some(
+        (f: any) => f.properties?.code?.startsWith(provinceCode)
+      );
+
+      if (hasDistricts && hasGeoFeatures) {
+        // Has districts: drill down
+        setDrillMetro(budgetName);
+        setSelectedRegion(null);
+        setHoveredRegion(null);
+      } else {
+        // No districts (e.g., 세종시): show detail panel without drill-down
+        setSelectedRegion((prev) => (prev === budgetName ? null : budgetName));
+      }
     }
-  }, [drillMetro]);
+  }, [drillMetro, districtDataByYear, year, allDistrictFeatures]);
 
   const handleBack = useCallback(() => {
     setDrillMetro(null);
