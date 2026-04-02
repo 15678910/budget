@@ -67,7 +67,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     const text = await res.text();
-    let data: { result?: string; msg?: string; OrdinSearch?: { totalCnt?: string; page?: string; 자치법규?: OrdinanceItem | OrdinanceItem[] } };
+    let data: { result?: string; msg?: string; OrdinSearch?: Record<string, unknown> };
 
     try {
       data = JSON.parse(text);
@@ -80,15 +80,17 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       return NextResponse.json({ error: `법령정보 API: ${data.result} - ${data.msg || ''}` }, { status: 502 });
     }
 
-    const total = parseInt(data.OrdinSearch?.totalCnt ?? '0', 10);
+    const total = parseInt(String(data.OrdinSearch?.totalCnt ?? '0'), 10);
 
-    // Handle single result vs array
+    // Handle single result vs array — API returns 'law' key (not '자치법규')
     let items: OrdinanceItem[] = [];
-    const raw = data.OrdinSearch?.['자치법규'];
+    const rawLaw = (data.OrdinSearch as Record<string, unknown>)?.['law'];
+    const rawOrdin = (data.OrdinSearch as Record<string, unknown>)?.['자치법규'];
+    const raw = rawLaw ?? rawOrdin;
     if (Array.isArray(raw)) {
-      items = raw;
+      items = raw as OrdinanceItem[];
     } else if (raw) {
-      items = [raw];
+      items = [raw as OrdinanceItem];
     }
 
     // Filter by localGov if specified
