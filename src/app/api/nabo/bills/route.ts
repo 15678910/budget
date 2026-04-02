@@ -112,12 +112,11 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   externalUrl.searchParams.set('pIndex', String(page));
   externalUrl.searchParams.set('pSize', String(size));
   externalUrl.searchParams.set('AGE', '22');
-  // Note: RST_PROPOSER is NOT a supported query parameter in this API.
-  // For proposer search, we fetch a larger batch and filter server-side.
   if (proposer) {
-    // Fetch larger batch for server-side filtering (API max pSize varies, use safe value)
-    externalUrl.searchParams.set('pSize', '50');
-  } else if (search) {
+    // PROPOSER parameter is officially supported (e.g., PROPOSER=강경식의원)
+    externalUrl.searchParams.set('PROPOSER', proposer.includes('의원') ? proposer : proposer + '의원');
+  }
+  if (search) {
     externalUrl.searchParams.set('BILL_NAME', search);
   }
   if (committee) {
@@ -176,17 +175,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     detailLink: row.DETAIL_LINK,
   }));
 
-  // Server-side proposer filtering (API doesn't support this as query param)
-  let filteredTotal = total;
-  if (proposer) {
-    bills = bills.filter(b => b.proposer === proposer || b.proposer.includes(proposer));
-    filteredTotal = bills.length;
-    // Paginate manually
-    const start = (page - 1) * size;
-    bills = bills.slice(start, start + size);
-  }
-
-  const response: BillsResponse = { bills, total: proposer ? filteredTotal : total, page, size };
+  const response: BillsResponse = { bills, total, page, size };
   setCache(cacheKey, response);
 
   return NextResponse.json(response, {
