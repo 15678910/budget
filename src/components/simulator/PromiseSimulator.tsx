@@ -232,14 +232,66 @@ export function PromiseSimulator() {
   const [promiseCost, setPromiseCost] = useState(20);    // 공약 비용 (조원 for national, 1000억원 for metro)
   const [years, setYears] = useState(5);                  // 이행 기간 1~10년
   const [taxRatio, setTaxRatio] = useState(30);           // 증세 비중 0~100%
-  const [gdpGrowth, setGdpGrowth] = useState(2.0);       // GDP 성장률 0~5%
 
-  // Adjust promise cost range based on scope
+  // === AI 공약 분석 state ===
+  const [promiseText, setPromiseText] = useState('');
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiResult, setAiResult] = useState<{
+    estimatedCost: number;
+    rationale: string;
+    source: 'ai' | 'local';
+  } | null>(null);
+  const [aiError, setAiError] = useState<string | null>(null);
+
+  // Cost max by scope (declared early for handleAiAnalyze)
   const costMax =
     scope === 'district' ? 5
     : scope === 'education' ? 15
     : scope === 'metro' ? 50
     : 100;
+
+  const handleAiAnalyze = async () => {
+    if (!promiseText.trim() || aiLoading) return;
+    setAiLoading(true);
+    setAiError(null);
+    setAiResult(null);
+    try {
+      const res = await fetch('/api/chat/diagnosis/promise-cost', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          promiseText: promiseText.trim(),
+          scope,
+          regionName:
+            scope === 'education' ? selectedEducation
+            : scope === 'district' ? `${selectedMetro} ${selectedDistrict}`
+            : scope === 'metro' ? selectedMetro
+            : '대한민국',
+          budget: activeBudget,
+          population: activePop,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setAiError(data.error || 'AI 분석 실패');
+        return;
+      }
+      setAiResult(data);
+      // Auto-fill sliders
+      if (data.estimatedCost) {
+        const cost = Math.min(Math.max(data.estimatedCost, 0.1), costMax);
+        setPromiseCost(cost);
+      }
+      if (data.years) setYears(data.years);
+      if (data.taxRatio !== undefined) setTaxRatio(data.taxRatio);
+    } catch {
+      setAiError('네트워크 오류가 발생했습니다.');
+    } finally {
+      setAiLoading(false);
+    }
+  };
+  const [gdpGrowth, setGdpGrowth] = useState(2.0);       // GDP 성장률 0~5%
+
   const costUnit = '조원';
 
   // === Simulation calculation ===
@@ -509,6 +561,53 @@ export function PromiseSimulator() {
             : '주민등록 기준'
           }
         />
+      </div>
+
+      {/* ====== SECTION 1.5: AI 공약 분석 ====== */}
+      <div className="border border-purple-900/50 bg-purple-950/20 p-4 md:p-5">
+        <div className="text-sm md:text-base font-semibold uppercase tracking-widest text-purple-400 mb-3">
+          AI 공약 분석 Ai Promise Analysis
+        </div>
+        <div className="flex gap-2 flex-wrap">
+          <input
+            type="text"
+            value={promiseText}
+            onChange={(e) => setPromiseText(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleAiAnalyze()}
+            placeholder="공약을 입력하세요 (예: 무상교복 지원, 청년 1인당 100만원 지급, 공공병원 신설...)"
+            maxLength={200}
+            className="flex-1 min-w-[250px] bg-gray-900 border border-gray-700 text-gray-200 text-sm rounded px-3 py-2 focus:outline-none focus:border-purple-500 placeholder:text-gray-600"
+          />
+          <button
+            onClick={handleAiAnalyze}
+            disabled={aiLoading || !promiseText.trim()}
+            className="px-4 py-2 bg-purple-600 hover:bg-purple-500 disabled:bg-gray-700 disabled:text-gray-500 text-white text-sm font-medium rounded transition-colors whitespace-nowrap"
+          >
+            {aiLoading ? 'AI 분석 중...' : 'AI 비용 추정'}
+          </button>
+        </div>
+        <p className="text-xs text-gray-500 mt-2">
+          공약 내용을 입력하면 AI가 예상 비용/기간/증세 비중을 자동으로 추정하여 슬라이더에 반영합니다.
+        </p>
+        {aiError && (
+          <div className="mt-3 border border-red-900/50 bg-red-950/30 p-3 rounded text-sm text-red-400">
+            {aiError}
+          </div>
+        )}
+        {aiResult && (
+          <div className="mt-3 border border-gray-700 bg-gray-900/50 p-3 rounded space-y-2">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-sm font-semibold text-purple-400">AI 추정 결과</span>
+              <span className="text-xs text-gray-500">
+                ({aiResult.source === 'ai' ? 'Gemini AI 분석' : '규칙 기반'})
+              </span>
+              <span className="ml-auto text-sm font-mono text-blue-400 font-bold">
+                {aiResult.estimatedCost.toFixed(1)}조원
+              </span>
+            </div>
+            <p className="text-sm text-gray-300 leading-relaxed">{aiResult.rationale}</p>
+          </div>
+        )}
       </div>
 
       {/* ====== SECTION 2: 시뮬레이션 설정 (Sliders) ====== */}
