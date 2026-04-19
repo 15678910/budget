@@ -37,8 +37,18 @@ export async function POST(request: NextRequest) {
 
     const apiKey = process.env.GEMINI_API_KEY;
     if (apiKey) {
+      // 방법 2: 레이트 리밋 시 자동 대기 + 재시도 (최대 2회)
       const rate = checkGeminiRateLimit();
-      if (rate.allowed) {
+      if (!rate.allowed) {
+        // 대기 시간이 짧으면 자동 대기
+        const waitMs = Math.min(rate.retryAfter * 1000, 5000);
+        if (waitMs > 0) {
+          await new Promise((r) => setTimeout(r, waitMs));
+        }
+      }
+
+      // 재시도 루프 (최대 2회: 초기 시도 + 429 시 1회 재시도)
+      for (let attempt = 0; attempt < 2; attempt++) {
         try {
           markGeminiCall();
           const ai = await runAI(apiKey, promiseText, scope, regionName, budget, population);
@@ -47,8 +57,15 @@ export async function POST(request: NextRequest) {
             if (cache.size > 50) cache.clear();
             return NextResponse.json(ai);
           }
+          // ai가 null이면 2차 시도 전 3초 대기
+          if (attempt === 0) {
+            await new Promise((r) => setTimeout(r, 3000));
+          }
         } catch {
-          // fall through
+          // 네트워크 오류 시 다음 루프로
+          if (attempt === 0) {
+            await new Promise((r) => setTimeout(r, 3000));
+          }
         }
       }
     }
@@ -143,51 +160,100 @@ function runLocal(promiseText: string, scope: string, budget: number): PromiseRe
   let taxRatio = 30;
   let category = '일반 정책';
 
-  if (/병원|의료|보건/.test(text)) {
-    ratio = 0.05;
-    years = 7;
-    taxRatio = 20;
-    category = '의료·보건';
-  } else if (/주택|아파트|임대|재개발/.test(text)) {
-    ratio = 0.08;
-    years = 6;
+  // Priority 1: 복합 키워드 (가장 구체적) - AI/기술/의료 복합어 먼저 매칭
+  if (/ai[\s]*플랫폼|ai[\s]*기본|클로드[\s]*코드|챗gpt|챗봇|생성형[\s]*ai|llm|대규모[\s]*언어/.test(text)) {
+    ratio = 0.015;
+    years = 3;
     taxRatio = 15;
-    category = '주택';
-  } else if (/도로|철도|교통|인프라/.test(text)) {
-    ratio = 0.07;
+    category = 'AI·LLM 기술';
+  } else if (/공공[\s]*병원|지방[\s]*의료원|공공[\s]*의료|응급[\s]*의료|공공[\s]*보건/.test(text)) {
+    ratio = 0.06;
+    years = 7;
+    taxRatio = 15;
+    category = '공공의료';
+  } else if (/공공[\s]*은행|지방[\s]*은행|서민[\s]*금융|마을[\s]*은행/.test(text)) {
+    ratio = 0.04;
     years = 5;
     taxRatio = 10;
-    category = '인프라';
-  } else if (/복지|돌봄|노인|아동|무상/.test(text)) {
-    ratio = 0.04;
+    category = '공공금융';
+  } else if (/지역[\s]*화폐|블록체인|디지털[\s]*화폐|cbdc|가상[\s]*화폐/.test(text)) {
+    ratio = 0.02;
+    years = 3;
+    taxRatio = 20;
+    category = '지역화폐·블록체인';
+  } else if (/기본[\s]*소득|청년[\s]*수당|재난[\s]*지원|현금[\s]*지급/.test(text)) {
+    ratio = 0.08;
     years = 4;
-    taxRatio = 50;
-    category = '복지';
-  } else if (/교육|학교|장학|급식|보육/.test(text)) {
-    ratio = 0.06;
-    years = 5;
-    taxRatio = 40;
-    category = '교육';
-  } else if (/ai|디지털|스마트|플랫폼/.test(text)) {
+    taxRatio = 55;
+    category = '기본소득·수당';
+  } else if (/공공[\s]*임대|행복[\s]*주택|청년[\s]*주택|신혼[\s]*주택/.test(text)) {
+    ratio = 0.09;
+    years = 6;
+    taxRatio = 15;
+    category = '공공주택';
+  } else if (/무상[\s]*교육|무상[\s]*급식|무상[\s]*교복|무상[\s]*돌봄/.test(text)) {
+    ratio = 0.05;
+    years = 4;
+    taxRatio = 45;
+    category = '무상 공공서비스';
+  }
+  // Priority 2: 단일 키워드 (기술 > 인프라 > 의료 > 복지 순)
+  else if (/인공지능|\bai\b|디지털|스마트시티|빅데이터|자율주행|로봇|데이터|플랫폼|iot|클라우드|메타버스|vr|ar|블록체인|토큰/.test(text)) {
     ratio = 0.02;
     years = 3;
     taxRatio = 20;
     category = 'AI·디지털';
-  } else if (/일자리|고용|창업|기업/.test(text)) {
-    ratio = 0.03;
-    years = 4;
-    taxRatio = 25;
-    category = '일자리';
-  } else if (/환경|탄소|에너지|친환경/.test(text)) {
+  } else if (/철도|지하철|고속도로|항만|공항|교량|터널|ktx|gtx|광역[\s]*교통/.test(text)) {
+    ratio = 0.09;
+    years = 7;
+    taxRatio = 8;
+    category = '대형 인프라';
+  } else if (/도로|교통|버스|인프라|상하수도|통신/.test(text)) {
+    ratio = 0.07;
+    years = 5;
+    taxRatio = 10;
+    category = '인프라';
+  } else if (/병원|의료|보건|진료|응급/.test(text)) {
+    ratio = 0.05;
+    years = 7;
+    taxRatio = 20;
+    category = '의료·보건';
+  } else if (/주택|아파트|임대|분양|재개발|재건축/.test(text)) {
+    ratio = 0.08;
+    years = 6;
+    taxRatio = 15;
+    category = '주택';
+  } else if (/환경|탄소|신재생|태양광|풍력|폐기물|하수|친환경|에너지|공원|생태/.test(text)) {
     ratio = 0.05;
     years = 6;
     taxRatio = 35;
-    category = '환경';
-  } else if (/문화|관광|축제|체육/.test(text)) {
+    category = '환경·에너지';
+  } else if (/교육|학교|장학|급식|보육|유치원|대학|도서관|평생학습/.test(text)) {
+    ratio = 0.06;
+    years = 5;
+    taxRatio = 40;
+    category = '교육';
+  } else if (/일자리|고용|창업|기업|중소기업|스타트업|산업|경제/.test(text)) {
+    ratio = 0.03;
+    years = 4;
+    taxRatio = 25;
+    category = '일자리·산업';
+  } else if (/관광|특구|축제|문화|예술|체육|스포츠|박물관|공연/.test(text)) {
     ratio = 0.02;
     years = 3;
     taxRatio = 30;
     category = '문화·관광';
+  } else if (/복지|돌봄|요양|노인|장애|아동|수당|저소득|취약계층/.test(text)) {
+    ratio = 0.04;
+    years = 4;
+    taxRatio = 50;
+    category = '복지';
+  } else if (/무상|지원금|지원/.test(text)) {
+    // "무상지원" 등 단독 사용 시 일반 복지로 분류
+    ratio = 0.03;
+    years = 4;
+    taxRatio = 40;
+    category = '일반 지원';
   }
 
   const estimatedCost = Math.max(0.1, Math.round(budget * ratio * 10) / 10);
