@@ -274,7 +274,7 @@ export function PromiseSimulator() {
               className="bg-gray-900 border border-gray-700 text-gray-300 text-sm px-2 py-1.5 rounded"
             >
               <option value="">광역시도 선택</option>
-              {metros.map((m) => (
+              {[...metros].sort((a, b) => a.name.localeCompare(b.name, 'ko')).map((m) => (
                 <option key={m.name} value={m.name}>
                   {m.name}
                 </option>
