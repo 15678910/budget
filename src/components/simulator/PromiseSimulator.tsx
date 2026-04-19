@@ -81,12 +81,12 @@ function Slider({
   return (
     <div className="py-3">
       <div className="flex items-center justify-between mb-2">
-        <span className="text-base md:text-base text-gray-400">{label}</span>
+        <span className="text-base md:text-base text-gray-300 font-medium">{label}</span>
         <div className="flex items-center gap-2">
           <span className={`text-lg md:text-xl font-mono font-bold ${color}`}>
             {value}{unit}
           </span>
-          {subLabel && <span className="text-sm md:text-base text-gray-500">({subLabel})</span>}
+          {subLabel && <span className="text-sm md:text-base text-gray-400">({subLabel})</span>}
         </div>
       </div>
       <input
@@ -109,18 +109,18 @@ function Slider({
 function Cell({ label, value, color, sub }: { label: string; value: string; color: string; sub?: string }) {
   return (
     <div className="border border-gray-800 p-3 md:p-4 min-w-0">
-      <div className="text-sm md:text-base text-gray-500 leading-tight truncate">{label}</div>
+      <div className="text-sm md:text-base text-gray-400 leading-tight truncate">{label}</div>
       <div className={`text-lg md:text-xl font-mono font-bold tabular-nums leading-tight truncate ${color}`}>
         {value}
       </div>
-      {sub && <div className="text-xs md:text-sm text-gray-600 leading-tight truncate">{sub}</div>}
+      {sub && <div className="text-xs md:text-sm text-gray-500 leading-tight truncate">{sub}</div>}
     </div>
   );
 }
 
 function SectionHeader({ title, color }: { title: string; color: string }) {
   return (
-    <div className={`col-span-full border border-gray-800 px-4 py-2 ${color}`}>
+    <div className={`col-span-full border border-gray-800 bg-gray-900/30 px-4 py-2 ${color}`}>
       <span className="text-sm md:text-base font-semibold uppercase tracking-widest">
         {title}
       </span>
@@ -508,12 +508,12 @@ export function PromiseSimulator() {
               ? `${metroData.name} 재정 현황`
               : '대한민국 재정 현황 Fiscal Overview'
           }
-          color="text-cyan-400"
+          color="text-gray-300"
         />
         <Cell
           label="예산규모"
           value={`${activeBudget.toFixed(activeBudget < 10 ? 1 : 0)}조원`}
-          color="text-cyan-400"
+          color="text-gray-100"
           sub={
             scope === 'national' ? '2026 세출예산'
             : scope === 'metro' ? '광역 예산'
@@ -524,19 +524,19 @@ export function PromiseSimulator() {
         <Cell
           label={scope === 'national' ? '국가채무' : scope === 'education' ? '교육채무' : '지역채무'}
           value={`${activeDebt.toFixed(activeDebt < 10 ? 1 : 0)}조원`}
-          color="text-red-400"
+          color={activeDebtRatio > 60 ? 'text-red-400' : 'text-gray-100'}
           sub={`${scope === 'national' ? 'GDP' : 'GRDP'} 대비 ${activeDebtRatio.toFixed(1)}%`}
         />
         <Cell
           label={scope === 'national' ? 'GDP' : 'GRDP 추정'}
           value={`${activeGdp.toFixed(activeGdp < 10 ? 1 : 0)}조원`}
-          color="text-cyan-400"
+          color="text-gray-100"
           sub={scope === 'national' ? '2026 명목 GDP' : '지역내총생산 추정'}
         />
         <Cell
           label="채무비율"
           value={`${activeDebtRatio.toFixed(1)}%`}
-          color="text-amber-400"
+          color={activeDebtRatio < 55 ? 'text-emerald-400' : activeDebtRatio < 65 ? 'text-amber-400' : 'text-red-400'}
           sub={
             scope === 'national' ? '국가채무/GDP'
             : scope === 'education' ? '교육채무/GRDP'
@@ -554,7 +554,7 @@ export function PromiseSimulator() {
             : scope === 'education' ? `${(activePop / 10000).toFixed(1)}만명`
             : `${(activePop / 10000).toFixed(0)}만명`
           }
-          color={scope === 'national' ? 'text-red-400' : 'text-cyan-400'}
+          color="text-gray-100"
           sub={
             scope === 'national' ? `GDP 대비 -${((CURRENT_DEFICIT / GDP) * 100).toFixed(1)}%`
             : scope === 'education' ? '관할 학생'
@@ -635,7 +635,7 @@ export function PromiseSimulator() {
 
       {/* ====== SECTION 2: 시뮬레이션 설정 (Sliders) ====== */}
       <div className="border border-gray-800 p-4 md:p-5">
-        <div className="text-sm md:text-base font-semibold uppercase tracking-widest text-blue-400 mb-3">
+        <div className="text-sm md:text-base font-semibold uppercase tracking-widest text-gray-300 mb-3">
           시뮬레이션 설정 Simulation Parameters
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
@@ -707,17 +707,17 @@ export function PromiseSimulator() {
 
       {/* ====== SECTION 3: 검증 결과 ====== */}
       <div className="grid grid-cols-2 md:grid-cols-3">
-        <SectionHeader title="검증 결과 Verification Results" color="text-blue-400" />
+        <SectionHeader title="검증 결과 Verification Results" color="text-gray-300" />
         <Cell
           label="공약 총비용"
           value={formatJo(simulation.totalCost)}
-          color="text-blue-400"
+          color="text-gray-100"
           sub={`${years}년간 총소요`}
         />
         <Cell
           label="연간 소요"
           value={formatJo(simulation.annualCost)}
-          color="text-blue-400"
+          color="text-gray-100"
           sub="연평균 소요액"
         />
         <Cell
@@ -733,7 +733,7 @@ export function PromiseSimulator() {
             : '국채 증가분'
           }
           value={formatJo(simulation.cumulativeDebt)}
-          color="text-red-400"
+          color={simulation.cumulativeDebt > activeBudget * 0.3 ? 'text-red-400' : 'text-gray-100'}
           sub={
             scope === 'education' ? `${years}년간 누적 교육채 (시설비 한정)`
             : scope === 'district' || scope === 'metro' ? `${years}년간 누적 지방채 (행안부 승인 필요)`
@@ -753,7 +753,7 @@ export function PromiseSimulator() {
             : '1인당 증세부담'
           }
           value={`${simulation.taxBurdenPerCapita.toLocaleString('ko-KR')}원`}
-          color="text-amber-400"
+          color={simulation.taxBurdenPerCapita > 300000 ? 'text-amber-400' : 'text-gray-100'}
           sub={
             scope === 'education' ? '연간 교부금 재편성 필요액'
             : scope === 'district' || scope === 'metro' ? '연간 지방세 추가 필요액'
@@ -788,7 +788,7 @@ export function PromiseSimulator() {
 
       {/* ====== BAR CHART: 연도별 채무/GDP 비율 추이 ====== */}
       <div className="border border-gray-800 p-4 md:p-5">
-        <div className="text-sm md:text-base font-semibold uppercase tracking-widest text-purple-400 mb-4">
+        <div className="text-sm md:text-base font-semibold uppercase tracking-widest text-gray-300 mb-4">
           연도별 채무/GDP 비율 추이 Debt Ratio Timeline
         </div>
         <div className="space-y-2">
@@ -846,7 +846,7 @@ export function PromiseSimulator() {
       </div>
 
       {/* ====== INFO SECTION: 판정 기준 ====== */}
-      <InfoSection title="판정 기준 Verdict Criteria" color="text-teal-400">
+      <InfoSection title="판정 기준 Verdict Criteria" color="text-gray-300">
         <div className="space-y-2">
           <div className="flex items-start gap-3">
             <span className="text-emerald-400 font-bold text-base flex-shrink-0">실현 가능</span>
@@ -865,7 +865,7 @@ export function PromiseSimulator() {
       </InfoSection>
 
       {/* ====== INFO SECTION: 데이터 출처 ====== */}
-      <InfoSection title="데이터 출처 Data Sources" color="text-blue-400">
+      <InfoSection title="데이터 출처 Data Sources" color="text-gray-300">
         <div className="space-y-2">
           <div className="flex items-start gap-3">
             <span className="text-blue-400 font-mono text-base flex-shrink-0">01</span>
