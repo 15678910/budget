@@ -661,13 +661,21 @@ export function PromiseSimulator() {
             onChange={setYears}
           />
           <Slider
-            label="증세 비중"
+            label={
+              scope === 'education' ? '교부금·전입금 활용 비중'
+              : scope === 'district' || scope === 'metro' ? '지방세·교부금 비중'
+              : '증세 비중'
+            }
             value={taxRatio}
             min={0}
             max={100}
             step={5}
             unit="%"
-            subLabel={`국채 ${100 - taxRatio}%`}
+            subLabel={
+              scope === 'education' ? `교육채 ${100 - taxRatio}%`
+              : scope === 'district' || scope === 'metro' ? `지방채 ${100 - taxRatio}%`
+              : `국채 ${100 - taxRatio}%`
+            }
             color="text-emerald-400"
             onChange={setTaxRatio}
           />
@@ -682,6 +690,19 @@ export function PromiseSimulator() {
             onChange={setGdpGrowth}
           />
         </div>
+        {scope === 'education' && (
+          <div className="mt-4 border border-cyan-900/50 bg-cyan-950/20 p-3 rounded text-xs text-cyan-300 leading-relaxed">
+            ℹ️ <strong>교육감은 증세·국채 발행 권한이 없습니다.</strong> 교육청 예산은 주로
+            ①지방교육재정교부금(내국세의 20.79%, 약 70%), ②시·도 전입금(약 15%), ③국고보조금·자체수입(약 15%)으로 구성됩니다.
+            신규 공약은 <strong>기존 예산 재편성</strong> 또는 <strong>교육채 발행(시설비 충당)</strong>으로 조달해야 합니다.
+          </div>
+        )}
+        {(scope === 'district' || scope === 'metro') && (
+          <div className="mt-4 border border-cyan-900/50 bg-cyan-950/20 p-3 rounded text-xs text-cyan-300 leading-relaxed">
+            ℹ️ <strong>지방자치단체는 국세 증세 권한이 없습니다.</strong> 지방세 인상(주민세, 재산세 등),
+            지방교부세·국고보조금 확보, 지방채 발행으로 재원을 조달합니다. 지방채 발행은 행정안전부 승인이 필요합니다.
+          </div>
+        )}
       </div>
 
       {/* ====== SECTION 3: 검증 결과 ====== */}
@@ -706,10 +727,18 @@ export function PromiseSimulator() {
           sub={`총예산 ${activeBudget.toFixed(activeBudget < 10 ? 1 : 0)}조 대비`}
         />
         <Cell
-          label="국채 증가분"
+          label={
+            scope === 'education' ? '교육채 발행분'
+            : scope === 'district' || scope === 'metro' ? '지방채 발행분'
+            : '국채 증가분'
+          }
           value={formatJo(simulation.cumulativeDebt)}
           color="text-red-400"
-          sub={`${years}년간 누적 국채 발행`}
+          sub={
+            scope === 'education' ? `${years}년간 누적 교육채 (시설비 한정)`
+            : scope === 'district' || scope === 'metro' ? `${years}년간 누적 지방채 (행안부 승인 필요)`
+            : `${years}년간 누적 국채 발행`
+          }
         />
         <Cell
           label="최종 채무비율"
@@ -718,10 +747,18 @@ export function PromiseSimulator() {
           sub={`현재 ${activeDebtRatio.toFixed(1)}% → ${simulation.finalDebtRatio.toFixed(1)}%`}
         />
         <Cell
-          label="1인당 증세부담"
+          label={
+            scope === 'education' ? '학생 1인당 교부금 부담'
+            : scope === 'district' || scope === 'metro' ? '1인당 지방세 부담'
+            : '1인당 증세부담'
+          }
           value={`${simulation.taxBurdenPerCapita.toLocaleString('ko-KR')}원`}
           color="text-amber-400"
-          sub="연간 1인당 추가 세금"
+          sub={
+            scope === 'education' ? '연간 교부금 재편성 필요액'
+            : scope === 'district' || scope === 'metro' ? '연간 지방세 추가 필요액'
+            : '연간 1인당 추가 세금'
+          }
         />
       </div>
 
