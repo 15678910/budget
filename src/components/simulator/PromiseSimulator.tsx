@@ -3,17 +3,24 @@
 import React, { useState, useMemo, useRef } from 'react';
 import { DataSources } from '@/components/shared/DataSources';
 import { PDFExportButton } from '@/components/shared/PDFExportButton';
+import { getMetroFiscalData } from '@/lib/data/fiscal-health-data';
 
 // ============================================================
 // 2026년 기준 대한민국 재정 데이터
 // ============================================================
 
-const BUDGET_TOTAL = 728;     // 조원 (총예산)
+const NATIONAL_BUDGET = 728;     // 조원 (총예산)
 const GDP = 2742;             // 조원
 const NATIONAL_DEBT = 1415;   // 조원
-const POPULATION = 51_350_000;
-const CURRENT_DEBT_RATIO = (NATIONAL_DEBT / GDP) * 100; // ~51.6%
+const NATIONAL_POP = 51_350_000;
+const NATIONAL_DEBT_RATIO = (NATIONAL_DEBT / GDP) * 100; // ~51.6%
 const CURRENT_DEFICIT = 109;  // 조원 (관리재정수지 적자)
+
+// ============================================================
+// Election scope types
+// ============================================================
+
+type ElectionScope = 'national' | 'metro';
 
 // ============================================================
 // Sub-components
@@ -130,11 +137,32 @@ function formatJo(value: number): string {
 // ============================================================
 
 export function PromiseSimulator() {
+  // === Scope selection ===
+  const [scope, setScope] = useState<ElectionScope>('national');
+  const [selectedMetro, setSelectedMetro] = useState<string>('');
+
+  const metros = useMemo(() => getMetroFiscalData(), []);
+  const metroData = useMemo(
+    () => metros.find((m) => m.name === selectedMetro),
+    [metros, selectedMetro],
+  );
+
+  // Active fiscal context (national or metro)
+  const activeBudget = scope === 'metro' && metroData ? metroData.budget / 10000 : NATIONAL_BUDGET; // 억원 → 조원
+  const activeDebt = scope === 'metro' && metroData ? metroData.debt / 10000 : NATIONAL_DEBT; // 억원 → 조원
+  const activeGdp = scope === 'metro' && metroData ? (metroData.budget / 10000) * 8 : GDP; // 지자체 GDP 대체: 예산의 약 8배 (GRDP 추정)
+  const activePop = scope === 'metro' && metroData ? metroData.population : NATIONAL_POP;
+  const activeDebtRatio = (activeDebt / activeGdp) * 100;
+
   // === Slider states ===
-  const [promiseCost, setPromiseCost] = useState(20);    // 공약 비용 1~100조원
+  const [promiseCost, setPromiseCost] = useState(20);    // 공약 비용 (조원 for national, 1000억원 for metro)
   const [years, setYears] = useState(5);                  // 이행 기간 1~10년
   const [taxRatio, setTaxRatio] = useState(30);           // 증세 비중 0~100%
   const [gdpGrowth, setGdpGrowth] = useState(2.0);       // GDP 성장률 0~5%
+
+  // Adjust promise cost range based on scope
+  const costMax = scope === 'metro' ? 50 : 100; // 지자체는 50조 상한 (큰 광역시도 대응)
+  const costUnit = scope === 'metro' && activeBudget < 30 ? '조원' : '조원';
 
   // === Simulation calculation ===
   const simulation = useMemo(() => {
@@ -144,20 +172,20 @@ export function PromiseSimulator() {
 
     const yearlyData: { year: number; debtRatio: number; totalDebt: number; gdpVal: number }[] = [];
     let cumulativeDebt = 0;
-    let gdpVal = GDP;
+    let gdpVal = activeGdp;
 
     for (let y = 1; y <= years; y++) {
       cumulativeDebt += annualDebtFunded;
       gdpVal *= (1 + gdpGrowth / 100);
-      const totalDebt = NATIONAL_DEBT + cumulativeDebt;
+      const totalDebt = activeDebt + cumulativeDebt;
       const debtRatio = (totalDebt / gdpVal) * 100;
       yearlyData.push({ year: 2026 + y, debtRatio, totalDebt, gdpVal });
     }
 
-    const finalDebtRatio = yearlyData[yearlyData.length - 1]?.debtRatio ?? CURRENT_DEBT_RATIO;
-    const budgetImpact = (annualCost / BUDGET_TOTAL) * 100;
+    const finalDebtRatio = yearlyData[yearlyData.length - 1]?.debtRatio ?? activeDebtRatio;
+    const budgetImpact = (annualCost / activeBudget) * 100;
     const totalCost = promiseCost;
-    const taxBurdenPerCapita = Math.round((annualTaxFunded * 1_0000_0000_0000) / POPULATION); // 원
+    const taxBurdenPerCapita = Math.round((annualTaxFunded * 1_0000_0000_0000) / activePop); // 원
 
     // Verdict
     let verdict: 'safe' | 'caution' | 'danger';
@@ -181,10 +209,10 @@ export function PromiseSimulator() {
       yearlyData,
       verdict,
     };
-  }, [promiseCost, years, taxRatio, gdpGrowth]);
+  }, [promiseCost, years, taxRatio, gdpGrowth, activeBudget, activeDebt, activeGdp, activePop, activeDebtRatio]);
 
   // Chart max value for scaling bars
-  const maxDebtRatio = Math.max(...simulation.yearlyData.map(d => d.debtRatio), CURRENT_DEBT_RATIO, 1);
+  const maxDebtRatio = Math.max(...simulation.yearlyData.map(d => d.debtRatio), activeDebtRatio, 1);
   // Scale the chart so that the max bar doesn't exceed the chart area
   const chartCeiling = Math.ceil(maxDebtRatio / 10) * 10 + 10;
 
@@ -217,52 +245,87 @@ export function PromiseSimulator() {
   return (
     <div ref={contentRef} className="bg-gray-950 text-gray-300 w-full min-h-screen p-2 md:p-4 space-y-1">
       {/* ====== TITLE BAR ====== */}
-      <div className="border border-gray-800 px-4 py-3 flex items-center justify-between">
+      <div className="border border-gray-800 px-4 py-3 flex items-center justify-between flex-wrap gap-3">
         <div>
           <h1 className="text-base md:text-lg font-bold tracking-[0.2em] uppercase text-gray-400">
             공약 검증 시뮬레이터
           </h1>
         </div>
-        <div className="flex items-center gap-2">
-          <PDFExportButton targetRef={contentRef} filename="공약검증" />
-          <span className="text-sm md:text-base text-gray-600">
-            재정 타당성 분석
-          </span>
+        <div className="flex items-center gap-2 flex-wrap">
+          {/* Scope Toggle */}
+          <div className="flex border border-gray-700 rounded overflow-hidden text-sm">
+            <button
+              onClick={() => setScope('national')}
+              className={`px-3 py-1.5 ${scope === 'national' ? 'bg-blue-600 text-white' : 'bg-gray-900 text-gray-400 hover:bg-gray-800'}`}
+            >
+              대선/총선
+            </button>
+            <button
+              onClick={() => setScope('metro')}
+              className={`px-3 py-1.5 ${scope === 'metro' ? 'bg-blue-600 text-white' : 'bg-gray-900 text-gray-400 hover:bg-gray-800'}`}
+            >
+              지방선거
+            </button>
+          </div>
+          {scope === 'metro' && (
+            <select
+              value={selectedMetro}
+              onChange={(e) => setSelectedMetro(e.target.value)}
+              className="bg-gray-900 border border-gray-700 text-gray-300 text-sm px-2 py-1.5 rounded"
+            >
+              <option value="">광역시도 선택</option>
+              {metros.map((m) => (
+                <option key={m.name} value={m.name}>
+                  {m.name}
+                </option>
+              ))}
+            </select>
+          )}
+          <PDFExportButton targetRef={contentRef} filename={scope === 'metro' && selectedMetro ? `공약검증_${selectedMetro}` : '공약검증'} />
         </div>
       </div>
 
-      {/* ====== SECTION 1: 대한민국 재정 현황 ====== */}
+      {scope === 'metro' && !selectedMetro && (
+        <div className="border border-amber-900/50 bg-amber-950/30 p-4 rounded">
+          <p className="text-amber-400 text-sm">광역시도를 선택하면 해당 지자체의 재정 데이터로 공약을 검증합니다.</p>
+        </div>
+      )}
+
+      {/* ====== SECTION 1: 재정 현황 ====== */}
       <div className="grid grid-cols-2 md:grid-cols-5">
-        <SectionHeader title="대한민국 재정 현황 Fiscal Overview" color="text-cyan-400" />
-        <Cell
-          label="총예산"
-          value={`${BUDGET_TOTAL}조원`}
+        <SectionHeader
+          title={scope === 'metro' && metroData ? `${metroData.name} 재정 현황` : '대한민국 재정 현황 Fiscal Overview'}
           color="text-cyan-400"
-          sub="2026 세출예산"
         />
         <Cell
-          label="국가채무"
-          value={`${NATIONAL_DEBT.toLocaleString('ko-KR')}조원`}
+          label="예산규모"
+          value={`${activeBudget.toFixed(activeBudget < 10 ? 1 : 0)}조원`}
+          color="text-cyan-400"
+          sub={scope === 'metro' ? '지자체 예산' : '2026 세출예산'}
+        />
+        <Cell
+          label={scope === 'metro' ? '지역채무' : '국가채무'}
+          value={`${activeDebt.toFixed(activeDebt < 10 ? 1 : 0)}조원`}
           color="text-red-400"
-          sub={`GDP 대비 ${CURRENT_DEBT_RATIO.toFixed(1)}%`}
+          sub={`${scope === 'metro' ? 'GRDP' : 'GDP'} 대비 ${activeDebtRatio.toFixed(1)}%`}
         />
         <Cell
-          label="GDP"
-          value={`${GDP.toLocaleString('ko-KR')}조원`}
+          label={scope === 'metro' ? 'GRDP 추정' : 'GDP'}
+          value={`${activeGdp.toFixed(activeGdp < 10 ? 1 : 0)}조원`}
           color="text-cyan-400"
-          sub="2026 명목 GDP"
+          sub={scope === 'metro' ? '지역내총생산 추정' : '2026 명목 GDP'}
         />
         <Cell
           label="채무비율"
-          value={`${CURRENT_DEBT_RATIO.toFixed(1)}%`}
+          value={`${activeDebtRatio.toFixed(1)}%`}
           color="text-amber-400"
-          sub="국가채무/GDP"
+          sub={scope === 'metro' ? '지역채무/GRDP' : '국가채무/GDP'}
         />
         <Cell
-          label="관리재정적자"
-          value={`${CURRENT_DEFICIT}조원`}
-          color="text-red-400"
-          sub={`GDP 대비 -${((CURRENT_DEFICIT / GDP) * 100).toFixed(1)}%`}
+          label={scope === 'metro' ? '인구' : '관리재정적자'}
+          value={scope === 'metro' ? `${(activePop / 10000).toFixed(0)}만명` : `${CURRENT_DEFICIT}조원`}
+          color={scope === 'metro' ? 'text-cyan-400' : 'text-red-400'}
+          sub={scope === 'metro' ? '주민등록 기준' : `GDP 대비 -${((CURRENT_DEFICIT / GDP) * 100).toFixed(1)}%`}
         />
       </div>
 
@@ -275,11 +338,11 @@ export function PromiseSimulator() {
           <Slider
             label="공약 비용"
             value={promiseCost}
-            min={1}
-            max={100}
-            step={1}
-            unit="조원"
-            subLabel={`연 ${(promiseCost / years).toFixed(1)}조원`}
+            min={scope === 'metro' ? 0.1 : 1}
+            max={costMax}
+            step={scope === 'metro' ? 0.1 : 1}
+            unit={costUnit}
+            subLabel={`연 ${(promiseCost / years).toFixed(1)}${costUnit}`}
             color="text-blue-400"
             onChange={setPromiseCost}
           />
@@ -336,7 +399,7 @@ export function PromiseSimulator() {
           label="예산대비 비중"
           value={`${simulation.budgetImpact.toFixed(1)}%`}
           color={simulation.budgetImpact < 3 ? 'text-emerald-400' : simulation.budgetImpact < 5 ? 'text-amber-400' : 'text-red-400'}
-          sub={`총예산 ${BUDGET_TOTAL}조 대비`}
+          sub={`총예산 ${activeBudget.toFixed(activeBudget < 10 ? 1 : 0)}조 대비`}
         />
         <Cell
           label="국채 증가분"
@@ -348,7 +411,7 @@ export function PromiseSimulator() {
           label="최종 채무비율"
           value={`${simulation.finalDebtRatio.toFixed(1)}%`}
           color={simulation.finalDebtRatio < 55 ? 'text-emerald-400' : simulation.finalDebtRatio < 65 ? 'text-amber-400' : 'text-red-400'}
-          sub={`현재 ${CURRENT_DEBT_RATIO.toFixed(1)}% → ${simulation.finalDebtRatio.toFixed(1)}%`}
+          sub={`현재 ${activeDebtRatio.toFixed(1)}% → ${simulation.finalDebtRatio.toFixed(1)}%`}
         />
         <Cell
           label="1인당 증세부담"
@@ -399,11 +462,11 @@ export function PromiseSimulator() {
               />
               <div
                 className="h-full rounded-full bg-gradient-to-r from-cyan-600 to-cyan-400"
-                style={{ width: `${(CURRENT_DEBT_RATIO / chartCeiling) * 100}%` }}
+                style={{ width: `${(activeDebtRatio / chartCeiling) * 100}%` }}
               />
             </div>
             <span className="text-sm md:text-base text-gray-400 w-16 text-right font-mono">
-              {CURRENT_DEBT_RATIO.toFixed(1)}%
+              {activeDebtRatio.toFixed(1)}%
             </span>
           </div>
           {/* Year-by-year data */}
