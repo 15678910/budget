@@ -20,7 +20,38 @@ const CURRENT_DEFICIT = 109;  // 조원 (관리재정수지 적자)
 // Election scope types
 // ============================================================
 
-type ElectionScope = 'national' | 'metro' | 'district';
+type ElectionScope = 'national' | 'metro' | 'district' | 'education';
+
+// ============================================================
+// 2026년 시·도 교육청 예산 (조원) - 지방교육재정교부금 + 지자체 전입금 기준
+// ============================================================
+
+interface EducationOfficeData {
+  name: string;       // 교육청명
+  metro: string;      // 관할 광역시도
+  budget: number;     // 예산 (조원)
+  students: number;   // 학생 수 (명)
+  debt: number;       // 교육채무 (조원)
+}
+
+const EDUCATION_OFFICES: EducationOfficeData[] = [
+  { name: '서울특별시교육청', metro: '서울특별시', budget: 11.8, students: 839000, debt: 0.45 },
+  { name: '부산광역시교육청', metro: '부산광역시', budget: 5.1, students: 313000, debt: 0.22 },
+  { name: '대구광역시교육청', metro: '대구광역시', budget: 3.8, students: 243000, debt: 0.18 },
+  { name: '인천광역시교육청', metro: '인천광역시', budget: 4.9, students: 316000, debt: 0.25 },
+  { name: '대전광역시교육청', metro: '대전광역시', budget: 2.6, students: 169000, debt: 0.12 },
+  { name: '울산광역시교육청', metro: '울산광역시', budget: 2.1, students: 135000, debt: 0.09 },
+  { name: '세종특별자치시교육청', metro: '세종특별자치시', budget: 1.2, students: 75000, debt: 0.05 },
+  { name: '경기도교육청', metro: '경기도', budget: 22.4, students: 1594000, debt: 0.85 },
+  { name: '강원특별자치도교육청', metro: '강원특별자치도', budget: 3.9, students: 160000, debt: 0.15 },
+  { name: '충청북도교육청', metro: '충청북도', budget: 3.4, students: 171000, debt: 0.13 },
+  { name: '충청남도교육청', metro: '충청남도', budget: 4.6, students: 237000, debt: 0.18 },
+  { name: '전북특별자치도교육청', metro: '전북특별자치도', budget: 4.1, students: 189000, debt: 0.16 },
+  { name: '전남광주통합특별시교육청', metro: '전남광주통합특별시', budget: 7.5, students: 397000, debt: 0.32 },
+  { name: '경상북도교육청', metro: '경상북도', budget: 5.4, students: 258000, debt: 0.20 },
+  { name: '경상남도교육청', metro: '경상남도', budget: 6.2, students: 358000, debt: 0.25 },
+  { name: '제주특별자치도교육청', metro: '제주특별자치도', budget: 1.6, students: 84000, debt: 0.07 },
+];
 
 // ============================================================
 // Sub-components
@@ -141,6 +172,12 @@ export function PromiseSimulator() {
   const [scope, setScope] = useState<ElectionScope>('national');
   const [selectedMetro, setSelectedMetro] = useState<string>('');
   const [selectedDistrict, setSelectedDistrict] = useState<string>('');
+  const [selectedEducation, setSelectedEducation] = useState<string>('');
+
+  const educationData = useMemo(
+    () => EDUCATION_OFFICES.find((e) => e.name === selectedEducation),
+    [selectedEducation],
+  );
 
   const metros = useMemo(() => getMetroFiscalData(), []);
   const metroData = useMemo(
@@ -156,27 +193,35 @@ export function PromiseSimulator() {
     [districts, selectedDistrict],
   );
 
-  // Active fiscal context (national, metro, or district)
+  // Active fiscal context (national, metro, district, or education)
   const activeBudget =
-    scope === 'district' && districtData
+    scope === 'education' && educationData
+      ? educationData.budget
+      : scope === 'district' && districtData
       ? districtData.budget / 10000
       : scope === 'metro' && metroData
       ? metroData.budget / 10000
       : NATIONAL_BUDGET;
   const activeDebt =
-    scope === 'district' && districtData
+    scope === 'education' && educationData
+      ? educationData.debt
+      : scope === 'district' && districtData
       ? districtData.debt / 10000
       : scope === 'metro' && metroData
       ? metroData.debt / 10000
       : NATIONAL_DEBT;
   const activeGdp =
-    scope === 'district' && districtData
+    scope === 'education' && educationData
+      ? educationData.budget * 8
+      : scope === 'district' && districtData
       ? (districtData.budget / 10000) * 8
       : scope === 'metro' && metroData
       ? (metroData.budget / 10000) * 8
       : GDP;
   const activePop =
-    scope === 'district' && districtData
+    scope === 'education' && educationData
+      ? educationData.students
+      : scope === 'district' && districtData
       ? districtData.population
       : scope === 'metro' && metroData
       ? metroData.population
@@ -190,7 +235,11 @@ export function PromiseSimulator() {
   const [gdpGrowth, setGdpGrowth] = useState(2.0);       // GDP 성장률 0~5%
 
   // Adjust promise cost range based on scope
-  const costMax = scope === 'district' ? 5 : scope === 'metro' ? 50 : 100;
+  const costMax =
+    scope === 'district' ? 5
+    : scope === 'education' ? 15
+    : scope === 'metro' ? 50
+    : 100;
   const costUnit = '조원';
 
   // === Simulation calculation ===
@@ -301,11 +350,19 @@ export function PromiseSimulator() {
             >
               기초단체장
             </button>
+            <button
+              onClick={() => { setScope('education'); setSelectedDistrict(''); }}
+              className={`px-3 py-1.5 ${scope === 'education' ? 'bg-blue-600 text-white' : 'bg-gray-900 text-gray-400 hover:bg-gray-800'}`}
+            >
+              교육감
+            </button>
           </div>
           <PDFExportButton
             targetRef={contentRef}
             filename={
-              scope === 'district' && selectedDistrict
+              scope === 'education' && selectedEducation
+                ? `공약검증_${selectedEducation}`
+                : scope === 'district' && selectedDistrict
                 ? `공약검증_${selectedMetro}_${selectedDistrict}`
                 : scope === 'metro' && selectedMetro
                 ? `공약검증_${selectedMetro}`
@@ -351,6 +408,23 @@ export function PromiseSimulator() {
           )}
         </div>
       )}
+      {scope === 'education' && (
+        <div className="border border-gray-800 px-4 py-3 flex items-center gap-3 flex-wrap bg-gray-950/30">
+          <span className="text-sm text-gray-400 font-semibold">교육청 선택:</span>
+          <select
+            value={selectedEducation}
+            onChange={(e) => setSelectedEducation(e.target.value)}
+            className="bg-gray-900 border border-gray-700 text-gray-300 text-sm px-3 py-1.5 rounded min-w-[200px]"
+          >
+            <option value="">시·도 교육청 선택</option>
+            {[...EDUCATION_OFFICES].sort((a, b) => a.name.localeCompare(b.name, 'ko')).map((e) => (
+              <option key={e.name} value={e.name}>
+                {e.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
 
       {scope === 'metro' && !selectedMetro && (
         <div className="border border-amber-900/50 bg-amber-950/30 p-4 rounded">
@@ -364,12 +438,19 @@ export function PromiseSimulator() {
           </p>
         </div>
       )}
+      {scope === 'education' && !selectedEducation && (
+        <div className="border border-amber-900/50 bg-amber-950/30 p-4 rounded">
+          <p className="text-amber-400 text-sm">시·도 교육청을 선택하면 해당 교육청 예산 데이터로 공약을 검증합니다.</p>
+        </div>
+      )}
 
       {/* ====== SECTION 1: 재정 현황 ====== */}
       <div className="grid grid-cols-2 md:grid-cols-5">
         <SectionHeader
           title={
-            scope === 'district' && districtData
+            scope === 'education' && educationData
+              ? `${educationData.name} 재정 현황`
+              : scope === 'district' && districtData
               ? `${selectedMetro} ${districtData.name} 재정 현황`
               : scope === 'metro' && metroData
               ? `${metroData.name} 재정 현황`
@@ -381,10 +462,15 @@ export function PromiseSimulator() {
           label="예산규모"
           value={`${activeBudget.toFixed(activeBudget < 10 ? 1 : 0)}조원`}
           color="text-cyan-400"
-          sub={scope === 'national' ? '2026 세출예산' : scope === 'metro' ? '광역 예산' : '기초 예산'}
+          sub={
+            scope === 'national' ? '2026 세출예산'
+            : scope === 'metro' ? '광역 예산'
+            : scope === 'district' ? '기초 예산'
+            : '교육청 예산'
+          }
         />
         <Cell
-          label={scope === 'national' ? '국가채무' : '지역채무'}
+          label={scope === 'national' ? '국가채무' : scope === 'education' ? '교육채무' : '지역채무'}
           value={`${activeDebt.toFixed(activeDebt < 10 ? 1 : 0)}조원`}
           color="text-red-400"
           sub={`${scope === 'national' ? 'GDP' : 'GRDP'} 대비 ${activeDebtRatio.toFixed(1)}%`}
@@ -399,13 +485,29 @@ export function PromiseSimulator() {
           label="채무비율"
           value={`${activeDebtRatio.toFixed(1)}%`}
           color="text-amber-400"
-          sub={scope === 'national' ? '국가채무/GDP' : '지역채무/GRDP'}
+          sub={
+            scope === 'national' ? '국가채무/GDP'
+            : scope === 'education' ? '교육채무/GRDP'
+            : '지역채무/GRDP'
+          }
         />
         <Cell
-          label={scope === 'national' ? '관리재정적자' : '인구'}
-          value={scope === 'national' ? `${CURRENT_DEFICIT}조원` : `${(activePop / 10000).toFixed(0)}만명`}
+          label={
+            scope === 'national' ? '관리재정적자'
+            : scope === 'education' ? '학생 수'
+            : '인구'
+          }
+          value={
+            scope === 'national' ? `${CURRENT_DEFICIT}조원`
+            : scope === 'education' ? `${(activePop / 10000).toFixed(1)}만명`
+            : `${(activePop / 10000).toFixed(0)}만명`
+          }
           color={scope === 'national' ? 'text-red-400' : 'text-cyan-400'}
-          sub={scope === 'national' ? `GDP 대비 -${((CURRENT_DEFICIT / GDP) * 100).toFixed(1)}%` : '주민등록 기준'}
+          sub={
+            scope === 'national' ? `GDP 대비 -${((CURRENT_DEFICIT / GDP) * 100).toFixed(1)}%`
+            : scope === 'education' ? '관할 학생'
+            : '주민등록 기준'
+          }
         />
       </div>
 
