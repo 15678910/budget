@@ -3,7 +3,7 @@
 import React, { useState, useMemo, useRef } from 'react';
 import { DataSources } from '@/components/shared/DataSources';
 import { PDFExportButton } from '@/components/shared/PDFExportButton';
-import { getMetroFiscalData } from '@/lib/data/fiscal-health-data';
+import { getMetroFiscalData, getDistrictFiscalData } from '@/lib/data/fiscal-health-data';
 
 // ============================================================
 // 2026년 기준 대한민국 재정 데이터
@@ -20,7 +20,7 @@ const CURRENT_DEFICIT = 109;  // 조원 (관리재정수지 적자)
 // Election scope types
 // ============================================================
 
-type ElectionScope = 'national' | 'metro';
+type ElectionScope = 'national' | 'metro' | 'district';
 
 // ============================================================
 // Sub-components
@@ -140,18 +140,47 @@ export function PromiseSimulator() {
   // === Scope selection ===
   const [scope, setScope] = useState<ElectionScope>('national');
   const [selectedMetro, setSelectedMetro] = useState<string>('');
+  const [selectedDistrict, setSelectedDistrict] = useState<string>('');
 
   const metros = useMemo(() => getMetroFiscalData(), []);
   const metroData = useMemo(
     () => metros.find((m) => m.name === selectedMetro),
     [metros, selectedMetro],
   );
+  const districts = useMemo(
+    () => (selectedMetro ? getDistrictFiscalData(selectedMetro) : []),
+    [selectedMetro],
+  );
+  const districtData = useMemo(
+    () => districts.find((d) => d.name === selectedDistrict),
+    [districts, selectedDistrict],
+  );
 
-  // Active fiscal context (national or metro)
-  const activeBudget = scope === 'metro' && metroData ? metroData.budget / 10000 : NATIONAL_BUDGET; // 억원 → 조원
-  const activeDebt = scope === 'metro' && metroData ? metroData.debt / 10000 : NATIONAL_DEBT; // 억원 → 조원
-  const activeGdp = scope === 'metro' && metroData ? (metroData.budget / 10000) * 8 : GDP; // 지자체 GDP 대체: 예산의 약 8배 (GRDP 추정)
-  const activePop = scope === 'metro' && metroData ? metroData.population : NATIONAL_POP;
+  // Active fiscal context (national, metro, or district)
+  const activeBudget =
+    scope === 'district' && districtData
+      ? districtData.budget / 10000
+      : scope === 'metro' && metroData
+      ? metroData.budget / 10000
+      : NATIONAL_BUDGET;
+  const activeDebt =
+    scope === 'district' && districtData
+      ? districtData.debt / 10000
+      : scope === 'metro' && metroData
+      ? metroData.debt / 10000
+      : NATIONAL_DEBT;
+  const activeGdp =
+    scope === 'district' && districtData
+      ? (districtData.budget / 10000) * 8
+      : scope === 'metro' && metroData
+      ? (metroData.budget / 10000) * 8
+      : GDP;
+  const activePop =
+    scope === 'district' && districtData
+      ? districtData.population
+      : scope === 'metro' && metroData
+      ? metroData.population
+      : NATIONAL_POP;
   const activeDebtRatio = (activeDebt / activeGdp) * 100;
 
   // === Slider states ===
@@ -161,8 +190,8 @@ export function PromiseSimulator() {
   const [gdpGrowth, setGdpGrowth] = useState(2.0);       // GDP 성장률 0~5%
 
   // Adjust promise cost range based on scope
-  const costMax = scope === 'metro' ? 50 : 100; // 지자체는 50조 상한 (큰 광역시도 대응)
-  const costUnit = scope === 'metro' && activeBudget < 30 ? '조원' : '조원';
+  const costMax = scope === 'district' ? 5 : scope === 'metro' ? 50 : 100;
+  const costUnit = '조원';
 
   // === Simulation calculation ===
   const simulation = useMemo(() => {
@@ -255,22 +284,28 @@ export function PromiseSimulator() {
           {/* Scope Toggle */}
           <div className="flex border border-gray-700 rounded overflow-hidden text-sm">
             <button
-              onClick={() => setScope('national')}
+              onClick={() => { setScope('national'); setSelectedDistrict(''); }}
               className={`px-3 py-1.5 ${scope === 'national' ? 'bg-blue-600 text-white' : 'bg-gray-900 text-gray-400 hover:bg-gray-800'}`}
             >
               대선/총선
             </button>
             <button
-              onClick={() => setScope('metro')}
+              onClick={() => { setScope('metro'); setSelectedDistrict(''); }}
               className={`px-3 py-1.5 ${scope === 'metro' ? 'bg-blue-600 text-white' : 'bg-gray-900 text-gray-400 hover:bg-gray-800'}`}
             >
-              지방선거
+              광역단체장
+            </button>
+            <button
+              onClick={() => setScope('district')}
+              className={`px-3 py-1.5 ${scope === 'district' ? 'bg-blue-600 text-white' : 'bg-gray-900 text-gray-400 hover:bg-gray-800'}`}
+            >
+              기초단체장
             </button>
           </div>
-          {scope === 'metro' && (
+          {(scope === 'metro' || scope === 'district') && (
             <select
               value={selectedMetro}
-              onChange={(e) => setSelectedMetro(e.target.value)}
+              onChange={(e) => { setSelectedMetro(e.target.value); setSelectedDistrict(''); }}
               className="bg-gray-900 border border-gray-700 text-gray-300 text-sm px-2 py-1.5 rounded"
             >
               <option value="">광역시도 선택</option>
@@ -281,7 +316,30 @@ export function PromiseSimulator() {
               ))}
             </select>
           )}
-          <PDFExportButton targetRef={contentRef} filename={scope === 'metro' && selectedMetro ? `공약검증_${selectedMetro}` : '공약검증'} />
+          {scope === 'district' && selectedMetro && (
+            <select
+              value={selectedDistrict}
+              onChange={(e) => setSelectedDistrict(e.target.value)}
+              className="bg-gray-900 border border-gray-700 text-gray-300 text-sm px-2 py-1.5 rounded"
+            >
+              <option value="">시·군·구 선택</option>
+              {[...districts].sort((a, b) => a.name.localeCompare(b.name, 'ko')).map((d) => (
+                <option key={d.name} value={d.name}>
+                  {d.name}
+                </option>
+              ))}
+            </select>
+          )}
+          <PDFExportButton
+            targetRef={contentRef}
+            filename={
+              scope === 'district' && selectedDistrict
+                ? `공약검증_${selectedMetro}_${selectedDistrict}`
+                : scope === 'metro' && selectedMetro
+                ? `공약검증_${selectedMetro}`
+                : '공약검증'
+            }
+          />
         </div>
       </div>
 
@@ -290,42 +348,55 @@ export function PromiseSimulator() {
           <p className="text-amber-400 text-sm">광역시도를 선택하면 해당 지자체의 재정 데이터로 공약을 검증합니다.</p>
         </div>
       )}
+      {scope === 'district' && (!selectedMetro || !selectedDistrict) && (
+        <div className="border border-amber-900/50 bg-amber-950/30 p-4 rounded">
+          <p className="text-amber-400 text-sm">
+            {!selectedMetro ? '광역시도를 먼저 선택해주세요.' : '시·군·구를 선택하면 해당 기초단체의 재정 데이터로 공약을 검증합니다.'}
+          </p>
+        </div>
+      )}
 
       {/* ====== SECTION 1: 재정 현황 ====== */}
       <div className="grid grid-cols-2 md:grid-cols-5">
         <SectionHeader
-          title={scope === 'metro' && metroData ? `${metroData.name} 재정 현황` : '대한민국 재정 현황 Fiscal Overview'}
+          title={
+            scope === 'district' && districtData
+              ? `${selectedMetro} ${districtData.name} 재정 현황`
+              : scope === 'metro' && metroData
+              ? `${metroData.name} 재정 현황`
+              : '대한민국 재정 현황 Fiscal Overview'
+          }
           color="text-cyan-400"
         />
         <Cell
           label="예산규모"
           value={`${activeBudget.toFixed(activeBudget < 10 ? 1 : 0)}조원`}
           color="text-cyan-400"
-          sub={scope === 'metro' ? '지자체 예산' : '2026 세출예산'}
+          sub={scope === 'national' ? '2026 세출예산' : scope === 'metro' ? '광역 예산' : '기초 예산'}
         />
         <Cell
-          label={scope === 'metro' ? '지역채무' : '국가채무'}
+          label={scope === 'national' ? '국가채무' : '지역채무'}
           value={`${activeDebt.toFixed(activeDebt < 10 ? 1 : 0)}조원`}
           color="text-red-400"
-          sub={`${scope === 'metro' ? 'GRDP' : 'GDP'} 대비 ${activeDebtRatio.toFixed(1)}%`}
+          sub={`${scope === 'national' ? 'GDP' : 'GRDP'} 대비 ${activeDebtRatio.toFixed(1)}%`}
         />
         <Cell
-          label={scope === 'metro' ? 'GRDP 추정' : 'GDP'}
+          label={scope === 'national' ? 'GDP' : 'GRDP 추정'}
           value={`${activeGdp.toFixed(activeGdp < 10 ? 1 : 0)}조원`}
           color="text-cyan-400"
-          sub={scope === 'metro' ? '지역내총생산 추정' : '2026 명목 GDP'}
+          sub={scope === 'national' ? '2026 명목 GDP' : '지역내총생산 추정'}
         />
         <Cell
           label="채무비율"
           value={`${activeDebtRatio.toFixed(1)}%`}
           color="text-amber-400"
-          sub={scope === 'metro' ? '지역채무/GRDP' : '국가채무/GDP'}
+          sub={scope === 'national' ? '국가채무/GDP' : '지역채무/GRDP'}
         />
         <Cell
-          label={scope === 'metro' ? '인구' : '관리재정적자'}
-          value={scope === 'metro' ? `${(activePop / 10000).toFixed(0)}만명` : `${CURRENT_DEFICIT}조원`}
-          color={scope === 'metro' ? 'text-cyan-400' : 'text-red-400'}
-          sub={scope === 'metro' ? '주민등록 기준' : `GDP 대비 -${((CURRENT_DEFICIT / GDP) * 100).toFixed(1)}%`}
+          label={scope === 'national' ? '관리재정적자' : '인구'}
+          value={scope === 'national' ? `${CURRENT_DEFICIT}조원` : `${(activePop / 10000).toFixed(0)}만명`}
+          color={scope === 'national' ? 'text-red-400' : 'text-cyan-400'}
+          sub={scope === 'national' ? `GDP 대비 -${((CURRENT_DEFICIT / GDP) * 100).toFixed(1)}%` : '주민등록 기준'}
         />
       </div>
 
@@ -338,9 +409,9 @@ export function PromiseSimulator() {
           <Slider
             label="공약 비용"
             value={promiseCost}
-            min={scope === 'metro' ? 0.1 : 1}
+            min={scope === 'national' ? 1 : 0.1}
             max={costMax}
-            step={scope === 'metro' ? 0.1 : 1}
+            step={scope === 'national' ? 1 : 0.1}
             unit={costUnit}
             subLabel={`연 ${(promiseCost / years).toFixed(1)}${costUnit}`}
             color="text-blue-400"
