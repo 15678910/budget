@@ -302,34 +302,6 @@ export function PromiseSimulator() {
               기초단체장
             </button>
           </div>
-          {(scope === 'metro' || scope === 'district') && (
-            <select
-              value={selectedMetro}
-              onChange={(e) => { setSelectedMetro(e.target.value); setSelectedDistrict(''); }}
-              className="bg-gray-900 border border-gray-700 text-gray-300 text-sm px-2 py-1.5 rounded"
-            >
-              <option value="">광역시도 선택</option>
-              {[...metros].sort((a, b) => a.name.localeCompare(b.name, 'ko')).map((m) => (
-                <option key={m.name} value={m.name}>
-                  {m.name}
-                </option>
-              ))}
-            </select>
-          )}
-          {scope === 'district' && selectedMetro && (
-            <select
-              value={selectedDistrict}
-              onChange={(e) => setSelectedDistrict(e.target.value)}
-              className="bg-gray-900 border border-gray-700 text-gray-300 text-sm px-2 py-1.5 rounded"
-            >
-              <option value="">시·군·구 선택</option>
-              {[...districts].sort((a, b) => a.name.localeCompare(b.name, 'ko')).map((d) => (
-                <option key={d.name} value={d.name}>
-                  {d.name}
-                </option>
-              ))}
-            </select>
-          )}
           <PDFExportButton
             targetRef={contentRef}
             filename={
@@ -342,6 +314,43 @@ export function PromiseSimulator() {
           />
         </div>
       </div>
+
+      {/* ====== 지역 선택 영역 (별도 행) ====== */}
+      {(scope === 'metro' || scope === 'district') && (
+        <div className="border border-gray-800 px-4 py-3 flex items-center gap-3 flex-wrap bg-gray-950/30">
+          <span className="text-sm text-gray-400 font-semibold">지역 선택:</span>
+          <select
+            value={selectedMetro}
+            onChange={(e) => { setSelectedMetro(e.target.value); setSelectedDistrict(''); }}
+            className="bg-gray-900 border border-gray-700 text-gray-300 text-sm px-3 py-1.5 rounded min-w-[150px]"
+          >
+            <option value="">광역시도 선택</option>
+            {[...metros].sort((a, b) => a.name.localeCompare(b.name, 'ko')).map((m) => (
+              <option key={m.name} value={m.name}>
+                {m.name}
+              </option>
+            ))}
+          </select>
+          {scope === 'district' && (
+            <>
+              <span className="text-gray-600">›</span>
+              <select
+                value={selectedDistrict}
+                onChange={(e) => setSelectedDistrict(e.target.value)}
+                disabled={!selectedMetro}
+                className="bg-gray-900 border border-gray-700 text-gray-300 text-sm px-3 py-1.5 rounded min-w-[150px] disabled:opacity-50"
+              >
+                <option value="">시·군·구 선택</option>
+                {[...districts].sort((a, b) => a.name.localeCompare(b.name, 'ko')).map((d) => (
+                  <option key={d.name} value={d.name}>
+                    {d.name}
+                  </option>
+                ))}
+              </select>
+            </>
+          )}
+        </div>
+      )}
 
       {scope === 'metro' && !selectedMetro && (
         <div className="border border-amber-900/50 bg-amber-950/30 p-4 rounded">
