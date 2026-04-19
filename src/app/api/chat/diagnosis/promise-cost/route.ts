@@ -258,11 +258,25 @@ function runLocal(promiseText: string, scope: string, budget: number): PromiseRe
 
   const estimatedCost = Math.max(0.1, Math.round(budget * ratio * 10) / 10);
 
+  // scope별 재정 조달 표현 차별화
+  let fundingLabel = '증세';
+  let debtLabel = '국채';
+  let fundingNote = '';
+  if (scope === 'education') {
+    fundingLabel = '교부금·전입금 활용';
+    debtLabel = '교육채';
+    fundingNote = ' (교육감은 증세·국채 발행 권한이 없어 실제로는 기존 예산 재편성 또는 교육채 시설비 충당)';
+  } else if (scope === 'district' || scope === 'metro') {
+    fundingLabel = '지방세·교부금';
+    debtLabel = '지방채';
+    fundingNote = ' (지자체는 국세 증세 권한이 없으며, 지방채 발행은 행안부 승인 필요)';
+  }
+
   return {
     estimatedCost,
     years,
     taxRatio,
-    rationale: `공약을 '${category}' 분야로 분류하여 해당 범위 예산의 ${(ratio * 100).toFixed(1)}%를 ${years}년에 걸쳐 소요되는 것으로 추정했습니다. 증세 비중은 ${taxRatio}% (국채 ${100 - taxRatio}%)로 기본 설정되었습니다.`,
+    rationale: `공약을 '${category}' 분야로 분류하여 해당 범위 예산의 ${(ratio * 100).toFixed(1)}%를 ${years}년에 걸쳐 소요되는 것으로 추정했습니다. ${fundingLabel} 비중 ${taxRatio}%, ${debtLabel} 발행 ${100 - taxRatio}%로 기본 설정되었습니다.${fundingNote}`,
     source: 'local',
   };
 }
