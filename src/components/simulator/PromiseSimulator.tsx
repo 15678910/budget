@@ -595,17 +595,40 @@ export function PromiseSimulator() {
           </div>
         )}
         {aiResult && (
-          <div className="mt-3 border border-gray-700 bg-gray-900/50 p-3 rounded space-y-2">
+          <div
+            className={`mt-3 border p-3 rounded space-y-2 ${
+              aiResult.source === 'ai'
+                ? 'border-emerald-700 bg-emerald-950/30'
+                : 'border-gray-700 bg-gray-900/50'
+            }`}
+          >
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-sm font-semibold text-purple-400">AI 추정 결과</span>
-              <span className="text-xs text-gray-500">
-                ({aiResult.source === 'ai' ? 'Gemini AI 분석' : '규칙 기반'})
+              <span
+                className={`text-sm font-semibold ${
+                  aiResult.source === 'ai' ? 'text-emerald-400' : 'text-gray-300'
+                }`}
+              >
+                {aiResult.source === 'ai' ? 'AI 분석 결과 (Gemini)' : '규칙 기반 추정'}
               </span>
               <span className="ml-auto text-sm font-mono text-blue-400 font-bold">
                 {aiResult.estimatedCost.toFixed(1)}조원
               </span>
             </div>
             <p className="text-sm text-gray-300 leading-relaxed">{aiResult.rationale}</p>
+            {aiResult.source === 'local' && (
+              <div className="pt-2 border-t border-gray-700/50 flex items-center justify-between gap-2 flex-wrap">
+                <p className="text-xs text-amber-400">
+                  ⚠️ AI 호출 실패 (무료 한도 초과 또는 일시적 오류). 규칙 기반 추정값 표시 중.
+                </p>
+                <button
+                  onClick={handleAiAnalyze}
+                  disabled={aiLoading}
+                  className="text-xs px-2 py-1 bg-purple-600 hover:bg-purple-500 disabled:bg-gray-700 text-white rounded"
+                >
+                  {aiLoading ? '재시도 중...' : 'AI 재시도'}
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>

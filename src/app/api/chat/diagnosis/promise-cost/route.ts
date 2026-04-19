@@ -262,7 +262,7 @@ function runLocal(promiseText: string, scope: string, budget: number): PromiseRe
     estimatedCost,
     years,
     taxRatio,
-    rationale: `[규칙 기반] 공약을 '${category}' 분야로 분류하여 해당 범위 예산의 ${(ratio * 100).toFixed(1)}%를 ${years}년에 걸쳐 소요되는 것으로 추정했습니다. 증세 비중은 ${taxRatio}% (국채 ${100 - taxRatio}%)로 기본 설정되었습니다. 정확한 AI 분석은 잠시 후 다시 시도해주세요.`,
+    rationale: `공약을 '${category}' 분야로 분류하여 해당 범위 예산의 ${(ratio * 100).toFixed(1)}%를 ${years}년에 걸쳐 소요되는 것으로 추정했습니다. 증세 비중은 ${taxRatio}% (국채 ${100 - taxRatio}%)로 기본 설정되었습니다.`,
     source: 'local',
   };
 }
