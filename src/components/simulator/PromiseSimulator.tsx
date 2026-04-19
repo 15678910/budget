@@ -587,7 +587,11 @@ export function PromiseSimulator() {
           </button>
         </div>
         <p className="text-xs text-gray-500 mt-2">
-          공약 내용을 입력하면 AI가 예상 비용/기간/증세 비중을 자동으로 추정하여 슬라이더에 반영합니다.
+          {scope === 'education'
+            ? '공약 내용을 입력하면 AI가 예상 비용·이행기간·교부금/전입금 활용 비중을 자동 추정하여 슬라이더에 반영합니다. (교육채는 시설비에 한해 제한적으로 활용)'
+            : scope === 'district' || scope === 'metro'
+            ? '공약 내용을 입력하면 AI가 예상 비용·이행기간·지방세/교부금 비중을 자동 추정하여 슬라이더에 반영합니다. (지방채 발행은 행안부 승인 필요)'
+            : '공약 내용을 입력하면 AI가 예상 비용·이행기간·증세 비중을 자동 추정하여 슬라이더에 반영합니다.'}
         </p>
         {aiError && (
           <div className="mt-3 border border-red-900/50 bg-red-950/30 p-3 rounded text-sm text-red-400">
