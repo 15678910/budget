@@ -47,3 +47,20 @@ next-env.d.ts
 
 # Large PDF reference files
 public/*.pdf
+
+# API probing artifacts (local debugging only)
+/*.html
+/*.json
+!/package.json
+!/package-lock.json
+!/tsconfig.json
+!/next.config.*.json
+/lofin_*.js
+/lofin_*.html
+/eduinfo_*
+/datago_*
+/narasal_*
+/btl.json
+/debt_all.json
+/scripts/output/
+/lofin_meta.xlsx
