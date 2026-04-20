@@ -108,16 +108,24 @@ function Slider({
 
 function Cell({ label, value, color, sub, tooltip }: { label: string; value: string; color: string; sub?: string; tooltip?: string }) {
   return (
-    <div className="border border-gray-800 p-3 md:p-4 min-w-0 relative group">
+    <div className="border border-gray-800 p-3 md:p-4 min-w-0">
       <div className="flex items-center gap-1">
         <div className="text-sm md:text-base text-gray-400 leading-tight truncate">{label}</div>
         {tooltip && (
-          <span
-            className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-gray-700 text-gray-400 text-[10px] font-bold cursor-help flex-shrink-0 hover:bg-gray-600 hover:text-gray-200"
-            title={tooltip}
-            aria-label={tooltip}
-          >
-            ?
+          <span className="relative inline-flex group/tip">
+            <span
+              className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-gray-700 text-gray-400 text-[10px] font-bold cursor-help flex-shrink-0 hover:bg-gray-600 hover:text-gray-200"
+              aria-label={tooltip}
+            >
+              ?
+            </span>
+            {/* 말풍선 */}
+            <span className="pointer-events-none absolute left-6 top-1/2 -translate-y-1/2 z-30 hidden group-hover/tip:block w-64 p-3 rounded-lg bg-gray-900 border border-gray-600 shadow-2xl text-xs text-gray-100 leading-relaxed whitespace-normal">
+              {/* 꼬리 (왼쪽 방향) - border 겹치기로 삼각형 말풍선 생성 */}
+              <span className="absolute right-full top-1/2 -translate-y-1/2 w-0 h-0 border-y-[6px] border-y-transparent border-r-[6px] border-r-gray-600" />
+              <span className="absolute right-full top-1/2 -translate-y-1/2 w-0 h-0 border-y-[5px] border-y-transparent border-r-[5px] border-r-gray-900 ml-[1px]" style={{ marginRight: '-1px' }} />
+              {tooltip}
+            </span>
           </span>
         )}
       </div>
@@ -125,11 +133,6 @@ function Cell({ label, value, color, sub, tooltip }: { label: string; value: str
         {value}
       </div>
       {sub && <div className="text-xs md:text-sm text-gray-500 leading-tight truncate">{sub}</div>}
-      {tooltip && (
-        <div className="pointer-events-none absolute left-full top-0 ml-2 z-20 hidden group-hover:block w-64 p-3 rounded-lg bg-gray-900 border border-gray-700 shadow-xl text-xs text-gray-200 leading-relaxed whitespace-normal">
-          {tooltip}
-        </div>
-      )}
     </div>
   );
 }
