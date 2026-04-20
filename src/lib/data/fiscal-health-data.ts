@@ -81,7 +81,28 @@ const METRO_FISCAL_DATA: MetroFiscalData[] = [
 ];
 
 // ============================================================
-// 시군구 데이터
+// 시군구(기초자치단체) 재정 데이터
+// ─────────────────────────────────────────────────────────────
+// ⚠️ 데이터 기준 및 한계
+//   • budget     : 2024년 본예산 기준 추정치 (조달 시점 기준)
+//   • debt       : 2024년 말 지방채 잔액 추정치
+//   • population : 2024년 주민등록인구 기준
+//   • 일부 구·시·군은 인구 유사 지역에서 선형 추정한 값이므로 오차 존재 가능
+//   • 사용자 지적 시 개별 교정 (예: 서울 중랑구 11,648억 — 2026 본예산안)
+//
+// 📌 자동 갱신 경로 부재 사유
+//   • data.go.kr 지방재정365 API 군(群) 전체가 `LINK` 유형 (프로그래매틱 호출 불가)
+//   • openfiscaldata.go.kr 167개 API 중 지자체 자체 세입예산 API 없음
+//     (지자체 관련 2건은 중앙정부→지자체 교부금·보조금 흐름만 제공)
+//   • 지방재정법 제60조 근거로 예산 공시는 각 자치단체 홈페이지에서 개별 수행
+//
+// 🎯 갱신 방침
+//   • 자동 파이프라인 확보 전까지 "사용자 제보 + 개별 교정" 방식 유지
+//   • 연 1회 예산안 발표 시(11~12월) 주요 광역/핵심 기초단체 수동 검증
+//   • 담당기관(행정안전부 지방재정보조금정보과 ☎044-205-3620) REST 전환 요청 접수 중
+//
+// 📝 변경 이력
+//   • 2026-04-20: 서울 중랑구 9,910 → 11,648 (2026 본예산안 기준)
 // ============================================================
 
 const DISTRICT_FISCAL_DATA: DistrictFiscalData[] = [
@@ -108,7 +129,7 @@ const DISTRICT_FISCAL_DATA: DistrictFiscalData[] = [
   { metro: '서울특별시', name: '성북구', independence: 20.8, autonomy: 57.5, debt: 700, population: 430000, budget: 10670 },
   { metro: '서울특별시', name: '은평구', independence: 19.5, autonomy: 56.8, debt: 650, population: 470000, budget: 11650 },
   { metro: '서울특별시', name: '노원구', independence: 18.5, autonomy: 55.8, debt: 720, population: 510000, budget: 12925 },
-  { metro: '서울특별시', name: '중랑구', independence: 17.2, autonomy: 54.8, debt: 560, population: 390000, budget: 9910 },
+  { metro: '서울특별시', name: '중랑구', independence: 17.2, autonomy: 54.8, debt: 560, population: 390000, budget: 11648 },
   { metro: '서울특별시', name: '도봉구', independence: 15.8, autonomy: 53.6, debt: 420, population: 320000, budget: 8580 },
   { metro: '서울특별시', name: '강북구', independence: 14.2, autonomy: 52.1, debt: 480, population: 300000, budget: 8200 },
 

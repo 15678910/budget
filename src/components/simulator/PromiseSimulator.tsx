@@ -23,34 +23,50 @@ const CURRENT_DEFICIT = 109;  // 조원 (관리재정수지 적자)
 type ElectionScope = 'national' | 'metro' | 'district' | 'education';
 
 // ============================================================
-// 2026년 시·도 교육청 예산 (조원) - 지방교육재정교부금 + 지자체 전입금 기준
+// 시·도 교육청 재정 지표
+//
+// budget (2026 예산 세입총계, 조원):
+//   - 출처: 지방교육재정알리미(eduinfo.go.kr) OpenAPI `opbdIntFiSta` (통합재정통계 — 예산공시)
+//   - 수집: scripts/fetch-eduinfo-2026.mjs, YMQ=2026 세입총계(A=B+C) 기준
+//   - 17개 시도교육청 합계 = 100.98조원. 교육부 발표 총재정규모 106.3조원과 약 5조 차이는
+//     국고 직접집행·교육세 편입분이 교육청 세입으로 표시되지 않는 구조 차이 때문.
+//
+// debt (2024 실질 채무, 조원 = BTL 잔액 기준):
+//   - 출처: eduinfo.go.kr OpenAPI `opclPriInvstBizBTL` (민간투자사업), FSCL_Y=2024, FNOW_REMDR
+//   - 수집: scripts/fetch-eduinfo-debt-2024.mjs
+//   - 공식 지방교육채 잔액은 2022년부터 전 교육청 0원 (교부금 급증으로 조기상환 완료).
+//     BTL 원리금 상환이 교육청의 실질 장기 채무 부담.
+//   - 2026 데이터가 없어 2024 값 사용 (BTL은 장기계약이라 연간 변동 미미).
+//
+// students (학생 수):
+//   - 출처: 교육통계연보 2024년 추정치 (KESS/학교알리미 API로 갱신 예정)
 // ============================================================
 
 interface EducationOfficeData {
   name: string;       // 교육청명
   metro: string;      // 관할 광역시도
-  budget: number;     // 예산 (조원)
+  budget: number;     // 2026 세입총계 예산 (조원)
   students: number;   // 학생 수 (명)
-  debt: number;       // 교육채무 (조원)
+  debt: number;       // 2024 BTL 잔액 (조원) — 실질 장기 채무
 }
 
 const EDUCATION_OFFICES: EducationOfficeData[] = [
-  { name: '서울특별시교육청', metro: '서울특별시', budget: 11.8, students: 839000, debt: 0.45 },
-  { name: '부산광역시교육청', metro: '부산광역시', budget: 5.1, students: 313000, debt: 0.22 },
-  { name: '대구광역시교육청', metro: '대구광역시', budget: 3.8, students: 243000, debt: 0.18 },
-  { name: '인천광역시교육청', metro: '인천광역시', budget: 4.9, students: 316000, debt: 0.25 },
-  { name: '대전광역시교육청', metro: '대전광역시', budget: 2.6, students: 169000, debt: 0.12 },
-  { name: '울산광역시교육청', metro: '울산광역시', budget: 2.1, students: 135000, debt: 0.09 },
-  { name: '세종특별자치시교육청', metro: '세종특별자치시', budget: 1.2, students: 75000, debt: 0.05 },
-  { name: '경기도교육청', metro: '경기도', budget: 22.4, students: 1594000, debt: 0.85 },
-  { name: '강원특별자치도교육청', metro: '강원특별자치도', budget: 3.9, students: 160000, debt: 0.15 },
-  { name: '충청북도교육청', metro: '충청북도', budget: 3.4, students: 171000, debt: 0.13 },
-  { name: '충청남도교육청', metro: '충청남도', budget: 4.6, students: 237000, debt: 0.18 },
-  { name: '전북특별자치도교육청', metro: '전북특별자치도', budget: 4.1, students: 189000, debt: 0.16 },
-  { name: '전남광주통합특별시교육청', metro: '전남광주통합특별시', budget: 7.5, students: 397000, debt: 0.32 },
-  { name: '경상북도교육청', metro: '경상북도', budget: 5.4, students: 258000, debt: 0.20 },
-  { name: '경상남도교육청', metro: '경상남도', budget: 6.2, students: 358000, debt: 0.25 },
-  { name: '제주특별자치도교육청', metro: '제주특별자치도', budget: 1.6, students: 84000, debt: 0.07 },
+  { name: '서울특별시교육청', metro: '서울특별시', budget: 12.2, students: 839000, debt: 0.35 },
+  { name: '부산광역시교육청', metro: '부산광역시', budget: 6.6, students: 313000, debt: 0.10 },
+  { name: '대구광역시교육청', metro: '대구광역시', budget: 4.7, students: 243000, debt: 0.16 },
+  { name: '인천광역시교육청', metro: '인천광역시', budget: 5.3, students: 316000, debt: 0.18 },
+  { name: '대전광역시교육청', metro: '대전광역시', budget: 3.1, students: 169000, debt: 0.10 },
+  { name: '울산광역시교육청', metro: '울산광역시', budget: 2.4, students: 135000, debt: 0.06 },
+  { name: '세종특별자치시교육청', metro: '세종특별자치시', budget: 1.4, students: 75000, debt: 0.06 },
+  { name: '경기도교육청', metro: '경기도', budget: 23.4, students: 1594000, debt: 1.28 },
+  { name: '강원특별자치도교육청', metro: '강원특별자치도', budget: 5.4, students: 160000, debt: 0.03 },
+  { name: '충청북도교육청', metro: '충청북도', budget: 4.1, students: 171000, debt: 0.05 },
+  { name: '충청남도교육청', metro: '충청남도', budget: 4.9, students: 237000, debt: 0.06 },
+  { name: '전북특별자치도교육청', metro: '전북특별자치도', budget: 4.8, students: 189000, debt: 0.07 },
+  { name: '전남광주통합특별시교육청', metro: '전남광주통합특별시', budget: 7.5, students: 397000, debt: 0.08 },
+  { name: '경상북도교육청', metro: '경상북도', budget: 6.4, students: 258000, debt: 0.17 },
+  { name: '경상남도교육청', metro: '경상남도', budget: 7.0, students: 358000, debt: 0.22 },
+  { name: '제주특별자치도교육청', metro: '제주특별자치도', budget: 1.7, students: 84000, debt: 0.00 },
 ];
 
 // ============================================================
@@ -605,6 +621,18 @@ export function PromiseSimulator() {
           }
         />
       </div>
+
+      {/* 기초단체 데이터 기준·한계 안내 */}
+      {scope === 'district' && districtData && (
+        <div className="border border-amber-900/40 bg-amber-950/20 p-3 md:p-4 text-xs md:text-sm text-amber-200/90 leading-relaxed">
+          ℹ️ <strong className="text-amber-300">기초단체 예산 데이터 안내:</strong> 현재 표시 금액은{' '}
+          <span className="font-semibold">2024년 본예산 기준 추정치</span>이며, 일부 구·시·군은 인구 유사 지역에서 추정한 값입니다.
+          국내 공공데이터 API 한계로 전국 228개 기초단체 자동 수집이 불가한 상태입니다
+          (행정안전부 지방재정365 API 군(群)은 LINK 타입).{' '}
+          <span className="text-amber-300">최신 2026년 본예산 확정치는 해당 자치단체 홈페이지를 참고</span>해주시고,
+          오류 발견 시 알려주시면 즉시 교정 반영하겠습니다.
+        </div>
+      )}
 
       {/* ====== SECTION 1.5: AI 공약 분석 ====== */}
       <div className="border border-purple-900/50 bg-purple-950/20 p-4 md:p-5">
