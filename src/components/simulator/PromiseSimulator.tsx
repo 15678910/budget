@@ -126,7 +126,7 @@ function Cell({ label, value, color, sub, tooltip }: { label: string; value: str
       </div>
       {sub && <div className="text-xs md:text-sm text-gray-500 leading-tight truncate">{sub}</div>}
       {tooltip && (
-        <div className="pointer-events-none absolute left-0 top-full mt-1 z-20 hidden group-hover:block w-64 p-3 rounded-lg bg-gray-900 border border-gray-700 shadow-xl text-xs text-gray-200 leading-relaxed whitespace-normal">
+        <div className="pointer-events-none absolute left-full top-0 ml-2 z-20 hidden group-hover:block w-64 p-3 rounded-lg bg-gray-900 border border-gray-700 shadow-xl text-xs text-gray-200 leading-relaxed whitespace-normal">
           {tooltip}
         </div>
       )}
