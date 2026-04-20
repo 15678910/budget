@@ -6,6 +6,7 @@ import {
   getDistrictFiscalData,
   getMetroNames,
 } from '@/lib/data/fiscal-health-data';
+import { getPolicyRecommendations, SOCIAL_POLICY_SUGGESTIONS } from '@/lib/data/regional-policy-recommendations';
 import type {
   DiagnosisResult,
   PolicySimResult,
@@ -304,10 +305,70 @@ export function FiscalDoctorDashboard() {
                   </button>
                 </div>
 
-                <div className="flex flex-wrap gap-2">
-                  {['주민세 10% 인상', '공공병원 신설', '지역화폐 30% 확대', '공무원 5% 감축', '관광특구 지정'].map((suggestion) => (
-                    <button key={suggestion} onClick={() => setPolicyText(suggestion)} className="text-xs px-3 py-1.5 bg-gray-800 text-gray-400 rounded-full hover:bg-gray-700 hover:text-gray-300 transition-colors border border-gray-700/50">{suggestion}</button>
-                  ))}
+                {/* ① 지역별 맞춤 정책 추천 — currentRegionName 기반 동적 렌더링 */}
+                <div className="space-y-1.5">
+                  <div className="text-[11px] text-gray-500 tracking-wide">
+                    {currentRegionType === 'metro'
+                      ? `💡 ${currentRegionName} 맞춤 정책 추천`
+                      : `💡 ${currentRegionName}에 자주 거론되는 정책`}
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {getPolicyRecommendations(currentRegionName).map((sug) =>
+                      sug.highlight ? (
+                        <button
+                          key={sug.text}
+                          onClick={() => setPolicyText(sug.text)}
+                          className="group text-xs px-3 py-1.5 rounded-full border transition-all relative
+                                     bg-gradient-to-r from-emerald-600/30 to-cyan-600/30
+                                     hover:from-emerald-500/50 hover:to-cyan-500/50
+                                     text-emerald-200 hover:text-white
+                                     border-emerald-500/60 hover:border-emerald-400
+                                     shadow-[0_0_12px_rgba(16,185,129,0.35)] hover:shadow-[0_0_16px_rgba(16,185,129,0.6)]
+                                     font-semibold"
+                          title={sug.rationale ?? ''}
+                        >
+                          {sug.icon && <span className="mr-1">{sug.icon}</span>}
+                          {sug.text}
+                          <span className="ml-1.5 text-[9px] px-1.5 py-0.5 rounded-full bg-emerald-400/20 text-emerald-200 border border-emerald-400/40 align-middle">
+                            NEW
+                          </span>
+                        </button>
+                      ) : (
+                        <button
+                          key={sug.text}
+                          onClick={() => setPolicyText(sug.text)}
+                          className="text-xs px-3 py-1.5 bg-gray-800 text-gray-400 rounded-full hover:bg-gray-700 hover:text-gray-300 transition-colors border border-gray-700/50"
+                          title={sug.rationale ?? ''}
+                        >
+                          {sug.icon && <span className="mr-1">{sug.icon}</span>}
+                          {sug.text}
+                        </button>
+                      ),
+                    )}
+                  </div>
+                </div>
+
+                {/* ② 사회 과제 대응 정책 — 전국 공통 (부의 양극화·가계대출·AI 실업 등) */}
+                <div className="space-y-1.5">
+                  <div className="text-[11px] text-gray-500 tracking-wide">
+                    🌐 사회 과제 대응 정책 <span className="text-gray-600">(부의 양극화 · 가계대출 · AI 전환)</span>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {SOCIAL_POLICY_SUGGESTIONS.map((sug) => (
+                      <button
+                        key={sug.text}
+                        onClick={() => setPolicyText(sug.text)}
+                        className="text-xs px-3 py-1.5 rounded-full transition-colors
+                                   bg-indigo-950/40 text-indigo-200/90
+                                   hover:bg-indigo-900/60 hover:text-indigo-100
+                                   border border-indigo-700/40 hover:border-indigo-500/60"
+                        title={sug.rationale ?? ''}
+                      >
+                        {sug.icon && <span className="mr-1">{sug.icon}</span>}
+                        {sug.text}
+                      </button>
+                    ))}
+                  </div>
                 </div>
 
                 {/* Simulation History */}
