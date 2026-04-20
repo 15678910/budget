@@ -120,7 +120,7 @@ function Cell({ label, value, color, sub, tooltip }: { label: string; value: str
               ?
             </span>
             {/* 말풍선 */}
-            <span className="pointer-events-none absolute left-6 top-1/2 -translate-y-1/2 z-30 hidden group-hover/tip:block w-64 p-3 rounded-lg bg-gray-900 border border-gray-600 shadow-2xl text-xs text-gray-100 leading-relaxed whitespace-normal">
+            <span className="pointer-events-none absolute left-6 top-1/2 -translate-y-1/2 z-30 hidden group-hover/tip:block w-72 p-3.5 rounded-lg bg-gray-900 border border-gray-600 shadow-2xl text-sm text-gray-100 leading-relaxed whitespace-normal">
               {/* 꼬리 (왼쪽 방향) - border 겹치기로 삼각형 말풍선 생성 */}
               <span className="absolute right-full top-1/2 -translate-y-1/2 w-0 h-0 border-y-[6px] border-y-transparent border-r-[6px] border-r-gray-600" />
               <span className="absolute right-full top-1/2 -translate-y-1/2 w-0 h-0 border-y-[5px] border-y-transparent border-r-[5px] border-r-gray-900 ml-[1px]" style={{ marginRight: '-1px' }} />
