@@ -106,14 +106,30 @@ function Slider({
   );
 }
 
-function Cell({ label, value, color, sub }: { label: string; value: string; color: string; sub?: string }) {
+function Cell({ label, value, color, sub, tooltip }: { label: string; value: string; color: string; sub?: string; tooltip?: string }) {
   return (
-    <div className="border border-gray-800 p-3 md:p-4 min-w-0">
-      <div className="text-sm md:text-base text-gray-400 leading-tight truncate">{label}</div>
+    <div className="border border-gray-800 p-3 md:p-4 min-w-0 relative group">
+      <div className="flex items-center gap-1">
+        <div className="text-sm md:text-base text-gray-400 leading-tight truncate">{label}</div>
+        {tooltip && (
+          <span
+            className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-gray-700 text-gray-400 text-[10px] font-bold cursor-help flex-shrink-0 hover:bg-gray-600 hover:text-gray-200"
+            title={tooltip}
+            aria-label={tooltip}
+          >
+            ?
+          </span>
+        )}
+      </div>
       <div className={`text-lg md:text-xl font-mono font-bold tabular-nums leading-tight truncate ${color}`}>
         {value}
       </div>
       {sub && <div className="text-xs md:text-sm text-gray-500 leading-tight truncate">{sub}</div>}
+      {tooltip && (
+        <div className="pointer-events-none absolute left-0 top-full mt-1 z-20 hidden group-hover:block w-64 p-3 rounded-lg bg-gray-900 border border-gray-700 shadow-xl text-xs text-gray-200 leading-relaxed whitespace-normal">
+          {tooltip}
+        </div>
+      )}
     </div>
   );
 }
@@ -520,18 +536,31 @@ export function PromiseSimulator() {
             : scope === 'district' ? '기초 예산'
             : '교육청 예산'
           }
+          tooltip="한 해 동안 해당 정부·지자체·교육청이 쓸 수 있는 전체 돈의 규모입니다. 공약 비용은 이 예산에서 조달하거나 추가 재원(세금·채무)으로 마련해야 합니다."
         />
         <Cell
           label={scope === 'national' ? '국가채무' : scope === 'education' ? '교육채무' : '지역채무'}
           value={`${activeDebt.toFixed(activeDebt < 10 ? 1 : 0)}조원`}
           color={activeDebtRatio > 60 ? 'text-red-400' : 'text-gray-100'}
           sub={`${scope === 'national' ? 'GDP' : 'GRDP'} 대비 ${activeDebtRatio.toFixed(1)}%`}
+          tooltip={
+            scope === 'national'
+              ? '국가가 갚아야 할 빚의 총액입니다. GDP 대비 비율로 재정 건전성을 판단합니다.'
+              : scope === 'education'
+              ? '교육청이 발행한 교육채 잔액입니다. 주로 학교 신축·시설비에 사용되며, 국가 기준 차입이 아닌 시설 관련 채무입니다.'
+              : '지자체가 발행한 지방채 잔액입니다. 도로·주택 등 대규모 사업에 사용되며, 발행 시 행정안전부 승인이 필요합니다.'
+          }
         />
         <Cell
           label={scope === 'national' ? 'GDP' : 'GRDP 추정'}
           value={`${activeGdp.toFixed(activeGdp < 10 ? 1 : 0)}조원`}
           color="text-gray-100"
           sub={scope === 'national' ? '2026 명목 GDP' : '지역내총생산 추정'}
+          tooltip={
+            scope === 'national'
+              ? '한 해 동안 대한민국에서 생산된 모든 재화와 서비스의 총액입니다. 경제 규모의 대표 지표.'
+              : '해당 지역에서 1년간 생산된 부가가치의 합계(GRDP) 추정치입니다. 지역 경제 규모를 나타냅니다.'
+          }
         />
         <Cell
           label="채무비율"
@@ -542,6 +571,7 @@ export function PromiseSimulator() {
             : scope === 'education' ? '교육채무/GRDP'
             : '지역채무/GRDP'
           }
+          tooltip="경제 규모(GDP/GRDP) 대비 빚이 얼마나 되는지 나타내는 비율입니다. IMF 권고 기준: 60% 미만 안전, 60% 이상 주의."
         />
         <Cell
           label={
@@ -559,6 +589,13 @@ export function PromiseSimulator() {
             scope === 'national' ? `GDP 대비 -${((CURRENT_DEFICIT / GDP) * 100).toFixed(1)}%`
             : scope === 'education' ? '관할 학생'
             : '주민등록 기준'
+          }
+          tooltip={
+            scope === 'national'
+              ? '한 해 국가 수입보다 지출이 얼마나 많은지 나타냅니다. 적자가 클수록 국채 발행이 늘어납니다.'
+              : scope === 'education'
+              ? '해당 교육청이 관할하는 초·중·고등학교 재학생 수입니다. 예산 배분과 학생 1인당 부담 계산 기준.'
+              : '해당 지역의 주민등록 기준 인구수입니다. 1인당 세금 부담 계산의 기준이 됩니다.'
           }
         />
       </div>
@@ -717,18 +754,21 @@ export function PromiseSimulator() {
           value={formatJo(simulation.totalCost)}
           color="text-gray-100"
           sub={`${years}년간 총소요`}
+          tooltip="공약을 이행 기간 동안 완료하는 데 필요한 총 예산입니다. (공약 비용 × 1)"
         />
         <Cell
           label="연간 소요"
           value={formatJo(simulation.annualCost)}
           color="text-gray-100"
           sub="연평균 소요액"
+          tooltip="공약 총비용을 이행 기간으로 나눈 연평균 금액입니다. 매년 이 금액이 기존 예산에 추가로 필요합니다."
         />
         <Cell
           label="예산대비 비중"
           value={`${simulation.budgetImpact.toFixed(1)}%`}
           color={simulation.budgetImpact < 3 ? 'text-emerald-400' : simulation.budgetImpact < 5 ? 'text-amber-400' : 'text-red-400'}
           sub={`총예산 ${activeBudget.toFixed(activeBudget < 10 ? 1 : 0)}조 대비`}
+          tooltip="연간 공약 비용이 해당 정부·지자체·교육청 총예산의 몇 %를 차지하는지 나타냅니다. 3% 미만: 여유, 5% 초과: 재정 압박."
         />
         <Cell
           label={
@@ -743,25 +783,40 @@ export function PromiseSimulator() {
             : scope === 'district' || scope === 'metro' ? `${years}년간 누적 지방채 (행안부 승인 필요)`
             : `${years}년간 누적 국채 발행`
           }
+          tooltip={
+            scope === 'education'
+              ? '공약 중 세금(교부금·전입금)으로 조달하지 못한 금액을 교육채로 발행해 조달합니다. 교육채는 주로 학교 건물·시설 관련 대규모 투자에 한정됩니다.'
+              : scope === 'district' || scope === 'metro'
+              ? '공약 중 지방세·교부금으로 조달하지 못한 금액을 지방채로 조달합니다. 행정안전부 승인이 필요하며, 지자체 재정 건전성을 해칠 수 있습니다.'
+              : '공약 중 세금으로 조달하지 못한 금액을 국채 발행으로 조달합니다. 미래 세대가 갚아야 할 빚이 됩니다.'
+          }
         />
         <Cell
           label="최종 채무비율"
           value={`${simulation.finalDebtRatio.toFixed(1)}%`}
           color={simulation.finalDebtRatio < 55 ? 'text-emerald-400' : simulation.finalDebtRatio < 65 ? 'text-amber-400' : 'text-red-400'}
           sub={`현재 ${activeDebtRatio.toFixed(1)}% → ${simulation.finalDebtRatio.toFixed(1)}%`}
+          tooltip="공약 이행 기간이 끝났을 때 예상되는 채무비율입니다. 현재값과 비교하여 증감폭이 크면 재정이 악화됩니다."
         />
         <Cell
           label={
-            scope === 'education' ? '학생 1인당 교부금 부담'
+            scope === 'education' ? '학생 1인당 재원'
             : scope === 'district' || scope === 'metro' ? '1인당 지방세 부담'
             : '1인당 증세부담'
           }
           value={`${simulation.taxBurdenPerCapita.toLocaleString('ko-KR')}원`}
           color={simulation.taxBurdenPerCapita > 300000 ? 'text-amber-400' : 'text-gray-100'}
           sub={
-            scope === 'education' ? '연간 교부금 재편성 필요액'
+            scope === 'education' ? '학생 1인당 연간 배정액'
             : scope === 'district' || scope === 'metro' ? '연간 지방세 추가 필요액'
             : '연간 1인당 추가 세금'
+          }
+          tooltip={
+            scope === 'education'
+              ? '공약 중 국가 교부금·시도 전입금으로 조달되는 부분을 학생 수로 나눈 1인당 배정액입니다. 학생이 직접 내는 돈이 아니라, 학생 1명당 공약에 투입되는 재원 규모를 뜻합니다.'
+              : scope === 'district' || scope === 'metro'
+              ? '공약을 시행할 때 주민 1인당 매년 추가로 부담해야 할 지방세 금액입니다. (주민세·재산세 등 인상 가정)'
+              : '공약 이행을 위해 국민 1인당 매년 추가로 부담해야 할 세금 금액입니다.'
           }
         />
       </div>
