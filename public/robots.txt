@@ -1,13 +1,20 @@
-# budget.ai.kr — 크롤링 정책
-# 본 사이트는 한국 정부 예산·재정 데이터를 시각화하는 공공 정보 서비스이지만,
-# 데이터 출처(NABO·eduinfo·열린재정·data.go.kr 등)의 라이선스 보호 및
-# AI 학습용 무단 수집 방지를 위해 모든 자동 수집을 명시적으로 거부합니다.
+# budget.ai.kr — 크롤링 정책 (균형형)
+#
+# 정책 의도:
+#   • 검색엔진(Google·Naver·Bing·Daum 등)의 일반 색인은 ✅ 허용
+#     → 시민이 "예산", "재정 건전성", "공약 검증" 등으로 검색해서 본 사이트를
+#       발견할 수 있게 함 (공공 정보 서비스의 접근성 보장)
+#   • AI 모델 학습(LLM training)을 위한 데이터 수집은 ❌ 명시적 거부
+#     → ChatGPT·Claude·Gemini·Perplexity·Llama 등이 본 사이트 콘텐츠를
+#       모델 학습용 코퍼스로 무단 사용하지 못하게 차단
+#   • 데이터 출처(NABO·eduinfo·열린재정·data.go.kr 등) 라이선스 보호
 
-# === 모든 봇 거부 (기본) ===
+# === 기본: 모든 일반 크롤러 허용 ===
 User-agent: *
-Disallow: /
+Allow: /
 
-# === AI 학습 데이터 수집 봇 명시적 거부 ===
+# === AI 학습용 봇 명시 차단 ===
+# OpenAI (ChatGPT)
 User-agent: GPTBot
 Disallow: /
 
@@ -17,6 +24,7 @@ Disallow: /
 User-agent: OAI-SearchBot
 Disallow: /
 
+# Anthropic (Claude)
 User-agent: ClaudeBot
 Disallow: /
 
@@ -26,24 +34,18 @@ Disallow: /
 User-agent: anthropic-ai
 Disallow: /
 
-User-agent: CCBot
-Disallow: /
-
-User-agent: PerplexityBot
-Disallow: /
-
-User-agent: Perplexity-User
-Disallow: /
-
+# Google (Gemini 학습 — 검색용 Googlebot은 위에서 허용 유지)
 User-agent: Google-Extended
 Disallow: /
 
 User-agent: GoogleOther
 Disallow: /
 
+# Apple (Apple Intelligence)
 User-agent: Applebot-Extended
 Disallow: /
 
+# Meta (Llama)
 User-agent: FacebookBot
 Disallow: /
 
@@ -53,21 +55,18 @@ Disallow: /
 User-agent: Meta-ExternalFetcher
 Disallow: /
 
-User-agent: Bytespider
+# Common Crawl (대다수 LLM의 1차 학습 데이터셋)
+User-agent: CCBot
 Disallow: /
 
-User-agent: Amazonbot
+# Perplexity
+User-agent: PerplexityBot
 Disallow: /
 
-User-agent: DuckAssistBot
+User-agent: Perplexity-User
 Disallow: /
 
-User-agent: Diffbot
-Disallow: /
-
-User-agent: ImagesiftBot
-Disallow: /
-
+# 기타 AI 회사
 User-agent: cohere-ai
 Disallow: /
 
@@ -80,22 +79,33 @@ Disallow: /
 User-agent: ai2bot
 Disallow: /
 
-User-agent: AwarioRssBot
+# AI 검색·스크래퍼
+User-agent: DuckAssistBot
 Disallow: /
 
-User-agent: AwarioSmartBot
+User-agent: Bytespider
 Disallow: /
 
-User-agent: DataForSeoBot
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /
+
+User-agent: ImagesiftBot
+Disallow: /
+
+# === SEO 스크래핑 봇 (정보 분석·재배포용, AI는 아니지만 무단 수집) ===
+User-agent: AhrefsBot
 Disallow: /
 
 User-agent: SemrushBot
 Disallow: /
 
-User-agent: AhrefsBot
+User-agent: MJ12bot
 Disallow: /
 
-User-agent: MJ12bot
+User-agent: DataForSeoBot
 Disallow: /
 
 User-agent: serpstatbot
@@ -104,26 +114,10 @@ Disallow: /
 User-agent: BLEXBot
 Disallow: /
 
-# === 검색 엔진 인덱싱도 거부 ===
-User-agent: Googlebot
+User-agent: AwarioRssBot
 Disallow: /
 
-User-agent: Bingbot
+User-agent: AwarioSmartBot
 Disallow: /
 
-User-agent: Slurp
-Disallow: /
-
-User-agent: Naverbot
-Disallow: /
-
-User-agent: Yeti
-Disallow: /
-
-User-agent: Daumoa
-Disallow: /
-
-User-agent: ZumBot
-Disallow: /
-
-# 사이트맵 미제공 (크롤링 거부 정책에 따름)
+# 사이트맵은 향후 추가 예정 (현재 정적 라우트 위주라 자동 발견 가능)
