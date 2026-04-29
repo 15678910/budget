@@ -120,4 +120,5 @@ Disallow: /
 User-agent: AwarioSmartBot
 Disallow: /
 
-# 사이트맵은 향후 추가 예정 (현재 정적 라우트 위주라 자동 발견 가능)
+# 사이트맵 위치
+Sitemap: https://budget.ai.kr/sitemap.xml

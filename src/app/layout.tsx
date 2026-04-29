@@ -22,10 +22,32 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "대한민국 예산 시각화 | 마을살림/나라살림",
-  description: "한국 정부 예산을 트리맵으로 한눈에 살펴보세요. 분야별·부처별 드릴다운, 연도 비교, 1인당 부담액 등을 제공합니다.",
-  keywords: ["정부예산", "예산시각화", "트리맵", "재정", "세출", "마을살림/나라살림"],
+  metadataBase: new URL("https://budget.ai.kr"),
+  title: {
+    default: "마을살림/나라살림 | 대한민국 예산·재정 시각화",
+    template: "%s | 마을살림/나라살림",
+  },
+  description:
+    "대한민국 정부·지자체·교육청 예산을 트리맵으로 한눈에. 재정 건전성 진단·공약 비용 검증·정책 시뮬레이션·지역 비교를 AI가 도와드립니다.",
+  keywords: [
+    "정부예산", "예산시각화", "재정 건전성", "공약 검증", "정책 시뮬레이션",
+    "지방재정", "교육청 예산", "트리맵", "국가채무", "주민세",
+    "나라살림", "마을살림", "재정자립도", "공공은행", "지역화폐",
+  ],
+  authors: [{ name: "마을살림/나라살림" }],
   manifest: "/manifest.json",
+  alternates: {
+    canonical: "https://budget.ai.kr",
+  },
+
+  // 검색엔진 인증 (env 변수로 키 주입 — Vercel에서 설정)
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION,
+    other: {
+      "naver-site-verification": process.env.NAVER_SITE_VERIFICATION ?? "",
+    },
+  },
+
   // 검색엔진 색인은 허용 (시민 접근성 확보), AI 학습 거부는 robots.txt + X-Robots-Tag 가 담당
   robots: {
     index: true,
@@ -38,6 +60,33 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
+
+  // Open Graph: 카카오톡·트위터·페이스북 등에 링크 공유 시 미리보기 카드
+  openGraph: {
+    type: "website",
+    locale: "ko_KR",
+    url: "https://budget.ai.kr",
+    siteName: "마을살림/나라살림",
+    title: "마을살림/나라살림 | 대한민국 예산·재정 시각화",
+    description:
+      "대한민국 정부·지자체·교육청 예산을 트리맵으로 한눈에. 재정 건전성 진단·공약 비용 검증·정책 시뮬레이션을 AI가 도와드립니다.",
+    images: [
+      {
+        url: "/icon-512.png",
+        width: 512,
+        height: 512,
+        alt: "마을살림/나라살림",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "마을살림/나라살림 | 대한민국 예산·재정 시각화",
+    description:
+      "정부·지자체·교육청 예산을 트리맵으로 한눈에. 공약 검증·정책 시뮬레이션 by AI.",
+    images: ["/icon-512.png"],
+  },
+
   icons: {
     icon: [
       { url: "/logo-icon.svg", type: "image/svg+xml" },
