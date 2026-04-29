@@ -1,0 +1,129 @@
+# budget.ai.kr — 크롤링 정책
+# 본 사이트는 한국 정부 예산·재정 데이터를 시각화하는 공공 정보 서비스이지만,
+# 데이터 출처(NABO·eduinfo·열린재정·data.go.kr 등)의 라이선스 보호 및
+# AI 학습용 무단 수집 방지를 위해 모든 자동 수집을 명시적으로 거부합니다.
+
+# === 모든 봇 거부 (기본) ===
+User-agent: *
+Disallow: /
+
+# === AI 학습 데이터 수집 봇 명시적 거부 ===
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: OAI-SearchBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: Perplexity-User
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: GoogleOther
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+User-agent: Meta-ExternalAgent
+Disallow: /
+
+User-agent: Meta-ExternalFetcher
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: DuckAssistBot
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /
+
+User-agent: ImagesiftBot
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+User-agent: cohere-training-data-crawler
+Disallow: /
+
+User-agent: PanguBot
+Disallow: /
+
+User-agent: ai2bot
+Disallow: /
+
+User-agent: AwarioRssBot
+Disallow: /
+
+User-agent: AwarioSmartBot
+Disallow: /
+
+User-agent: DataForSeoBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: serpstatbot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+# === 검색 엔진 인덱싱도 거부 ===
+User-agent: Googlebot
+Disallow: /
+
+User-agent: Bingbot
+Disallow: /
+
+User-agent: Slurp
+Disallow: /
+
+User-agent: Naverbot
+Disallow: /
+
+User-agent: Yeti
+Disallow: /
+
+User-agent: Daumoa
+Disallow: /
+
+User-agent: ZumBot
+Disallow: /
+
+# 사이트맵 미제공 (크롤링 거부 정책에 따름)

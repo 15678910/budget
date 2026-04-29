@@ -26,6 +26,23 @@ export const metadata: Metadata = {
   description: "한국 정부 예산을 트리맵으로 한눈에 살펴보세요. 분야별·부처별 드릴다운, 연도 비교, 1인당 부담액 등을 제공합니다.",
   keywords: ["정부예산", "예산시각화", "트리맵", "재정", "세출", "마을살림/나라살림"],
   manifest: "/manifest.json",
+  // 크롤링·색인·AI 학습용 수집 모두 거부 (robots.txt + X-Robots-Tag 와 함께 3중 방어)
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    noarchive: true,
+    nosnippet: true,
+    notranslate: true,
+    googleBot: {
+      index: false,
+      follow: false,
+      noimageindex: true,
+      "max-video-preview": -1,
+      "max-image-preview": "none",
+      "max-snippet": -1,
+    },
+  },
   icons: {
     icon: [
       { url: "/logo-icon.svg", type: "image/svg+xml" },
