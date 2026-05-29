@@ -61,3 +61,11 @@ Password requirements: minimum 12 characters.
 - The route now exclusively reads `ADMIN_PASSWORD_HASH`. `ADMIN_PASSWORD` is silently ignored.
 - If `ADMIN_PASSWORD_HASH` is not set, the endpoint returns HTTP 503.
 - Failing to migrate before removing `ADMIN_PASSWORD` will lock out admin access until `ADMIN_PASSWORD_HASH` is set.
+
+
+---
+
+## 위협 모델
+
+전체 위협 카탈로그·자산·완화 매트릭스: [docs/THREAT_MODEL.md](docs/THREAT_MODEL.md)
+회귀 테스트: `tests/test_threat_scenarios.ts`
