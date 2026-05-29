@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { SignJWT } from 'jose';
+import bcrypt from 'bcryptjs';
 
 // ---------------------------------------------------------------------------
 // POST /api/admin/auth  — Admin login
@@ -9,15 +10,23 @@ export async function POST(request: NextRequest) {
   try {
     const { password } = (await request.json()) as { password?: string };
 
-    const adminPassword = process.env.ADMIN_PASSWORD;
-    if (!adminPassword) {
+    const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH;
+    if (!adminPasswordHash) {
       return NextResponse.json(
         { error: 'Admin password not configured' },
         { status: 503 },
       );
     }
 
-    if (!password || password !== adminPassword) {
+    if (!password) {
+      return NextResponse.json(
+        { error: 'Invalid password' },
+        { status: 401 },
+      );
+    }
+
+    const isValid = await bcrypt.compare(password, adminPasswordHash);
+    if (!isValid) {
       return NextResponse.json(
         { error: 'Invalid password' },
         { status: 401 },
