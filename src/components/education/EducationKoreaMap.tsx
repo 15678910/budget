@@ -35,7 +35,15 @@ const W = 360, H = 440;
 
 export function EducationKoreaMap({ geoData, municipalitiesGeo, selectedSido, selectedSgg, onSelect, onSelectSgg, onBack, metricBySido }: Props) {
   const [zoom, setZoom] = useState(1);
+  const [emdTopo, setEmdTopo] = useState<Topology | null>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
+
+  // 읍면동 경계 lazy 로드 (시군구 선택 시 최초 1회)
+  useEffect(() => {
+    if (selectedSgg && !emdTopo) {
+      fetch('/data/korea-emd-topo.json').then((r) => r.json()).then(setEmdTopo).catch(() => {});
+    }
+  }, [selectedSgg, emdTopo]);
 
   // 마우스 휠 줌 (페이지 스크롤 방지 위해 passive:false)
   useEffect(() => {
@@ -94,6 +102,33 @@ export function EducationKoreaMap({ geoData, municipalitiesGeo, selectedSido, se
     });
   }, [municipalitiesGeo, selectedSido, selectedSgg]);
 
+  // 읍면동(EMD) 경로 — 선택 시군구만 (EMD code = 시군구 5자리 + 2)
+  const emdPaths = useMemo(() => {
+    if (!selectedSido || !selectedSgg || !emdTopo) return [];
+    // 선택 시군구의 5자리 코드 찾기
+    const mObj = Object.keys(municipalitiesGeo.objects)[0];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const mfc = feature(municipalitiesGeo as any, (municipalitiesGeo as any).objects[mObj]) as any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const sggFeat = mfc.features.find((f: any) => f.properties.name === selectedSgg);
+    const sggCode = sggFeat ? String(sggFeat.properties.code ?? '') : '';
+    if (!sggCode) return [];
+    const eObj = Object.keys(emdTopo.objects)[0];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const efc = feature(emdTopo as any, (emdTopo as any).objects[eObj]) as any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const feats = efc.features.filter((f: any) => String(f.properties.code ?? '').startsWith(sggCode));
+    if (feats.length === 0) return [];
+    const subset = { type: 'FeatureCollection', features: feats };
+    const proj = geoMercator().fitSize([W - 16, H - 16], subset as never);
+    const pg = geoPath(proj);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return feats.map((f: any, i: number) => {
+      const c = pg.centroid(f);
+      return { name: f.properties.name as string, d: pg(f) ?? '', cx: c[0], cy: c[1], i };
+    });
+  }, [emdTopo, municipalitiesGeo, selectedSido, selectedSgg]);
+
   const max = useMemo(() => {
     const vals = metricBySido ? Object.values(metricBySido) : [];
     return vals.length ? Math.max(...vals) : 0;
@@ -127,8 +162,18 @@ export function EducationKoreaMap({ geoData, municipalitiesGeo, selectedSido, se
                   className="pointer-events-none fill-white" style={{ fontSize: 9 }}>{p.sido}</text>
               </g>
             ))
+          ) : selectedSgg && emdPaths.length > 0 ? (
+            // 3단계: 선택 시군구의 읍면동 경계
+            emdPaths.map((m: { name: string; d: string; cx: number; cy: number; i: number }) => (
+              <g key={m.i} className="cursor-default">
+                <path d={m.d} fill="#1e40af" stroke="#93c5fd" strokeWidth={0.4}
+                  className="transition-colors hover:brightness-125" />
+                <text x={m.cx} y={m.cy} textAnchor="middle" dominantBaseline="middle"
+                  className="pointer-events-none fill-white" style={{ fontSize: 8 }}>{m.name}</text>
+              </g>
+            ))
           ) : (
-            // 드릴: 선택 시도의 시군구 (시군구 미선택 시 클릭 가능)
+            // 2단계: 선택 시도의 시군구 (시군구 미선택 시 클릭 가능)
             muniPaths.map((m: { name: string; d: string; cx: number; cy: number }, i: number) => (
               <g key={i} onClick={() => !selectedSgg && onSelectSgg(m.name)}
                 className={selectedSgg ? 'cursor-default' : 'cursor-pointer'}>

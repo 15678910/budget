@@ -145,7 +145,7 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
               selectedSido={sido} selectedSgg={sgg} onSelect={selectSido} onSelectSgg={selectSgg}
               onBack={resetAll} metricBySido={metricBySido} />
           </div>
-          <p className="text-[11px] text-gray-500 mt-1 text-center">시도 클릭 → 시군구 지도 → 시군구 클릭 → 관할 교육지원청 · 마우스 휠 확대/축소</p>
+          <p className="text-[11px] text-gray-500 mt-1 text-center">시도 → 시군구 → 시군구 클릭 시 <strong className="text-gray-400">읍면동 경계</strong> + 관할 교육지원청 · 마우스 휠 확대/축소</p>
         </div>
 
         {/* 우측: 교육지원청 목록 / 학교 목록 */}
@@ -197,8 +197,8 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
               </div>
               {/* 유/초/중/고 필터 버튼 */}
               <div className="flex gap-1.5 mb-2 flex-wrap">
-                <button disabled title="유치원은 학교알리미 미제공(유치원알리미 별도)"
-                  className="px-2.5 py-1 text-xs rounded border border-gray-800 text-gray-600 cursor-not-allowed">유 (없음)</button>
+                <button disabled title="유치원은 학교알리미 미제공 — 유치원알리미(e-childschoolinfo.moe.go.kr) 별도 OpenAPI 키 필요"
+                  className="px-2.5 py-1 text-xs rounded border border-gray-800 text-gray-600 cursor-not-allowed">유 (키필요)</button>
                 {KINDS.map((k) => (
                   <button key={k} onClick={() => setKind(k)}
                     className={`px-2.5 py-1 text-xs rounded border transition-colors ${
@@ -252,6 +252,11 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
           ※ 소규모 학교가 많은 농어촌 교육지원청일수록 학생 1인당 학교회계 예산이 높습니다(고정비). 본청(○○교육청)은 목록에서 제외.
           광역 지자체 전입금(법정전입금, 예: 강원 2026 약 3,781억)은 시도교육청 세입총계에 이미 포함되어 별도 분리 표기하지 않으며,
           시군구(기초단체) 교육경비보조금은 지방재정365 LINK 방식이라 자동수집이 불가합니다.
+        </p>
+        <p className="text-[11px] text-gray-600 mt-1">
+          · <strong className="text-gray-500">읍면동 경계</strong>: 통계청 2013 행정구역(southkorea-maps) 기준.
+          · <strong className="text-gray-500">학교 위치(GPS 핀)</strong>: NEIS·학교알리미는 주소만 제공(좌표 없음) → 정확한 핀 표시는 NEIS 또는 지오코딩(VWorld/Kakao) API 키 필요.
+          · <strong className="text-gray-500">유치원</strong>: 유치원알리미 별도 포털 OpenAPI 키 확보 시 즉시 연동 가능.
         </p>
       </div>
     </div>
