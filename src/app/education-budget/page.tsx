@@ -10,13 +10,13 @@ export const metadata: Metadata = {
 };
 
 export default function EducationBudgetPage() {
-  // 시도 TopoJSON (교육 지도용) — 서버에서 로드
-  const geoPath = path.join(process.cwd(), 'data', 'geo', 'korea-provinces-topo.json');
-  const geoData = JSON.parse(fs.readFileSync(geoPath, 'utf-8'));
+  // 시도·시군구 TopoJSON (교육 지도용) — 서버에서 로드
+  const geoData = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'data', 'geo', 'korea-provinces-topo.json'), 'utf-8'));
+  const muniGeo = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'data', 'geo', 'korea-municipalities-topo.json'), 'utf-8'));
 
   return (
     <div className="w-full max-w-7xl mx-auto">
-      <EducationBudgetView geoData={geoData} />
+      <EducationBudgetView geoData={geoData} municipalitiesGeo={muniGeo} />
     </div>
   );
 }

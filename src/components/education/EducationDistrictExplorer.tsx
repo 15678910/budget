@@ -43,7 +43,7 @@ const KINDS = ['전체', '초', '중', '고'] as const;
 type Kind = typeof KINDS[number];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function EducationDistrictExplorer({ geoData }: { geoData: any }) {
+export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoData: any; municipalitiesGeo: any }) {
   const [detail, setDetail] = useState<DetailData | null>(null);
   const [sido, setSido] = useState<string | null>(null);
   const [distName, setDistName] = useState<string | null>(null);
@@ -118,9 +118,11 @@ export function EducationDistrictExplorer({ geoData }: { geoData: any }) {
             )}
           </div>
           <div className="max-w-[520px] mx-auto">
-            <EducationKoreaMap geoData={geoData} selectedSido={sido} onSelect={selectSido} metricBySido={metricBySido} />
+            <EducationKoreaMap geoData={geoData} municipalitiesGeo={municipalitiesGeo}
+              selectedSido={sido} onSelect={selectSido} onBack={() => { setSido(null); setDistName(null); }}
+              metricBySido={metricBySido} />
           </div>
-          <p className="text-[11px] text-gray-500 mt-1 text-center">시도를 클릭하면 교육지원청이 표시됩니다 · +/− 로 확대</p>
+          <p className="text-[11px] text-gray-500 mt-1 text-center">시도 클릭 → 관내 시군구 지도 · 마우스 휠로 확대/축소</p>
         </div>
 
         {/* 우측: 교육지원청 목록 / 학교 목록 */}
