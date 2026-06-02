@@ -73,9 +73,10 @@ export function EducationAdmissionRate() {
         <ResponsiveContainer width="100%" height={400}>
           <BarChart data={bar} layout="vertical" margin={{ left: 8, right: 32, top: 4, bottom: 4 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#374151" horizontal={false} />
-            <XAxis type="number" domain={[50, 90]} tick={{ fill: '#9ca3af', fontSize: 12 }} unit="%" />
+            <XAxis type="number" domain={[50, 90]} tick={{ fill: '#9ca3af', fontSize: 12 }} tickFormatter={(v) => `${v}%`} />
             <YAxis type="category" dataKey="name" tick={{ fill: '#d1d5db', fontSize: 12 }} width={40} />
             <Tooltip contentStyle={{ background: '#111827', border: '1px solid #374151', borderRadius: 8, fontSize: 13 }}
+              labelStyle={{ color: '#e5e7eb' }} itemStyle={{ color: '#e5e7eb' }}
               formatter={(v) => [`${v}%`, '진학률']} />
             <Bar dataKey="rate" radius={[0, 4, 4, 0]}>
               {bar.map((d, i) => <Cell key={i} fill={d.rate < 70 ? '#ef4444' : d.rate >= 80 ? '#10b981' : '#3b82f6'} />)}
@@ -91,8 +92,9 @@ export function EducationAdmissionRate() {
           <LineChart data={trend} margin={{ left: 8, right: 16, top: 4, bottom: 4 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
             <XAxis dataKey="year" tick={{ fill: '#9ca3af', fontSize: 12 }} />
-            <YAxis domain={[55, 90]} tick={{ fill: '#9ca3af', fontSize: 12 }} unit="%" />
-            <Tooltip contentStyle={{ background: '#111827', border: '1px solid #374151', borderRadius: 8, fontSize: 12 }} />
+            <YAxis domain={[55, 90]} tick={{ fill: '#9ca3af', fontSize: 12 }} tickFormatter={(v) => `${v}%`} />
+            <Tooltip contentStyle={{ background: '#111827', border: '1px solid #374151', borderRadius: 8, fontSize: 12 }}
+              labelStyle={{ color: '#e5e7eb' }} itemStyle={{ color: '#e5e7eb' }} formatter={(v) => [`${v}%`]} />
             <Legend wrapperStyle={{ fontSize: 12 }} />
             <Line type="monotone" dataKey={top.sido} stroke="#10b981" strokeWidth={2} dot={false} />
             <Line type="monotone" dataKey="서울" stroke="#ef4444" strokeWidth={2} dot={false} />

@@ -93,11 +93,12 @@ export function EducationBudgetDashboard() {
         <ResponsiveContainer width="100%" height={520}>
           <BarChart data={barData} layout="vertical" margin={{ left: 8, right: 24, top: 4, bottom: 4 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#374151" horizontal={false} />
-            <XAxis type="number" tick={{ fill: '#9ca3af', fontSize: 12 }} unit="만" />
+            <XAxis type="number" tick={{ fill: '#9ca3af', fontSize: 12 }} tickFormatter={(v) => `${v}만`} />
             <YAxis type="category" dataKey="name" tick={{ fill: '#d1d5db', fontSize: 12 }} width={48} />
             <Tooltip
               contentStyle={{ background: '#111827', border: '1px solid #374151', borderRadius: 8, fontSize: 13 }}
               labelStyle={{ color: '#e5e7eb' }}
+              itemStyle={{ color: '#e5e7eb' }}
               formatter={(value, _name, item) => {
                 const v = Number(value);
                 const p = (item as { payload?: { vsAvg: number; fullName: string } })?.payload;
@@ -128,13 +129,14 @@ export function EducationBudgetDashboard() {
         <ResponsiveContainer width="100%" height={400}>
           <ScatterChart margin={{ left: 8, right: 24, top: 8, bottom: 16 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-            <XAxis type="number" dataKey="students" name="학생수" unit="만명" tick={{ fill: '#9ca3af', fontSize: 12 }} />
-            <YAxis type="number" dataKey="perStudent" name="1인당예산" unit="만원" tick={{ fill: '#9ca3af', fontSize: 12 }} />
-            <ZAxis type="number" dataKey="budget" range={[60, 600]} name="총예산" unit="조" />
+            <XAxis type="number" dataKey="students" name="학생수" tickFormatter={(v) => `${v}만명`} tick={{ fill: '#9ca3af', fontSize: 12 }} />
+            <YAxis type="number" dataKey="perStudent" name="1인당예산" tickFormatter={(v) => `${v}만원`} tick={{ fill: '#9ca3af', fontSize: 12 }} />
+            <ZAxis type="number" dataKey="budget" range={[60, 600]} name="총예산" />
             <Tooltip
               cursor={{ strokeDasharray: '3 3' }}
               contentStyle={{ background: '#111827', border: '1px solid #374151', borderRadius: 8, fontSize: 13 }}
               labelStyle={{ color: '#e5e7eb' }}
+              itemStyle={{ color: '#e5e7eb' }}
               formatter={(value, name) => {
                 const v = Number(value);
                 const n = String(name);

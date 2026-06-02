@@ -74,8 +74,9 @@ export function EducationTypeHierarchy() {
             <BarChart data={typeBar} margin={{ left: 8, right: 16, top: 4, bottom: 4 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" vertical={false} />
               <XAxis dataKey="name" tick={{ fill: '#d1d5db', fontSize: 12 }} />
-              <YAxis tick={{ fill: '#9ca3af', fontSize: 12 }} unit="만" />
+              <YAxis tick={{ fill: '#9ca3af', fontSize: 12 }} tickFormatter={(v) => `${v}만`} />
               <Tooltip contentStyle={{ background: '#111827', border: '1px solid #374151', borderRadius: 8, fontSize: 13 }}
+                labelStyle={{ color: '#e5e7eb' }} itemStyle={{ color: '#e5e7eb' }}
                 formatter={(v) => [`${Number(v).toLocaleString()}만원`, '1인당 예산']} />
               <Bar dataKey="perStudent" radius={[4, 4, 0, 0]}>
                 {typeBar.map((d, i) => <Cell key={i} fill={TYPE_COLOR[d.name] ?? '#6b7280'} />)}
