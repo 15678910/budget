@@ -64,3 +64,4 @@ public/*.pdf
 /debt_all.json
 /scripts/output/
 /lofin_meta.xlsx
+scripts/_regions.json
