@@ -234,15 +234,14 @@ export function EducationBudgetDashboard() {
         </p>
       </section>
 
-      {/* Phase 2 안내 — 교육지원청·학교 드릴다운 */}
-      <section className="border border-dashed border-gray-700 bg-gray-900/20 rounded-lg p-4 md:p-5">
-        <h2 className="text-base font-semibold text-gray-300 mb-2">🔜 다음 단계 — 교육지원청·학교별 드릴다운</h2>
+      {/* 교육지원청·학교 분석 안내 */}
+      <section className="border border-gray-800 bg-gray-900/20 rounded-lg p-4 md:p-5">
+        <h2 className="text-base font-semibold text-gray-300 mb-2">📂 더 깊이 보기 — 교육지원청·학교별 분석</h2>
         <p className="text-sm text-gray-400 leading-relaxed">
-          현재는 <strong className="text-gray-300">시도교육청 17곳</strong> 단위 분석입니다.
-          전국 <strong>176개 교육지원청</strong>과 <strong>약 12,000개 학교</strong>별 예산·1인당 예산,
-          그리고 <strong>계층 회계 정합성</strong>(시도 총액 = 본청 + Σ교육지원청 + Σ학교) 검증은
-          <strong className="text-gray-300"> 학교알리미 OpenAPI</strong> 데이터로 확장 예정입니다.
-          데이터 모델·분석 엔진은 이미 계층 구조로 준비되어 있어, 데이터만 채우면 자동으로 확장됩니다.
+          위 탭의 <strong className="text-blue-300">교육지원청·학교 (183 · 8,661)</strong>에서
+          전국 183개 교육지원청과 8,661개 학교의 학교회계 세출을 학생 1인당 기준으로 비교하고,
+          시도 → 교육지원청 → 학교 드릴다운과 <strong className="text-gray-300">계층 정합성</strong>(학교회계가
+          시도 총예산에서 차지하는 비중)을 확인할 수 있습니다. (출처: 학교알리미 OpenAPI)
         </p>
       </section>
     </div>
