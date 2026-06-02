@@ -1,5 +1,7 @@
 import { EducationBudgetView } from '@/components/education/EducationBudgetView';
 import type { Metadata } from 'next';
+import fs from 'fs';
+import path from 'path';
 
 export const metadata: Metadata = {
   title: '전국 교육청 예산 정합성 분석 | 마을살림/나라살림',
@@ -8,9 +10,13 @@ export const metadata: Metadata = {
 };
 
 export default function EducationBudgetPage() {
+  // 시도 TopoJSON (교육 지도용) — 서버에서 로드
+  const geoPath = path.join(process.cwd(), 'data', 'geo', 'korea-provinces-topo.json');
+  const geoData = JSON.parse(fs.readFileSync(geoPath, 'utf-8'));
+
   return (
     <div className="w-full max-w-7xl mx-auto">
-      <EducationBudgetView />
+      <EducationBudgetView geoData={geoData} />
     </div>
   );
 }

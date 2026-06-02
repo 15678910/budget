@@ -9,7 +9,8 @@ import { EducationAdmissionRate } from './EducationAdmissionRate';
 
 type Tab = 'metro' | 'district' | 'type' | 'admission' | 'disclosure';
 
-export function EducationBudgetView() {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function EducationBudgetView({ geoData }: { geoData: any }) {
   const [tab, setTab] = useState<Tab>('metro');
 
   return (
@@ -68,7 +69,7 @@ export function EducationBudgetView() {
       </div>
 
       {tab === 'metro' && <EducationBudgetDashboard />}
-      {tab === 'district' && <EducationDistrictExplorer />}
+      {tab === 'district' && <EducationDistrictExplorer geoData={geoData} />}
       {tab === 'type' && <EducationTypeHierarchy />}
       {tab === 'admission' && <EducationAdmissionRate />}
       {tab === 'disclosure' && <EducationDisclosureExplorer />}

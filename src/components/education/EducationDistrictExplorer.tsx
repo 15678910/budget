@@ -1,194 +1,214 @@
 'use client';
 
-import { useMemo, useState } from 'react';
-import {
-  METRO_SCHOOL_AGG, DISTRICT_SCHOOL_AGG, SCHOOL_BUDGET_YEAR, SCHOOL_TOTAL_COUNT,
-  type DistrictAgg,
-} from '@/lib/data/education-districts';
-import { METRO_EDUCATION_BUDGETS, computeDistribution, formatKRW } from '@/lib/data/education-budget';
+import { useEffect, useMemo, useState } from 'react';
+import { DISTRICT_SCHOOL_AGG, SCHOOL_TOTAL_COUNT } from '@/lib/data/education-districts';
+import { computeDistribution, formatKRW } from '@/lib/data/education-budget';
+import { EducationKoreaMap } from './EducationKoreaMap';
 
-interface SchoolRow { n: string; k: string; b: number; s: number; p: number }
+interface SchoolDetail { n: string; k: string; s: number; c: number; t: number }
+interface DistDetail { code: string; name: string; sido: string; schools: number; students: number; teachers: number; classes: number }
+interface DetailData {
+  byDistrict: Record<string, SchoolDetail[]>;
+  districts: DistDetail[];
+  metros: { sido: string; districts: number; schools: number; students: number; teachers: number }[];
+}
 
-const SIDO_LIST = METRO_SCHOOL_AGG.map((m) => m.sido);
+const KIND_COLOR: Record<string, string> = { 초: '#3b82f6', 중: '#10b981', 고: '#f59e0b' };
 
-export function EducationDistrictExplorer() {
-  const [sido, setSido] = useState<string>(SIDO_LIST[0] ?? '서울');
-  const [openDist, setOpenDist] = useState<string | null>(null);
-  const [schoolsByDist, setSchoolsByDist] = useState<Record<string, SchoolRow[]>>({});
-  const [loading, setLoading] = useState(false);
-
-  // 전국 교육지원청 1인당 예산 분포 (도농 격차)
-  const allDist = DISTRICT_SCHOOL_AGG;
-  const distStats = useMemo(() => computeDistribution(allDist.map((d) => d.perStudent)), [allDist]);
-  const top = allDist[0];
-  const bottom = allDist[allDist.length - 1];
-
-  // 선택 시도의 교육지원청
-  const sidoDistricts = useMemo(
-    () => allDist.filter((d) => d.sido === sido).sort((a, b) => b.perStudent - a.perStudent),
-    [allDist, sido],
+// 예산(1인당) 조회용 — 교육지원청명 기준 합산(중복 코드 병합) → perStudent
+const BUDGET_BY_NAME: Record<string, number> = (() => {
+  const agg: Record<string, { budget: number; students: number }> = {};
+  for (const d of DISTRICT_SCHOOL_AGG) {
+    const a = agg[d.name] ?? (agg[d.name] = { budget: 0, students: 0 });
+    a.budget += d.schoolBudget;
+    a.students += d.students;
+  }
+  return Object.fromEntries(
+    Object.entries(agg).map(([name, v]) => [name, v.students > 0 ? v.budget / v.students : 0]),
   );
+})();
 
-  // 계층 정합성: 학교회계 세출 합 vs 시도 총예산(eduinfo)
-  const coherence = useMemo(() => {
-    return METRO_SCHOOL_AGG.map((m) => {
-      const total = METRO_EDUCATION_BUDGETS.find((e) => e.name === m.name);
-      const totalWon = total ? total.budget2026 * 1e12 : 0;
-      return {
-        name: m.name,
-        schoolBudget: m.schoolBudget,
-        totalBudget: totalWon,
-        ratio: totalWon > 0 ? (m.schoolBudget / totalWon) * 100 : 0,
-      };
-    }).sort((a, b) => b.ratio - a.ratio);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function EducationDistrictExplorer({ geoData }: { geoData: any }) {
+  const [detail, setDetail] = useState<DetailData | null>(null);
+  const [sido, setSido] = useState<string | null>(null);
+  const [distCode, setDistCode] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/data/education-schools-detail-2024.json')
+      .then((r) => r.json())
+      .then((j) => setDetail(j))
+      .catch(() => {})
+      .finally(() => setLoading(false));
   }, []);
 
-  async function toggleDistrict(d: DistrictAgg) {
-    if (openDist === d.code) { setOpenDist(null); return; }
-    setOpenDist(d.code);
-    if (!schoolsByDist[d.code]) {
-      setLoading(true);
-      try {
-        const res = await fetch(`/data/education-schools-${SCHOOL_BUDGET_YEAR}.json`);
-        const json = await res.json();
-        setSchoolsByDist(json.byDistrict ?? {});
-      } catch {
-        // 무시 — 빈 목록 표시
-      } finally {
-        setLoading(false);
-      }
-    }
+  // 지도 색상 메트릭 — 시도별 학생수
+  const metricBySido = useMemo(() => {
+    const m: Record<string, number> = {};
+    (detail?.metros ?? []).forEach((x) => { m[x.sido] = x.students; });
+    return m;
+  }, [detail]);
+
+  // 선택 시도의 교육지원청
+  const sidoDistricts = useMemo(() => {
+    if (!detail) return [];
+    const list = sido ? detail.districts.filter((d) => d.sido === sido) : detail.districts;
+    return list.map((d) => ({ ...d, perStudent: BUDGET_BY_NAME[d.name] ?? 0 }))
+      .sort((a, b) => b.students - a.students);
+  }, [detail, sido]);
+
+  const schools = distCode && detail ? detail.byDistrict[distCode] ?? [] : [];
+  const selectedDist = sidoDistricts.find((d) => d.code === distCode);
+
+  // 전국 요약
+  const natStudents = (detail?.metros ?? []).reduce((s, m) => s + m.students, 0);
+  const natTeachers = (detail?.metros ?? []).reduce((s, m) => s + m.teachers, 0);
+  const distStats = useMemo(() => computeDistribution(DISTRICT_SCHOOL_AGG.map((d) => d.perStudent)), []);
+
+  function selectSido(s: string) {
+    setSido(s === sido ? null : s);
+    setDistCode(null);
   }
 
   return (
-    <div className="space-y-6">
-      {/* 요약 */}
-      <div className="space-y-2">
-        <h2 className="text-xl md:text-2xl font-bold text-gray-100">교육지원청·학교별 분석</h2>
-        <p className="text-sm text-gray-400 leading-relaxed">
-          전국 <strong className="text-gray-200">{allDist.length}개 교육지원청</strong>과{' '}
-          <strong className="text-gray-200">{SCHOOL_TOTAL_COUNT.toLocaleString()}개 학교</strong>의{' '}
-          학교회계 세출({SCHOOL_BUDGET_YEAR})을 학생 1인당 기준으로 비교합니다.
-          <span className="text-gray-500"> (출처: 학교알리미 OpenAPI · 학교회계 세출, 인건비 등 교육청 직접집행분 제외)</span>
+    <div className="space-y-5">
+      <div>
+        <h2 className="text-xl md:text-2xl font-bold text-gray-100">교육지원청·학교 지도 탐색</h2>
+        <p className="text-sm text-gray-400 leading-relaxed mt-1">
+          지도에서 <strong className="text-gray-200">시도</strong>를 클릭 → <strong className="text-gray-200">교육지원청</strong> 선택 →
+          관내 <strong className="text-gray-200">초·중·고 학교별 학생수·교원수·학급수</strong>를 확인합니다.
+          <span className="text-gray-500"> (출처: 학교알리미 · 학교회계 예산은 교육지원청 1인당 기준)</span>
         </p>
       </div>
 
-      {/* 도농 격차 카드 */}
+      {/* 요약 카드 */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <div className="border border-gray-800 bg-gray-900/40 rounded-lg p-4">
-          <div className="text-xs text-gray-400">교육지원청 수</div>
-          <div className="text-xl font-bold text-gray-100 mt-1">{allDist.length}곳</div>
+        <Card label="교육지원청" value={`${DISTRICT_SCHOOL_AGG.length}곳`} />
+        <Card label="학교 수" value={`${SCHOOL_TOTAL_COUNT.toLocaleString()}교`} sub="초·중·고" />
+        <Card label="학생 수" value={natStudents ? `${(natStudents / 10000).toFixed(0)}만명` : '—'} />
+        <Card label="교원 수" value={natTeachers ? `${(natTeachers / 10000).toFixed(1)}만명` : '—'} />
+      </div>
+
+      {/* 3패널: 지도 → 교육지원청 → 학교 */}
+      <div className="grid lg:grid-cols-[340px_1fr_1fr] gap-4">
+        {/* 패널1: 지도 */}
+        <div className="border border-gray-800 bg-gray-900/30 rounded-lg p-3">
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="text-sm font-semibold text-gray-300">시도 선택</h3>
+            {sido && (
+              <button onClick={() => { setSido(null); setDistCode(null); }}
+                className="text-xs text-blue-400 hover:text-blue-300">전국 보기 ✕</button>
+            )}
+          </div>
+          <EducationKoreaMap geoData={geoData} selectedSido={sido} onSelect={selectSido} metricBySido={metricBySido} />
+          <p className="text-[11px] text-gray-500 mt-1 text-center">색이 진할수록 학생수 많음</p>
         </div>
-        <div className="border border-gray-800 bg-gray-900/40 rounded-lg p-4">
-          <div className="text-xs text-gray-400">최고 1인당 (농어촌)</div>
-          <div className="text-lg font-bold text-red-400 mt-1">{formatKRW(top.perStudent)}</div>
-          <div className="text-[11px] text-gray-500">{top.name}</div>
+
+        {/* 패널2: 교육지원청 목록 */}
+        <div className="border border-gray-800 bg-gray-900/30 rounded-lg p-3">
+          <h3 className="text-sm font-semibold text-gray-300 mb-2">
+            {sido ? `${sido} 교육지원청` : '전국 교육지원청'} <span className="text-gray-500">({sidoDistricts.length})</span>
+          </h3>
+          {loading ? (
+            <div className="text-sm text-gray-500 py-6 text-center">불러오는 중…</div>
+          ) : (
+            <div className="space-y-1 max-h-[460px] overflow-y-auto pr-1">
+              {sidoDistricts.map((d) => (
+                <button key={d.code} onClick={() => setDistCode(d.code)}
+                  className={`w-full flex items-center gap-2 px-2.5 py-2 rounded text-left transition-colors ${
+                    distCode === d.code ? 'bg-blue-600/30 border border-blue-500/50' : 'hover:bg-gray-800/60 border border-transparent'
+                  }`}>
+                  <span className="flex-1 text-sm text-gray-200 truncate">{d.name}</span>
+                  <span className="text-[11px] text-gray-500">{d.schools}교</span>
+                  <span className="text-xs text-gray-300 w-16 text-right">{(d.students / 10000).toFixed(1)}만명</span>
+                </button>
+              ))}
+            </div>
+          )}
         </div>
-        <div className="border border-gray-800 bg-gray-900/40 rounded-lg p-4">
-          <div className="text-xs text-gray-400">최저 1인당 (도시)</div>
-          <div className="text-lg font-bold text-amber-400 mt-1">{formatKRW(bottom.perStudent)}</div>
-          <div className="text-[11px] text-gray-500">{bottom.name}</div>
-        </div>
-        <div className="border border-gray-800 bg-gray-900/40 rounded-lg p-4">
-          <div className="text-xs text-gray-400">도농 격차</div>
-          <div className="text-xl font-bold text-gray-100 mt-1">{distStats.spread.toFixed(1)}배</div>
-          <div className="text-[11px] text-gray-500">지니 {distStats.gini.toFixed(3)}</div>
+
+        {/* 패널3: 학교 목록 */}
+        <div className="border border-gray-800 bg-gray-900/30 rounded-lg p-3">
+          {!selectedDist ? (
+            <div className="text-sm text-gray-500 py-10 text-center">
+              교육지원청을 선택하면<br />관내 학교 목록이 표시됩니다.
+            </div>
+          ) : (
+            <>
+              <div className="mb-2">
+                <h3 className="text-sm font-semibold text-gray-200">{selectedDist.name}</h3>
+                <div className="flex gap-3 text-[11px] text-gray-400 mt-0.5 flex-wrap">
+                  <span>학교 {selectedDist.schools}</span>
+                  <span>학생 {selectedDist.students.toLocaleString()}</span>
+                  <span>교원 {selectedDist.teachers.toLocaleString()}</span>
+                  <span>학급 {selectedDist.classes.toLocaleString()}</span>
+                  {selectedDist.perStudent > 0 && <span className="text-emerald-400">1인당 {formatKRW(selectedDist.perStudent)}</span>}
+                </div>
+              </div>
+              <div className="overflow-x-auto max-h-[440px] overflow-y-auto">
+                <table className="w-full text-xs md:text-sm">
+                  <thead className="sticky top-0 bg-gray-900">
+                    <tr className="text-gray-500 border-b border-gray-700">
+                      <th className="text-left py-1.5 px-1.5">학교</th>
+                      <th className="text-center py-1.5 px-1">급</th>
+                      <th className="text-right py-1.5 px-1.5">학생</th>
+                      <th className="text-right py-1.5 px-1.5">교원</th>
+                      <th className="text-right py-1.5 px-1.5">학급</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {schools.map((s, i) => (
+                      <tr key={i} className="border-b border-gray-800/40">
+                        <td className="py-1.5 px-1.5 text-gray-200">{s.n}</td>
+                        <td className="text-center py-1.5 px-1">
+                          <span className="px-1.5 py-0.5 rounded text-[10px] text-white" style={{ background: KIND_COLOR[s.k] ?? '#6b7280' }}>{s.k}</span>
+                        </td>
+                        <td className="text-right py-1.5 px-1.5 text-gray-300">{s.s.toLocaleString()}</td>
+                        <td className="text-right py-1.5 px-1.5 text-gray-300">{s.t.toLocaleString()}</td>
+                        <td className="text-right py-1.5 px-1.5 text-gray-400">{s.c.toLocaleString()}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          )}
         </div>
       </div>
 
-      {/* 계층 회계 정합성 */}
-      <section className="border border-gray-800 bg-gray-900/30 rounded-lg p-4 md:p-5">
-        <h3 className="text-base font-semibold text-gray-200 mb-1">계층 정합성 — 학교회계가 시도 총예산에서 차지하는 비중</h3>
-        <p className="text-xs text-gray-500 mb-3">
-          학교회계 세출(학교가 직접 집행) ÷ 시도교육청 총예산. 나머지는 대부분 교원 인건비·교육청 직접사업으로,
-          학교로 직접 내려가는 예산이 의외로 작다는 것을 보여줍니다.
+      {/* 도농 격차 요약 (기존 분석 유지) */}
+      <div className="border border-gray-800 bg-gray-900/30 rounded-lg p-4">
+        <h3 className="text-sm font-semibold text-gray-300 mb-2">교육지원청 1인당 예산 격차 (학교회계 기준)</h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-center">
+          <Mini label="최고(농어촌)" value={formatKRW(distStats.max)} color="text-red-400" />
+          <Mini label="최저(도시)" value={formatKRW(distStats.min)} color="text-amber-400" />
+          <Mini label="격차" value={`${distStats.spread.toFixed(1)}배`} color="text-gray-100" />
+          <Mini label="지니계수" value={distStats.gini.toFixed(3)} color="text-blue-300" />
+        </div>
+        <p className="text-[11px] text-gray-500 mt-2">
+          ※ 소규모 학교가 많은 농어촌 교육지원청일수록 학생 1인당 학교회계 예산이 높습니다(고정비). 1인당 예산은 학교회계(인건비 제외) 기준.
         </p>
-        <div className="space-y-1.5">
-          {coherence.map((c) => (
-            <div key={c.name} className="flex items-center gap-2 text-sm">
-              <span className="w-28 md:w-36 shrink-0 text-gray-300 truncate">{c.name}</span>
-              <div className="flex-1 bg-gray-800 rounded h-4 relative overflow-hidden">
-                <div className="bg-blue-600 h-full rounded" style={{ width: `${Math.min(100, c.ratio * 4)}%` }} />
-              </div>
-              <span className="w-12 text-right text-gray-200 font-semibold">{c.ratio.toFixed(1)}%</span>
-              <span className="w-32 text-right text-gray-500 text-xs hidden md:inline">
-                {(c.schoolBudget / 1e12).toFixed(2)}조 / {(c.totalBudget / 1e12).toFixed(1)}조
-              </span>
-            </div>
-          ))}
-        </div>
-        <p className="text-[11px] text-gray-500 mt-2">※ 막대 길이는 비율×4 배율로 시각화(대부분 8~20% 구간).</p>
-      </section>
+      </div>
+    </div>
+  );
+}
 
-      {/* 시도 선택 → 교육지원청 → 학교 드릴다운 */}
-      <section className="border border-gray-800 bg-gray-900/30 rounded-lg p-4 md:p-5">
-        <div className="flex items-center gap-3 mb-4 flex-wrap">
-          <h3 className="text-base font-semibold text-gray-200">시도 → 교육지원청 → 학교 드릴다운</h3>
-          <select
-            value={sido}
-            onChange={(e) => { setSido(e.target.value); setOpenDist(null); }}
-            className="bg-gray-800 border border-gray-700 text-gray-200 text-sm rounded px-2 py-1.5"
-          >
-            {SIDO_LIST.map((s) => (
-              <option key={s} value={s}>{METRO_SCHOOL_AGG.find((m) => m.sido === s)?.name ?? s}</option>
-            ))}
-          </select>
-        </div>
+function Card({ label, value, sub }: { label: string; value: string; sub?: string }) {
+  return (
+    <div className="border border-gray-800 bg-gray-900/40 rounded-lg p-4">
+      <div className="text-xs text-gray-400">{label}</div>
+      <div className="text-xl font-bold text-gray-100 mt-1">{value}</div>
+      {sub && <div className="text-[11px] text-gray-500">{sub}</div>}
+    </div>
+  );
+}
 
-        <div className="space-y-1.5">
-          {sidoDistricts.map((d) => {
-            const isOpen = openDist === d.code;
-            const schools = schoolsByDist[d.code] ?? [];
-            return (
-              <div key={d.code} className="border border-gray-800 rounded">
-                <button
-                  onClick={() => toggleDistrict(d)}
-                  className="w-full flex items-center gap-2 px-3 py-2.5 hover:bg-gray-800/50 transition-colors text-left"
-                >
-                  <span className={`text-gray-500 transition-transform ${isOpen ? 'rotate-90' : ''}`}>▶</span>
-                  <span className="flex-1 text-gray-200 text-sm">{d.name}</span>
-                  <span className="text-xs text-gray-500">{d.schoolCount}교</span>
-                  <span className="text-sm font-semibold text-gray-100 w-24 text-right">{formatKRW(d.perStudent)}</span>
-                </button>
-                {isOpen && (
-                  <div className="px-3 pb-3 border-t border-gray-800/50">
-                    {loading && schools.length === 0 ? (
-                      <div className="py-3 text-sm text-gray-500">학교 데이터 불러오는 중…</div>
-                    ) : schools.length === 0 ? (
-                      <div className="py-3 text-sm text-gray-500">학교 데이터가 없습니다.</div>
-                    ) : (
-                      <div className="overflow-x-auto mt-2">
-                        <table className="w-full text-xs md:text-sm">
-                          <thead>
-                            <tr className="text-gray-500 border-b border-gray-800">
-                              <th className="text-left py-1.5 px-2">학교</th>
-                              <th className="text-center py-1.5 px-2">구분</th>
-                              <th className="text-right py-1.5 px-2">학교회계 세출</th>
-                              <th className="text-right py-1.5 px-2">학생수</th>
-                              <th className="text-right py-1.5 px-2">1인당</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {schools.map((s, i) => (
-                              <tr key={i} className="border-b border-gray-800/40">
-                                <td className="py-1.5 px-2 text-gray-200">{s.n}</td>
-                                <td className="text-center py-1.5 px-2 text-gray-400">{s.k}</td>
-                                <td className="text-right py-1.5 px-2 text-gray-300">{formatKRW(s.b)}</td>
-                                <td className="text-right py-1.5 px-2 text-gray-400">{s.s.toLocaleString()}명</td>
-                                <td className="text-right py-1.5 px-2 text-gray-100 font-medium">{formatKRW(s.p)}</td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </section>
+function Mini({ label, value, color }: { label: string; value: string; color: string }) {
+  return (
+    <div className="border border-gray-800 rounded p-2.5">
+      <div className="text-[11px] text-gray-500">{label}</div>
+      <div className={`text-base font-bold mt-0.5 ${color}`}>{value}</div>
     </div>
   );
 }
