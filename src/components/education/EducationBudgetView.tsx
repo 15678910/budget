@@ -3,8 +3,9 @@
 import { useState } from 'react';
 import { EducationBudgetDashboard } from './EducationBudgetDashboard';
 import { EducationDistrictExplorer } from './EducationDistrictExplorer';
+import { EducationDisclosureExplorer } from './EducationDisclosureExplorer';
 
-type Tab = 'metro' | 'district';
+type Tab = 'metro' | 'district' | 'disclosure';
 
 export function EducationBudgetView() {
   const [tab, setTab] = useState<Tab>('metro');
@@ -32,9 +33,21 @@ export function EducationBudgetView() {
         >
           교육지원청·학교 (183 · 8,661)
         </button>
+        <button
+          onClick={() => setTab('disclosure')}
+          className={`px-4 py-2 text-sm font-medium border-b-2 -mb-px transition-colors ${
+            tab === 'disclosure'
+              ? 'border-blue-500 text-blue-300'
+              : 'border-transparent text-gray-400 hover:text-gray-200'
+          }`}
+        >
+          의원 셀프조회
+        </button>
       </div>
 
-      {tab === 'metro' ? <EducationBudgetDashboard /> : <EducationDistrictExplorer />}
+      {tab === 'metro' && <EducationBudgetDashboard />}
+      {tab === 'district' && <EducationDistrictExplorer />}
+      {tab === 'disclosure' && <EducationDisclosureExplorer />}
     </div>
   );
 }
