@@ -57,6 +57,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // 1) Maintenance mode (대소문자·공백 무관 파싱)
+  let slidingRefreshHash: string | null = null;
   const maintenanceMode =
     process.env.MAINTENANCE_MODE?.trim().toLowerCase() === 'true';
 
@@ -89,10 +90,13 @@ export async function middleware(request: NextRequest) {
       return response;
     }
 
-    // 1-B) 쿠키 해시 일치 → 통과
+    // 1-B) 쿠키 해시 일치 → 통과 (+ 방문 시마다 30일 자동 연장 = 슬라이딩 만료)
     const allowedByCookie = Boolean(
       expectedHash && cookieHash && timingSafeEqual(cookieHash, expectedHash),
     );
+    if (allowedByCookie && expectedHash) {
+      slidingRefreshHash = expectedHash;
+    }
 
     if (!allowedByCookie) {
       // 1-C) 차단 → /maintenance 로 rewrite (URL 유지, 내용만 점검 페이지)
@@ -129,6 +133,16 @@ export async function middleware(request: NextRequest) {
   // 정적 자산(JS/CSS/이미지)은 step 0에서 이미 통과하므로 영향 없음.
   const res = NextResponse.next();
   res.headers.set('Cache-Control', 'no-store, must-revalidate');
+  // bypass 쿠키 슬라이딩 연장 — 방문할 때마다 만료 30일 재설정 (계속 쓰면 안 끊김)
+  if (slidingRefreshHash) {
+    res.cookies.set(BYPASS_COOKIE, slidingRefreshHash, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'lax',
+      path: '/',
+      maxAge: BYPASS_MAX_AGE,
+    });
+  }
   return res;
 }
 
