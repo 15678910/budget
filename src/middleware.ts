@@ -124,7 +124,12 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  return NextResponse.next();
+  // 페이지(HTML) 응답은 캐시 금지 — 점검모드 전환 시 캐시된 옛 화면이
+  // 노출되는 문제 방지 (PWA 홈화면 앱 / 브라우저 HTTP 캐시 / bfcache 포함).
+  // 정적 자산(JS/CSS/이미지)은 step 0에서 이미 통과하므로 영향 없음.
+  const res = NextResponse.next();
+  res.headers.set('Cache-Control', 'no-store, must-revalidate');
+  return res;
 }
 
 export const config = {
