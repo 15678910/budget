@@ -40,7 +40,7 @@ export function EducationBudgetDashboard() {
   const regions = useMemo(() => aggregateByRegion(offices), [offices]);
 
   const barData = ranked.map((r) => ({
-    name: r.office.metro.replace(/특별시|광역시|특별자치시|특별자치도|도$/g, '').slice(0, 3) || r.office.metro,
+    name: r.office.metro, // 정식 시도명 (예: 경상북도)
     fullName: r.office.name,
     perStudent: Math.round(r.perStudent / 1e4), // 만원
     region: r.office.region,
@@ -48,7 +48,7 @@ export function EducationBudgetDashboard() {
   }));
 
   const scatterData = offices.map((o) => ({
-    name: o.metro.replace(/특별시|광역시|특별자치시|특별자치도|도$/g, '').slice(0, 3) || o.metro,
+    name: o.metro, // 정식 시도명
     students: Math.round(o.students / 10000), // 만명
     perStudent: Math.round(perStudentBudget(o) / 1e4), // 만원
     budget: o.budget2026,
@@ -90,11 +90,15 @@ export function EducationBudgetDashboard() {
       <section className="border border-gray-800 bg-gray-900/30 rounded-lg p-4 md:p-5">
         <h2 className="text-base md:text-lg font-semibold text-gray-200 mb-1">학생 1인당 예산 순위</h2>
         <p className="text-xs text-gray-500 mb-4">막대 색상 = 권역. 농어촌 비중이 높은 도(道) 지역일수록 1인당 예산이 높습니다(소규모 학교 고정비).</p>
-        <ResponsiveContainer width="100%" height={520}>
-          <BarChart data={barData} layout="vertical" margin={{ left: 8, right: 24, top: 4, bottom: 4 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#374151" horizontal={false} />
-            <XAxis type="number" tick={{ fill: '#9ca3af', fontSize: 12 }} tickFormatter={(v) => `${v}만`} />
-            <YAxis type="category" dataKey="name" tick={{ fill: '#d1d5db', fontSize: 12 }} width={48} />
+        <ResponsiveContainer width="100%" height={480}>
+          <BarChart data={barData} margin={{ left: 8, right: 16, top: 8, bottom: 90 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#374151" vertical={false} />
+            <XAxis
+              type="category" dataKey="name" interval={0}
+              angle={-45} textAnchor="end" height={90}
+              tick={{ fill: '#d1d5db', fontSize: 11 }}
+            />
+            <YAxis type="number" tick={{ fill: '#9ca3af', fontSize: 12 }} tickFormatter={(v) => `${v}만`} />
             <Tooltip
               contentStyle={{ background: '#111827', border: '1px solid #374151', borderRadius: 8, fontSize: 13 }}
               labelStyle={{ color: '#e5e7eb' }}
@@ -106,7 +110,7 @@ export function EducationBudgetDashboard() {
                 return [`${v.toLocaleString()}만원 (평균대비 ${sign}${p ? p.vsAvg.toFixed(0) : '0'}%)`, p?.fullName ?? ''];
               }}
             />
-            <Bar dataKey="perStudent" radius={[0, 4, 4, 0]}>
+            <Bar dataKey="perStudent" radius={[4, 4, 0, 0]}>
               {barData.map((d, i) => (
                 <Cell key={i} fill={REGION_COLOR[d.region] ?? '#6b7280'} />
               ))}
@@ -122,72 +126,79 @@ export function EducationBudgetDashboard() {
         </div>
       </section>
 
-      {/* 산점도: 학생수 ↔ 1인당 예산 (규모의 경제) */}
-      <section className="border border-gray-800 bg-gray-900/30 rounded-lg p-4 md:p-5">
-        <h2 className="text-base md:text-lg font-semibold text-gray-200 mb-1">학생수 ↔ 1인당 예산 (규모의 경제)</h2>
-        <p className="text-xs text-gray-500 mb-4">오른쪽 아래로 갈수록 "학생 많고 1인당 예산 낮음"(규모의 경제), 왼쪽 위는 "소규모·고비용".</p>
-        <ResponsiveContainer width="100%" height={400}>
-          <ScatterChart margin={{ left: 8, right: 24, top: 8, bottom: 16 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-            <XAxis type="number" dataKey="students" name="학생수" tickFormatter={(v) => `${v}만명`} tick={{ fill: '#9ca3af', fontSize: 12 }} />
-            <YAxis type="number" dataKey="perStudent" name="1인당예산" tickFormatter={(v) => `${v}만원`} tick={{ fill: '#9ca3af', fontSize: 12 }} />
-            <ZAxis type="number" dataKey="budget" range={[60, 600]} name="총예산" />
-            <Tooltip
-              cursor={{ strokeDasharray: '3 3' }}
-              contentStyle={{ background: '#111827', border: '1px solid #374151', borderRadius: 8, fontSize: 13 }}
-              labelStyle={{ color: '#e5e7eb' }}
-              itemStyle={{ color: '#e5e7eb' }}
-              formatter={(value, name) => {
-                const v = Number(value);
-                const n = String(name);
-                if (n === '학생수') return [`${v}만명`, n];
-                if (n === '1인당예산') return [`${v.toLocaleString()}만원`, n];
-                if (n === '총예산') return [`${v}조원`, n];
-                return [String(value), n];
-              }}
-            />
-            <Scatter data={scatterData}>
-              {scatterData.map((d, i) => (
-                <Cell key={i} fill={REGION_COLOR[d.region] ?? '#6b7280'} />
-              ))}
-            </Scatter>
-          </ScatterChart>
-        </ResponsiveContainer>
-      </section>
+      {/* 산점도 + 권역별 비교 (1행 2열) */}
+      <div className="grid md:grid-cols-2 gap-4">
+        {/* 산점도: 학생수 ↔ 1인당 예산 (규모의 경제) */}
+        <section className="border border-gray-800 bg-gray-900/30 rounded-lg p-4 md:p-5">
+          <h2 className="text-base md:text-lg font-semibold text-gray-200 mb-1">학생수 ↔ 1인당 예산 (규모의 경제)</h2>
+          <p className="text-xs text-gray-500 mb-4">오른쪽 아래로 갈수록 "학생 많고 1인당 예산 낮음"(규모의 경제), 왼쪽 위는 "소규모·고비용".</p>
+          <ResponsiveContainer width="100%" height={360}>
+            <ScatterChart margin={{ left: 8, right: 24, top: 8, bottom: 16 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+              <XAxis type="number" dataKey="students" name="학생수" tickFormatter={(v) => `${v}만명`} tick={{ fill: '#9ca3af', fontSize: 12 }} />
+              <YAxis type="number" dataKey="perStudent" name="1인당예산" tickFormatter={(v) => `${v}만원`} tick={{ fill: '#9ca3af', fontSize: 12 }} />
+              <ZAxis type="number" dataKey="budget" range={[60, 600]} name="총예산" />
+              <Tooltip
+                cursor={{ strokeDasharray: '3 3' }}
+                contentStyle={{ background: '#111827', border: '1px solid #374151', borderRadius: 8, fontSize: 13 }}
+                labelStyle={{ color: '#e5e7eb', fontWeight: 700, marginBottom: 4 }}
+                itemStyle={{ color: '#e5e7eb' }}
+                labelFormatter={(_label, payload) => {
+                  const p = payload?.[0]?.payload as { name?: string } | undefined;
+                  return p?.name ?? '';
+                }}
+                formatter={(value, name) => {
+                  const v = Number(value);
+                  const n = String(name);
+                  if (n === '학생수') return [`${v}만명`, n];
+                  if (n === '1인당예산') return [`${v.toLocaleString()}만원`, n];
+                  if (n === '총예산') return [`${v}조원`, n];
+                  return [String(value), n];
+                }}
+              />
+              <Scatter data={scatterData}>
+                {scatterData.map((d, i) => (
+                  <Cell key={i} fill={REGION_COLOR[d.region] ?? '#6b7280'} />
+                ))}
+              </Scatter>
+            </ScatterChart>
+          </ResponsiveContainer>
+        </section>
 
-      {/* 권역별 집계 */}
-      <section className="border border-gray-800 bg-gray-900/30 rounded-lg p-4 md:p-5">
-        <h2 className="text-base md:text-lg font-semibold text-gray-200 mb-4">권역별 비교</h2>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="text-gray-400 border-b border-gray-800">
-                <th className="text-left py-2 px-2">권역</th>
-                <th className="text-right py-2 px-2">교육청</th>
-                <th className="text-right py-2 px-2">예산</th>
-                <th className="text-right py-2 px-2">학생수</th>
-                <th className="text-right py-2 px-2">1인당 예산</th>
-              </tr>
-            </thead>
-            <tbody>
-              {regions.map((r) => (
-                <tr key={r.region} className="border-b border-gray-800/50">
-                  <td className="py-2 px-2">
-                    <span className="flex items-center gap-1.5 text-gray-200">
-                      <span className="w-2.5 h-2.5 rounded-sm inline-block" style={{ background: REGION_COLOR[r.region] }} />
-                      {r.region}
-                    </span>
-                  </td>
-                  <td className="text-right py-2 px-2 text-gray-400">{r.officeCount}곳</td>
-                  <td className="text-right py-2 px-2 text-gray-200">{r.budget.toFixed(1)}조</td>
-                  <td className="text-right py-2 px-2 text-gray-400">{(r.students / 10000).toFixed(0)}만명</td>
-                  <td className="text-right py-2 px-2 text-gray-100 font-semibold">{formatKRW(r.perStudent)}</td>
+        {/* 권역별 집계 */}
+        <section className="border border-gray-800 bg-gray-900/30 rounded-lg p-4 md:p-5">
+          <h2 className="text-base md:text-lg font-semibold text-gray-200 mb-4">권역별 비교</h2>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="text-gray-400 border-b border-gray-800">
+                  <th className="text-left py-2 px-2">권역</th>
+                  <th className="text-right py-2 px-2">교육청</th>
+                  <th className="text-right py-2 px-2">예산</th>
+                  <th className="text-right py-2 px-2">학생수</th>
+                  <th className="text-right py-2 px-2">1인당 예산</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
+              </thead>
+              <tbody>
+                {regions.map((r) => (
+                  <tr key={r.region} className="border-b border-gray-800/50">
+                    <td className="py-2 px-2">
+                      <span className="flex items-center gap-1.5 text-gray-200">
+                        <span className="w-2.5 h-2.5 rounded-sm inline-block" style={{ background: REGION_COLOR[r.region] }} />
+                        {r.region}
+                      </span>
+                    </td>
+                    <td className="text-right py-2 px-2 text-gray-400">{r.officeCount}곳</td>
+                    <td className="text-right py-2 px-2 text-gray-200">{r.budget.toFixed(1)}조</td>
+                    <td className="text-right py-2 px-2 text-gray-400">{(r.students / 10000).toFixed(0)}만명</td>
+                    <td className="text-right py-2 px-2 text-gray-100 font-semibold">{formatKRW(r.perStudent)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
 
       {/* 정합성 분석 해설 */}
       <section className="border border-gray-800 bg-gray-900/30 rounded-lg p-4 md:p-5 space-y-3">
