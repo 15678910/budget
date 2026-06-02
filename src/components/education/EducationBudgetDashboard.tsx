@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell,
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, Legend,
   ScatterChart, Scatter, ZAxis,
 } from 'recharts';
 import {
@@ -11,6 +11,7 @@ import {
   computeDistribution, detectOutliers, rankByPerStudent,
   nationalSummary, aggregateByRegion, formatKRW,
 } from '@/lib/data/education-budget';
+import { METRO_SCHOOL_AGG } from '@/lib/data/education-districts';
 
 const REGION_COLOR: Record<string, string> = {
   수도권: '#3b82f6',
@@ -75,6 +76,25 @@ export function EducationBudgetDashboard() {
     region: o.region,
   }));
 
+  // 공교육비 1인당(전체) vs 순수 학교회계 1인당 비교
+  const compareData = useMemo(() => {
+    return offices.map((o) => {
+      const total = perStudentBudget(o); // 원
+      const school = METRO_SCHOOL_AGG.find((m) => m.name === o.name); // 학교회계 집계
+      const pure = school?.perStudent ?? 0; // 원
+      return {
+        name: o.metro,
+        total: Math.round(total / 1e4),   // 만원
+        pure: Math.round(pure / 1e4),     // 만원
+        pureRatio: total > 0 ? (pure / total) * 100 : 0,
+      };
+    }).sort((a, b) => b.pure - a.pure);
+  }, [offices]);
+
+  const totalSchoolBudget = METRO_SCHOOL_AGG.reduce((s, m) => s + m.schoolBudget, 0);
+  const totalSchoolStudents = METRO_SCHOOL_AGG.reduce((s, m) => s + m.students, 0);
+  const nationalPure = totalSchoolStudents > 0 ? totalSchoolBudget / totalSchoolStudents : 0;
+
   // 정합성 해설 (자동 생성)
   const top = ranked[0];
   const bottom = ranked[ranked.length - 1];
@@ -105,6 +125,57 @@ export function EducationBudgetDashboard() {
         <StatCard label="학생 1인당 평균예산" value={formatKRW(summary.avgPerStudent)} sub="총예산 ÷ 총학생 (가중)" />
         <StatCard label="지역 형평성 (지니)" value={dist.gini.toFixed(3)} sub={equityVerdict} />
       </div>
+
+      {/* 공교육비 1인당 vs 순수(학교회계) 1인당 */}
+      <section className="border border-gray-800 bg-gray-900/30 rounded-lg p-4 md:p-5">
+        <h2 className="text-base md:text-lg font-semibold text-gray-200 mb-1">공교육비 1인당 vs 순수 학생 직접지출</h2>
+        <p className="text-xs text-gray-500 mb-3">
+          <span className="text-gray-300">공교육비 1인당</span>(총예산÷학생, 교원 인건비·시설 포함)은 크지만,
+          학교가 <span className="text-gray-300">직접 학생에게 쓰는 순수 예산</span>(학교회계, 본청 인건비 제외)은 훨씬 작습니다.
+        </p>
+
+        {/* 전국 대비 카드 */}
+        <div className="grid grid-cols-2 gap-3 mb-4">
+          <div className="border border-gray-800 bg-gray-900/40 rounded-lg p-4">
+            <div className="text-xs text-gray-400">① 공교육비 1인당 (전체)</div>
+            <div className="text-2xl font-bold text-gray-100 mt-1">{formatKRW(summary.avgPerStudent)}</div>
+            <div className="text-[11px] text-gray-500">교원 인건비·시설·급식·사업 전부</div>
+          </div>
+          <div className="border border-emerald-800/50 bg-emerald-950/20 rounded-lg p-4">
+            <div className="text-xs text-emerald-400">② 순수 1인당 (학교회계 직접지출)</div>
+            <div className="text-2xl font-bold text-emerald-300 mt-1">{formatKRW(nationalPure)}</div>
+            <div className="text-[11px] text-gray-500">
+              전체의 {summary.avgPerStudent > 0 ? ((nationalPure / summary.avgPerStudent) * 100).toFixed(1) : 0}% · 본청 인건비 제외
+            </div>
+          </div>
+        </div>
+
+        {/* 시도별 비교 막대 (그룹) */}
+        <ResponsiveContainer width="100%" height={420}>
+          <BarChart data={compareData} margin={{ left: 8, right: 16, top: 8, bottom: 90 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#374151" vertical={false} />
+            <XAxis type="category" dataKey="name" interval={0} angle={-45} textAnchor="end" height={90} tick={{ fill: '#d1d5db', fontSize: 11 }} />
+            <YAxis type="number" tick={{ fill: '#9ca3af', fontSize: 12 }} tickFormatter={(v) => `${v}만`} />
+            <Tooltip
+              cursor={false}
+              contentStyle={{ background: '#111827', border: '1px solid #374151', borderRadius: 8, fontSize: 13 }}
+              labelStyle={{ color: '#e5e7eb', fontWeight: 700 }}
+              itemStyle={{ color: '#e5e7eb' }}
+              formatter={(value, name) => {
+                const v = Number(value).toLocaleString();
+                return [`${v}만원`, name === 'total' ? '공교육비 1인당' : '순수(학교회계) 1인당'];
+              }}
+            />
+            <Legend wrapperStyle={{ fontSize: 12 }} formatter={(v: string) => (v === 'total' ? '공교육비 1인당(전체)' : '순수(학교회계) 1인당')} />
+            <Bar dataKey="total" fill="#3b82f6" radius={[3, 3, 0, 0]} isAnimationActive={false} />
+            <Bar dataKey="pure" fill="#10b981" radius={[3, 3, 0, 0]} isAnimationActive={false} />
+          </BarChart>
+        </ResponsiveContainer>
+        <p className="text-[11px] text-gray-500 mt-2 leading-relaxed">
+          ※ "순수 1인당"은 학교가 직접 운용하는 학교회계 세출÷학생(학교알리미). 교원 급여 대부분은 교육청 본청이
+          직접 집행하여 제외됩니다. 학교회계에도 기간제 인건비·일부 시설비가 일부 포함됩니다.
+        </p>
+      </section>
 
       {/* 학생 1인당 예산 순위 */}
       <section className="border border-gray-800 bg-gray-900/30 rounded-lg p-4 md:p-5">
