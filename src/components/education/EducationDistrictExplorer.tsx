@@ -46,6 +46,7 @@ type Kind = typeof KINDS[number];
 export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoData: any; municipalitiesGeo: any }) {
   const [detail, setDetail] = useState<DetailData | null>(null);
   const [sido, setSido] = useState<string | null>(null);
+  const [sgg, setSgg] = useState<string | null>(null);
   const [distName, setDistName] = useState<string | null>(null);
   const [kind, setKind] = useState<Kind>('전체');
   const [loading, setLoading] = useState(true);
@@ -84,7 +85,27 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
     return computeDistribution(vals);
   }, []);
 
-  function selectSido(s: string) { setSido(s === sido ? null : s); setDistName(null); setKind('전체'); }
+  function selectSido(s: string) { setSido(s === sido ? null : s); setSgg(null); setDistName(null); setKind('전체'); }
+  function resetAll() { setSido(null); setSgg(null); setDistName(null); }
+
+  // 시군구 클릭 → 관할 교육지원청 자동 선택
+  const norm = (x: string) => x.replace(/\s/g, '');
+  function selectSgg(s: string | null) {
+    setSgg(s);
+    setKind('전체');
+    if (s) {
+      const covering = sidoDistricts.find((d) =>
+        d.sggs?.some((g) => norm(g) === norm(s) || norm(g).startsWith(norm(s)) || norm(s).startsWith(norm(g))));
+      setDistName(covering ? covering.name : null);
+    } else {
+      setDistName(null);
+    }
+  }
+
+  // 상황판: 교육지원청 수 · 학교 수 (선택 시도 또는 전국)
+  const metroAgg = sido ? (detail?.metros ?? []).find((m) => m.sido === sido) : null;
+  const distCount = sidoDistricts.length;
+  const schoolCount = sido ? (metroAgg?.schools ?? 0) : (detail?.metros ?? []).reduce((x, m) => x + m.schools, 0);
 
   return (
     <div className="space-y-5">
@@ -100,7 +121,7 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         <Card label={`${sido ?? '전국'} 중앙 교부금`} value={`${gyobu.toFixed(1)}조`} sub="지방교육재정교부금(근사)" accent="indigo" />
         <Card label={`${sido ?? '전국'} 시도교육청 예산`} value={`${sidoBudget.toFixed(1)}조`} sub="2026 세입총계" accent="blue" />
-        <Card label="기초단체 교육경비" value="제한" sub="지방재정365 LINK(미수집)" accent="gray" />
+        <Card label={`${sido ?? '전국'} 교육지원청·학교`} value={detail ? `${distCount}청 · ${schoolCount.toLocaleString()}교` : '—'} sub="지원청 수 · 초중고 학교 수" accent="indigo" />
         <Card label={sido ? `${sido} 학생수` : '전국 학생수'} value={
           sido ? `${((metricBySido[sido] ?? 0) / 10000).toFixed(1)}만명` : (natStudents ? `${(natStudents / 10000).toFixed(0)}만명` : '—')
         } sub="초·중·고" accent="gray" />
@@ -111,18 +132,20 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
         {/* 지도 */}
         <div className="border border-gray-800 bg-gray-900/30 rounded-lg p-4">
           <div className="flex items-center justify-between mb-2">
-            <h3 className="text-sm font-semibold text-gray-300">시도 선택</h3>
+            <h3 className="text-sm font-semibold text-gray-300">
+              {sgg ? `${sido} · ${sgg}` : sido ? `${sido} 시군구` : '시도 선택'}
+            </h3>
             {sido && (
-              <button onClick={() => { setSido(null); setDistName(null); }}
+              <button onClick={resetAll}
                 className="text-xs text-blue-400 hover:text-blue-300">전국 보기 ✕</button>
             )}
           </div>
           <div className="max-w-[520px] mx-auto">
             <EducationKoreaMap geoData={geoData} municipalitiesGeo={municipalitiesGeo}
-              selectedSido={sido} onSelect={selectSido} onBack={() => { setSido(null); setDistName(null); }}
-              metricBySido={metricBySido} />
+              selectedSido={sido} selectedSgg={sgg} onSelect={selectSido} onSelectSgg={selectSgg}
+              onBack={resetAll} metricBySido={metricBySido} />
           </div>
-          <p className="text-[11px] text-gray-500 mt-1 text-center">시도 클릭 → 관내 시군구 지도 · 마우스 휠로 확대/축소</p>
+          <p className="text-[11px] text-gray-500 mt-1 text-center">시도 클릭 → 시군구 지도 → 시군구 클릭 → 관할 교육지원청 · 마우스 휠 확대/축소</p>
         </div>
 
         {/* 우측: 교육지원청 목록 / 학교 목록 */}
@@ -227,7 +250,8 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
         </div>
         <p className="text-[11px] text-gray-500 mt-2">
           ※ 소규모 학교가 많은 농어촌 교육지원청일수록 학생 1인당 학교회계 예산이 높습니다(고정비). 본청(○○교육청)은 목록에서 제외.
-          기초단체 교육경비보조금은 지방재정365 LINK 방식이라 자동수집이 불가합니다.
+          광역 지자체 전입금(법정전입금, 예: 강원 2026 약 3,781억)은 시도교육청 세입총계에 이미 포함되어 별도 분리 표기하지 않으며,
+          시군구(기초단체) 교육경비보조금은 지방재정365 LINK 방식이라 자동수집이 불가합니다.
         </p>
       </div>
     </div>

@@ -97,7 +97,31 @@
       "Bash(curl -s \"http://localhost:3000/_next/static/chunks/src_5775a843._.js\" --max-time 60 -o /tmp/fd_actual.js -w \"Size: %{size_download}B\\\\n\")",
       "Bash(vercel ls *)",
       "Bash(curl -sL \"https://budget-pj3f428n2-15678910s-projects-2abd4c3f.vercel.app/fiscal-doctor\" --max-time 30 -o /tmp/prod_page.html -w \"HTTP %{http_code} · %{size_download}B · %{time_total}s\\\\n\")",
-      "Bash(vercel inspect *)"
+      "Bash(vercel inspect *)",
+      "Bash(node -e \"console.log\\(require\\('crypto'\\).randomBytes\\(32\\).toString\\('base64url'\\)\\)\")",
+      "Bash(vercel env *)",
+      "Bash(vercel whoami *)",
+      "Bash(# Windows AppData에 Vercel 인증 파일 찾기 *)",
+      "Bash(echo \"=== TSC EXIT: $? ===\")",
+      "Bash(curl -sL \"https://www.data.go.kr/data/15098092/openapi.do\" --ssl-no-revoke -k --max-time 30 -o schoolinfo.html -w \"HTTP %{http_code} %{size_download}B\\\\n\")",
+      "Bash(curl -sL \"https://www.data.go.kr/data/15098092/openapi.do\" --ssl-no-revoke -k --max-time 40 --retry 2 -o schoolinfo.html -w \"HTTP %{http_code} %{size_download}B\\\\n\")",
+      "Bash(curl -sL \"https://www.data.go.kr/data/15098092/openapi.do\" -A \"Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\)\" --ssl-no-revoke -k --max-time 35 -o si.html -w \"HTTP %{http_code} %{size_download}B\\\\n\")",
+      "Bash(node scripts/build-education-data.mjs 2024)",
+      "Bash(iconv -f EUC-KR -t UTF-8 l3_27.html)",
+      "Bash(grep -oE \"AMT[0-9]|YESAN_PER_HEAD|PER_STUDAY|WEEK_TOT|[A-Z_]{4,}\" l3_27_utf8.html)",
+      "Bash(node -e 'const r=require\\(\"./src/lib/data/schoolinfo-regions.ts.txt\"||\"\"\\)')",
+      "Bash(SCHOOLINFO_API_KEY=75521bddab6d4d8fa468fc5ccb3d79fa node scripts/build-schoolinfo-regions.mjs)",
+      "Bash(node -e 'const m=require\\(\"fs\"\\).readFileSync\\(\"src/lib/data/schoolinfo-regions.ts\",\"utf8\"\\);const cnt=\\(m.match\\(/\"code\"/g\\)||[]\\).length;console.log\\(\"총 코드 항목:\",cnt\\);console.log\\(\"수원/창원/청주 포함?\", [\"41111\",\"48121\",\"43111\"].map\\(c=>m.includes\\(c\\)\\).join\\(\",\"\\)\\);')",
+      "Bash(echo \"TSC EXIT: $?\")",
+      "Bash(node -e 'const j=JSON.parse\\(require\\(\"fs\"\\).readFileSync\\(\"scripts/output/schoolinfo-raw-2024.json\",\"utf8\"\\)\\);const kinds={};j.forEach\\(s=>kinds[s.kind]=\\(kinds[s.kind]||0\\)+1\\);console.log\\(\"kind 분포:\",JSON.stringify\\(kinds\\)\\);')",
+      "Bash(SCHOOLINFO_API_KEY=75521bddab6d4d8fa468fc5ccb3d79fa node scripts/fetch-highschool-types.mjs)",
+      "Bash(curl -s -o /dev/null -w \"odcloud HTTP: %{http_code}\\\\n\" \"https://api.odcloud.kr/api/15053808/v1/uddi:test\" --max-time 15 --ssl-no-revoke -k)",
+      "Bash(curl -s -o /dev/null -w \"apis.data.go.kr HTTP: %{http_code}\\\\n\" \"https://apis.data.go.kr\" --max-time 15 --ssl-no-revoke -k)",
+      "Bash(curl -s -G https://api.odcloud.kr/api/15053808/v1/uddi:__TRACKED_VAR__ --data-urlencode serviceKey=__TRACKED_VAR__ --data 'page=1&perPage=3&returnType=JSON' --max-time 20 --ssl-no-revoke -k)",
+      "Bash(curl -s -G https://api.odcloud.kr/api/15053808/v1/uddi:__TRACKED_VAR__ --data-urlencode serviceKey=__TRACKED_VAR__ --data 'page=1&perPage=2&returnType=JSON' --max-time 20 --ssl-no-revoke -k)",
+      "Bash(node -e 'let d=\"\";process.stdin.on\\(\"data\",c=>d+=c\\);process.stdin.on\\(\"end\",\\(\\)=>{const j=JSON.parse\\(d\\);const yrs=new Set\\(j.data.map\\(r=>r.연도\\)\\);console.log\\(\"연도들:\",[...yrs].join\\(\",\"\\),\"| 행수:\",j.data.length\\);}\\)')",
+      "Bash(curl -s -o /dev/null -w \"localhost:3000 → HTTP %{http_code}\\\\n\" \"http://localhost:3000/education-budget\" --max-time 5)",
+      "Bash(curl -s -X POST \"https://www.eduinfo.go.kr/portal/service/openInfColViewPopUp.do\" -H \"Content-Type: application/x-www-form-urlencoded\" -H \"X-Requested-With: XMLHttpRequest\" -d \"infId=1K6MN5UAT5WF667L291S5554773&srvCd=A\")"
     ]
   }
 }

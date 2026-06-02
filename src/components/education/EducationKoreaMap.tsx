@@ -24,14 +24,16 @@ interface Props {
   geoData: Topology;            // 시도(provinces)
   municipalitiesGeo: Topology;  // 시군구(municipalities)
   selectedSido: string | null;
+  selectedSgg: string | null;
   onSelect: (sido: string) => void;
+  onSelectSgg: (sgg: string | null) => void;
   onBack: () => void;
   metricBySido?: Record<string, number>;
 }
 
 const W = 360, H = 440;
 
-export function EducationKoreaMap({ geoData, municipalitiesGeo, selectedSido, onSelect, onBack, metricBySido }: Props) {
+export function EducationKoreaMap({ geoData, municipalitiesGeo, selectedSido, selectedSgg, onSelect, onSelectSgg, onBack, metricBySido }: Props) {
   const [zoom, setZoom] = useState(1);
   const wrapRef = useRef<HTMLDivElement>(null);
 
@@ -47,8 +49,8 @@ export function EducationKoreaMap({ geoData, municipalitiesGeo, selectedSido, on
     return () => el.removeEventListener('wheel', onWheel);
   }, []);
 
-  // 줌 리셋 on 시도 변경
-  useEffect(() => { setZoom(1); }, [selectedSido]);
+  // 줌 리셋 on 시도/시군구 변경
+  useEffect(() => { setZoom(1); }, [selectedSido, selectedSgg]);
 
   // 시도(province) 경로
   const provincePaths = useMemo(() => {
@@ -74,7 +76,14 @@ export function EducationKoreaMap({ geoData, municipalitiesGeo, selectedSido, on
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const fc = feature(municipalitiesGeo as any, (municipalitiesGeo as any).objects[objName]) as any;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const subset = { type: 'FeatureCollection', features: fc.features.filter((f: any) => String(f.properties.code ?? '').startsWith(prov)) };
+    let feats = fc.features.filter((f: any) => String(f.properties.code ?? '').startsWith(prov));
+    // 시군구 선택 시 해당 시군구만 (대도시 구 분리 대비 startsWith 매칭)
+    if (selectedSgg) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const only = feats.filter((f: any) => f.properties.name === selectedSgg);
+      if (only.length) feats = only;
+    }
+    const subset = { type: 'FeatureCollection', features: feats };
     if (subset.features.length === 0) return [];
     const proj = geoMercator().fitSize([W - 20, H - 20], subset as never);
     const pg = geoPath(proj);
@@ -83,7 +92,7 @@ export function EducationKoreaMap({ geoData, municipalitiesGeo, selectedSido, on
       const c = pg.centroid(f);
       return { name: f.properties.name as string, d: pg(f) ?? '', cx: c[0], cy: c[1] };
     });
-  }, [municipalitiesGeo, selectedSido]);
+  }, [municipalitiesGeo, selectedSido, selectedSgg]);
 
   const max = useMemo(() => {
     const vals = metricBySido ? Object.values(metricBySido) : [];
@@ -100,9 +109,9 @@ export function EducationKoreaMap({ geoData, municipalitiesGeo, selectedSido, on
   return (
     <div className="relative">
       {selectedSido && (
-        <button onClick={onBack}
+        <button onClick={() => (selectedSgg ? onSelectSgg(null) : onBack())}
           className="absolute left-1 top-1 z-10 px-2.5 py-1 rounded bg-gray-800/90 border border-gray-700 text-gray-200 text-xs hover:bg-gray-700">
-          ← 전국
+          {selectedSgg ? `← ${selectedSido}` : '← 전국'}
         </button>
       )}
       <div ref={wrapRef} className="overflow-hidden rounded" style={{ touchAction: 'none' }}>
@@ -119,13 +128,14 @@ export function EducationKoreaMap({ geoData, municipalitiesGeo, selectedSido, on
               </g>
             ))
           ) : (
-            // 드릴: 선택 시도의 시군구
+            // 드릴: 선택 시도의 시군구 (시군구 미선택 시 클릭 가능)
             muniPaths.map((m: { name: string; d: string; cx: number; cy: number }, i: number) => (
-              <g key={i} className="cursor-default">
-                <path d={m.d} fill="#1e3a5f" stroke="#60a5fa" strokeWidth={0.5}
+              <g key={i} onClick={() => !selectedSgg && onSelectSgg(m.name)}
+                className={selectedSgg ? 'cursor-default' : 'cursor-pointer'}>
+                <path d={m.d} fill={selectedSgg ? '#2563eb' : '#1e3a5f'} stroke="#60a5fa" strokeWidth={0.5}
                   className="transition-colors hover:brightness-125" />
                 <text x={m.cx} y={m.cy} textAnchor="middle" dominantBaseline="middle"
-                  className="pointer-events-none fill-white" style={{ fontSize: 7 }}>{m.name}</text>
+                  className="pointer-events-none fill-white" style={{ fontSize: selectedSgg ? 10 : 7 }}>{m.name}</text>
               </g>
             ))
           )}
