@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { DISTRICT_SCHOOL_AGG } from '@/lib/data/education-districts';
 import { METRO_EDUCATION_BUDGETS, computeDistribution, formatKRW } from '@/lib/data/education-budget';
+import { LOCAL_GOV_TRANSFER, formatTransfer } from '@/lib/data/local-gov-transfer';
 import { EducationKoreaMap } from './EducationKoreaMap';
 
 interface SchoolDetail { n: string; k: string; s: number; c: number; t: number }
@@ -102,10 +103,8 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
     }
   }
 
-  // 상황판: 교육지원청 수 · 학교 수 (선택 시도 또는 전국)
-  const metroAgg = sido ? (detail?.metros ?? []).find((m) => m.sido === sido) : null;
-  const distCount = sidoDistricts.length;
-  const schoolCount = sido ? (metroAgg?.schools ?? 0) : (detail?.metros ?? []).reduce((x, m) => x + m.schools, 0);
+  // 지자체 전입금 (지자체 → 교육청 연간 전입, 재정공시 기준)
+  const transfer = sido ? LOCAL_GOV_TRANSFER[sido] : null;
 
   return (
     <div className="space-y-5">
@@ -121,7 +120,12 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         <Card label={`${sido ?? '전국'} 중앙 교부금`} value={`${gyobu.toFixed(1)}조`} sub="지방교육재정교부금(근사)" accent="indigo" />
         <Card label={`${sido ?? '전국'} 시도교육청 예산`} value={`${sidoBudget.toFixed(1)}조`} sub="2026 세입총계" accent="blue" />
-        <Card label={`${sido ?? '전국'} 교육지원청·학교`} value={detail ? `${distCount}청 · ${schoolCount.toLocaleString()}교` : '—'} sub="지원청 수 · 초중고 학교 수" accent="indigo" />
+        <Card
+          label={`${sido ?? '전국'} 지자체 전입금`}
+          value={!sido ? '시도 선택' : transfer?.y2026 != null ? formatTransfer(transfer.y2026) : '재정공시 확인'}
+          sub={!sido ? '시도 클릭 시 표시' : transfer?.y2026 != null ? `2026 본예산 · 전년 ${formatTransfer(transfer.y2025 ?? 0)}` : '지자체→교육청 전입(검증 예정)'}
+          accent="indigo"
+        />
         <Card label={sido ? `${sido} 학생수` : '전국 학생수'} value={
           sido ? `${((metricBySido[sido] ?? 0) / 10000).toFixed(1)}만명` : (natStudents ? `${(natStudents / 10000).toFixed(0)}만명` : '—')
         } sub="초·중·고" accent="gray" />
@@ -250,8 +254,9 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
         </div>
         <p className="text-[11px] text-gray-500 mt-2">
           ※ 소규모 학교가 많은 농어촌 교육지원청일수록 학생 1인당 학교회계 예산이 높습니다(고정비). 본청(○○교육청)은 목록에서 제외.
-          광역 지자체 전입금(법정전입금, 예: 강원 2026 약 3,781억)은 시도교육청 세입총계에 이미 포함되어 별도 분리 표기하지 않으며,
-          시군구(기초단체) 교육경비보조금은 지방재정365 LINK 방식이라 자동수집이 불가합니다.
+          상단 <strong className="text-gray-400">지자체 전입금</strong> 카드 = 지자체(광역+기초)가 교육청에 전입하는 연간 금액(법정전입금 위주),
+          시도교육청 세입총계에 포함됩니다. 지방교육재정알리미 OpenAPI가 재원별 세입을 시도별로 제공하지 않아 각 교육청 본예산 재정공시 기준으로 등재하며,
+          미검증 시도는 추정 없이 '재정공시 확인'으로 표기합니다(강원 2026 = 3,781억, 전년 3,559억 확정).
         </p>
         <p className="text-[11px] text-gray-600 mt-1">
           · <strong className="text-gray-500">읍면동 경계</strong>: 통계청 2013 행정구역(southkorea-maps) 기준.
