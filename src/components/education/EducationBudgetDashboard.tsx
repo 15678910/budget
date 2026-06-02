@@ -90,7 +90,7 @@ export function EducationBudgetDashboard() {
       <section className="border border-gray-800 bg-gray-900/30 rounded-lg p-4 md:p-5">
         <h2 className="text-base md:text-lg font-semibold text-gray-200 mb-1">학생 1인당 예산 순위</h2>
         <p className="text-xs text-gray-500 mb-4">막대 색상 = 권역. 농어촌 비중이 높은 도(道) 지역일수록 1인당 예산이 높습니다(소규모 학교 고정비).</p>
-        <ResponsiveContainer width="100%" height={480}>
+        <ResponsiveContainer width="100%" height={480} className="edu-hover-bar">
           <BarChart data={barData} margin={{ left: 8, right: 16, top: 8, bottom: 90 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#374151" vertical={false} />
             <XAxis
@@ -100,7 +100,7 @@ export function EducationBudgetDashboard() {
             />
             <YAxis type="number" tick={{ fill: '#9ca3af', fontSize: 12 }} tickFormatter={(v) => `${v}만`} />
             <Tooltip
-              cursor={{ fill: 'rgba(148,163,184,0.08)' }}
+              cursor={false}
               contentStyle={{ background: '#111827', border: '1px solid #374151', borderRadius: 8, fontSize: 13 }}
               labelStyle={{ color: '#e5e7eb' }}
               itemStyle={{ color: '#e5e7eb' }}
@@ -111,7 +111,7 @@ export function EducationBudgetDashboard() {
                 return [`${v.toLocaleString()}만원 (평균대비 ${sign}${p ? p.vsAvg.toFixed(0) : '0'}%)`, p?.fullName ?? ''];
               }}
             />
-            <Bar dataKey="perStudent" radius={[4, 4, 0, 0]}>
+            <Bar dataKey="perStudent" radius={[4, 4, 0, 0]} isAnimationActive={false}>
               {barData.map((d, i) => (
                 <Cell key={i} fill={REGION_COLOR[d.region] ?? '#6b7280'} />
               ))}

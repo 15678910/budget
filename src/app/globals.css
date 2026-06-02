@@ -54,3 +54,15 @@ body {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* 교육 막대그래프 호버 효과 — 막대에 마우스 올리면 살짝 커졌다 복귀 */
+.edu-hover-bar .recharts-bar-rectangle {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  transition: transform 0.18s ease, filter 0.18s ease;
+  cursor: pointer;
+}
+.edu-hover-bar .recharts-bar-rectangle:hover {
+  transform: scaleY(1.06);
+  filter: brightness(1.18);
+}
