@@ -61,8 +61,9 @@ export async function middleware(request: NextRequest) {
     process.env.MAINTENANCE_MODE?.trim().toLowerCase() === 'true';
 
   if (maintenanceMode) {
-    const bypassKey = process.env.MAINTENANCE_BYPASS_KEY;
-    const rawQueryKey = request.nextUrl.searchParams.get('bypass');
+    // 환경변수 붙여넣기 시 끝에 섞일 수 있는 공백/줄바꿈 제거 (흔한 오류 방어)
+    const bypassKey = process.env.MAINTENANCE_BYPASS_KEY?.trim();
+    const rawQueryKey = request.nextUrl.searchParams.get('bypass')?.trim();
     // DoS 가드: 비정상적으로 긴 입력은 비교 전에 폐기
     const queryKey =
       rawQueryKey && rawQueryKey.length <= MAX_BYPASS_QUERY_LEN
