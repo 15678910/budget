@@ -5,8 +5,9 @@ import { EducationBudgetDashboard } from './EducationBudgetDashboard';
 import { EducationDistrictExplorer } from './EducationDistrictExplorer';
 import { EducationDisclosureExplorer } from './EducationDisclosureExplorer';
 import { EducationTypeHierarchy } from './EducationTypeHierarchy';
+import { EducationAdmissionRate } from './EducationAdmissionRate';
 
-type Tab = 'metro' | 'district' | 'type' | 'disclosure';
+type Tab = 'metro' | 'district' | 'type' | 'admission' | 'disclosure';
 
 export function EducationBudgetView() {
   const [tab, setTab] = useState<Tab>('metro');
@@ -45,6 +46,16 @@ export function EducationBudgetView() {
           고교유형·예산계층
         </button>
         <button
+          onClick={() => setTab('admission')}
+          className={`px-4 py-2 text-sm font-medium border-b-2 -mb-px transition-colors ${
+            tab === 'admission'
+              ? 'border-blue-500 text-blue-300'
+              : 'border-transparent text-gray-400 hover:text-gray-200'
+          }`}
+        >
+          진학률
+        </button>
+        <button
           onClick={() => setTab('disclosure')}
           className={`px-4 py-2 text-sm font-medium border-b-2 -mb-px transition-colors ${
             tab === 'disclosure'
@@ -59,6 +70,7 @@ export function EducationBudgetView() {
       {tab === 'metro' && <EducationBudgetDashboard />}
       {tab === 'district' && <EducationDistrictExplorer />}
       {tab === 'type' && <EducationTypeHierarchy />}
+      {tab === 'admission' && <EducationAdmissionRate />}
       {tab === 'disclosure' && <EducationDisclosureExplorer />}
     </div>
   );
