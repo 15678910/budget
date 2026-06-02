@@ -75,7 +75,8 @@ export function EducationTypeHierarchy() {
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" vertical={false} />
               <XAxis dataKey="name" tick={{ fill: '#d1d5db', fontSize: 12 }} />
               <YAxis tick={{ fill: '#9ca3af', fontSize: 12 }} tickFormatter={(v) => `${v}만`} />
-              <Tooltip contentStyle={{ background: '#111827', border: '1px solid #374151', borderRadius: 8, fontSize: 13 }}
+              <Tooltip cursor={{ fill: 'rgba(148,163,184,0.08)' }}
+                contentStyle={{ background: '#111827', border: '1px solid #374151', borderRadius: 8, fontSize: 13 }}
                 labelStyle={{ color: '#e5e7eb' }} itemStyle={{ color: '#e5e7eb' }}
                 formatter={(v) => [`${Number(v).toLocaleString()}만원`, '1인당 예산']} />
               <Bar dataKey="perStudent" radius={[4, 4, 0, 0]}>

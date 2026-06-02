@@ -100,6 +100,7 @@ export function EducationBudgetDashboard() {
             />
             <YAxis type="number" tick={{ fill: '#9ca3af', fontSize: 12 }} tickFormatter={(v) => `${v}만`} />
             <Tooltip
+              cursor={{ fill: 'rgba(148,163,184,0.08)' }}
               contentStyle={{ background: '#111827', border: '1px solid #374151', borderRadius: 8, fontSize: 13 }}
               labelStyle={{ color: '#e5e7eb' }}
               itemStyle={{ color: '#e5e7eb' }}
