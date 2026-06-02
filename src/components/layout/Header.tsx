@@ -31,6 +31,7 @@ const AI_SUB_TABS = [
   { href: "/public-bank", label: "공공은행" },
   { href: "/ai-law", label: "AI기본법" },
   { href: "/fiscal-doctor", label: "AI정책진단" },
+  { href: "/education-budget", label: "교육청예산" },
 ];
 
 export function Header() {
