@@ -20,6 +20,26 @@ const REGION_COLOR: Record<string, string> = {
   강원제주: '#8b5cf6',
 };
 
+// 산점도 커스텀 툴팁 — 시도명 + 권역 + 값 항상 표시
+function ScatterTip({ active, payload }: {
+  active?: boolean;
+  payload?: { payload: { name: string; region: string; students: number; perStudent: number; budget: number } }[];
+}) {
+  if (!active || !payload || payload.length === 0) return null;
+  const d = payload[0].payload;
+  return (
+    <div className="bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-[13px] shadow-xl">
+      <div className="flex items-center gap-1.5 font-bold text-gray-100 mb-1">
+        <span className="w-2.5 h-2.5 rounded-sm inline-block" style={{ background: REGION_COLOR[d.region] ?? '#6b7280' }} />
+        {d.name} <span className="text-gray-500 font-normal">· {d.region}</span>
+      </div>
+      <div className="text-gray-300">학생수: {d.students.toLocaleString()}만명</div>
+      <div className="text-gray-300">1인당 예산: {d.perStudent.toLocaleString()}만원</div>
+      <div className="text-gray-300">총예산: {d.budget.toFixed(1)}조원</div>
+    </div>
+  );
+}
+
 function StatCard({ label, value, sub }: { label: string; value: string; sub?: string }) {
   return (
     <div className="border border-gray-800 bg-gray-900/40 rounded-lg p-4">
@@ -139,24 +159,7 @@ export function EducationBudgetDashboard() {
               <XAxis type="number" dataKey="students" name="학생수" tickFormatter={(v) => `${v}만명`} tick={{ fill: '#9ca3af', fontSize: 12 }} />
               <YAxis type="number" dataKey="perStudent" name="1인당예산" tickFormatter={(v) => `${v}만원`} tick={{ fill: '#9ca3af', fontSize: 12 }} />
               <ZAxis type="number" dataKey="budget" range={[60, 600]} name="총예산" />
-              <Tooltip
-                cursor={{ strokeDasharray: '3 3' }}
-                contentStyle={{ background: '#111827', border: '1px solid #374151', borderRadius: 8, fontSize: 13 }}
-                labelStyle={{ color: '#e5e7eb', fontWeight: 700, marginBottom: 4 }}
-                itemStyle={{ color: '#e5e7eb' }}
-                labelFormatter={(_label, payload) => {
-                  const p = payload?.[0]?.payload as { name?: string } | undefined;
-                  return p?.name ?? '';
-                }}
-                formatter={(value, name) => {
-                  const v = Number(value);
-                  const n = String(name);
-                  if (n === '학생수') return [`${v}만명`, n];
-                  if (n === '1인당예산') return [`${v.toLocaleString()}만원`, n];
-                  if (n === '총예산') return [`${v}조원`, n];
-                  return [String(value), n];
-                }}
-              />
+              <Tooltip cursor={{ strokeDasharray: '3 3' }} content={<ScatterTip />} />
               <Scatter data={scatterData}>
                 {scatterData.map((d, i) => (
                   <Cell key={i} fill={REGION_COLOR[d.region] ?? '#6b7280'} />
