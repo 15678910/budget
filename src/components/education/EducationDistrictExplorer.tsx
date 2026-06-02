@@ -6,7 +6,7 @@ import { METRO_EDUCATION_BUDGETS, computeDistribution, formatKRW } from '@/lib/d
 import { EducationKoreaMap } from './EducationKoreaMap';
 
 interface SchoolDetail { n: string; k: string; s: number; c: number; t: number }
-interface DistDetail { code: string; name: string; sido: string; schools: number; students: number; teachers: number; classes: number }
+interface DistDetail { code: string; name: string; sido: string; sggs?: string[]; schools: number; students: number; teachers: number; classes: number }
 interface DetailData {
   byDistrict: Record<string, SchoolDetail[]>;
   districts: DistDetail[];
@@ -120,7 +120,7 @@ export function EducationDistrictExplorer({ geoData }: { geoData: any }) {
           <div className="max-w-[520px] mx-auto">
             <EducationKoreaMap geoData={geoData} selectedSido={sido} onSelect={selectSido} metricBySido={metricBySido} />
           </div>
-          <p className="text-[11px] text-gray-500 mt-1 text-center">색이 진할수록 학생수 많음 · 시도를 클릭하세요</p>
+          <p className="text-[11px] text-gray-500 mt-1 text-center">시도를 클릭하면 교육지원청이 표시됩니다 · +/− 로 확대</p>
         </div>
 
         {/* 우측: 교육지원청 목록 / 학교 목록 */}
@@ -138,11 +138,16 @@ export function EducationDistrictExplorer({ geoData }: { geoData: any }) {
                 <div className="space-y-1 max-h-[520px] overflow-y-auto pr-1">
                   {sidoDistricts.map((d) => (
                     <button key={d.name} onClick={() => { setDistName(d.name); setKind('전체'); }}
-                      className="w-full flex items-center gap-2 px-2.5 py-2 rounded text-left hover:bg-gray-800/60 border border-transparent hover:border-gray-700 transition-colors">
-                      <span className="flex-1 text-sm text-gray-200 truncate">{d.name}</span>
-                      <span className="text-[11px] text-gray-500">{d.schools}교</span>
-                      <span className="text-xs text-gray-300 w-16 text-right">{(d.students / 10000).toFixed(1)}만명</span>
-                      {d.perStudent > 0 && <span className="text-[11px] text-emerald-400 w-20 text-right">{formatKRW(d.perStudent)}</span>}
+                      className="w-full px-2.5 py-2 rounded text-left hover:bg-gray-800/60 border border-transparent hover:border-gray-700 transition-colors">
+                      <div className="flex items-center gap-2">
+                        <span className="flex-1 text-sm text-gray-200 truncate">{d.name}</span>
+                        <span className="text-[11px] text-gray-500">{d.schools}교</span>
+                        <span className="text-xs text-gray-300 w-16 text-right">{(d.students / 10000).toFixed(1)}만명</span>
+                        {d.perStudent > 0 && <span className="text-[11px] text-emerald-400 w-20 text-right">{formatKRW(d.perStudent)}</span>}
+                      </div>
+                      {d.sggs && d.sggs.length > 0 && (
+                        <div className="text-[11px] text-gray-500 mt-0.5 truncate">관할: {d.sggs.join(' · ')}</div>
+                      )}
                     </button>
                   ))}
                 </div>
@@ -153,6 +158,9 @@ export function EducationDistrictExplorer({ geoData }: { geoData: any }) {
               <div className="flex items-start justify-between mb-2">
                 <div>
                   <h3 className="text-sm font-semibold text-gray-200">{selectedDist.name}</h3>
+                  {selectedDist.sggs && selectedDist.sggs.length > 0 && (
+                    <div className="text-[11px] text-gray-500">관할 시군구: {selectedDist.sggs.join(' · ')}</div>
+                  )}
                   <div className="flex gap-3 text-[11px] text-gray-400 mt-0.5 flex-wrap">
                     <span>학교 {selectedDist.schools}</span>
                     <span>학생 {selectedDist.students.toLocaleString()}</span>

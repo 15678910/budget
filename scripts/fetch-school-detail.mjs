@@ -16,6 +16,14 @@ const KINDS = { '02': '초', '03': '중', '04': '고' };
 const GAP = 200;
 const REGIONS = JSON.parse(readFileSync('scripts/_regions.json', 'utf8'));
 const SIDO_NM = { '11':'서울','26':'부산','27':'대구','28':'인천','29':'광주','30':'대전','31':'울산','36':'세종','41':'경기','51':'강원','43':'충북','44':'충남','52':'전북','46':'전남','47':'경북','48':'경남','50':'제주' };
+// sggCode → 시군구명 (schoolinfo-regions.ts에서 로드)
+const SGG_NAME = (() => {
+  const ts = readFileSync('src/lib/data/schoolinfo-regions.ts', 'utf8');
+  const arr = JSON.parse(ts.match(/SCHOOLINFO_REGIONS[^=]*=\s*(\[[\s\S]*\]);/)[1]);
+  const m = {};
+  for (const s of arr) for (const g of s.sgg) m[g.code] = g.name;
+  return m;
+})();
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const n = (v) => Number(String(v ?? '').replace(/[^0-9.]/g, '')) || 0;
 
@@ -40,7 +48,8 @@ const n = (v) => Number(String(v ?? '').replace(/[^0-9.]/g, '')) || 0;
                   n: r.SCHUL_NM, k: KINDS[knd],
                   s: n(r.COL_S_SUM), c: n(r.COL_C_SUM), t: n(r.TEACH_CNT),
                 });
-                if (!distMeta[key]) distMeta[key] = { name: key, sido: SIDO_NM[sido] };
+                if (!distMeta[key]) distMeta[key] = { name: key, sido: SIDO_NM[sido], sggs: new Set() };
+                if (SGG_NAME[sgg]) distMeta[key].sggs.add(SGG_NAME[sgg]);
                 total++;
               }
             }
@@ -60,6 +69,7 @@ const n = (v) => Number(String(v ?? '').replace(/[^0-9.]/g, '')) || 0;
     schools.sort((a, b) => (order[a.k] - order[b.k]) || (b.s - a.s));
     districts.push({
       code: key, name: distMeta[key].name, sido: distMeta[key].sido,
+      sggs: [...distMeta[key].sggs].sort((a, b) => a.localeCompare(b, 'ko')),
       schools: schools.length,
       students: schools.reduce((x, s) => x + s.s, 0),
       teachers: schools.reduce((x, s) => x + s.t, 0),
