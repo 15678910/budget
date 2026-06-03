@@ -13,7 +13,7 @@ interface DetailData {
   metros: { sido: string; districts: number; schools: number; students: number; teachers: number }[];
 }
 
-const KIND_COLOR: Record<string, string> = { 초: '#3b82f6', 중: '#10b981', 고: '#f59e0b' };
+const KIND_COLOR: Record<string, string> = { 초: '#3b82f6', 중: '#10b981', 고: '#f59e0b', 유: '#a855f7' };
 const NATIONAL_GYOBU = 106.3; // 2026 지방교육재정 총규모(교육부 발표, 조원)
 
 // 시도 정식명 → 약칭
@@ -40,7 +40,10 @@ const BUDGET_BY_NAME: Record<string, number> = (() => {
 })();
 
 const KINDS = ['전체', '초', '중', '고'] as const;
-type Kind = typeof KINDS[number];
+type Kind = typeof KINDS[number] | '유';
+
+interface Kinder { n: string; s: number; c: number; est: string }
+interface KinderData { year: string; byDistrict: Record<string, Kinder[]>; total: number }
 
 const SUBSIDY_YEAR = '2026';
 interface SubsidyMuni { name: string; isBoncheong: boolean; totalWon: number; eduSubsidyWon: number; byType: Record<string, number> }
@@ -61,10 +64,13 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
   const [loading, setLoading] = useState(true);
   const [subsidy, setSubsidy] = useState<SubsidyResp | null>(null);
   const [subLoading, setSubLoading] = useState(false);
+  const [kinder, setKinder] = useState<KinderData | null>(null);
 
   useEffect(() => {
     fetch('/data/education-schools-detail-2024.json')
       .then((r) => r.json()).then((j) => setDetail(j)).catch(() => {}).finally(() => setLoading(false));
+    fetch('/data/kindergarten-2024.json')
+      .then((r) => r.json()).then((j) => setKinder(j)).catch(() => {});
   }, []);
 
   // 지자체 교육지원(지방재정365) — 시도 선택 시 로드
@@ -96,6 +102,7 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
   const selectedDist = sidoDistricts.find((d) => d.name === distName);
   const allSchools = distName && detail ? detail.byDistrict[distName] ?? [] : [];
   const schools = kind === '전체' ? allSchools : allSchools.filter((s) => s.k === kind);
+  const kinderList = distName && kinder ? kinder.byDistrict[distName] ?? [] : [];
 
   // 지원금 상황판 (선택 시도 또는 전국)
   const sidoBudget = sido ? (SIDO_BUDGET[sido] ?? 0) : NATIONAL_SIDO_BUDGET;
@@ -135,7 +142,7 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
         <h2 className="text-xl md:text-2xl font-bold text-gray-100">교육지원청·학교 지도 탐색</h2>
         <p className="text-sm text-gray-400 leading-relaxed mt-1">
           지도에서 <strong className="text-gray-200">시도</strong>를 클릭하면 <strong className="text-gray-200">교육지원청</strong> 목록이,
-          교육지원청을 클릭하면 관내 <strong className="text-gray-200">학교(초·중·고)</strong>가 학생수·교원수·학급수와 함께 표시됩니다.
+          교육지원청을 클릭하면 관내 <strong className="text-gray-200">학교(초·중·고·유)</strong>가 학생수·교원수·학급수와 함께 표시됩니다.
         </p>
       </div>
 
@@ -232,10 +239,8 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
                 </div>
                 <button onClick={() => setDistName(null)} className="text-xs text-blue-400 hover:text-blue-300 shrink-0">← 목록</button>
               </div>
-              {/* 유/초/중/고 필터 버튼 */}
+              {/* 전체/초/중/고/유 필터 버튼 */}
               <div className="flex gap-1.5 mb-2 flex-wrap">
-                <button disabled title="유치원은 학교알리미 미제공 — 유치원알리미(e-childschoolinfo.moe.go.kr) 별도 OpenAPI 키 필요"
-                  className="px-2.5 py-1 text-xs rounded border border-gray-800 text-gray-600 cursor-not-allowed">유 (키필요)</button>
                 {KINDS.map((k) => (
                   <button key={k} onClick={() => setKind(k)}
                     className={`px-2.5 py-1 text-xs rounded border transition-colors ${
@@ -244,32 +249,66 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
                     {k}{k !== '전체' ? `(${allSchools.filter((s) => s.k === k).length})` : `(${allSchools.length})`}
                   </button>
                 ))}
+                <button onClick={() => setKind('유')}
+                  title="유치원알리미(e-childschoolinfo) 기본현황 — 원아수·학급수"
+                  className={`px-2.5 py-1 text-xs rounded border transition-colors ${
+                    kind === '유' ? 'bg-purple-600 border-purple-500 text-white' : 'border-gray-700 text-gray-300 hover:bg-gray-800'
+                  }`}>
+                  유({kinderList.length})
+                </button>
               </div>
               <div className="overflow-x-auto max-h-[480px] overflow-y-auto">
-                <table className="w-full text-xs md:text-sm">
-                  <thead className="sticky top-0 bg-gray-900">
-                    <tr className="text-gray-500 border-b border-gray-700">
-                      <th className="text-left py-1.5 px-1.5">학교</th>
-                      <th className="text-center py-1.5 px-1">급</th>
-                      <th className="text-right py-1.5 px-1.5">학생</th>
-                      <th className="text-right py-1.5 px-1.5">교원</th>
-                      <th className="text-right py-1.5 px-1.5">학급</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {schools.map((s, i) => (
-                      <tr key={i} className="border-b border-gray-800/40">
-                        <td className="py-1.5 px-1.5 text-gray-200">{s.n}</td>
-                        <td className="text-center py-1.5 px-1">
-                          <span className="px-1.5 py-0.5 rounded text-[10px] text-white" style={{ background: KIND_COLOR[s.k] ?? '#6b7280' }}>{s.k}</span>
-                        </td>
-                        <td className="text-right py-1.5 px-1.5 text-gray-300">{s.s.toLocaleString()}</td>
-                        <td className="text-right py-1.5 px-1.5 text-gray-300">{s.t.toLocaleString()}</td>
-                        <td className="text-right py-1.5 px-1.5 text-gray-400">{s.c.toLocaleString()}</td>
+                {kind === '유' ? (
+                  <table className="w-full text-xs md:text-sm">
+                    <thead className="sticky top-0 bg-gray-900">
+                      <tr className="text-gray-500 border-b border-gray-700">
+                        <th className="text-left py-1.5 px-1.5">유치원</th>
+                        <th className="text-center py-1.5 px-1">설립</th>
+                        <th className="text-right py-1.5 px-1.5">원아</th>
+                        <th className="text-right py-1.5 px-1.5">학급</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {kinderList.length === 0 ? (
+                        <tr><td colSpan={4} className="py-6 text-center text-gray-500">유치원 데이터 없음</td></tr>
+                      ) : kinderList.map((g, i) => (
+                        <tr key={i} className="border-b border-gray-800/40">
+                          <td className="py-1.5 px-1.5 text-gray-200">{g.n}</td>
+                          <td className="text-center py-1.5 px-1">
+                            <span className="px-1.5 py-0.5 rounded text-[10px] text-white" style={{ background: KIND_COLOR['유'] }}>{g.est.replace(/[()]/g, ' ').trim().split(' ')[0] || '유'}</span>
+                          </td>
+                          <td className="text-right py-1.5 px-1.5 text-gray-300">{g.s.toLocaleString()}</td>
+                          <td className="text-right py-1.5 px-1.5 text-gray-400">{g.c.toLocaleString()}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                ) : (
+                  <table className="w-full text-xs md:text-sm">
+                    <thead className="sticky top-0 bg-gray-900">
+                      <tr className="text-gray-500 border-b border-gray-700">
+                        <th className="text-left py-1.5 px-1.5">학교</th>
+                        <th className="text-center py-1.5 px-1">급</th>
+                        <th className="text-right py-1.5 px-1.5">학생</th>
+                        <th className="text-right py-1.5 px-1.5">교원</th>
+                        <th className="text-right py-1.5 px-1.5">학급</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {schools.map((s, i) => (
+                        <tr key={i} className="border-b border-gray-800/40">
+                          <td className="py-1.5 px-1.5 text-gray-200">{s.n}</td>
+                          <td className="text-center py-1.5 px-1">
+                            <span className="px-1.5 py-0.5 rounded text-[10px] text-white" style={{ background: KIND_COLOR[s.k] ?? '#6b7280' }}>{s.k}</span>
+                          </td>
+                          <td className="text-right py-1.5 px-1.5 text-gray-300">{s.s.toLocaleString()}</td>
+                          <td className="text-right py-1.5 px-1.5 text-gray-300">{s.t.toLocaleString()}</td>
+                          <td className="text-right py-1.5 px-1.5 text-gray-400">{s.c.toLocaleString()}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
               </div>
             </>
           )}
@@ -293,8 +332,8 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
         </p>
         <p className="text-[11px] text-gray-600 mt-1">
           · <strong className="text-gray-500">읍면동 경계</strong>: 통계청 2013 행정구역(southkorea-maps) 기준.
-          · <strong className="text-gray-500">학교 위치(GPS 핀)</strong>: NEIS·학교알리미는 주소만 제공(좌표 없음) → 정확한 핀 표시는 NEIS 또는 지오코딩(VWorld/Kakao) API 키 필요.
-          · <strong className="text-gray-500">유치원</strong>: 유치원알리미 별도 포털 OpenAPI 키 확보 시 즉시 연동 가능.
+          · <strong className="text-gray-500">유치원</strong>: 유치원알리미(e-childschoolinfo) 기본현황 — 원아수·학급수 (전국 7,805곳, 유 버튼).
+          · <strong className="text-gray-500">학교 위치(GPS 핀)</strong>: 학교알리미·유치원알리미 모두 주소만 제공(좌표 없음) → 지도 핀은 data.go.kr 위치표준데이터(좌표) 키 확보 시 추가 예정.
         </p>
       </div>
     </div>
