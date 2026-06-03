@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { DISTRICT_SCHOOL_AGG } from '@/lib/data/education-districts';
 import { METRO_EDUCATION_BUDGETS, computeDistribution, formatKRW } from '@/lib/data/education-budget';
-import { LOCAL_GOV_TRANSFER, formatTransfer } from '@/lib/data/local-gov-transfer';
 import { EducationKoreaMap } from './EducationKoreaMap';
 
 interface SchoolDetail { n: string; k: string; s: number; c: number; t: number }
@@ -43,6 +42,15 @@ const BUDGET_BY_NAME: Record<string, number> = (() => {
 const KINDS = ['전체', '초', '중', '고'] as const;
 type Kind = typeof KINDS[number];
 
+const SUBSIDY_YEAR = '2026';
+interface SubsidyMuni { name: string; isBoncheong: boolean; totalWon: number; eduSubsidyWon: number; byType: Record<string, number> }
+interface SubsidyResp { region: string; fyr: string; regionTotalWon: number; municipalities: SubsidyMuni[]; message?: string }
+function wonToKR(won: number): string {
+  const eok = won / 1e8;
+  if (eok >= 10000) return `${(eok / 10000).toFixed(2)}조`;
+  return `${Math.round(eok).toLocaleString()}억`;
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoData: any; municipalitiesGeo: any }) {
   const [detail, setDetail] = useState<DetailData | null>(null);
@@ -51,11 +59,24 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
   const [distName, setDistName] = useState<string | null>(null);
   const [kind, setKind] = useState<Kind>('전체');
   const [loading, setLoading] = useState(true);
+  const [subsidy, setSubsidy] = useState<SubsidyResp | null>(null);
+  const [subLoading, setSubLoading] = useState(false);
 
   useEffect(() => {
     fetch('/data/education-schools-detail-2024.json')
       .then((r) => r.json()).then((j) => setDetail(j)).catch(() => {}).finally(() => setLoading(false));
   }, []);
+
+  // 지자체 교육지원(지방재정365) — 시도 선택 시 로드
+  useEffect(() => {
+    if (!sido) { setSubsidy(null); return; }
+    setSubLoading(true);
+    fetch(`/api/education-subsidy?region=${encodeURIComponent(sido)}&fyr=${SUBSIDY_YEAR}`)
+      .then((r) => r.json())
+      .then((j) => setSubsidy(j && !j.error ? j : null))
+      .catch(() => setSubsidy(null))
+      .finally(() => setSubLoading(false));
+  }, [sido]);
 
   const metricBySido = useMemo(() => {
     const m: Record<string, number> = {};
@@ -103,8 +124,10 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
     }
   }
 
-  // 지자체 전입금 (지자체 → 교육청 연간 전입, 재정공시 기준)
-  const transfer = sido ? LOCAL_GOV_TRANSFER[sido] : null;
+  // 선택 시군구의 지자체 교육지원(지방재정365 매칭)
+  const sggMuni = sgg && subsidy
+    ? subsidy.municipalities.find((m) => !m.isBoncheong && (m.name === sgg || sgg.startsWith(m.name) || m.name.startsWith(sgg)))
+    : null;
 
   return (
     <div className="space-y-5">
@@ -121,9 +144,19 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
         <Card label={`${sido ?? '전국'} 중앙 교부금`} value={`${gyobu.toFixed(1)}조`} sub="지방교육재정교부금(근사)" accent="indigo" />
         <Card label={`${sido ?? '전국'} 시도교육청 예산`} value={`${sidoBudget.toFixed(1)}조`} sub="2026 세입총계" accent="blue" />
         <Card
-          label={`${sido ?? '전국'} 지자체 전입금`}
-          value={!sido ? '시도 선택' : transfer?.y2026 != null ? formatTransfer(transfer.y2026) : '재정공시 확인'}
-          sub={!sido ? '시도 클릭 시 표시' : transfer?.y2026 != null ? `2026 본예산 · 전년 ${formatTransfer(transfer.y2025 ?? 0)}` : '지자체→교육청 전입(검증 예정)'}
+          label={sgg ? `${sgg} 교육지원` : `${sido ?? '전국'} 지자체 교육지원`}
+          value={
+            !sido ? '시도 선택'
+              : subLoading ? '…'
+              : !subsidy ? '—'
+              : sgg ? (sggMuni ? wonToKR(sggMuni.totalWon) : '자료없음')
+              : wonToKR(subsidy.regionTotalWon)
+          }
+          sub={
+            !sido ? '시도 클릭 시 표시'
+              : sgg ? `${SUBSIDY_YEAR} 교육경비보조+급식+전출 등`
+              : `${SUBSIDY_YEAR} 본청+시군구 합계 (지방재정365)`
+          }
           accent="indigo"
         />
         <Card label={sido ? `${sido} 학생수` : '전국 학생수'} value={
@@ -254,9 +287,9 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
         </div>
         <p className="text-[11px] text-gray-500 mt-2">
           ※ 소규모 학교가 많은 농어촌 교육지원청일수록 학생 1인당 학교회계 예산이 높습니다(고정비). 본청(○○교육청)은 목록에서 제외.
-          상단 <strong className="text-gray-400">지자체 전입금</strong> 카드 = 지자체(광역+기초)가 교육청에 전입하는 연간 금액(법정전입금 위주),
-          시도교육청 세입총계에 포함됩니다. 지방교육재정알리미 OpenAPI가 재원별 세입을 시도별로 제공하지 않아 각 교육청 본예산 재정공시 기준으로 등재하며,
-          미검증 시도는 추정 없이 '재정공시 확인'으로 표기합니다(강원 2026 = 3,781억, 전년 3,559억 확정).
+          상단 <strong className="text-gray-400">지자체 교육지원</strong> 카드 = <strong className="text-gray-400">지방재정365 OpenAPI</strong>(교육관련지원 예산현황)
+          실시간 호출값으로 매년 자동 갱신됩니다. 시도 선택 시 본청(법정전출금)+시군구 합계, 시군구 선택 시 해당 시군구의
+          교육경비보조금·학교급식보조·전출금 등 교육 지원 총액을 표시합니다(예: 강원 {SUBSIDY_YEAR} 약 3,397억, 인제군 약 20억).
         </p>
         <p className="text-[11px] text-gray-600 mt-1">
           · <strong className="text-gray-500">읍면동 경계</strong>: 통계청 2013 행정구역(southkorea-maps) 기준.

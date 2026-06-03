@@ -121,7 +121,11 @@
       "Bash(curl -s -G https://api.odcloud.kr/api/15053808/v1/uddi:__TRACKED_VAR__ --data-urlencode serviceKey=__TRACKED_VAR__ --data 'page=1&perPage=2&returnType=JSON' --max-time 20 --ssl-no-revoke -k)",
       "Bash(node -e 'let d=\"\";process.stdin.on\\(\"data\",c=>d+=c\\);process.stdin.on\\(\"end\",\\(\\)=>{const j=JSON.parse\\(d\\);const yrs=new Set\\(j.data.map\\(r=>r.연도\\)\\);console.log\\(\"연도들:\",[...yrs].join\\(\",\"\\),\"| 행수:\",j.data.length\\);}\\)')",
       "Bash(curl -s -o /dev/null -w \"localhost:3000 → HTTP %{http_code}\\\\n\" \"http://localhost:3000/education-budget\" --max-time 5)",
-      "Bash(curl -s -X POST \"https://www.eduinfo.go.kr/portal/service/openInfColViewPopUp.do\" -H \"Content-Type: application/x-www-form-urlencoded\" -H \"X-Requested-With: XMLHttpRequest\" -d \"infId=1K6MN5UAT5WF667L291S5554773&srvCd=A\")"
+      "Bash(curl -s -X POST \"https://www.eduinfo.go.kr/portal/service/openInfColViewPopUp.do\" -H \"Content-Type: application/x-www-form-urlencoded\" -H \"X-Requested-With: XMLHttpRequest\" -d \"infId=1K6MN5UAT5WF667L291S5554773&srvCd=A\")",
+      "Bash(curl -s --max-time 40 \"http://localhost:3000/api/education-subsidy?region=%EA%B0%95%EC%9B%90&fyr=2026\")",
+      "Bash(node -e 'let d=\"\";process.stdin.on\\(\"data\",c=>d+=c\\);process.stdin.on\\(\"end\",\\(\\)=>{try{const j=JSON.parse\\(d\\);if\\(j.message&&!j.municipalities.length\\){console.log\\(\"MSG:\",j.message\\);return;}console.log\\(\"regionTotal:\",\\(j.regionTotalWon/1e8\\).toFixed\\(0\\),\"억 | 자치단체:\",j.municipalities.length\\);j.municipalities.slice\\(0,4\\).forEach\\(m=>console.log\\(`  ${m.isBoncheong?\"[본청]\":\"\"}${m.name}: 총${\\(m.totalWon/1e8\\).toFixed\\(1\\)}억·교육경비${\\(m.eduSubsidyWon/1e8\\).toFixed\\(1\\)}억`\\)\\);const inje=j.municipalities.find\\(m=>m.name.includes\\(\"인제\"\\)\\);if\\(inje\\)console.log\\(\"  인제군: 총\",\\(inje.totalWon/1e8\\).toFixed\\(1\\),\"억·교육경비\",\\(inje.eduSubsidyWon/1e8\\).toFixed\\(1\\),\"억\"\\);}catch\\(e\\){console.log\\(\"비JSON:\",d.slice\\(0,200\\)\\);}}\\)')",
+      "Bash(curl -s --max-time 60 \"http://localhost:3000/api/education-subsidy?region=%EA%B2%BD%EA%B8%B0&fyr=2026\")",
+      "Bash(node -e 'let d=\"\";process.stdin.on\\(\"data\",c=>d+=c\\);process.stdin.on\\(\"end\",\\(\\)=>{try{const j=JSON.parse\\(d\\);console.log\\(\"경기 regionTotal:\",\\(j.regionTotalWon/1e8\\).toFixed\\(0\\),\"억 | 자치단체:\",j.municipalities.length,\"| msg:\",j.message||\"-\"\\);}catch\\(e\\){console.log\\(\"비JSON:\",d.slice\\(0,200\\)\\);}}\\)')"
     ]
   }
 }
