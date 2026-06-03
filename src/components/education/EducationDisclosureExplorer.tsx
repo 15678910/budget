@@ -28,6 +28,15 @@ export function EducationDisclosureExplorer() {
   const sido = useMemo(() => SCHOOLINFO_REGIONS.find((s) => s.code === sidoCode), [sidoCode]);
   const item = useMemo<DisclosureItem>(() => DISCLOSURE_ITEMS.find((d) => d.apiType === apiType)!, [apiType]);
 
+  // 가나다 정렬 (광역·기초)
+  const sidosSorted = useMemo(() => [...SCHOOLINFO_REGIONS].sort((a, b) => a.name.localeCompare(b.name, 'ko')), []);
+  const sggsSorted = useMemo(() => [...(sido?.sgg ?? [])].sort((a, b) => a.name.localeCompare(b.name, 'ko')), [sido]);
+  // 결과 행 학교명 가나다 정렬
+  const sortedRows = useMemo(
+    () => [...rows].sort((a, b) => String(a.SCHUL_NM ?? '').localeCompare(String(b.SCHUL_NM ?? ''), 'ko')),
+    [rows],
+  );
+
   const cols = useMemo(() => {
     if (rows.length === 0) return [];
     // primaryCols 우선, 그 외 숨김컬럼 제외하고 추가
@@ -64,7 +73,7 @@ export function EducationDisclosureExplorer() {
   function exportCsv() {
     if (rows.length === 0) return;
     const header = cols.map(labelOf).join(',');
-    const body = rows.map((r) => cols.map((c) => {
+    const body = sortedRows.map((r) => cols.map((c) => {
       const v = r[c] ?? '';
       const s = String(v).replace(/"/g, '""');
       return /[",\n]/.test(s) ? `"${s}"` : s;
@@ -95,11 +104,11 @@ export function EducationDisclosureExplorer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
           <select value={sidoCode} onChange={(e) => { setSidoCode(e.target.value); const s = SCHOOLINFO_REGIONS.find((x) => x.code === e.target.value); setSggCode(s?.sgg[0]?.code ?? ''); }}
             className="bg-gray-800 border border-gray-700 text-gray-200 text-sm rounded px-2 py-2">
-            {SCHOOLINFO_REGIONS.map((s) => <option key={s.code} value={s.code}>{s.name}</option>)}
+            {sidosSorted.map((s) => <option key={s.code} value={s.code}>{s.name}</option>)}
           </select>
           <select value={sggCode} onChange={(e) => setSggCode(e.target.value)}
             className="bg-gray-800 border border-gray-700 text-gray-200 text-sm rounded px-2 py-2">
-            {sido?.sgg.map((g) => <option key={g.code} value={g.code}>{g.name}</option>)}
+            {sggsSorted.map((g) => <option key={g.code} value={g.code}>{g.name}</option>)}
           </select>
           <select value={schulKnd} onChange={(e) => setSchulKnd(e.target.value)}
             className="bg-gray-800 border border-gray-700 text-gray-200 text-sm rounded px-2 py-2">
@@ -150,7 +159,7 @@ export function EducationDisclosureExplorer() {
                     </tr>
                   </thead>
                   <tbody>
-                    {rows.map((r, i) => (
+                    {sortedRows.map((r, i) => (
                       <tr key={i} className="border-b border-gray-800/40">
                         {cols.map((c) => <td key={c} className="py-1.5 px-2 text-gray-200 whitespace-nowrap">{String(r[c] ?? '')}</td>)}
                       </tr>
@@ -158,8 +167,9 @@ export function EducationDisclosureExplorer() {
                   </tbody>
                 </table>
               </div>
-              <p className="text-[11px] text-gray-600 mt-2">
-                ※ 한글 라벨이 없는 열은 학교알리미 원자료 코드입니다. 공식 정의는 학교알리미 공시 페이지를 참조하세요.
+              <p className="text-[11px] text-gray-600 mt-2 leading-relaxed">
+                ※ 학교명 가나다순 정렬. {apiType === '09' && '학년별 컬럼: 학생수=N학년 학생, 학급=N학년 학급수, 학급당=학급당 학생수(학생÷학급). 초등 1~6학년·중고 1~3학년, 「특수학급」은 특수학급분, 「(계)」는 합계. '}
+                한글 라벨이 없는 열은 학교알리미 원자료 코드이며, 공식 정의는 학교알리미 공시 페이지를 참조하세요.
               </p>
             </>
           )}

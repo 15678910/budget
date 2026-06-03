@@ -31,7 +31,22 @@ export const DISCLOSURE_ITEMS: DisclosureItem[] = [
   {
     apiType: '09', name: '학년별·학급별 학생수', category: '학생·교원',
     desc: '학생수·학급수·교원수 (매년 의회 단골 요구자료)',
-    fieldLabels: { COL_S_SUM: '학생수(계)', COL_C_SUM: '학급수(계)', TEACH_CNT: '교원수', TEACH_CAL: '교원1인당학생수' },
+    fieldLabels: {
+      COL_S_SUM: '학생수(계)', COL_C_SUM: '학급수(계)', TEACH_CNT: '교원수', TEACH_CAL: '교원1인당학생수',
+      COL_SUM: '전체 학급당학생',
+      // COL_S{n}=n학년 학생수 (초 1~6 / 중·고 1~3), S7=특수학급, S8=기타
+      COL_S1: '1학년 학생', COL_S2: '2학년 학생', COL_S3: '3학년 학생',
+      COL_S4: '4학년 학생', COL_S5: '5학년 학생', COL_S6: '6학년 학생',
+      COL_S7: '특수학급 학생', COL_S8: '기타 학생',
+      // COL_C{n}=n학년 학급수
+      COL_C1: '1학년 학급', COL_C2: '2학년 학급', COL_C3: '3학년 학급',
+      COL_C4: '4학년 학급', COL_C5: '5학년 학급', COL_C6: '6학년 학급',
+      COL_C7: '특수학급', COL_C8: '기타 학급',
+      // COL_{n}=n학년 학급당 학생수 (학생÷학급)
+      COL_1: '1학년 학급당', COL_2: '2학년 학급당', COL_3: '3학년 학급당',
+      COL_4: '4학년 학급당', COL_5: '5학년 학급당', COL_6: '6학년 학급당',
+      COL_7: '특수 학급당', COL_8: '기타 학급당',
+    },
     primaryCols: ['SCHUL_NM', 'ADRCD_NM', 'COL_S_SUM', 'COL_C_SUM', 'TEACH_CNT', 'TEACH_CAL'],
   },
   {
