@@ -121,6 +121,18 @@ export function EducationAdmissionRate() {
           )}
         </div>
         {sggData && (
+          <div className="border border-amber-900/40 bg-amber-950/20 rounded-lg p-3 mb-3 text-[13px] text-amber-100/90 leading-relaxed">
+            <strong className="text-amber-300">왜 강남·서초가 진학률 하위일까?</strong> — 교육 수준이 낮아서가 <em>아닙니다</em>.
+            진학률은 <strong>“졸업한 해에 대학에 등록한 비율”</strong>이라, 다음 요인으로 상위권 지향 지역일수록 낮게 나옵니다:
+            <ul className="list-disc pl-5 mt-1 space-y-0.5 text-amber-100/80">
+              <li><strong>재수·N수(주원인):</strong> 상위권 대학·의약학을 목표로, 원하는 곳에 못 가면 하위권 등록 대신 재수를 선택 → 당해 연도 ‘미진학’으로 집계.</li>
+              <li><strong>조기유학·해외대학(부차):</strong> 해외 진학은 국내 대학 등록 통계에 잡히지 않아 진학률을 일부 낮춤.</li>
+              <li><strong>역설:</strong> 재수 후 최종 진학까지 합치면 격차는 크게 줄어듭니다. 낮은 당해 진학률 = ‘눈높이가 높아 즉시 진학을 미룬 것’.</li>
+            </ul>
+            <span className="text-amber-200/60">※ 이 통계는 졸업 직후 시점만 반영(한국교육개발원 기준). 재수생 최종 진학은 미포함.</span>
+          </div>
+        )}
+        {sggData && (
           <div className="overflow-x-auto max-h-96 overflow-y-auto">
             <table className="w-full text-sm">
               <thead className="sticky top-0 bg-gray-900">
