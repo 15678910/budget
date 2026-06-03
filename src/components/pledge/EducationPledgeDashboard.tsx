@@ -5,10 +5,16 @@ import { METRO_EDUCATION_BUDGETS } from '@/lib/data/education-budget';
 import { analyzeCandidate, type RegionData } from '@/lib/pledge/analyze';
 import type { PledgeDataset, Candidate } from '@/lib/pledge/types';
 
-// 시도(정식명) → 추계 입력 (교육 공약 → 시도교육청 예산·학생수 기준)
-function regionFor(sido: string): RegionData {
-  const m = METRO_EDUCATION_BUDGETS.find((x) => x.metro === sido);
-  return { population: m?.students ?? 200_000, budget: Math.round((m?.budget2026 ?? 3) * 10_000), independence: 40 };
+export interface PledgeFeed { type: string; label: string; dataset: PledgeDataset }
+
+// 추계 입력: 교육감=시도교육청 예산, 그 외=상대비교용 개략 기준(레이스 내 동일)
+function regionFor(type: string, sido: string): RegionData {
+  if (type === '11') {
+    const m = METRO_EDUCATION_BUDGETS.find((x) => x.metro === sido);
+    return { population: m?.students ?? 200_000, budget: Math.round((m?.budget2026 ?? 3) * 10_000), independence: 40 };
+  }
+  // 시도지사·구시군의장: 정밀 지자체예산 미연동 → 상대 비교용 개략 입력(동일 레이스 내 일정)
+  return { population: type === '3' ? 1_500_000 : 250_000, budget: type === '3' ? 200_000 : 8_000, independence: 35 };
 }
 
 const CAT_KR: Record<string, string> = {
@@ -23,67 +29,79 @@ const CAT_COLOR: Record<string, string> = {
 };
 const won = (eok: number) => (eok >= 10000 ? `${(eok / 10000).toFixed(1)}조` : `${Math.round(eok).toLocaleString()}억`);
 
-export function EducationPledgeDashboard({ dataset }: { dataset: PledgeDataset }) {
-  const sidos = useMemo(() => [...new Set(dataset.candidates.map((c) => c.sido))].sort((a, b) => a.localeCompare(b, 'ko')), [dataset]);
-  const [sido, setSido] = useState(sidos[0] ?? '');
-  const [openId, setOpenId] = useState<string | null>(null);
+export function EducationPledgeDashboard({ feeds }: { feeds: PledgeFeed[] }) {
+  const [type, setType] = useState(feeds[0]?.type ?? '11');
+  const feed = feeds.find((f) => f.type === type) ?? feeds[0];
+  const cands = feed.dataset.candidates;
 
-  const region = regionFor(sido);
-  const cands = useMemo(() => dataset.candidates.filter((c) => c.sido === sido), [dataset, sido]);
+  // 레이스(선거구) = 구시군의장은 시군구(sgg), 그 외 시도
+  const groupKey = (c: Candidate) => (type === '4' ? (c.sgg || c.sido) : c.sido);
+  const groups = useMemo(() => [...new Set(cands.map(groupKey))].sort((a, b) => a.localeCompare(b, 'ko')), [cands, type]); // eslint-disable-line react-hooks/exhaustive-deps
+  const [group, setGroup] = useState(groups[0] ?? '');
+  const curGroup = groups.includes(group) ? group : (groups[0] ?? '');
 
-  // 후보별 분석 (전 후보 동일 기준)
-  const analyzed = useMemo(() => cands.map((c) => ({ c, a: analyzeCandidate(c.pledges, region) })), [cands, region]);
+  const raceCands = useMemo(() => cands.filter((c) => groupKey(c) === curGroup), [cands, curGroup, type]); // eslint-disable-line react-hooks/exhaustive-deps
+  const region = regionFor(type, raceCands[0]?.sido ?? curGroup);
+  const analyzed = useMemo(() => raceCands.map((c) => ({ c, a: analyzeCandidate(c.pledges, region) })), [raceCands, region]);
   const maxCost = Math.max(1, ...analyzed.map((x) => x.a.totalFiveYear));
+  const [openId, setOpenId] = useState<string | null>(null);
 
   return (
     <div className="space-y-5">
       <div className="space-y-2">
-        <h2 className="text-xl md:text-2xl font-bold text-gray-100">교육감 후보 공약 분석 (2026 지방선거)</h2>
+        <h2 className="text-xl md:text-2xl font-bold text-gray-100">선거 공약 분석 (2026 지방선거)</h2>
         <p className="text-sm text-gray-400 leading-relaxed">
-          전국 <strong className="text-gray-200">{dataset.candidates.length}명</strong> 교육감 후보의 5대 공약을
-          <strong className="text-gray-200"> 동일 기준</strong>으로 분석합니다 — 정책 분야 분류 + 비용 추계.
-          <span className="text-gray-500"> (출처: 중앙선관위 선거공약정보 · 비용추계: NABO 표준단가 엔진)</span>
+          후보 공약을 <strong className="text-gray-200">동일 기준</strong>으로 분석합니다 — 정책 분야 분류 + 비용 추계.
+          <span className="text-gray-500"> (출처: 중앙선관위 선거공약정보 · 추계: NABO 표준단가 엔진)</span>
         </p>
+      </div>
+
+      {/* 직급 탭 */}
+      <div className="flex gap-2 border-b border-gray-800 flex-wrap">
+        {feeds.map((f) => (
+          <button key={f.type} onClick={() => { setType(f.type); setOpenId(null); }}
+            className={`px-4 py-2 text-sm font-medium border-b-2 -mb-px ${type === f.type ? 'border-blue-500 text-blue-300' : 'border-transparent text-gray-400 hover:text-gray-200'}`}>
+            {f.label} <span className="text-gray-500">({f.dataset.candidates.length})</span>
+          </button>
+        ))}
       </div>
 
       {/* 중립·추정 고지 */}
       <div className="border border-amber-900/40 bg-amber-950/20 rounded-lg p-3 text-[13px] text-amber-100/90 leading-relaxed">
         ⚖️ <strong className="text-amber-300">중립·추정 고지</strong> — 전 후보를 동일 방법론으로 분석합니다(특정 후보 우열 판단 아님).
-        비용은 공약 텍스트를 표준단가에 적용한 <strong>개략 추정치(가정 기반)</strong>이며, 공약의 구체성에 따라 오차가 있습니다.
-        효용(정책 효과)은 단정하지 않습니다. 원문·분류·추계는 참고용입니다.
+        비용은 공약 텍스트를 표준단가에 적용한 <strong>개략 추정치(가정 기반)</strong>이며, 같은 선거구 내 상대 비교용입니다.
+        효용(정책 효과)은 단정하지 않습니다. {type !== '11' && '※ 시도지사·기초단체장은 지자체 정밀예산 미연동(상대 비교 기준).'}
       </div>
 
-      {/* 시도 선택 */}
+      {/* 선거구 선택 */}
       <div className="flex items-center gap-2 flex-wrap">
-        <span className="text-sm text-gray-400">시도</span>
-        <select value={sido} onChange={(e) => { setSido(e.target.value); setOpenId(null); }}
-          className="bg-gray-800 border border-gray-700 text-gray-200 text-sm rounded px-3 py-2">
-          {sidos.map((s) => <option key={s} value={s}>{s}</option>)}
+        <span className="text-sm text-gray-400">{type === '4' ? '시군구' : '시도'}</span>
+        <select value={curGroup} onChange={(e) => { setGroup(e.target.value); setOpenId(null); }}
+          className="bg-gray-800 border border-gray-700 text-gray-200 text-sm rounded px-3 py-2 max-w-[260px]">
+          {groups.map((g) => <option key={g} value={g}>{g}</option>)}
         </select>
-        <span className="text-xs text-gray-500">후보 {cands.length}명 · 교육청 예산 {won(region.budget)} · 학생 {(region.population / 10000).toFixed(0)}만</span>
+        <span className="text-xs text-gray-500">후보 {raceCands.length}명</span>
       </div>
 
-      {/* 후보 비교 (5년 추정비용) */}
+      {/* 후보 비교 */}
       <section className="border border-gray-800 bg-gray-900/30 rounded-lg p-4">
         <h3 className="text-sm font-semibold text-gray-300 mb-3">후보별 공약 5년 추정비용 비교</h3>
         <div className="space-y-2">
           {analyzed.map(({ c, a }) => (
             <div key={c.cnddtId} className="flex items-center gap-3">
-              <span className="w-20 text-sm text-gray-200 truncate shrink-0">{c.name}</span>
+              <span className="w-24 text-sm text-gray-200 truncate shrink-0">{c.name} <span className="text-[11px] text-gray-500">{c.party !== '무소속' ? c.party : ''}</span></span>
               <div className="flex-1 bg-gray-800 rounded h-5 overflow-hidden">
-                <div className="h-full bg-blue-600 flex items-center justify-end px-2"
-                  style={{ width: `${Math.max(6, (a.totalFiveYear / maxCost) * 100)}%` }}>
+                <div className="h-full bg-blue-600 flex items-center justify-end px-2" style={{ width: `${Math.max(6, (a.totalFiveYear / maxCost) * 100)}%` }}>
                   <span className="text-[11px] text-white whitespace-nowrap">{won(a.totalFiveYear)}</span>
                 </div>
               </div>
-              <span className="text-[11px] text-gray-500 w-24 text-right shrink-0">재정부담 {a.fiscalLoad}%</span>
             </div>
           ))}
         </div>
-        <p className="text-[11px] text-gray-600 mt-2">※ 5년 추정비용 = 초기비용 + 연운영비×5 (추정). 재정부담 = 연운영비합 ÷ 시도교육청 예산.</p>
+        <p className="text-[11px] text-gray-600 mt-2">※ 5년 추정비용 = 초기비용 + 연운영비×5 (추정·상대비교용).</p>
       </section>
 
-      {/* 후보별 공약 상세 */}
+      {/* 후보 상세 */}
       <div className="space-y-3">
         {analyzed.map(({ c, a }) => (
           <CandidateCard key={c.cnddtId} c={c} a={a} open={openId === c.cnddtId}
@@ -95,14 +113,10 @@ export function EducationPledgeDashboard({ dataset }: { dataset: PledgeDataset }
 }
 
 function CandidateCard({ c, a, open, onToggle }: {
-  c: Candidate;
-  a: ReturnType<typeof analyzeCandidate>;
-  open: boolean; onToggle: () => void;
+  c: Candidate; a: ReturnType<typeof analyzeCandidate>; open: boolean; onToggle: () => void;
 }) {
-  // 카테고리 분포
   const catCount: Record<string, number> = {};
   a.perPledge.forEach((p) => p.analysis.categories.forEach((cat) => { catCount[cat] = (catCount[cat] ?? 0) + 1; }));
-
   return (
     <div className="border border-gray-800 bg-gray-900/30 rounded-lg overflow-hidden">
       <button onClick={onToggle} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-800/40 text-left">
@@ -110,8 +124,7 @@ function CandidateCard({ c, a, open, onToggle }: {
         <span className="text-xs text-gray-500">{c.party}</span>
         <div className="flex gap-1 flex-wrap flex-1">
           {Object.entries(catCount).map(([cat, n]) => (
-            <span key={cat} className="text-[10px] px-1.5 py-0.5 rounded text-white"
-              style={{ background: CAT_COLOR[cat] ?? '#6b7280' }}>{CAT_KR[cat] ?? cat}{n > 1 ? `×${n}` : ''}</span>
+            <span key={cat} className="text-[10px] px-1.5 py-0.5 rounded text-white" style={{ background: CAT_COLOR[cat] ?? '#6b7280' }}>{CAT_KR[cat] ?? cat}{n > 1 ? `×${n}` : ''}</span>
           ))}
         </div>
         <span className="text-xs text-gray-400 shrink-0">5년 {won(a.totalFiveYear)}</span>
