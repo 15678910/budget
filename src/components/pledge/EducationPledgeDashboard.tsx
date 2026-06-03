@@ -158,6 +158,9 @@ export function EducationPledgeDashboard({ feeds }: { feeds: PledgeFeed[] }) {
           </h3>
           <span className="font-mono text-xs text-gray-500">셀 농도 = 공약 수</span>
         </div>
+        <p className="px-4 py-2 text-xs text-gray-500 border-b border-gray-800/60 bg-gray-900/30">
+          셀 숫자 = 해당 후보의 5대 공약 중 그 분야에 해당하는 <strong className="text-gray-400">공약 수</strong> (한 공약이 여러 분야에 중복 분류될 수 있어 합이 5를 넘을 수 있음). 색이 진할수록 집중. <span className="text-gray-600">※ 분야는 공약 텍스트 자동 분류(시스템 추정).</span>
+        </p>
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-left">
             <thead>
