@@ -17,7 +17,9 @@ export interface DisclosureItem {
   primaryCols: string[];    // 표에 우선 표시할 컬럼(코드)
 }
 
-// 공통 식별 필드 (모든 항목 공유)
+// 공통 라벨 (여러 apiType이 공유하는 식별·학년별 학생/학급 필드)
+// ※ COL_1~8(학년별 '값')은 apiType마다 의미가 달라(09/62=학급당 학생, 08=수업일수)
+//   COMMON에 넣지 않고 각 항목 fieldLabels에 정의한다. labelOf는 COMMON 우선.
 export const COMMON_LABELS: Record<string, string> = {
   SCHUL_NM: '학교명',
   ATPT_OFCDC_ORG_NM: '시도교육청',
@@ -25,35 +27,37 @@ export const COMMON_LABELS: Record<string, string> = {
   ADRCD_NM: '소재지',
   FOND_SC_CODE: '설립',
   SCHUL_CRSE_SC_VALUE_NM: '학교급',
+  DGHT_CRSE_SC_CODE: '주야과정',
+  // 학년별 학생수 (COL_S{n}): 초 1~6 / 중·고 1~3, S7=특수학급, S8=기타
+  COL_S1: '1학년 학생', COL_S2: '2학년 학생', COL_S3: '3학년 학생',
+  COL_S4: '4학년 학생', COL_S5: '5학년 학생', COL_S6: '6학년 학생',
+  COL_S7: '특수학급 학생', COL_S8: '기타 학생', COL_S_SUM: '학생수(계)',
+  // 학년별 학급수 (COL_C{n})
+  COL_C1: '1학년 학급', COL_C2: '2학년 학급', COL_C3: '3학년 학급',
+  COL_C4: '4학년 학급', COL_C5: '5학년 학급', COL_C6: '6학년 학급',
+  COL_C7: '특수학급', COL_C8: '기타 학급', COL_C_SUM: '학급수(계)',
+  COL_SUM: '전체 학급당학생', TEACH_CNT: '교원수', TEACH_CAL: '교원1인당학생수',
+};
+
+// COL_1~8 = 학년별 학급당 학생수 (학생÷학급) — 학생수 위주 항목(09·62) 공용
+const PER_CLASS_LABELS: Record<string, string> = {
+  COL_1: '1학년 학급당', COL_2: '2학년 학급당', COL_3: '3학년 학급당',
+  COL_4: '4학년 학급당', COL_5: '5학년 학급당', COL_6: '6학년 학급당',
+  COL_7: '특수 학급당', COL_8: '기타 학급당',
 };
 
 export const DISCLOSURE_ITEMS: DisclosureItem[] = [
   {
     apiType: '09', name: '학년별·학급별 학생수', category: '학생·교원',
     desc: '학생수·학급수·교원수 (매년 의회 단골 요구자료)',
-    fieldLabels: {
-      COL_S_SUM: '학생수(계)', COL_C_SUM: '학급수(계)', TEACH_CNT: '교원수', TEACH_CAL: '교원1인당학생수',
-      COL_SUM: '전체 학급당학생',
-      // COL_S{n}=n학년 학생수 (초 1~6 / 중·고 1~3), S7=특수학급, S8=기타
-      COL_S1: '1학년 학생', COL_S2: '2학년 학생', COL_S3: '3학년 학생',
-      COL_S4: '4학년 학생', COL_S5: '5학년 학생', COL_S6: '6학년 학생',
-      COL_S7: '특수학급 학생', COL_S8: '기타 학생',
-      // COL_C{n}=n학년 학급수
-      COL_C1: '1학년 학급', COL_C2: '2학년 학급', COL_C3: '3학년 학급',
-      COL_C4: '4학년 학급', COL_C5: '5학년 학급', COL_C6: '6학년 학급',
-      COL_C7: '특수학급', COL_C8: '기타 학급',
-      // COL_{n}=n학년 학급당 학생수 (학생÷학급)
-      COL_1: '1학년 학급당', COL_2: '2학년 학급당', COL_3: '3학년 학급당',
-      COL_4: '4학년 학급당', COL_5: '5학년 학급당', COL_6: '6학년 학급당',
-      COL_7: '특수 학급당', COL_8: '기타 학급당',
-    },
+    fieldLabels: { ...PER_CLASS_LABELS },
     primaryCols: ['SCHUL_NM', 'ADRCD_NM', 'COL_S_SUM', 'COL_C_SUM', 'TEACH_CNT', 'TEACH_CAL'],
   },
   {
     apiType: '62', name: '학교 현황', category: '학생·교원',
-    desc: '학교 기본현황 (설립·소재지·연락)',
-    fieldLabels: {},
-    primaryCols: ['SCHUL_NM', 'ADRCD_NM', 'FOND_SC_CODE'],
+    desc: '학교 기본현황 (설립·주야·학년별 학생수)',
+    fieldLabels: { ...PER_CLASS_LABELS },
+    primaryCols: ['SCHUL_NM', 'ADRCD_NM', 'FOND_SC_CODE', 'DGHT_CRSE_SC_CODE', 'COL_S_SUM', 'COL_C_SUM', 'TEACH_CNT', 'TEACH_CAL'],
   },
   {
     apiType: '10', name: '전·출입 및 학업중단 학생수', category: '학생·교원',
