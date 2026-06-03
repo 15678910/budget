@@ -18,7 +18,11 @@ const MAIN_TABS = [
   { href: "/regional", label: "지역지도" },
   { href: "/fiscal-health", label: "재정건전성" },
   { href: "/debt-clock", label: "국채시계" },
+];
+
+const PLEDGE_TABS = [
   { href: "/promise-check", label: "공약검증" },
+  { href: "/pledges", label: "공약분석" },
 ];
 
 const AI_SUB_TABS = [
@@ -32,7 +36,6 @@ const AI_SUB_TABS = [
   { href: "/ai-law", label: "AI기본법" },
   { href: "/fiscal-doctor", label: "AI정책진단" },
   { href: "/education-budget", label: "교육청예산" },
-  { href: "/pledges", label: "공약분석" },
 ];
 
 export function Header() {
@@ -40,8 +43,10 @@ export function Header() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [aiMenuOpen, setAiMenuOpen] = useState(false);
+  const [pledgeMenuOpen, setPledgeMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const aiMenuRef = useRef<HTMLDivElement>(null);
+  const pledgeMenuRef = useRef<HTMLDivElement>(null);
   const { user, isLoggedIn, loading } = useUser();
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
@@ -58,6 +63,9 @@ export function Header() {
       if (!inDesktop) {
         setAiMenuOpen(false);
       }
+      if (!pledgeMenuRef.current?.contains(target)) {
+        setPledgeMenuOpen(false);
+      }
       if (userMenuRef.current && !userMenuRef.current.contains(target)) {
         setUserMenuOpen(false);
       }
@@ -69,11 +77,13 @@ export function Header() {
   // Close dropdown on route change
   useEffect(() => {
     setAiMenuOpen(false);
+    setPledgeMenuOpen(false);
     setUserMenuOpen(false);
     setMobileMenuOpen(false);
   }, [pathname]);
 
   const isAIActive = AI_SUB_TABS.some((t) => t.href === pathname);
+  const isPledgeActive = PLEDGE_TABS.some((t) => t.href === pathname);
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
@@ -107,6 +117,51 @@ export function Header() {
                 {tab.label}
               </Link>
             ))}
+
+            {/* 공약 Dropdown — desktop hover */}
+            <div
+              ref={pledgeMenuRef}
+              className="relative"
+              onMouseEnter={() => setPledgeMenuOpen(true)}
+              onMouseLeave={() => setPledgeMenuOpen(false)}
+            >
+              <Link
+                href="/promise-check"
+                className={cn(
+                  "flex items-center gap-1 px-3 py-1.5 text-sm rounded-md transition-colors whitespace-nowrap",
+                  isPledgeActive
+                    ? "text-foreground bg-muted/50"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                )}
+              >
+                공약
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                  className={cn("transition-transform", pledgeMenuOpen && "rotate-180")}>
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </Link>
+              {pledgeMenuOpen && (
+                <div className="absolute top-full left-0 pt-1 z-50">
+                  <div className="w-36 bg-background border border-border rounded-lg shadow-lg p-1.5">
+                    {PLEDGE_TABS.map((tab) => (
+                      <Link
+                        key={tab.href}
+                        href={tab.href}
+                        className={cn(
+                          "block px-3 py-2 text-sm rounded-md transition-colors",
+                          pathname === tab.href
+                            ? "text-foreground bg-muted/50 font-medium"
+                            : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                        )}
+                      >
+                        {tab.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
 
             {/* AI기본사회 Dropdown — desktop hover */}
             <div
@@ -292,6 +347,27 @@ export function Header() {
                 {tab.label}
               </Link>
             ))}
+
+            <div className="pt-3 pb-1 border-t border-border mt-2">
+              <p className="text-xs text-muted-foreground font-medium tracking-wider px-3 pb-2">공약</p>
+              <div className="pl-3 space-y-0.5">
+                {PLEDGE_TABS.map((tab) => (
+                  <Link
+                    key={tab.href}
+                    href={tab.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={cn(
+                      "block px-3 py-2 text-sm rounded-lg transition-colors",
+                      pathname === tab.href
+                        ? "text-foreground bg-muted/50 font-medium"
+                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                    )}
+                  >
+                    {tab.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
 
             <div className="pt-3 pb-1 border-t border-border mt-2">
               <p className="text-xs text-muted-foreground font-medium tracking-wider px-3 pb-2">AI 기본사회</p>
