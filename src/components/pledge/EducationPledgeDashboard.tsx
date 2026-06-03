@@ -308,9 +308,10 @@ function Kpi({ label, value, unit, accent }: { label: string; value: string; uni
 function CandidateDrawer({ data, onClose }: { data: Analyzed; onClose: () => void }) {
   const { c, a } = data;
   return (
-    <div className="fixed inset-0 z-50 flex justify-end" role="dialog" aria-modal="true">
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <aside className="relative w-full max-w-md h-full bg-gray-950 border-l border-gray-800 shadow-2xl overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex justify-end pointer-events-none" role="dialog" aria-modal="true">
+      {/* 투명 클릭 캐처: 왼쪽 대시보드를 어둡게 하지 않고(딤 없음) 바깥 클릭 시 닫기만 */}
+      <div className="absolute inset-0 bg-transparent pointer-events-auto" onClick={onClose} />
+      <aside className="pointer-events-auto relative w-full max-w-md h-full bg-gray-950 border-l border-gray-700 shadow-[-12px_0_40px_-8px_rgba(0,0,0,0.7)] overflow-y-auto">
         {/* 드로어 헤더 */}
         <div className="sticky top-0 z-10 bg-gray-950/95 backdrop-blur border-b border-gray-800 px-5 py-4">
           <div className="flex items-start justify-between gap-3">
@@ -328,6 +329,19 @@ function CandidateDrawer({ data, onClose }: { data: Analyzed; onClose: () => voi
             <MiniStat label="공약" value={String(a.pledgeCount)} />
             <MiniStat label="초기 추정" value={won(a.totalInitial)} />
             <MiniStat label="5년 추정" value={won(a.totalFiveYear)} accent="text-emerald-300" />
+          </div>
+        </div>
+
+        {/* 출처·추정 구분 고지 */}
+        <div className="px-5 pt-4">
+          <div className="rounded-md border border-gray-700 bg-gray-900/60 px-4 py-3 text-[13px] leading-relaxed space-y-1.5">
+            <p className="text-gray-200">
+              <span className="font-semibold text-sky-300">📋 공약 원문</span>은 후보가 중앙선관위에 제출한 내용입니다.
+            </p>
+            <p className="text-gray-200">
+              <span className="font-semibold text-emerald-300">💰 비용·산출근거</span>는 후보가 제시한 게 아니라
+              <span className="text-amber-200"> 본 시스템이 NABO 표준단가로 추정한 값</span>입니다.
+            </p>
           </div>
         </div>
 
@@ -351,21 +365,34 @@ function CandidateDrawer({ data, onClose }: { data: Analyzed; onClose: () => voi
                   ))}
                 </div>
               </div>
-              <div className="px-4 py-3 grid grid-cols-3 gap-2 bg-gray-900/30 border-b border-gray-800/60">
+              {/* ── 후보 작성 공약 원문 ── */}
+              {pledge.content && (
+                <div className="px-4 py-3 border-b border-gray-800/60">
+                  <div className="inline-flex items-center gap-1.5 mb-2 text-[11px] font-semibold tracking-wide text-sky-300 bg-sky-950/40 border border-sky-800/50 rounded px-2 py-0.5">
+                    📋 후보 작성 공약 <span className="font-normal text-sky-400/70">(선관위 제출 원문)</span>
+                  </div>
+                  <p className="text-sm text-gray-300 leading-relaxed whitespace-pre-line">{pledge.content}</p>
+                </div>
+              )}
+
+              {/* ── 시스템 추정 영역 (후보 작성 아님) ── */}
+              <div className="px-4 pt-3 pb-1 bg-gray-950/30 border-b border-gray-800/40">
+                <div className="inline-flex items-center gap-1.5 text-[11px] font-semibold tracking-wide text-emerald-300 bg-emerald-950/40 border border-emerald-800/50 rounded px-2 py-0.5">
+                  💰 시스템 추정 <span className="font-normal text-emerald-400/70">(후보 작성 아님 · NABO 표준단가 자동계산)</span>
+                </div>
+              </div>
+              <div className="px-4 py-3 grid grid-cols-3 gap-2 bg-gray-950/30 border-b border-gray-800/60">
                 <CostCell label="초기" value={won(analysis.cost.initialCost)} />
                 <CostCell label="연운영" value={`${won(analysis.cost.annualOperatingCost)}/년`} />
                 <CostCell label="실현성" value={analysis.cost.feasibility}
                   accent={analysis.cost.feasibility === '상' ? 'text-emerald-300' : analysis.cost.feasibility === '하' ? 'text-rose-300' : 'text-amber-300'} />
               </div>
-              {pledge.content && (
-                <p className="px-4 py-3 text-sm text-gray-400 leading-relaxed whitespace-pre-line line-clamp-6">{pledge.content.slice(0, 360)}</p>
-              )}
 
-              {/* 산출 근거 (모든 공약 표시) */}
+              {/* 산출 근거 (모든 공약 표시) — 전문 표시, 클램프 없음 */}
               {analysis.cost.methodology && (
                 <div className="px-4 py-3 border-t border-gray-800/60 bg-gray-950/30">
                   <div className="font-mono text-xs uppercase tracking-wider text-sky-400/80 mb-1.5">산출 근거</div>
-                  <p className="text-sm text-gray-300 leading-relaxed">{analysis.cost.methodology}</p>
+                  <p className="text-sm text-gray-300 leading-relaxed whitespace-pre-line">{analysis.cost.methodology}</p>
                 </div>
               )}
 
