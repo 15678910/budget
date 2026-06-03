@@ -4,8 +4,8 @@
  * 원아수(ppcnt3/4/5/mix/sh) + 학급수(clcnt3/4/5/mix/sh)를 유치원별로 집계,
  * 기존 학교 데이터와 동일하게 교육지원청(school-detail district)별로 묶는다.
  * 산출물: public/data/kindergarten-2024.json
- *   { year, byDistrict: { <교육지원청명>: [{n,s,c,est}] }, total }
- *     n=유치원명 s=원아수 c=학급수 est=설립유형
+ *   { year, byDistrict: { <교육지원청명>: [{n,s,c,est,sgg,la,lo}] }, total }
+ *     n=유치원명 s=원아수 c=학급수 est=설립유형 sgg=시군구 la=위도 lo=경도
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 
@@ -56,8 +56,12 @@ const n = (v) => Number(String(v ?? '').replace(/[^0-9.]/g, '')) || 0;
           if (!sggToDistrict[sggName]) unmapped++;
           const students = n(r.ppcnt3) + n(r.ppcnt4) + n(r.ppcnt5) + n(r.mixppcnt) + n(r.shppcnt);
           const classes = n(r.clcnt3) + n(r.clcnt4) + n(r.clcnt5) + n(r.mixclcnt) + n(r.shclcnt);
+          const la = parseFloat(r.lttdcdnt), lo = parseFloat(r.lngtcdnt);
           (byDistrict[target] ?? (byDistrict[target] = [])).push({
             n: r.kindername, s: students, c: classes, est: r.establish || '',
+            sgg: sggName || '',
+            la: Number.isFinite(la) ? +la.toFixed(6) : null,
+            lo: Number.isFinite(lo) ? +lo.toFixed(6) : null,
           });
           total++;
         }

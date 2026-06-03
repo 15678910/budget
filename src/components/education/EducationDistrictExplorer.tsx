@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { DISTRICT_SCHOOL_AGG } from '@/lib/data/education-districts';
 import { METRO_EDUCATION_BUDGETS, computeDistribution, formatKRW } from '@/lib/data/education-budget';
-import { EducationKoreaMap } from './EducationKoreaMap';
+import { EducationKoreaMap, type MapPoint } from './EducationKoreaMap';
 
 interface SchoolDetail { n: string; k: string; s: number; c: number; t: number }
 interface DistDetail { code: string; name: string; sido: string; sggs?: string[]; schools: number; students: number; teachers: number; classes: number }
@@ -42,7 +42,7 @@ const BUDGET_BY_NAME: Record<string, number> = (() => {
 const KINDS = ['전체', '초', '중', '고'] as const;
 type Kind = typeof KINDS[number] | '유';
 
-interface Kinder { n: string; s: number; c: number; est: string }
+interface Kinder { n: string; s: number; c: number; est: string; sgg?: string; la?: number | null; lo?: number | null }
 interface KinderData { year: string; byDistrict: Record<string, Kinder[]>; total: number }
 
 const SUBSIDY_YEAR = '2026';
@@ -131,6 +131,14 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
     }
   }
 
+  // 선택 시군구의 유치원 위치 핀 (좌표 보유분)
+  const mapPoints: MapPoint[] = useMemo(() => {
+    if (!sgg || !kinder) return [];
+    return Object.values(kinder.byDistrict).flat()
+      .filter((g) => g.sgg === sgg && g.la != null && g.lo != null)
+      .map((g) => ({ lat: g.la as number, lng: g.lo as number, label: `${g.n} · 원아 ${g.s}명`, color: '#c084fc' }));
+  }, [sgg, kinder]);
+
   // 선택 시군구의 지자체 교육지원(지방재정365 매칭)
   const sggMuni = sgg && subsidy
     ? subsidy.municipalities.find((m) => !m.isBoncheong && (m.name === sgg || sgg.startsWith(m.name) || m.name.startsWith(sgg)))
@@ -187,9 +195,9 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
           <div className="max-w-[520px] mx-auto">
             <EducationKoreaMap geoData={geoData} municipalitiesGeo={municipalitiesGeo}
               selectedSido={sido} selectedSgg={sgg} onSelect={selectSido} onSelectSgg={selectSgg}
-              onBack={resetAll} metricBySido={metricBySido} />
+              onBack={resetAll} metricBySido={metricBySido} points={mapPoints} />
           </div>
-          <p className="text-[11px] text-gray-500 mt-1 text-center">시도 → 시군구 → 시군구 클릭 시 <strong className="text-gray-400">읍면동 경계</strong> + 관할 교육지원청 · 마우스 휠 확대/축소</p>
+          <p className="text-[11px] text-gray-500 mt-1 text-center">시도 → 시군구 → 시군구 클릭 시 <strong className="text-gray-400">읍면동 경계</strong> + <strong className="text-purple-300">유치원 위치(보라 핀)</strong> · 마우스 휠 확대/축소</p>
         </div>
 
         {/* 우측: 교육지원청 목록 / 학교 목록 */}
