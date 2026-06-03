@@ -44,6 +44,8 @@ type Kind = typeof KINDS[number] | '유';
 
 interface Kinder { n: string; s: number; c: number; est: string; sgg?: string; la?: number | null; lo?: number | null }
 interface KinderData { year: string; byDistrict: Record<string, Kinder[]>; total: number }
+interface SchoolLoc { n: string; k: string; la: number | null; lo: number | null }
+interface SchoolLocData { bySgg: Record<string, SchoolLoc[]>; total: number }
 
 const SUBSIDY_YEAR = '2026';
 interface SubsidyMuni { name: string; isBoncheong: boolean; totalWon: number; eduSubsidyWon: number; byType: Record<string, number> }
@@ -65,13 +67,16 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
   const [subsidy, setSubsidy] = useState<SubsidyResp | null>(null);
   const [subLoading, setSubLoading] = useState(false);
   const [kinder, setKinder] = useState<KinderData | null>(null);
-  const [hlKinder, setHlKinder] = useState<string | null>(null); // 핀↔목록 하이라이트
+  const [schoolLoc, setSchoolLoc] = useState<SchoolLocData | null>(null);
+  const [hlPoint, setHlPoint] = useState<string | null>(null); // 핀↔목록 하이라이트(학교·유치원 공용)
 
   useEffect(() => {
     fetch('/data/education-schools-detail-2024.json')
       .then((r) => r.json()).then((j) => setDetail(j)).catch(() => {}).finally(() => setLoading(false));
     fetch('/data/kindergarten-2024.json')
       .then((r) => r.json()).then((j) => setKinder(j)).catch(() => {});
+    fetch('/data/school-locations.json')
+      .then((r) => r.json()).then((j) => setSchoolLoc(j)).catch(() => {});
   }, []);
 
   // 지자체 교육지원(지방재정365) — 시도 선택 시 로드
@@ -132,13 +137,19 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
     }
   }
 
-  // 선택 시군구의 유치원 위치 핀 (좌표 보유분)
+  // 선택 시군구의 위치 핀 — 유/초/중/고 필터에 따라 (학교=좌표표준데이터, 유치원=유치원알리미)
   const mapPoints: MapPoint[] = useMemo(() => {
-    if (!sgg || !kinder) return [];
-    return Object.values(kinder.byDistrict).flat()
-      .filter((g) => g.sgg === sgg && g.la != null && g.lo != null)
-      .map((g) => ({ lat: g.la as number, lng: g.lo as number, name: g.n, label: `${g.n} · 원아 ${g.s}명`, color: '#c084fc' }));
-  }, [sgg, kinder]);
+    if (!sgg) return [];
+    if (kind === '유') {
+      return (kinder ? Object.values(kinder.byDistrict).flat() : [])
+        .filter((g) => g.sgg === sgg && g.la != null && g.lo != null)
+        .map((g) => ({ lat: g.la as number, lng: g.lo as number, name: g.n, label: `${g.n} · 원아 ${g.s}명`, color: KIND_COLOR['유'] }));
+    }
+    const list = schoolLoc?.bySgg[sgg] ?? [];
+    return list
+      .filter((s) => (kind === '전체' || s.k === kind) && s.la != null && s.lo != null)
+      .map((s) => ({ lat: s.la as number, lng: s.lo as number, name: s.n, label: `${s.n} (${s.k})`, color: KIND_COLOR[s.k] ?? '#9ca3af' }));
+  }, [sgg, kind, kinder, schoolLoc]);
 
   // 선택 시군구의 지자체 교육지원(지방재정365 매칭)
   const sggMuni = sgg && subsidy
@@ -197,10 +208,10 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
             <EducationKoreaMap geoData={geoData} municipalitiesGeo={municipalitiesGeo}
               selectedSido={sido} selectedSgg={sgg} onSelect={selectSido} onSelectSgg={selectSgg}
               onBack={resetAll} metricBySido={metricBySido} points={mapPoints}
-              highlightName={hlKinder}
-              onPointClick={(name) => { setKind('유'); setHlKinder(name); }} />
+              highlightName={hlPoint}
+              onPointClick={(name) => setHlPoint(name === hlPoint ? null : name)} />
           </div>
-          <p className="text-[11px] text-gray-500 mt-1 text-center">시도 → 시군구 → 시군구 클릭 시 <strong className="text-gray-400">읍면동 경계</strong> + <strong className="text-purple-300">유치원 위치(보라 핀)</strong> · 마우스 휠 확대/축소</p>
+          <p className="text-[11px] text-gray-500 mt-1 text-center">시도 → 시군구 클릭 시 <strong className="text-gray-400">읍면동 경계</strong> + <strong className="text-gray-300">학교·유치원 위치 핀</strong>(유/초/중/고 버튼으로 필터) · 휠 확대 · 드래그 이동 · 핀↔목록 클릭 연동</p>
         </div>
 
         {/* 우측: 교육지원청 목록 / 학교 목록 */}
@@ -283,8 +294,8 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
                       {kinderList.length === 0 ? (
                         <tr><td colSpan={4} className="py-6 text-center text-gray-500">유치원 데이터 없음</td></tr>
                       ) : kinderList.map((g, i) => (
-                        <tr key={i} onClick={() => setHlKinder(g.n === hlKinder ? null : g.n)}
-                          className={`border-b border-gray-800/40 cursor-pointer ${g.n === hlKinder ? 'bg-purple-600/30' : 'hover:bg-gray-800/40'}`}>
+                        <tr key={i} onClick={() => setHlPoint(g.n === hlPoint ? null : g.n)}
+                          className={`border-b border-gray-800/40 cursor-pointer ${g.n === hlPoint ? 'bg-purple-600/30' : 'hover:bg-gray-800/40'}`}>
                           <td className="py-1.5 px-1.5 text-gray-200">{g.n}{g.la == null && <span className="text-[10px] text-gray-600 ml-1">(위치없음)</span>}</td>
                           <td className="text-center py-1.5 px-1">
                             <span className="px-1.5 py-0.5 rounded text-[10px] text-white" style={{ background: KIND_COLOR['유'] }}>{g.est.replace(/[()]/g, ' ').trim().split(' ')[0] || '유'}</span>
@@ -308,7 +319,8 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
                     </thead>
                     <tbody>
                       {schools.map((s, i) => (
-                        <tr key={i} className="border-b border-gray-800/40">
+                        <tr key={i} onClick={() => setHlPoint(s.n === hlPoint ? null : s.n)}
+                          className={`border-b border-gray-800/40 cursor-pointer ${s.n === hlPoint ? 'bg-yellow-500/20' : 'hover:bg-gray-800/40'}`}>
                           <td className="py-1.5 px-1.5 text-gray-200">{s.n}</td>
                           <td className="text-center py-1.5 px-1">
                             <span className="px-1.5 py-0.5 rounded text-[10px] text-white" style={{ background: KIND_COLOR[s.k] ?? '#6b7280' }}>{s.k}</span>
@@ -344,8 +356,8 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
         </p>
         <p className="text-[11px] text-gray-600 mt-1">
           · <strong className="text-gray-500">읍면동 경계</strong>: 통계청 2013 행정구역(southkorea-maps) 기준.
-          · <strong className="text-gray-500">유치원</strong>: 유치원알리미(e-childschoolinfo) 기본현황 — 원아수·학급수 (전국 7,805곳, 유 버튼).
-          · <strong className="text-gray-500">학교 위치(GPS 핀)</strong>: 학교알리미·유치원알리미 모두 주소만 제공(좌표 없음) → 지도 핀은 data.go.kr 위치표준데이터(좌표) 키 확보 시 추가 예정.
+          · <strong className="text-gray-500">유치원</strong>: 유치원알리미(e-childschoolinfo) 기본현황 — 원아수·학급수 (전국 7,805곳).
+          · <strong className="text-gray-500">학교·유치원 위치 핀</strong>: 학교=전국초중등학교위치표준데이터(data.go.kr, 12,011교 좌표), 유치원=유치원알리미 좌표. 유/초/중/고 버튼으로 필터.
         </p>
       </div>
     </div>
