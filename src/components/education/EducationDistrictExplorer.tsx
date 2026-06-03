@@ -136,7 +136,7 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
     if (!sgg || !kinder) return [];
     return Object.values(kinder.byDistrict).flat()
       .filter((g) => g.sgg === sgg && g.la != null && g.lo != null)
-      .map((g) => ({ lat: g.la as number, lng: g.lo as number, label: `${g.n} · 원아 ${g.s}명`, color: '#c084fc' }));
+      .map((g) => ({ lat: g.la as number, lng: g.lo as number, name: g.n, label: `${g.n} · 원아 ${g.s}명`, color: '#c084fc' }));
   }, [sgg, kinder]);
 
   // 선택 시군구의 지자체 교육지원(지방재정365 매칭)

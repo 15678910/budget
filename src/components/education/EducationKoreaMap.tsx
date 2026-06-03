@@ -32,14 +32,16 @@ interface Props {
   points?: MapPoint[]; // 시군구 드릴 시 표시할 위치 핀 (유치원·학교 등)
 }
 
-export interface MapPoint { lat: number; lng: number; label: string; color: string }
+export interface MapPoint { lat: number; lng: number; name: string; label: string; color: string }
 
 const W = 360, H = 440;
 
 export function EducationKoreaMap({ geoData, municipalitiesGeo, selectedSido, selectedSgg, onSelect, onSelectSgg, onBack, metricBySido, points }: Props) {
   const [zoom, setZoom] = useState(1);
+  const [pan, setPan] = useState({ x: 0, y: 0 });
   const [emdTopo, setEmdTopo] = useState<Topology | null>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
+  const drag = useRef<{ active: boolean; sx: number; sy: number; px: number; py: number; moved: boolean }>({ active: false, sx: 0, sy: 0, px: 0, py: 0, moved: false });
 
   // 읍면동 경계 lazy 로드 (시군구 선택 시 최초 1회)
   useEffect(() => {
@@ -54,14 +56,35 @@ export function EducationKoreaMap({ geoData, municipalitiesGeo, selectedSido, se
     if (!el) return;
     const onWheel = (e: WheelEvent) => {
       e.preventDefault();
-      setZoom((z) => Math.min(5, Math.max(1, +(z - Math.sign(e.deltaY) * 0.25).toFixed(2))));
+      setZoom((z) => Math.min(6, Math.max(1, +(z - Math.sign(e.deltaY) * 0.25).toFixed(2))));
     };
     el.addEventListener('wheel', onWheel, { passive: false });
     return () => el.removeEventListener('wheel', onWheel);
   }, []);
 
-  // 줌 리셋 on 시도/시군구 변경
-  useEffect(() => { setZoom(1); }, [selectedSido, selectedSgg]);
+  // 줌·팬 리셋 on 시도/시군구 변경
+  useEffect(() => { setZoom(1); setPan({ x: 0, y: 0 }); }, [selectedSido, selectedSgg]);
+
+  // 드래그 팬 (SVG 좌표계 기준 이동)
+  function onPointerDown(e: React.PointerEvent) {
+    drag.current = { active: true, sx: e.clientX, sy: e.clientY, px: pan.x, py: pan.y, moved: false };
+    (e.target as Element).setPointerCapture?.(e.pointerId);
+  }
+  function onPointerMove(e: React.PointerEvent) {
+    if (!drag.current.active) return;
+    const el = wrapRef.current;
+    const scale = el ? (W * zoom) / el.clientWidth : 1; // 화면px → SVG단위
+    const dx = (e.clientX - drag.current.sx) * scale;
+    const dy = (e.clientY - drag.current.sy) * scale;
+    if (Math.abs(dx) + Math.abs(dy) > 2) drag.current.moved = true;
+    setPan({ x: drag.current.px + dx, y: drag.current.py + dy });
+  }
+  function onPointerUp(e: React.PointerEvent) {
+    drag.current.active = false;
+    (e.target as Element).releasePointerCapture?.(e.pointerId);
+  }
+  // 드래그 직후 클릭(시도/시군구 선택) 방지
+  const guardClick = (fn: () => void) => () => { if (!drag.current.moved) fn(); };
 
   // 시도(province) 경로
   const provincePaths = useMemo(() => {
@@ -106,7 +129,7 @@ export function EducationKoreaMap({ geoData, municipalitiesGeo, selectedSido, se
   }, [municipalitiesGeo, selectedSido, selectedSgg]);
 
   // 읍면동(EMD) 경로 + 위치 핀 — 선택 시군구만 (EMD code = 시군구 5자리 + 2)
-  const emd = useMemo((): { paths: { name: string; d: string; cx: number; cy: number; i: number }[]; pins: { x: number; y: number; label: string; color: string; i: number }[] } => {
+  const emd = useMemo((): { paths: { name: string; d: string; cx: number; cy: number; i: number }[]; pins: { x: number; y: number; name: string; label: string; color: string; i: number }[] } => {
     const empty = { paths: [], pins: [] };
     if (!selectedSido || !selectedSgg || !emdTopo) return empty;
     const mObj = Object.keys(municipalitiesGeo.objects)[0];
@@ -133,8 +156,8 @@ export function EducationKoreaMap({ geoData, municipalitiesGeo, selectedSido, se
     // 위치 핀 투영 (lng,lat → x,y)
     const pins = (points ?? []).map((p, i) => {
       const xy = proj([p.lng, p.lat]);
-      return xy ? { x: xy[0], y: xy[1], label: p.label, color: p.color, i } : null;
-    }).filter((p): p is { x: number; y: number; label: string; color: string; i: number } => p != null);
+      return xy ? { x: xy[0], y: xy[1], name: p.name, label: p.label, color: p.color, i } : null;
+    }).filter((p): p is { x: number; y: number; name: string; label: string; color: string; i: number } => p != null);
     return { paths, pins };
   }, [emdTopo, municipalitiesGeo, selectedSido, selectedSgg, points]);
 
@@ -159,12 +182,14 @@ export function EducationKoreaMap({ geoData, municipalitiesGeo, selectedSido, se
         </button>
       )}
       <div ref={wrapRef} className="overflow-hidden rounded" style={{ touchAction: 'none' }}>
-        <svg viewBox={`0 0 ${W} ${H}`} className="select-none mx-auto block"
-          style={{ width: `${100 * zoom}%`, height: 'auto', transition: 'width 0.15s' }}>
+        <svg viewBox={`0 0 ${W} ${H}`} className="select-none mx-auto block w-full h-auto"
+          style={{ cursor: drag.current.active ? 'grabbing' : 'grab' }}
+          onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerLeave={onPointerUp}>
+          <g transform={`translate(${pan.x} ${pan.y}) scale(${zoom})`}>
           {!selectedSido ? (
             // 전국: 시도
             provincePaths.map((p: { sido: string; full: string; d: string; cx: number; cy: number }) => (
-              <g key={p.full} onClick={() => onSelect(p.sido)} className="cursor-pointer">
+              <g key={p.full} onClick={guardClick(() => onSelect(p.sido))} className="cursor-pointer">
                 <path d={p.d} fill={provinceFill(p.sido)} stroke="#0f172a" strokeWidth={0.6}
                   className="transition-colors hover:brightness-150" />
                 <text x={p.cx} y={p.cy} textAnchor="middle" dominantBaseline="middle"
@@ -172,28 +197,33 @@ export function EducationKoreaMap({ geoData, municipalitiesGeo, selectedSido, se
               </g>
             ))
           ) : selectedSgg && emd.paths.length > 0 ? (
-            // 3단계: 선택 시군구의 읍면동 경계 + 위치 핀
+            // 3단계: 선택 시군구의 읍면동 경계 + 위치 핀(명칭)
             <>
               {emd.paths.map((m) => (
-                <g key={`emd-${m.i}`} className="cursor-default">
+                <g key={`emd-${m.i}`} className="cursor-grab">
                   <path d={m.d} fill="#1e40af" stroke="#93c5fd" strokeWidth={0.4}
                     className="transition-colors hover:brightness-125" />
                   <text x={m.cx} y={m.cy} textAnchor="middle" dominantBaseline="middle"
-                    className="pointer-events-none fill-white/70" style={{ fontSize: 8 }}>{m.name}</text>
+                    className="pointer-events-none fill-white/60" style={{ fontSize: 7 }}>{m.name}</text>
                 </g>
               ))}
               {emd.pins.map((p) => (
-                <circle key={`pin-${p.i}`} cx={p.x} cy={p.y} r={2.2}
-                  fill={p.color} stroke="#fff" strokeWidth={0.5}>
-                  <title>{p.label}</title>
-                </circle>
+                <g key={`pin-${p.i}`} className="pointer-events-none">
+                  <circle cx={p.x} cy={p.y} r={1.8} fill={p.color} stroke="#fff" strokeWidth={0.4}>
+                    <title>{p.label}</title>
+                  </circle>
+                  <text x={p.x + 2.4} y={p.y + 1} className="fill-purple-100"
+                    style={{ fontSize: 4.2, paintOrder: 'stroke', stroke: '#0b1020', strokeWidth: 0.7 }}>
+                    {p.name.replace(/유치원$/, '').replace(/초등학교병설$/, '(병설)')}
+                  </text>
+                </g>
               ))}
             </>
           ) : (
             // 2단계: 선택 시도의 시군구 (시군구 미선택 시 클릭 가능)
             muniPaths.map((m: { name: string; d: string; cx: number; cy: number }, i: number) => (
-              <g key={i} onClick={() => !selectedSgg && onSelectSgg(m.name)}
-                className={selectedSgg ? 'cursor-default' : 'cursor-pointer'}>
+              <g key={i} onClick={guardClick(() => { if (!selectedSgg) onSelectSgg(m.name); })}
+                className={selectedSgg ? 'cursor-grab' : 'cursor-pointer'}>
                 <path d={m.d} fill={selectedSgg ? '#2563eb' : '#1e3a5f'} stroke="#60a5fa" strokeWidth={0.5}
                   className="transition-colors hover:brightness-125" />
                 <text x={m.cx} y={m.cy} textAnchor="middle" dominantBaseline="middle"
@@ -201,6 +231,7 @@ export function EducationKoreaMap({ geoData, municipalitiesGeo, selectedSido, se
               </g>
             ))
           )}
+          </g>
         </svg>
       </div>
     </div>
