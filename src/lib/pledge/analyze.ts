@@ -51,3 +51,38 @@ export function analyzeCandidate(pledges: Pledge[], region: RegionData): Candida
   const fiscalLoad = region.budget > 0 ? +((totalAnnual / region.budget) * 100).toFixed(1) : 0;
   return { totalInitial, totalFiveYear, fiscalLoad, pledgeCount: pledges.length, perPledge };
 }
+
+/**
+ * 실현가능성 지수 (Feasibility Index) — 0~100
+ * ⚠️ 비용·재정·집행 '실현가능성' 지표일 뿐, 공약의 가치·효과(효용)·"질" 평가가 아님.
+ *    교육 환경 질 등 효과는 효용 영역이라 객관 점수화하지 않음(단정 금지 원칙).
+ * 투명 공식(전 후보 동일):
+ *   - 재정 실현성 40%: 재정부담률 낮을수록 ↑ (부담 15%에서 0점)
+ *   - 집행 실현성 40%: 공약 feasibility 등급 평균 (상100/중60/하30)
+ *   - 공약 구체성 20%: 평균 내용길이(600자 만점) + 이행방법 명시 비율
+ */
+export interface FeasibilityScore {
+  total: number;     // 0~100
+  fiscal: number;    // 재정 실현성 0~100
+  exec: number;      // 집행 실현성 0~100
+  concrete: number;  // 구체성 0~100
+}
+export function scoreFeasibility(ca: CandidateAnalysis): FeasibilityScore {
+  // 재정: 부담률 0%→100, 15%↑→0
+  const fiscal = Math.max(0, Math.min(100, 100 - (ca.fiscalLoad / 15) * 100));
+  // 집행: feasibility 등급 평균
+  const fMap: Record<string, number> = { 상: 100, 중: 60, 하: 30 };
+  const exec = ca.perPledge.length
+    ? ca.perPledge.reduce((s, x) => s + (fMap[x.analysis.cost.feasibility] ?? 60), 0) / ca.perPledge.length
+    : 0;
+  // 구체성: 내용 길이 + 이행방법 명시
+  const concrete = ca.perPledge.length
+    ? ca.perPledge.reduce((s, x) => {
+        const len = Math.min(1, (x.pledge.content?.length ?? 0) / 600);
+        const hasMethod = /이행\s*방법|추진\s*계획|재원/.test(x.pledge.content ?? '') ? 1 : 0;
+        return s + (len * 0.7 + hasMethod * 0.3) * 100;
+      }, 0) / ca.perPledge.length
+    : 0;
+  const total = +(fiscal * 0.4 + exec * 0.4 + concrete * 0.2).toFixed(1);
+  return { total, fiscal: +fiscal.toFixed(0), exec: +exec.toFixed(0), concrete: +concrete.toFixed(0) };
+}
