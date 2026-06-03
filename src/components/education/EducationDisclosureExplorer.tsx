@@ -24,6 +24,7 @@ export function EducationDisclosureExplorer() {
   const [msg, setMsg] = useState('');
   const [loading, setLoading] = useState(false);
   const [queried, setQueried] = useState(false);
+  const [showRaw, setShowRaw] = useState(false); // 미검증 원자료 코드 열 표시 여부
 
   const sido = useMemo(() => SCHOOLINFO_REGIONS.find((s) => s.code === sidoCode), [sidoCode]);
   const item = useMemo<DisclosureItem>(() => DISCLOSURE_ITEMS.find((d) => d.apiType === apiType)!, [apiType]);
@@ -37,6 +38,9 @@ export function EducationDisclosureExplorer() {
     [rows],
   );
 
+  const labelOf = (c: string) => COMMON_LABELS[c] ?? item.fieldLabels[c] ?? c;
+  const isLabeled = (c: string) => COMMON_LABELS[c] != null || item.fieldLabels[c] != null;
+
   const cols = useMemo(() => {
     if (rows.length === 0) return [];
     // primaryCols 우선, 그 외 숨김컬럼 제외하고 추가
@@ -45,10 +49,16 @@ export function EducationDisclosureExplorer() {
       ...item.primaryCols.filter((c) => present.includes(c)),
       ...present.filter((c) => !item.primaryCols.includes(c) && !HIDDEN_COLS.has(c)),
     ];
-    return ordered;
-  }, [rows, item]);
+    // 기본: 라벨 검증된 열 + primaryCols만. 토글 시 원자료 전체.
+    if (showRaw) return ordered;
+    return ordered.filter((c) => item.primaryCols.includes(c) || COMMON_LABELS[c] != null || item.fieldLabels[c] != null);
+  }, [rows, item, showRaw]);
 
-  const labelOf = (c: string) => COMMON_LABELS[c] ?? item.fieldLabels[c] ?? c;
+  // 숨겨진(미라벨) 열 개수
+  const hiddenCount = useMemo(() => {
+    if (rows.length === 0) return 0;
+    return Object.keys(rows[0]).filter((c) => !HIDDEN_COLS.has(c) && !item.primaryCols.includes(c) && !isLabeled(c)).length;
+  }, [rows, item]); // eslint-disable-line react-hooks/exhaustive-deps
 
   async function runQuery() {
     if (!sggCode) { setMsg('시군구를 선택해주세요.'); return; }
@@ -148,8 +158,14 @@ export function EducationDisclosureExplorer() {
             <div className="text-sm text-gray-500 py-6 text-center">{msg || '데이터가 없습니다.'}</div>
           ) : (
             <>
-              <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center justify-between mb-2 gap-2 flex-wrap">
                 <span className="text-sm text-gray-300">{sido?.name} {sido?.sgg.find((g) => g.code === sggCode)?.name} · <strong>{rows.length}개교</strong></span>
+                {hiddenCount > 0 && (
+                  <button onClick={() => setShowRaw((v) => !v)}
+                    className="text-xs px-2.5 py-1 rounded border border-gray-700 text-gray-300 hover:bg-gray-800">
+                    {showRaw ? `원자료 코드 열 숨기기` : `원자료 코드 열 보기 (+${hiddenCount})`}
+                  </button>
+                )}
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full text-xs md:text-sm">
@@ -169,7 +185,7 @@ export function EducationDisclosureExplorer() {
               </div>
               <p className="text-[11px] text-gray-600 mt-2 leading-relaxed">
                 ※ 학교명 가나다순 정렬. {(apiType === '09' || apiType === '62') && '학년별 컬럼: 학생수=N학년 학생, 학급=N학년 학급수, 학급당=학급당 학생수(학생÷학급). 초등 1~6학년·중고 1~3학년, 「특수학급」은 특수학급분, 「(계)」는 합계. '}
-                한글 라벨이 없는 열은 학교알리미 원자료 코드이며, 공식 정의는 학교알리미 공시 페이지를 참조하세요.
+                기본은 <strong className="text-gray-500">한글 라벨이 검증된 열</strong>만 표시합니다. 학교알리미 원자료 코드(미검증)는 「원자료 코드 열 보기」로 펼칠 수 있으며, 코드 정의는 학교알리미 공시 페이지를 참조하세요. (CSV 내보내기는 현재 보이는 열 기준)
               </p>
             </>
           )}
