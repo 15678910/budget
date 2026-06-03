@@ -30,13 +30,15 @@ interface Props {
   onBack: () => void;
   metricBySido?: Record<string, number>;
   points?: MapPoint[]; // 시군구 드릴 시 표시할 위치 핀 (유치원·학교 등)
+  highlightName?: string | null;        // 강조할 핀 이름
+  onPointClick?: (name: string) => void; // 핀 클릭 콜백
 }
 
 export interface MapPoint { lat: number; lng: number; name: string; label: string; color: string }
 
 const W = 360, H = 440;
 
-export function EducationKoreaMap({ geoData, municipalitiesGeo, selectedSido, selectedSgg, onSelect, onSelectSgg, onBack, metricBySido, points }: Props) {
+export function EducationKoreaMap({ geoData, municipalitiesGeo, selectedSido, selectedSgg, onSelect, onSelectSgg, onBack, metricBySido, points, highlightName, onPointClick }: Props) {
   const [zoom, setZoom] = useState(1);
   const [pan, setPan] = useState({ x: 0, y: 0 });
   const [emdTopo, setEmdTopo] = useState<Topology | null>(null);
@@ -207,17 +209,22 @@ export function EducationKoreaMap({ geoData, municipalitiesGeo, selectedSido, se
                     className="pointer-events-none fill-white/60" style={{ fontSize: 7 }}>{m.name}</text>
                 </g>
               ))}
-              {emd.pins.map((p) => (
-                <g key={`pin-${p.i}`} className="pointer-events-none">
-                  <circle cx={p.x} cy={p.y} r={1.8} fill={p.color} stroke="#fff" strokeWidth={0.4}>
-                    <title>{p.label}</title>
-                  </circle>
-                  <text x={p.x + 2.4} y={p.y + 1} className="fill-purple-100"
-                    style={{ fontSize: 4.2, paintOrder: 'stroke', stroke: '#0b1020', strokeWidth: 0.7 }}>
-                    {p.name.replace(/유치원$/, '').replace(/초등학교병설$/, '(병설)')}
-                  </text>
-                </g>
-              ))}
+              {emd.pins.map((p) => {
+                const hl = highlightName === p.name;
+                return (
+                  <g key={`pin-${p.i}`} onClick={guardClick(() => onPointClick?.(p.name))}
+                    className="cursor-pointer">
+                    {hl && <circle cx={p.x} cy={p.y} r={4.2} fill="none" stroke="#facc15" strokeWidth={0.8} />}
+                    <circle cx={p.x} cy={p.y} r={hl ? 2.6 : 1.8} fill={hl ? '#facc15' : p.color} stroke="#fff" strokeWidth={0.4}>
+                      <title>{p.label}</title>
+                    </circle>
+                    <text x={p.x + 2.4} y={p.y + 1} className={hl ? 'fill-yellow-200' : 'fill-purple-100'}
+                      style={{ fontSize: hl ? 5 : 4, paintOrder: 'stroke', stroke: '#0b1020', strokeWidth: 0.7, fontWeight: hl ? 700 : 400 }}>
+                      {p.name}
+                    </text>
+                  </g>
+                );
+              })}
             </>
           ) : (
             // 2단계: 선택 시도의 시군구 (시군구 미선택 시 클릭 가능)

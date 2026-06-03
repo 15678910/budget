@@ -65,6 +65,7 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
   const [subsidy, setSubsidy] = useState<SubsidyResp | null>(null);
   const [subLoading, setSubLoading] = useState(false);
   const [kinder, setKinder] = useState<KinderData | null>(null);
+  const [hlKinder, setHlKinder] = useState<string | null>(null); // 핀↔목록 하이라이트
 
   useEffect(() => {
     fetch('/data/education-schools-detail-2024.json')
@@ -195,7 +196,9 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
           <div className="max-w-[520px] mx-auto">
             <EducationKoreaMap geoData={geoData} municipalitiesGeo={municipalitiesGeo}
               selectedSido={sido} selectedSgg={sgg} onSelect={selectSido} onSelectSgg={selectSgg}
-              onBack={resetAll} metricBySido={metricBySido} points={mapPoints} />
+              onBack={resetAll} metricBySido={metricBySido} points={mapPoints}
+              highlightName={hlKinder}
+              onPointClick={(name) => { setKind('유'); setHlKinder(name); }} />
           </div>
           <p className="text-[11px] text-gray-500 mt-1 text-center">시도 → 시군구 → 시군구 클릭 시 <strong className="text-gray-400">읍면동 경계</strong> + <strong className="text-purple-300">유치원 위치(보라 핀)</strong> · 마우스 휠 확대/축소</p>
         </div>
@@ -280,8 +283,9 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
                       {kinderList.length === 0 ? (
                         <tr><td colSpan={4} className="py-6 text-center text-gray-500">유치원 데이터 없음</td></tr>
                       ) : kinderList.map((g, i) => (
-                        <tr key={i} className="border-b border-gray-800/40">
-                          <td className="py-1.5 px-1.5 text-gray-200">{g.n}</td>
+                        <tr key={i} onClick={() => setHlKinder(g.n === hlKinder ? null : g.n)}
+                          className={`border-b border-gray-800/40 cursor-pointer ${g.n === hlKinder ? 'bg-purple-600/30' : 'hover:bg-gray-800/40'}`}>
+                          <td className="py-1.5 px-1.5 text-gray-200">{g.n}{g.la == null && <span className="text-[10px] text-gray-600 ml-1">(위치없음)</span>}</td>
                           <td className="text-center py-1.5 px-1">
                             <span className="px-1.5 py-0.5 rounded text-[10px] text-white" style={{ background: KIND_COLOR['유'] }}>{g.est.replace(/[()]/g, ' ').trim().split(' ')[0] || '유'}</span>
                           </td>
