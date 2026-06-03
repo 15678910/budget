@@ -290,7 +290,7 @@ export function EducationPledgeDashboard({ feeds }: { feeds: PledgeFeed[] }) {
 
       {/* ── 상세 드로어 ── */}
       {opened && (
-        <CandidateDrawer data={opened} onClose={() => setOpenId(null)} />
+        <CandidateDrawer data={opened} type={type} onClose={() => setOpenId(null)} />
       )}
     </div>
   );
@@ -308,8 +308,11 @@ function Kpi({ label, value, unit, accent }: { label: string; value: string; uni
   );
 }
 
-function CandidateDrawer({ data, onClose }: { data: Analyzed; onClose: () => void }) {
+function CandidateDrawer({ data, type, onClose }: { data: Analyzed; type: string; onClose: () => void }) {
   const { c, a } = data;
+  const scope = type === '11' ? 'education' : type === '3' ? 'metro' : 'district';
+  const simHref = (title: string) =>
+    `/promise-check?scope=${scope}&sido=${encodeURIComponent(c.sido)}${c.sgg ? `&sgg=${encodeURIComponent(c.sgg)}` : ''}&pledge=${encodeURIComponent(title)}`;
   return (
     <div className="fixed inset-0 z-50 flex justify-end pointer-events-none" role="dialog" aria-modal="true">
       {/* 투명 클릭 캐처: 왼쪽 대시보드를 어둡게 하지 않고(딤 없음) 바깥 클릭 시 닫기만 */}
@@ -357,6 +360,11 @@ function CandidateDrawer({ data, onClose }: { data: Analyzed; onClose: () => voi
                 <div className="flex items-start gap-2">
                   <span className="font-mono text-xs text-sky-400 shrink-0 mt-0.5">#{pledge.ord}</span>
                   <h5 className="text-base font-semibold text-gray-100 leading-snug flex-1">{pledge.title}</h5>
+                  <a href={simHref(pledge.title)}
+                    className="shrink-0 inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-md border border-violet-700/60 bg-violet-950/40 text-violet-200 hover:bg-violet-900/50 transition-colors whitespace-nowrap"
+                    title="이 공약을 공약검증 시뮬레이터로 보내 재정 가능성을 실험합니다">
+                    🧪 이 공약 시뮬레이션
+                  </a>
                 </div>
                 <div className="flex flex-wrap items-center gap-1.5 mt-2.5 pl-6">
                   {analysis.categories.map((cat) => (

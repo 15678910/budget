@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { DataSources } from '@/components/shared/DataSources';
 import { PDFExportButton } from '@/components/shared/PDFExportButton';
 import { getMetroFiscalData, getDistrictFiscalData } from '@/lib/data/fiscal-health-data';
@@ -329,6 +329,33 @@ export function PromiseSimulator() {
     }
   };
   const [gdpGrowth, setGdpGrowth] = useState(2.0);       // GDP 성장률 0~5%
+
+  // 공약분석 → 시뮬레이션 연결: URL 파라미터로 공약 사전 입력 + 자동 추정
+  const [autoRan, setAutoRan] = useState(false);
+  useEffect(() => {
+    const sp = new URLSearchParams(window.location.search);
+    const pledge = sp.get('pledge');
+    const sc = sp.get('scope') as ElectionScope | null;
+    const sido = sp.get('sido');
+    const sgg = sp.get('sgg');
+    if (sc) setScope(sc);
+    if (sc === 'education' && sido) {
+      const off = EDUCATION_OFFICES.find((e) => e.metro === sido);
+      if (off) setSelectedEducation(off.name);
+    } else if (sc === 'metro' && sido) {
+      setSelectedMetro(sido);
+    } else if (sc === 'district' && sido) {
+      setSelectedMetro(sido);
+      if (sgg) setSelectedDistrict(sgg);
+    }
+    if (pledge) { setPromiseText(pledge); setAutoRan(true); }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  // 사전 입력 후 자동 AI 추정 1회
+  useEffect(() => {
+    if (autoRan && promiseText && !aiLoading) { handleAiAnalyze(); setAutoRan(false); }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoRan, promiseText]);
 
   const costUnit = '조원';
 
