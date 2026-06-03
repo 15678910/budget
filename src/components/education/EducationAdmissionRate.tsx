@@ -73,42 +73,46 @@ export function EducationAdmissionRate() {
         당해 연도 진학률이 구조적으로 낮게 나타납니다.
       </div>
 
-      {/* 시도별 순위 막대 */}
-      <section className="border border-gray-800 bg-gray-900/30 rounded-lg p-4">
-        <h3 className="text-sm font-semibold text-gray-300 mb-3">시도별 진학률 ({ADMISSION_LATEST_YEAR})</h3>
-        <ResponsiveContainer width="100%" height={400}>
-          <BarChart data={bar} layout="vertical" margin={{ left: 8, right: 32, top: 4, bottom: 4 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#374151" horizontal={false} />
-            <XAxis type="number" domain={[50, 90]} tick={{ fill: '#9ca3af', fontSize: 12 }} tickFormatter={(v) => `${v}%`} />
-            <YAxis type="category" dataKey="name" tick={{ fill: '#d1d5db', fontSize: 12 }} width={40} />
-            <Tooltip cursor={{ fill: 'rgba(148,163,184,0.08)' }}
-              contentStyle={{ background: '#111827', border: '1px solid #374151', borderRadius: 8, fontSize: 13 }}
-              labelStyle={{ color: '#e5e7eb' }} itemStyle={{ color: '#e5e7eb' }}
-              formatter={(v) => [`${v}%`, '진학률']} />
-            <Bar dataKey="rate" radius={[0, 4, 4, 0]}>
-              {bar.map((d, i) => <Cell key={i} fill={d.rate < 70 ? '#ef4444' : d.rate >= 80 ? '#10b981' : '#3b82f6'} />)}
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>
-      </section>
+      {/* 시도별 막대 + 연도별 추이 (1행 2열) */}
+      <div className="grid lg:grid-cols-2 gap-4">
+        {/* 시도별 순위 — 세로 막대 (지역명 하단, 막대 위로) */}
+        <section className="border border-gray-800 bg-gray-900/30 rounded-lg p-4">
+          <h3 className="text-sm font-semibold text-gray-300 mb-3">시도별 진학률 ({ADMISSION_LATEST_YEAR})</h3>
+          <ResponsiveContainer width="100%" height={380}>
+            <BarChart data={bar} margin={{ left: 4, right: 8, top: 4, bottom: 28 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#374151" vertical={false} />
+              <XAxis type="category" dataKey="name" interval={0} angle={-45} textAnchor="end" height={48}
+                tick={{ fill: '#d1d5db', fontSize: 11 }} />
+              <YAxis type="number" domain={[50, 90]} tick={{ fill: '#9ca3af', fontSize: 12 }} tickFormatter={(v) => `${v}%`} width={36} />
+              <Tooltip cursor={false}
+                contentStyle={{ background: '#111827', border: '1px solid #374151', borderRadius: 8, fontSize: 13 }}
+                labelStyle={{ color: '#e5e7eb' }} itemStyle={{ color: '#e5e7eb' }}
+                formatter={(v) => [`${v}%`, '진학률']} />
+              <Bar dataKey="rate" radius={[4, 4, 0, 0]}>
+                {bar.map((d, i) => <Cell key={i} fill={d.rate < 70 ? '#ef4444' : d.rate >= 80 ? '#10b981' : '#3b82f6'} />)}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </section>
 
-      {/* 연도 추이 (최고·최저·전국 대표 시도) */}
-      <section className="border border-gray-800 bg-gray-900/30 rounded-lg p-4">
-        <h3 className="text-sm font-semibold text-gray-300 mb-3">연도별 추이 ({ADMISSION_YEARS[0]}~{ADMISSION_LATEST_YEAR})</h3>
-        <ResponsiveContainer width="100%" height={260}>
-          <LineChart data={trend} margin={{ left: 8, right: 16, top: 4, bottom: 4 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-            <XAxis dataKey="year" tick={{ fill: '#9ca3af', fontSize: 12 }} />
-            <YAxis domain={[55, 90]} tick={{ fill: '#9ca3af', fontSize: 12 }} tickFormatter={(v) => `${v}%`} />
-            <Tooltip contentStyle={{ background: '#111827', border: '1px solid #374151', borderRadius: 8, fontSize: 12 }}
-              labelStyle={{ color: '#e5e7eb' }} itemStyle={{ color: '#e5e7eb' }} formatter={(v) => [`${v}%`]} />
-            <Legend wrapperStyle={{ fontSize: 12 }} />
-            <Line type="monotone" dataKey={top.sido} stroke="#10b981" strokeWidth={2} dot={false} />
-            <Line type="monotone" dataKey="서울" stroke="#ef4444" strokeWidth={2} dot={false} />
-            <Line type="monotone" dataKey="경기" stroke="#f59e0b" strokeWidth={2} dot={false} />
-          </LineChart>
-        </ResponsiveContainer>
-      </section>
+        {/* 연도 추이 (최고·최저·전국 대표 시도) */}
+        <section className="border border-gray-800 bg-gray-900/30 rounded-lg p-4">
+          <h3 className="text-sm font-semibold text-gray-300 mb-3">연도별 추이 ({ADMISSION_YEARS[0]}~{ADMISSION_LATEST_YEAR})</h3>
+          <ResponsiveContainer width="100%" height={380}>
+            <LineChart data={trend} margin={{ left: 4, right: 16, top: 4, bottom: 28 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+              <XAxis dataKey="year" tick={{ fill: '#9ca3af', fontSize: 12 }} />
+              <YAxis domain={[55, 90]} tick={{ fill: '#9ca3af', fontSize: 12 }} tickFormatter={(v) => `${v}%`} width={36} />
+              <Tooltip cursor={false} contentStyle={{ background: '#111827', border: '1px solid #374151', borderRadius: 8, fontSize: 12 }}
+                labelStyle={{ color: '#e5e7eb' }} itemStyle={{ color: '#e5e7eb' }} formatter={(v) => [`${v}%`]} />
+              <Legend wrapperStyle={{ fontSize: 12 }} />
+              <Line type="monotone" dataKey={top.sido} stroke="#10b981" strokeWidth={2} dot={false} />
+              <Line type="monotone" dataKey="서울" stroke="#ef4444" strokeWidth={2} dot={false} />
+              <Line type="monotone" dataKey="경기" stroke="#f59e0b" strokeWidth={2} dot={false} />
+            </LineChart>
+          </ResponsiveContainer>
+        </section>
+      </div>
 
       {/* 시군구별 드릴다운 */}
       <section className="border border-gray-800 bg-gray-900/30 rounded-lg p-4">
