@@ -42,10 +42,16 @@ async function get(url, attempts = 6) {
 }
 
 (async () => {
-  // 1) 후보 목록
-  const cand = await get(`${HOST}/PofelcddInfoInqireService/getPofelcddRegistSttusInfoInqire?serviceKey=${KEY}&pageNo=1&numOfRows=300&sgId=${SG_ID}&sgTypecode=${SG_TYPE}`);
-  if (!cand || cand.items.length === 0) { console.error('후보 0명'); process.exit(3); }
-  const cands = cand.items.filter((c) => c.huboid);
+  // 1) 후보 목록 (페이지당 100 제한 → 페이지네이션)
+  const cands = [];
+  for (let page = 1; page <= 30; page++) {
+    const cand = await get(`${HOST}/PofelcddInfoInqireService/getPofelcddRegistSttusInfoInqire?serviceKey=${KEY}&pageNo=${page}&numOfRows=100&sgId=${SG_ID}&sgTypecode=${SG_TYPE}`);
+    if (!cand || cand.items.length === 0) break;
+    cands.push(...cand.items.filter((c) => c.huboid));
+    if (cands.length >= cand.total || cand.items.length < 100) break;
+    await sleep(120);
+  }
+  if (cands.length === 0) { console.error('후보 0명'); process.exit(3); }
   console.error(`후보 ${cands.length}명 · 공약 수집…`);
 
   // 2) 후보별 공약
