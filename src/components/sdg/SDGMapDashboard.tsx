@@ -90,18 +90,16 @@ export function SDGMapDashboard({ geoData, kosis }: { geoData: any; kosis: Kosis
           return (
             <button key={g.num} onClick={() => setGoalNum(g.num)}
               title={`SDG ${g.num} ${g.name}${hasData ? '' : ' (데이터 준비중)'}`}
-              className="group flex flex-col items-stretch text-left">
-              {/* 공식 타일 원본(번호+영문+픽토그램, 흰색)을 컬러 배경에 꽉 채움 */}
-              <span className={`relative block aspect-square rounded-md overflow-hidden transition-all ${active ? 'ring-2 ring-white scale-105 z-10' : 'group-hover:brightness-110'} ${hasData ? '' : 'opacity-45'}`}
-                style={{ background: g.color }}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={`/sdg/sdg-${g.num}.svg`} alt={g.name} className="absolute inset-0 w-full h-full object-contain p-1.5" />
-                {hasData && <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-emerald-300 ring-1 ring-white/60" />}
-              </span>
-              {/* 한글명 캡션 (타일 아래) */}
-              <span className={`mt-1 text-center text-[11px] md:text-xs leading-tight break-keep ${active ? 'text-white font-semibold' : 'text-gray-300'}`}>
-                {g.num}. {g.name}
-              </span>
+              className={`relative aspect-square rounded-md flex flex-col text-white p-2 md:p-2.5 overflow-hidden transition-all ${active ? 'ring-2 ring-white scale-105 z-10' : 'hover:brightness-110'} ${hasData ? '' : 'opacity-60'}`}
+              style={{ background: g.color }}>
+              {/* 상단: 번호 + 한글 제목 (공식 영문 위치·크기) */}
+              <div className="flex items-start gap-1.5">
+                <span className="font-extrabold text-2xl md:text-3xl leading-[0.8]">{g.num}</span>
+                <span className="font-bold leading-[1.12] text-[11px] md:text-[13px] pt-0.5 break-keep">{g.name}</span>
+              </div>
+              {/* 하단: 픽토그램(크롭본 — 번호·영문 제거) */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={`/sdg/sdg-${g.num}-pic.svg`} alt={g.name} className="w-full flex-1 object-contain mt-1 min-h-0" />
             </button>
           );
         })}
