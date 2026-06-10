@@ -62,12 +62,13 @@ export function SDGMapDashboard({ geoData }: { geoData: any }) {
       <div className="space-y-1.5">
         <div className="flex items-center gap-2">
           <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_2px_rgba(52,211,153,0.6)]" />
-          <span className="font-mono text-xs uppercase tracking-[0.2em] text-gray-500">SDG MAP · 한국 지역 지속가능발전목표</span>
+          <span className="font-mono text-xs uppercase tracking-[0.2em] text-gray-500">SDGs MAP · 지속가능발전목표 지역 현황</span>
         </div>
-        <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-gray-50">SDG 지역 지도</h2>
+        <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-gray-50">지속가능발전목표(SDGs) 지역 지도</h2>
         <p className="text-sm text-gray-400 leading-relaxed">
-          17개 지속가능발전목표(SDG)별 시도 현황을 지도로 비교합니다.
-          <span className="text-gray-500"> goal을 선택하면 대표 지표로 시도를 색칠합니다.</span>
+          UN 지속가능발전목표(SDGs)는 2030년까지 달성할 <strong className="text-gray-300">17개 목표(Goals)</strong>입니다.
+          목표별 시도 현황을 대표 지표로 비교합니다.
+          <span className="text-gray-500"> 아래 17개 목표 중 하나를 선택하면 지도를 색칠합니다.</span>
         </p>
       </div>
 
