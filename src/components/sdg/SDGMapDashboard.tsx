@@ -83,21 +83,21 @@ export function SDGMapDashboard({ geoData, kosis }: { geoData: any; kosis: Kosis
       </div>
 
       {/* 17 Goal 선택 그리드 — UN 공식 픽토그램(CC0) */}
-      <div className="grid grid-cols-6 md:grid-cols-9 gap-1.5">
+      <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-2">
         {SDG_GOALS.map((g) => {
           const hasData = indicatorFor(g.num) != null;
           const active = g.num === goalNum;
           return (
             <button key={g.num} onClick={() => setGoalNum(g.num)}
               title={`SDG ${g.num} ${g.name}${hasData ? '' : ' (데이터 준비중)'}`}
-              className={`relative aspect-square rounded-md flex flex-col items-center justify-center text-white p-1 transition-all ${active ? 'ring-2 ring-white scale-105 z-10' : 'hover:brightness-110'} ${hasData ? '' : 'opacity-45'}`}
+              className={`relative aspect-square rounded-lg flex flex-col items-center justify-center text-white p-2 transition-all ${active ? 'ring-2 ring-white scale-105 z-10' : 'hover:brightness-110'} ${hasData ? '' : 'opacity-45'}`}
               style={{ background: g.color }}>
-              <span className="absolute top-1 left-1.5 font-bold text-xs leading-none">{g.num}</span>
+              <span className="absolute top-1.5 left-2 font-bold text-base md:text-lg leading-none">{g.num}</span>
               {/* UN 공식 흰색 픽토그램 (배경 투명 → 컬러 타일 위에 표시) */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={`/sdg/sdg-${g.num}.svg`} alt={g.name} className="w-7 h-7 md:w-8 md:h-8 mt-1" />
-              <span className="text-[9px] leading-tight mt-0.5 px-0.5 text-center">{g.short}</span>
-              {hasData && <span className="absolute top-1 right-1 h-1.5 w-1.5 rounded-full bg-emerald-300 ring-1 ring-white/60" />}
+              <img src={`/sdg/sdg-${g.num}.svg`} alt={g.name} className="w-12 h-12 md:w-16 md:h-16 mt-2" />
+              <span className="text-xs md:text-sm font-medium leading-tight mt-1 px-1 text-center">{g.short}</span>
+              {hasData && <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-emerald-300 ring-1 ring-white/60" />}
             </button>
           );
         })}
