@@ -67,19 +67,7 @@ export function GuidedTour() {
     return () => window.removeEventListener('narasalim-start-tour', handler);
   }, []);
 
-  // Auto-show on first visit
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const done = localStorage.getItem('narasalim-tour-done');
-      if (!done) {
-        const timer = setTimeout(() => {
-          setCurrentStep(0);
-          setIsActive(true);
-        }, 1500);
-        return () => clearTimeout(timer);
-      }
-    }
-  }, []);
+  // (자동 시작 제거) 가이드 투어는 도움말(?) 버튼으로만 수동 실행됩니다.
 
   // Update target element rect when step changes
   useEffect(() => {
