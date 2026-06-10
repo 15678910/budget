@@ -36,6 +36,7 @@ const AI_SUB_TABS = [
   { href: "/ai-law", label: "AI기본법" },
   { href: "/fiscal-doctor", label: "AI정책진단" },
   { href: "/education-budget", label: "교육청예산" },
+  { href: "/sdg", label: "SDG 지도" },
 ];
 
 export function Header() {

@@ -126,7 +126,16 @@
       "Bash(node -e 'let d=\"\";process.stdin.on\\(\"data\",c=>d+=c\\);process.stdin.on\\(\"end\",\\(\\)=>{try{const j=JSON.parse\\(d\\);if\\(j.message&&!j.municipalities.length\\){console.log\\(\"MSG:\",j.message\\);return;}console.log\\(\"regionTotal:\",\\(j.regionTotalWon/1e8\\).toFixed\\(0\\),\"억 | 자치단체:\",j.municipalities.length\\);j.municipalities.slice\\(0,4\\).forEach\\(m=>console.log\\(`  ${m.isBoncheong?\"[본청]\":\"\"}${m.name}: 총${\\(m.totalWon/1e8\\).toFixed\\(1\\)}억·교육경비${\\(m.eduSubsidyWon/1e8\\).toFixed\\(1\\)}억`\\)\\);const inje=j.municipalities.find\\(m=>m.name.includes\\(\"인제\"\\)\\);if\\(inje\\)console.log\\(\"  인제군: 총\",\\(inje.totalWon/1e8\\).toFixed\\(1\\),\"억·교육경비\",\\(inje.eduSubsidyWon/1e8\\).toFixed\\(1\\),\"억\"\\);}catch\\(e\\){console.log\\(\"비JSON:\",d.slice\\(0,200\\)\\);}}\\)')",
       "Bash(curl -s --max-time 60 \"http://localhost:3000/api/education-subsidy?region=%EA%B2%BD%EA%B8%B0&fyr=2026\")",
       "Bash(node -e 'let d=\"\";process.stdin.on\\(\"data\",c=>d+=c\\);process.stdin.on\\(\"end\",\\(\\)=>{try{const j=JSON.parse\\(d\\);console.log\\(\"경기 regionTotal:\",\\(j.regionTotalWon/1e8\\).toFixed\\(0\\),\"억 | 자치단체:\",j.municipalities.length,\"| msg:\",j.message||\"-\"\\);}catch\\(e\\){console.log\\(\"비JSON:\",d.slice\\(0,200\\)\\);}}\\)')",
-      "Bash(git commit -q -m ' *)"
+      "Bash(git commit -q -m ' *)",
+      "Bash(curl -s -o /dev/null -w \"auth/login: %{http_code}\\\\n\" http://localhost:3000/auth/login)",
+      "Bash(curl -s --max-time 10 \"http://localhost:3000/api/auth/me\")",
+      "Bash(pkill -f \"next dev\")",
+      "Bash(pkill -f \"next-server\")",
+      "Bash(taskkill //F //IM node.exe)",
+      "Bash(pkill -9 node)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" --max-time 3 http://localhost:3000/)",
+      "Bash(node --experimental-vm-modules -e ' *)",
+      "Bash(awk '{print $9, $5\"B\"}')"
     ]
   }
 }
