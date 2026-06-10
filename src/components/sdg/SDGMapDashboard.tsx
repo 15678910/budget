@@ -90,13 +90,16 @@ export function SDGMapDashboard({ geoData, kosis }: { geoData: any; kosis: Kosis
           return (
             <button key={g.num} onClick={() => setGoalNum(g.num)}
               title={`SDG ${g.num} ${g.name}${hasData ? '' : ' (데이터 준비중)'}`}
-              className={`relative aspect-square rounded-lg flex flex-col items-center justify-center text-white p-2 transition-all ${active ? 'ring-2 ring-white scale-105 z-10' : 'hover:brightness-110'} ${hasData ? '' : 'opacity-45'}`}
+              className={`relative aspect-square rounded-md flex flex-col text-white p-2 md:p-2.5 transition-all overflow-hidden ${active ? 'ring-2 ring-white scale-105 z-10' : 'hover:brightness-110'} ${hasData ? '' : 'opacity-45'}`}
               style={{ background: g.color }}>
-              <span className="absolute top-1.5 left-2 font-bold text-base md:text-lg leading-none">{g.num}</span>
-              {/* UN 공식 흰색 픽토그램 (배경 투명 → 컬러 타일 위에 표시) */}
+              {/* 상단: 번호 + 영문 제목 (UN 공식 레이아웃) */}
+              <div className="flex items-start gap-1.5">
+                <span className="font-extrabold text-2xl md:text-3xl leading-[0.85]">{g.num}</span>
+                <span className="font-bold uppercase leading-[1.05] text-[10px] md:text-[11px] tracking-tight pt-0.5">{g.en}</span>
+              </div>
+              {/* 하단: UN 공식 흰색 픽토그램 */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={`/sdg/sdg-${g.num}.svg`} alt={g.name} className="w-12 h-12 md:w-16 md:h-16 mt-2" />
-              <span className="text-xs md:text-sm font-medium leading-tight mt-1 px-1 text-center">{g.short}</span>
+              <img src={`/sdg/sdg-${g.num}.svg`} alt={g.name} className="w-12 h-12 md:w-16 md:h-16 mt-auto self-start" />
               {hasData && <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-emerald-300 ring-1 ring-white/60" />}
             </button>
           );
