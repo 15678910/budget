@@ -259,6 +259,13 @@ export function Header() {
                   </button>
                   {userMenuOpen && (
                     <div className="absolute top-full right-0 mt-1 w-36 bg-background border border-border rounded-lg shadow-lg p-1.5 z-50">
+                      <Link
+                        href="/account"
+                        onClick={() => setUserMenuOpen(false)}
+                        className="block w-full text-left px-3 py-2 text-sm rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+                      >
+                        마이페이지
+                      </Link>
                       <button
                         onClick={async () => {
                           await fetch('/api/auth/logout', { method: 'POST' });

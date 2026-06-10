@@ -486,6 +486,11 @@ export async function updateUserNickname(id: number, nickname: string): Promise<
   await sql`UPDATE users SET nickname = ${nickname} WHERE id = ${id}`;
 }
 
+export async function updateUserPassword(id: number, passwordHash: string): Promise<void> {
+  const sql = getSQL();
+  await sql`UPDATE users SET password_hash = ${passwordHash} WHERE id = ${id}`;
+}
+
 export async function getUserStats(days: number = 30) {
   const sql = getSQL();
   const startDate = new Date();
