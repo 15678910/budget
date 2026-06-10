@@ -135,7 +135,15 @@
       "Bash(pkill -9 node)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" --max-time 3 http://localhost:3000/)",
       "Bash(node --experimental-vm-modules -e ' *)",
-      "Bash(awk '{print $9, $5\"B\"}')"
+      "Bash(awk '{print $9, $5\"B\"}')",
+      "Bash(curl -s --max-time 20 \"https://api.github.com/search/repositories?q=sdg+icons&per_page=8\")",
+      "Bash(node -e 'let d=\"\";process.stdin.on\\(\"data\",c=>d+=c\\);process.stdin.on\\(\"end\",\\(\\)=>{try{const j=JSON.parse\\(d\\);\\(j.items||[]\\).forEach\\(r=>console.log\\(`  ${r.full_name} ⭐${r.stargazers_count} — ${\\(r.description||\"\"\\).slice\\(0,50\\)}`\\)\\);}catch\\(e\\){console.log\\(\"err\",d.slice\\(0,150\\)\\);}}\\)')",
+      "Bash(curl -s --max-time 20 \"https://api.github.com/repos/joaomlourenco/SDGs/contents/Icons\")",
+      "Bash(node -e 'let d=\"\";process.stdin.on\\(\"data\",c=>d+=c\\);process.stdin.on\\(\"end\",\\(\\)=>{try{const j=JSON.parse\\(d\\);j.slice\\(0,25\\).forEach\\(f=>console.log\\(`  ${f.type} ${f.name}`\\)\\);}catch\\(e\\){console.log\\(\"err\",d.slice\\(0,200\\)\\);}}\\)')",
+      "Bash(curl -s --max-time 20 \"https://api.github.com/repos/joaomlourenco/SDGs/contents/Icons/EN\")",
+      "Bash(node -e 'let d=\"\";process.stdin.on\\(\"data\",c=>d+=c\\);process.stdin.on\\(\"end\",\\(\\)=>{try{const j=JSON.parse\\(d\\);console.log\\(\"개수:\",j.length\\);j.slice\\(0,6\\).forEach\\(f=>console.log\\(`  ${f.name} \\(${\\(f.size/1024\\).toFixed\\(0\\)}KB\\) ${f.download_url?\"DL가능\":\"\"}`\\)\\);}catch\\(e\\){console.log\\(\"err\",d.slice\\(0,200\\)\\);}}\\)')",
+      "Bash(curl -s --max-time 20 \"https://api.github.com/repos/joaomlourenco/SDGs/contents/Icons/EN/SVG\")",
+      "Bash(node -e 'let d=\"\";process.stdin.on\\(\"data\",c=>d+=c\\);process.stdin.on\\(\"end\",\\(\\)=>{try{const j=JSON.parse\\(d\\);console.log\\(\"개수:\",j.length\\);j.slice\\(0,6\\).forEach\\(f=>console.log\\(`  ${f.name}`\\)\\);console.log\\(\"  ...\"\\);console.log\\(\"download_url 예:\",j[0]?.download_url\\);}catch\\(e\\){console.log\\(\"err\",d.slice\\(0,200\\)\\);}}\\)')"
     ]
   }
 }

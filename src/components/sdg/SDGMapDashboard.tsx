@@ -78,7 +78,7 @@ export function SDGMapDashboard({ geoData }: { geoData: any }) {
         데이터 미보유 goal은 <strong>'데이터 준비중'</strong>(KOSIS 수집 예정)으로 표기합니다.
       </div>
 
-      {/* 17 Goal 선택 그리드 */}
+      {/* 17 Goal 선택 그리드 — UN 공식 픽토그램(CC0) */}
       <div className="grid grid-cols-6 md:grid-cols-9 gap-1.5">
         {SDG_GOALS.map((g) => {
           const hasData = getGoalIndicator(g.num) != null;
@@ -86,11 +86,14 @@ export function SDGMapDashboard({ geoData }: { geoData: any }) {
           return (
             <button key={g.num} onClick={() => setGoalNum(g.num)}
               title={`SDG ${g.num} ${g.name}${hasData ? '' : ' (데이터 준비중)'}`}
-              className={`relative aspect-square rounded-md flex flex-col items-center justify-center text-white transition-all ${active ? 'ring-2 ring-white scale-105' : 'hover:brightness-110'} ${hasData ? '' : 'opacity-40'}`}
+              className={`relative aspect-square rounded-md flex flex-col items-center justify-center text-white p-1 transition-all ${active ? 'ring-2 ring-white scale-105 z-10' : 'hover:brightness-110'} ${hasData ? '' : 'opacity-45'}`}
               style={{ background: g.color }}>
-              <span className="font-bold text-sm leading-none">{g.num}</span>
+              <span className="absolute top-1 left-1.5 font-bold text-xs leading-none">{g.num}</span>
+              {/* UN 공식 흰색 픽토그램 */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={`/sdg/sdg-${g.num}.svg`} alt={g.name} className="w-7 h-7 md:w-8 md:h-8 mt-1" style={{ filter: 'brightness(0) invert(1)' }} />
               <span className="text-[9px] leading-tight mt-0.5 px-0.5 text-center">{g.short}</span>
-              {hasData && <span className="absolute top-0.5 right-0.5 h-1.5 w-1.5 rounded-full bg-emerald-300" />}
+              {hasData && <span className="absolute top-1 right-1 h-1.5 w-1.5 rounded-full bg-emerald-300 ring-1 ring-white/60" />}
             </button>
           );
         })}
