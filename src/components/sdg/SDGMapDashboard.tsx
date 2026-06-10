@@ -92,13 +92,10 @@ export function SDGMapDashboard({ geoData, kosis }: { geoData: any; kosis: Kosis
               title={`SDG ${g.num} ${g.name}${hasData ? '' : ' (데이터 준비중)'}`}
               className={`relative aspect-square rounded-md flex flex-col text-white p-2 md:p-2.5 transition-all overflow-hidden ${active ? 'ring-2 ring-white scale-105 z-10' : 'hover:brightness-110'} ${hasData ? '' : 'opacity-45'}`}
               style={{ background: g.color }}>
-              {/* 상단: 번호 + 영문 제목 + 한글 병기 (UN 공식 레이아웃) */}
+              {/* 상단: 번호 + 한글 제목 (UN 공식 레이아웃, 한글화) */}
               <div className="flex items-start gap-1.5">
                 <span className="font-extrabold text-2xl md:text-3xl leading-[0.85]">{g.num}</span>
-                <span className="flex flex-col pt-0.5 min-w-0">
-                  <span className="font-bold uppercase leading-[1.05] text-[10px] md:text-[11px] tracking-tight">{g.en}</span>
-                  <span className="leading-tight text-[10px] md:text-xs text-white/90 mt-0.5">{g.name}</span>
-                </span>
+                <span className="font-bold leading-[1.15] text-[11px] md:text-[13px] pt-0.5 break-keep">{g.name}</span>
               </div>
               {/* 하단: UN 공식 흰색 픽토그램 */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
