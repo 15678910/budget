@@ -40,6 +40,36 @@ async function sha256Hex(input: string): Promise<string> {
     .join('');
 }
 
+/**
+ * 로그인한 관리자 여부 — user_token(JWT, HS256, ADMIN_JWT_SECRET) 검증 후
+ * 이메일이 ADMIN_EMAILS(콤마구분 환경변수)에 포함되면 true.
+ * 유지보수 모드라도 관리자는 통과시키기 위함. (ADMIN_EMAILS 미설정 시 false)
+ */
+async function isAdminLoggedIn(request: NextRequest): Promise<boolean> {
+  const adminEmails = (process.env.ADMIN_EMAILS || '')
+    .split(',')
+    .map((s) => s.trim().toLowerCase())
+    .filter(Boolean);
+  if (adminEmails.length === 0) return false;
+  const token = request.cookies.get('user_token')?.value;
+  const secret = process.env.ADMIN_JWT_SECRET;
+  if (!token || !secret) return false;
+  try {
+    const { payload } = await jwtVerify(token, new TextEncoder().encode(secret));
+    const email = String(payload.email ?? '').toLowerCase();
+    return email !== '' && adminEmails.includes(email);
+  } catch {
+    return false;
+  }
+}
+
+/** 유지보수 중에도 접근 허용할 인증 경로 (로그인 흐름). 회원가입은 제외(신규가입 차단). */
+function isAuthRoute(pathname: string): boolean {
+  if (pathname === '/auth/login') return true;
+  if (pathname.startsWith('/api/auth/') && pathname !== '/api/auth/register') return true;
+  return false;
+}
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -98,7 +128,12 @@ export async function middleware(request: NextRequest) {
       slidingRefreshHash = expectedHash;
     }
 
-    if (!allowedByCookie) {
+    // 1-B') 추가 통과 조건:
+    //   · 로그인 경로(/auth/login, /api/auth/*) → 관리자가 로그인할 수 있도록 항상 허용
+    //   · 로그인한 관리자(user_token 이메일 ∈ ADMIN_EMAILS) → 사이트 전체 통과
+    const exempt = isAuthRoute(pathname) || (await isAdminLoggedIn(request));
+
+    if (!allowedByCookie && !exempt) {
       // 1-C) 차단 → /maintenance 로 rewrite (URL 유지, 내용만 점검 페이지)
       //      HTTP 503 + Retry-After 로 "일시적 점검"임을 검색엔진에 명시
       //      (영구 색인 제거 방지 — 점검 종료 후 순위 보존)
