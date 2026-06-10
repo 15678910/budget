@@ -61,18 +61,24 @@ export function SDGMapDashboard({ geoData, kosis }: { geoData: any; kosis: Kosis
 
   return (
     <div className="space-y-5 text-gray-200">
-      {/* 헤더 */}
-      <div className="space-y-1.5">
-        <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_2px_rgba(52,211,153,0.6)]" />
-          <span className="font-mono text-xs uppercase tracking-[0.2em] text-gray-500">SDGs MAP · 지속가능발전목표 지역 현황</span>
+      {/* 헤더 — SDG 휠 로고(17색) + 제목 */}
+      <div className="flex items-center gap-4">
+        {/* SDG 컬러 휠 (17개 공식색 conic-gradient 도넛) */}
+        <div className="relative shrink-0 rounded-full" style={{
+          width: 72, height: 72,
+          background: `conic-gradient(${SDG_GOALS.map((g, i) => `${g.color} ${(i * 360 / 17).toFixed(2)}deg ${((i + 1) * 360 / 17).toFixed(2)}deg`).join(', ')})`,
+        }}>
+          <div className="absolute inset-[26%] rounded-full bg-gray-950 flex items-center justify-center">
+            <span className="text-[9px] font-extrabold text-white leading-none text-center">SDGs</span>
+          </div>
         </div>
-        <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-gray-50">지속가능발전목표(SDGs) 지역 지도</h2>
-        <p className="text-sm text-gray-400 leading-relaxed">
-          UN 지속가능발전목표(SDGs)는 2030년까지 달성할 <strong className="text-gray-300">17개 목표(Goals)</strong>입니다.
-          목표별 시도 현황을 대표 지표로 비교합니다.
-          <span className="text-gray-500"> 아래 17개 목표 중 하나를 선택하면 지도를 색칠합니다.</span>
-        </p>
+        <div className="space-y-1">
+          <span className="font-mono text-xs uppercase tracking-[0.2em] text-gray-500">SUSTAINABLE DEVELOPMENT GOALS</span>
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-gray-50">지속가능발전목표(SDGs) 지역 지도</h2>
+          <p className="text-sm text-gray-400 leading-relaxed">
+            UN SDGs는 2030년까지 달성할 <strong className="text-gray-300">17개 목표</strong>입니다. 목표를 선택하면 시도별 대표 지표로 지도를 색칠합니다.
+          </p>
+        </div>
       </div>
 
       {/* 중립·지표해석 고지 */}
@@ -90,16 +96,17 @@ export function SDGMapDashboard({ geoData, kosis }: { geoData: any; kosis: Kosis
           return (
             <button key={g.num} onClick={() => setGoalNum(g.num)}
               title={`SDG ${g.num} ${g.name}${hasData ? '' : ' (데이터 준비중)'}`}
-              className={`relative aspect-square rounded-md flex flex-col text-white p-2 md:p-2.5 overflow-hidden transition-all ${active ? 'ring-2 ring-white scale-105 z-10' : 'hover:brightness-110'} ${hasData ? '' : 'opacity-60'}`}
-              style={{ background: g.color }}>
-              {/* 상단: 번호 + 한글 제목 (공식 영문 위치·크기) */}
-              <div className="flex items-start gap-1.5">
-                <span className="font-extrabold text-2xl md:text-3xl leading-[0.8]">{g.num}</span>
-                <span className="font-bold leading-[1.12] text-[11px] md:text-[13px] pt-0.5 break-keep">{g.name}</span>
-              </div>
-              {/* 하단: 픽토그램(크롭본 — 번호·영문 제거) */}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={`/sdg/sdg-${g.num}-pic.svg`} alt={g.name} className="w-full flex-1 object-contain mt-1 min-h-0" />
+              className="group flex flex-col items-stretch text-left">
+              {/* 공식 타일 원본(정확한 픽토그램·번호·색) */}
+              <span className={`relative block aspect-square rounded-md overflow-hidden transition-all ${active ? 'ring-2 ring-white scale-105 z-10' : 'group-hover:brightness-110'}`}
+                style={{ background: g.color }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={`/sdg/sdg-${g.num}.svg`} alt={g.name} className="absolute inset-0 w-full h-full object-contain p-1.5" />
+              </span>
+              {/* 한글명 캡션 (확대) */}
+              <span className={`mt-1.5 text-center text-sm md:text-base font-medium leading-tight break-keep ${active ? 'text-white font-bold' : 'text-gray-200'}`}>
+                {g.num}. {g.name}
+              </span>
             </button>
           );
         })}
