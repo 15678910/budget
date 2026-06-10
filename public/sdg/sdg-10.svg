@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 405 405">
-  <!-- SDG 10 REDUCED INEQUALITIES — 현행 공식형(열린 원 + 등호), 하단 배치 -->
-  <path d="M 283 226 A 92 92 0 1 1 283 316" fill="none" stroke="#ffffff" stroke-width="26" stroke-linecap="round"/>
-  <rect x="150" y="253" width="104" height="18" rx="9" fill="#ffffff"/>
-  <rect x="150" y="284" width="104" height="18" rx="9" fill="#ffffff"/>
-  <path d="M 300 245 L 330 271 L 300 297 Z" fill="#ffffff"/>
+  <!-- SDG 10 REDUCED INEQUALITIES — 원(링) 안에 등호 중앙 배치 -->
+  <circle cx="202" cy="271" r="86" fill="none" stroke="#ffffff" stroke-width="24"/>
+  <rect x="163" y="254" width="78" height="16" rx="8" fill="#ffffff"/>
+  <rect x="163" y="286" width="78" height="16" rx="8" fill="#ffffff"/>
 </svg>

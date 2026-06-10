@@ -96,7 +96,7 @@ export function SDGMapDashboard({ geoData, kosis }: { geoData: any; kosis: Kosis
           return (
             <button key={g.num} onClick={() => setGoalNum(g.num)}
               title={`SDG ${g.num} ${g.name}${hasData ? '' : ' (데이터 준비중)'}`}
-              className={`relative block aspect-square rounded-md overflow-hidden transition-all ${active ? 'ring-2 ring-white z-10' : 'hover:brightness-110'}`}
+              className={`relative block aspect-square rounded-md overflow-hidden transition-all ${active ? 'brightness-105 z-10' : 'hover:brightness-110'}`}
               style={{ background: g.color }}>
               {/* 공식 픽토그램(하단) — 풀 SVG, 상단 영문은 아래 오버레이로 가림 */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
