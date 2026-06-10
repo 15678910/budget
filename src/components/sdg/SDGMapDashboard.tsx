@@ -3,9 +3,10 @@
 import { useMemo, useState } from 'react';
 import { geoMercator, geoPath } from 'd3-geo';
 import { feature } from 'topojson-client';
-import { SDG_GOALS, getGoalIndicator, SIDO_FULL_TO_SHORT } from '@/lib/sdg/goals';
+import { SDG_GOALS, getGoalIndicator, SIDO_FULL_TO_SHORT, type SDGIndicator } from '@/lib/sdg/goals';
 
 type Topology = { type: 'Topology'; objects: Record<string, unknown>; arcs: unknown[]; [k: string]: unknown };
+interface KosisData { goals: Record<string, SDGIndicator> }
 const W = 360, H = 440;
 
 // hex → rgba (농도용)
@@ -16,10 +17,12 @@ function hexA(hex: string, a: number): string {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function SDGMapDashboard({ geoData }: { geoData: any }) {
+export function SDGMapDashboard({ geoData, kosis }: { geoData: any; kosis: KosisData }) {
+  // 지표 = KOSIS 수집분 우선, 없으면 코드 내장(진학률 등)
+  const indicatorFor = (num: number): SDGIndicator | null => kosis?.goals?.[String(num)] ?? getGoalIndicator(num);
   const [goalNum, setGoalNum] = useState(4); // 기본: 데이터 보유 goal
   const goal = SDG_GOALS.find((g) => g.num === goalNum)!;
-  const indicator = useMemo(() => getGoalIndicator(goalNum), [goalNum]);
+  const indicator = useMemo(() => indicatorFor(goalNum), [goalNum]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // 시도 경로 + 값 매핑
   const provinces = useMemo(() => {
@@ -82,7 +85,7 @@ export function SDGMapDashboard({ geoData }: { geoData: any }) {
       {/* 17 Goal 선택 그리드 — UN 공식 픽토그램(CC0) */}
       <div className="grid grid-cols-6 md:grid-cols-9 gap-1.5">
         {SDG_GOALS.map((g) => {
-          const hasData = getGoalIndicator(g.num) != null;
+          const hasData = indicatorFor(g.num) != null;
           const active = g.num === goalNum;
           return (
             <button key={g.num} onClick={() => setGoalNum(g.num)}
