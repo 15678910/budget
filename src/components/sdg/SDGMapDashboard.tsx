@@ -93,9 +93,9 @@ export function SDGMapDashboard({ geoData, kosis }: { geoData: any; kosis: Kosis
               className={`relative aspect-square rounded-md flex flex-col items-center justify-center text-white p-1 transition-all ${active ? 'ring-2 ring-white scale-105 z-10' : 'hover:brightness-110'} ${hasData ? '' : 'opacity-45'}`}
               style={{ background: g.color }}>
               <span className="absolute top-1 left-1.5 font-bold text-xs leading-none">{g.num}</span>
-              {/* UN 공식 흰색 픽토그램 */}
+              {/* UN 공식 흰색 픽토그램 (배경 투명 → 컬러 타일 위에 표시) */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={`/sdg/sdg-${g.num}.svg`} alt={g.name} className="w-7 h-7 md:w-8 md:h-8 mt-1" style={{ filter: 'brightness(0) invert(1)' }} />
+              <img src={`/sdg/sdg-${g.num}.svg`} alt={g.name} className="w-7 h-7 md:w-8 md:h-8 mt-1" />
               <span className="text-[9px] leading-tight mt-0.5 px-0.5 text-center">{g.short}</span>
               {hasData && <span className="absolute top-1 right-1 h-1.5 w-1.5 rounded-full bg-emerald-300 ring-1 ring-white/60" />}
             </button>
