@@ -96,15 +96,15 @@ export function SDGMapDashboard({ geoData, kosis }: { geoData: any; kosis: Kosis
           return (
             <button key={g.num} onClick={() => setGoalNum(g.num)}
               title={`SDG ${g.num} ${g.name}${hasData ? '' : ' (데이터 준비중)'}`}
-              className={`relative block aspect-square rounded-md overflow-hidden transition-all ${active ? 'ring-2 ring-white scale-105 z-10' : 'hover:brightness-110'}`}
+              className={`relative block aspect-square rounded-md overflow-hidden transition-all ${active ? 'ring-2 ring-white z-10' : 'hover:brightness-110'}`}
               style={{ background: g.color }}>
               {/* 공식 픽토그램(하단) — 풀 SVG, 상단 영문은 아래 오버레이로 가림 */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={`/sdg/sdg-${g.num}.svg`} alt={g.name} className="absolute inset-0 w-full h-full object-contain" />
               {/* 상단 오버레이(동일 색) — SVG 번호·영문 가리고 번호+한글 표시 */}
-              <span className="absolute top-0 left-0 right-0 h-[40%] flex items-start gap-1.5 p-2 text-white text-left" style={{ background: g.color }}>
-                <span className="font-extrabold text-2xl md:text-3xl leading-[0.8]">{g.num}</span>
-                <span className="font-bold leading-[1.1] text-[11px] md:text-[13px] pt-0.5 break-keep">{g.name}</span>
+              <span className="absolute top-0 left-0 right-0 h-[46%] flex items-start gap-1.5 p-2 text-white text-left" style={{ background: g.color }}>
+                <span className="font-extrabold text-xl md:text-2xl leading-[0.85] shrink-0">{g.num}</span>
+                <span className="font-bold leading-[1.12] text-[15px] md:text-xl pt-0.5 break-keep">{g.name}</span>
               </span>
             </button>
           );
