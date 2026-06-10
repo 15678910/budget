@@ -102,9 +102,9 @@ export function SDGMapDashboard({ geoData, kosis }: { geoData: any; kosis: Kosis
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={`/sdg/sdg-${g.num}.svg`} alt={g.name} className="absolute inset-0 w-full h-full object-contain" />
               {/* 상단 오버레이(동일 색) — SVG 번호·영문 가리고 번호+한글 표시 */}
-              <span className="absolute top-0 left-0 right-0 h-[46%] flex items-start gap-1.5 p-2 text-white text-left" style={{ background: g.color }}>
-                <span className="font-extrabold text-xl md:text-2xl leading-[0.85] shrink-0">{g.num}</span>
-                <span className="font-bold leading-[1.12] text-[15px] md:text-xl pt-0.5 break-keep">{g.name}</span>
+              <span className="absolute top-0 left-0 right-0 h-[46%] flex items-start gap-1.5 p-2 text-white text-left leading-none" style={{ background: g.color }}>
+                <span className="font-extrabold text-xl md:text-2xl leading-none shrink-0">{g.num}</span>
+                <span className="font-bold leading-[1.15] text-[15px] md:text-xl break-keep">{g.name}</span>
               </span>
             </button>
           );
