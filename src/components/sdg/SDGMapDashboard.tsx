@@ -104,7 +104,7 @@ export function SDGMapDashboard({ geoData, kosis }: { geoData: any; kosis: Kosis
               </div>
               {/* 하단: 공식 픽토그램(크롭본) — 자체 영역에만 표시 */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={`/sdg/sdg-${g.num}-pic.svg?v=10`} alt={g.name} className="flex-1 min-h-0 w-full object-contain pb-2 px-2" />
+              <img src={`/sdg/sdg-${g.num}-pic.svg?v=11`} alt={g.name} className="flex-1 min-h-0 w-full object-contain pb-2 px-2" />
             </button>
           );
         })}
