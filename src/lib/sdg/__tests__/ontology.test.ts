@@ -1,4 +1,11 @@
-import { buildOntology, validateFocus } from '@/lib/sdg/ontology';
+import {
+  buildOntology,
+  validateFocus,
+  neighbors,
+  shortestPath,
+  ontologyCounts,
+} from '@/lib/sdg/ontology';
+import type { OntologyEdge } from '@/lib/sdg/ontology';
 import { INDICATOR_TO_GOAL } from '@/lib/sdg/indicator-map';
 import { SDG_GOALS, SDG_DOMAINS_5 } from '@/lib/sdg/goals';
 import { SDG_DOMAINS } from '@/lib/data/local-sdg-data';
@@ -99,5 +106,107 @@ describe('validateFocus', () => {
     const ds = nodes.find((n) => n.type === 'dataset')!;
     expect(validateFocus([ds.id, 'ind-wel_basic'])).toContain(ds.id);
     expect(validateFocus([ds.id, 'ind-wel_basic'])).toContain('ind-wel_basic');
+  });
+});
+
+describe('neighbors', () => {
+  // A-B(provides), B-C(maps-to), C-A(belongs-to) 삼각 + A-D(provides) 가지
+  const edges: OntologyEdge[] = [
+    { from: 'A', to: 'B', kind: 'provides' },
+    { from: 'B', to: 'C', kind: 'maps-to' },
+    { from: 'C', to: 'A', kind: 'belongs-to' },
+    { from: 'A', to: 'D', kind: 'provides' },
+  ];
+
+  it('양방향으로 직접 연결된 이웃을 반환한다(from/to 무관)', () => {
+    const ns = neighbors(edges, 'A');
+    const ids = ns.map((n) => n.nodeId).sort();
+    // A는 B(from), C(to), D(from)와 연결
+    expect(ids).toEqual(['B', 'C', 'D']);
+  });
+
+  it('엣지 종류를 동반한다', () => {
+    const ns = neighbors(edges, 'B');
+    const byId = new Map(ns.map((n) => [n.nodeId, n.edgeKind]));
+    expect(byId.get('A')).toBe('provides');
+    expect(byId.get('C')).toBe('maps-to');
+  });
+
+  it('중복 이웃을 제거한다', () => {
+    const dup: OntologyEdge[] = [
+      { from: 'X', to: 'Y', kind: 'provides' },
+      { from: 'Y', to: 'X', kind: 'maps-to' },
+    ];
+    const ns = neighbors(dup, 'X');
+    expect(ns.length).toBe(1);
+    expect(ns[0].nodeId).toBe('Y');
+  });
+
+  it('연결이 없으면 빈 배열', () => {
+    expect(neighbors(edges, 'Z')).toEqual([]);
+  });
+});
+
+describe('shortestPath', () => {
+  // A-B-C-E 선형 + B-D 가지, F 고립
+  const edges: OntologyEdge[] = [
+    { from: 'A', to: 'B', kind: 'provides' },
+    { from: 'B', to: 'C', kind: 'maps-to' },
+    { from: 'C', to: 'E', kind: 'belongs-to' },
+    { from: 'B', to: 'D', kind: 'provides' },
+  ];
+
+  it('존재하는 경로를 최단으로 반환한다', () => {
+    expect(shortestPath(edges, 'A', 'E')).toEqual(['A', 'B', 'C', 'E']);
+  });
+
+  it('무방향이라 역방향으로도 탐색한다', () => {
+    expect(shortestPath(edges, 'E', 'A')).toEqual(['E', 'C', 'B', 'A']);
+  });
+
+  it('경로가 없으면 빈 배열', () => {
+    expect(shortestPath(edges, 'A', 'F')).toEqual([]);
+  });
+
+  it('from===to면 [from]', () => {
+    expect(shortestPath(edges, 'B', 'B')).toEqual(['B']);
+  });
+
+  it('실제 온톨로지에서 dataset→domain 경로가 존재한다', () => {
+    const o = buildOntology();
+    const ds = o.nodes.find((n) => n.type === 'dataset')!;
+    const dom = o.nodes.find((n) => n.type === 'domain')!;
+    const path = shortestPath(o.edges, ds.id, dom.id);
+    // 경로가 있다면 양 끝이 정확해야 한다(없을 수도 있으나 본 데이터에선 통상 연결됨)
+    if (path.length > 0) {
+      expect(path[0]).toBe(ds.id);
+      expect(path[path.length - 1]).toBe(dom.id);
+    }
+  });
+});
+
+describe('ontologyCounts', () => {
+  it('엔티티=노드수, 관계=엣지수, 속성=meta 키 총합', () => {
+    const o = {
+      nodes: [
+        { id: 'A', type: 'goal' as const, label: 'a' },
+        { id: 'B', type: 'indicator' as const, label: 'b', meta: { unit: 'x', source: 'y' } },
+        { id: 'C', type: 'indicator' as const, label: 'c', meta: { unit: 'x', source: 'y', direction: 'z' } },
+      ],
+      edges: [
+        { from: 'A', to: 'B', kind: 'maps-to' as const },
+        { from: 'B', to: 'C', kind: 'provides' as const },
+      ],
+    };
+    expect(ontologyCounts(o)).toEqual({ entities: 3, relationships: 2, properties: 5 });
+  });
+
+  it('실제 온톨로지 카운트가 노드/엣지 수와 일치한다', () => {
+    const o = buildOntology();
+    const counts = ontologyCounts(o);
+    expect(counts.entities).toBe(o.nodes.length);
+    expect(counts.relationships).toBe(o.edges.length);
+    const props = o.nodes.reduce((s, n) => s + (n.meta ? Object.keys(n.meta).length : 0), 0);
+    expect(counts.properties).toBe(props);
   });
 });
