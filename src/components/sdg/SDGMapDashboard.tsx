@@ -100,7 +100,7 @@ export function SDGMapDashboard({ geoData, kosis }: { geoData: any; kosis: Kosis
               {/* 상단: 번호 + 한글 (픽토그램과 분리 → 겹침/잘림 없음) */}
               <div className="flex items-start gap-1.5 px-2 pt-2 pb-0.5 text-white leading-none">
                 <span className="font-extrabold text-xl md:text-2xl leading-none shrink-0">{g.num}</span>
-                <span className="font-bold leading-[1.15] text-[15px] md:text-xl break-keep">{g.num === 12 ? <>책임있는<br />소비·생산</> : g.name}</span>
+                <span className={`font-bold leading-[1.15] text-[15px] md:text-xl ${g.num === 12 ? 'whitespace-nowrap' : 'break-keep'}`}>{g.num === 12 ? <>책임있는<br />소비·생산</> : g.name}</span>
               </div>
               {/* 하단: 공식 픽토그램(크롭본) — 자체 영역에만 표시 */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
