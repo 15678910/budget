@@ -2,8 +2,10 @@ import { SDGBoard } from '@/components/sdg/SDGBoard';
 import { assembleIndicatorValues } from '@/lib/sdg/board-data';
 import { buildMatrix } from '@/lib/sdg/matrix';
 import { INDICATOR_TO_GOAL } from '@/lib/sdg/indicator-map';
-import { CANON_16 } from '@/lib/sdg/region-normalize';
+import { CANON_16, mergeToCanon16 } from '@/lib/sdg/region-normalize';
+import { nationalByGoal, type IndicatorLabel } from '@/lib/sdg/national';
 import { getMetroFiscalData } from '@/lib/data/fiscal-health-data';
+import { SDG_DOMAINS } from '@/lib/data/local-sdg-data';
 import { SIDO_FULL_TO_SHORT } from '@/lib/sdg/goals';
 import type { FiscalContext } from '@/components/sdg/SDGRegionProfile';
 import type { Metadata } from 'next';
@@ -67,10 +69,19 @@ function buildFiscalByRegion(): Record<string, FiscalContext> {
   return out;
 }
 
+// 지표 id → {label, unit} (SDG_DOMAINS에서 추출). 전국 절대값 카드 라벨용.
+function buildIndicatorLabels(): Record<string, IndicatorLabel> {
+  const out: Record<string, IndicatorLabel> = {};
+  for (const d of SDG_DOMAINS) {
+    for (const ind of d.indicators) out[ind.id] = { label: ind.name, unit: ind.unit };
+  }
+  return out;
+}
+
 export default function SDGPage() {
   const geoData = loadGeo();
   const kosis = loadKosis();
-  const { valuesByIndicator, direction } = assembleIndicatorValues();
+  const { valuesByIndicator, direction, population } = assembleIndicatorValues();
   const matrix = buildMatrix({
     metros: CANON_16,
     indicatorToGoal: INDICATOR_TO_GOAL,
@@ -78,11 +89,23 @@ export default function SDGPage() {
     valuesByIndicator,
   });
   const fiscalByRegion = buildFiscalByRegion();
+
+  // population은 원시 약칭(광주·전남 분리) 키 → valuesByIndicator(CANON_16, '광주전남' 병합)와
+  // 키를 맞추기 위해 sum 병합으로 canon 인구 가중치 생성.
+  const canonPopulation = mergeToCanon16(population, 'sum');
+  const national = nationalByGoal(
+    valuesByIndicator,
+    canonPopulation,
+    direction,
+    buildIndicatorLabels(),
+  );
+
   return (
     <div className="w-full max-w-6xl mx-auto">
       <SDGBoard
         matrix={matrix}
         metros={CANON_16}
+        national={national}
         fiscalByRegion={fiscalByRegion}
         geoData={geoData}
         kosis={kosis}
