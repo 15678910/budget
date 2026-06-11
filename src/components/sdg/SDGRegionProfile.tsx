@@ -1,5 +1,8 @@
+import { useState } from 'react';
 import { SDG_GOALS } from '@/lib/sdg/goals';
 import type { Matrix } from '@/lib/sdg/matrix';
+import type { IndicatorDirection } from '@/lib/data/local-sdg-data';
+import { SDGScenarioSimulator } from './SDGScenarioSimulator';
 
 export interface FiscalContext {
   independence: number; // 재정자립도 %
@@ -28,12 +31,17 @@ export function SDGRegionProfile({
   matrix,
   fiscal,
   onSelectGoal,
+  valuesByIndicator,
+  direction,
 }: {
   region: string;
   matrix: Matrix;
   fiscal: FiscalContext | null;
   onSelectGoal: (g: number) => void;
+  valuesByIndicator: Record<string, Record<string, number>>;
+  direction: Record<string, IndicatorDirection>;
 }) {
+  const [showSim, setShowSim] = useState(false);
   const row = matrix[region] ?? {};
   const scored = SDG_GOALS.map((g) => ({ g, v: row[g.num] })).filter(
     (x): x is { g: (typeof SDG_GOALS)[number]; v: number } => x.v != null,
@@ -120,6 +128,24 @@ export function SDGRegionProfile({
           ))}
         </div>
       </div>
+
+      {/* what-if 시뮬레이터 토글 */}
+      <div className="border-t border-gray-800 pt-3">
+        <button
+          onClick={() => setShowSim((s) => !s)}
+          className="text-sm px-3 py-1.5 rounded border border-amber-700/60 text-amber-200 hover:bg-amber-900/30"
+        >
+          🧪 what-if 시뮬레이터 {showSim ? '닫기' : '열기'}
+        </button>
+      </div>
+      {showSim && (
+        <SDGScenarioSimulator
+          metro={region}
+          valuesByIndicator={valuesByIndicator}
+          direction={direction}
+          baselineRow={row}
+        />
+      )}
 
       <p className="text-[11px] text-gray-600 border-t border-gray-800 pt-2">
         점수 = 16광역 분포 대비 대표지표 정규화값(0~100), 순위(N/M위) = 데이터 보유 광역 중 순위.

@@ -9,6 +9,7 @@ import { SDGMunicipalProfile } from './SDGMunicipalProfile';
 import type { Matrix } from '@/lib/sdg/matrix';
 import type { SDGIndicator } from '@/lib/sdg/goals';
 import type { NationalByGoal } from '@/lib/sdg/national';
+import type { IndicatorDirection } from '@/lib/data/local-sdg-data';
 
 interface KosisData {
   goals: Record<string, SDGIndicator>;
@@ -21,6 +22,8 @@ export function SDGBoard({
   fiscalByRegion,
   geoData,
   kosis,
+  valuesByIndicator,
+  direction,
 }: {
   matrix: Matrix;
   metros: readonly string[];
@@ -29,6 +32,8 @@ export function SDGBoard({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any -- topojson(geoData)는 외부 토포 구조라 런타임 가드만 가능
   geoData: any;
   kosis: KosisData;
+  valuesByIndicator: Record<string, Record<string, number>>;
+  direction: Record<string, IndicatorDirection>;
 }) {
   const [scope, setScope] = useState<SDGScope>('national');
   const [selectedMetro, setSelectedMetro] = useState<string | null>(null);
@@ -69,6 +74,8 @@ export function SDGBoard({
                 matrix={matrix}
                 fiscal={fiscalByRegion[selectedMetro] ?? null}
                 onSelectGoal={setGoal}
+                valuesByIndicator={valuesByIndicator}
+                direction={direction}
               />
             ) : (
               <Placeholder text="광역을 선택하면 프로파일이 표시됩니다." />
