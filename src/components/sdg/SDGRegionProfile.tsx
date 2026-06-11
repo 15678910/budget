@@ -9,6 +9,20 @@ export interface FiscalContext {
   population: number;
 }
 
+/** goal에 데이터가 있는 광역 중 region의 순위(1=최고). 데이터 없으면 null. */
+function goalRank(matrix: Matrix, region: string, goal: number): { rank: number; total: number } | null {
+  const vals: { metro: string; v: number }[] = [];
+  for (const [metro, row] of Object.entries(matrix)) {
+    const v = row[goal];
+    if (v != null) vals.push({ metro, v });
+  }
+  if (vals.length === 0) return null;
+  vals.sort((a, b) => b.v - a.v); // 높을수록 좋음(정규화 점수)
+  const idx = vals.findIndex((x) => x.metro === region);
+  if (idx < 0) return null;
+  return { rank: idx + 1, total: vals.length };
+}
+
 export function SDGRegionProfile({
   region,
   matrix,
@@ -59,6 +73,7 @@ export function SDGRegionProfile({
       <div className="grid grid-cols-2 gap-1.5">
         {SDG_GOALS.map((g) => {
           const v = row[g.num];
+          const rk = v != null ? goalRank(matrix, region, g.num) : null;
           return (
             <button
               key={g.num}
@@ -66,7 +81,7 @@ export function SDGRegionProfile({
               className="flex items-center gap-2 text-left hover:bg-gray-800/40 rounded px-1 py-0.5"
             >
               <span className="w-5 text-[11px] font-mono text-gray-500">{g.num}</span>
-              <span className="w-16 text-[11px] text-gray-300 truncate">{g.name}</span>
+              <span className="w-14 text-[11px] text-gray-300 truncate">{g.name}</span>
               <span className="flex-1 h-2 rounded bg-gray-800 overflow-hidden">
                 {v != null && (
                   <span
@@ -75,8 +90,11 @@ export function SDGRegionProfile({
                   />
                 )}
               </span>
-              <span className="w-8 text-right text-[11px] font-mono text-gray-400">
+              <span className="w-7 text-right text-[11px] font-mono text-gray-400">
                 {v ?? '–'}
+              </span>
+              <span className="w-12 text-right text-[10px] font-mono text-gray-500">
+                {rk ? `${rk.rank}/${rk.total}위` : ''}
               </span>
             </button>
           );
@@ -104,8 +122,8 @@ export function SDGRegionProfile({
       </div>
 
       <p className="text-[11px] text-gray-600 border-t border-gray-800 pt-2">
-        점수 = 16광역 분포 대비 대표지표 정규화값(0~100). 종합 SDG 달성도와 다를 수 있으며, 지역
-        여건 차이를 고려해 해석하세요.
+        점수 = 16광역 분포 대비 대표지표 정규화값(0~100), 순위(N/M위) = 데이터 보유 광역 중 순위.
+        종합 SDG 달성도와 다를 수 있으며, 지역 여건 차이를 고려해 해석하세요.
       </p>
     </div>
   );
