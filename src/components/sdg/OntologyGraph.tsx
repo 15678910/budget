@@ -1,6 +1,14 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState, useCallback } from 'react';
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useCallback,
+  useImperativeHandle,
+  forwardRef,
+} from 'react';
 import {
   forceSimulation,
   forceLink,
@@ -9,55 +17,40 @@ import {
   forceCollide,
   type Simulation,
 } from 'd3-force';
-import type {
-  Ontology,
-  OntologyNode,
-  OntologyNodeType,
-} from '@/lib/sdg/ontology';
+import type { Ontology } from '@/lib/sdg/ontology';
+import {
+  type SimNode,
+  type SimLink,
+  type ViewTransform,
+  TYPE_RADIUS,
+  WIDTH,
+  HEIGHT,
+  SCALE_STEP,
+  INITIAL_TRANSFORM,
+  edgeKey,
+  clampScale,
+  exportSvgToPng,
+} from '@/components/sdg/ontology-graph-utils';
+import { EdgeLayer, NodeLayer, GraphToolbar } from '@/components/sdg/OntologyGraphLayers';
 
-// d3-force mutates node objects with x/y/vx/vy; extend the node shape for the simulation.
-interface SimNode extends OntologyNode {
-  x: number;
-  y: number;
-  fx?: number | null;
-  fy?: number | null;
-}
-
-interface SimLink {
-  source: string | SimNode;
-  target: string | SimNode;
-  kind: string;
-}
-
-const TYPE_COLOR: Record<OntologyNodeType, string> = {
-  dataset: '#0A97D9',
-  indicator: '#4C9F38',
-  goal: '#E5243B',
-  domain: '#19486A',
-};
-
-const TYPE_RADIUS: Record<OntologyNodeType, number> = {
-  dataset: 9,
-  indicator: 6,
-  goal: 11,
-  domain: 14,
-};
-
-const WIDTH = 900;
-const HEIGHT = 620;
-
-function linkEndId(end: string | SimNode): string {
-  return typeof end === 'string' ? end : end.id;
+export interface OntologyGraphHandle {
+  /** SVG를 직렬화하여 PNG로 다운로드. (html2canvas 미사용 — SVG→canvas 직렬화) */
+  exportPng: (fileName?: string) => void;
 }
 
 interface OntologyGraphProps {
   ontology: Ontology;
   /** 강조 집합. null이면 전체 균등 표시 */
   focusIds: Set<string> | null;
+  /** 최단 경로 노드 id 배열. null/빈 배열이면 경로 강조 없음. */
+  pathIds: string[] | null;
   onNodeClick: (nodeId: string) => void;
 }
 
-export default function OntologyGraph({ ontology, focusIds, onNodeClick }: OntologyGraphProps) {
+function OntologyGraphImpl(
+  { ontology, focusIds, pathIds, onNodeClick }: OntologyGraphProps,
+  ref: React.Ref<OntologyGraphHandle>,
+) {
   // Graph data lives in state so render never reads from a ref. d3 mutates these same
   // objects in place; the tick handler bumps `version` to re-render with fresh x/y.
   const [graph, setGraph] = useState<{ nodes: SimNode[]; links: SimLink[] }>({
@@ -65,8 +58,11 @@ export default function OntologyGraph({ ontology, focusIds, onNodeClick }: Ontol
     links: [],
   });
   const [, setVersion] = useState(0);
+  const [view, setView] = useState<ViewTransform>(INITIAL_TRANSFORM);
+  const [hoverId, setHoverId] = useState<string | null>(null);
   const simRef = useRef<Simulation<SimNode, undefined> | null>(null);
   const draggingRef = useRef<SimNode | null>(null);
+  const panRef = useRef<{ startX: number; startY: number; tx: number; ty: number } | null>(null);
   const svgRef = useRef<SVGSVGElement | null>(null);
 
   // Build simulation node/link objects once per ontology identity.
@@ -115,8 +111,8 @@ export default function OntologyGraph({ ontology, focusIds, onNodeClick }: Ontol
     };
   }, [graphKey, ontology.edges, ontology.nodes]);
 
-  // ── pointer-based drag (no d3-drag dependency) ──
-  const toLocal = useCallback((clientX: number, clientY: number) => {
+  // ── coordinate helper: client → SVG viewBox space (independent of view transform) ──
+  const toViewBox = useCallback((clientX: number, clientY: number) => {
     const svg = svgRef.current;
     if (!svg) return { x: clientX, y: clientY };
     const rect = svg.getBoundingClientRect();
@@ -126,6 +122,16 @@ export default function OntologyGraph({ ontology, focusIds, onNodeClick }: Ontol
     };
   }, []);
 
+  // client → graph (world) space: undo the current view transform.
+  const toLocal = useCallback(
+    (clientX: number, clientY: number) => {
+      const { x, y } = toViewBox(clientX, clientY);
+      return { x: (x - view.tx) / view.scale, y: (y - view.ty) / view.scale };
+    },
+    [toViewBox, view.tx, view.ty, view.scale],
+  );
+
+  // ── node drag ──
   const handlePointerDownNode = useCallback(
     (e: React.PointerEvent, node: SimNode) => {
       e.stopPropagation();
@@ -139,15 +145,31 @@ export default function OntologyGraph({ ontology, focusIds, onNodeClick }: Ontol
     [toLocal],
   );
 
+  // ── canvas pan (pointer down on empty area) ──
+  const handlePointerDownCanvas = useCallback(
+    (e: React.PointerEvent) => {
+      const { x, y } = toViewBox(e.clientX, e.clientY);
+      panRef.current = { startX: x, startY: y, tx: view.tx, ty: view.ty };
+    },
+    [toViewBox, view.tx, view.ty],
+  );
+
   const handlePointerMove = useCallback(
     (e: React.PointerEvent) => {
       const node = draggingRef.current;
-      if (!node) return;
-      const { x, y } = toLocal(e.clientX, e.clientY);
-      node.fx = x;
-      node.fy = y;
+      if (node) {
+        const { x, y } = toLocal(e.clientX, e.clientY);
+        node.fx = x;
+        node.fy = y;
+        return;
+      }
+      const pan = panRef.current;
+      if (pan) {
+        const { x, y } = toViewBox(e.clientX, e.clientY);
+        setView((v) => ({ ...v, tx: pan.tx + (x - pan.startX), ty: pan.ty + (y - pan.startY) }));
+      }
     },
-    [toLocal],
+    [toLocal, toViewBox],
   );
 
   const handlePointerUp = useCallback(() => {
@@ -157,85 +179,109 @@ export default function OntologyGraph({ ontology, focusIds, onNodeClick }: Ontol
       node.fy = null;
     }
     draggingRef.current = null;
+    panRef.current = null;
     simRef.current?.alphaTarget(0);
   }, []);
 
-  // Neighbor set for dimming: a node/link is "active" if focusIds null, or it/its endpoints intersect focusIds.
-  const isNodeActive = useCallback(
-    (id: string) => focusIds === null || focusIds.has(id),
-    [focusIds],
+  // ── zoom around viewBox center ──
+  const zoomBy = useCallback((factor: number) => {
+    setView((v) => {
+      const next = clampScale(v.scale * factor);
+      if (next === v.scale) return v;
+      const cx = WIDTH / 2;
+      const cy = HEIGHT / 2;
+      const tx = cx - ((cx - v.tx) / v.scale) * next;
+      const ty = cy - ((cy - v.ty) / v.scale) * next;
+      return { scale: next, tx, ty };
+    });
+  }, []);
+
+  const resetView = useCallback(() => setView(INITIAL_TRANSFORM), []);
+
+  const handleWheel = useCallback(
+    (e: React.WheelEvent) => {
+      const { x: vx, y: vy } = toViewBox(e.clientX, e.clientY);
+      setView((v) => {
+        const factor = e.deltaY < 0 ? SCALE_STEP : 1 / SCALE_STEP;
+        const next = clampScale(v.scale * factor);
+        if (next === v.scale) return v;
+        // zoom toward cursor: world point under cursor stays under cursor
+        const tx = vx - ((vx - v.tx) / v.scale) * next;
+        const ty = vy - ((vy - v.ty) / v.scale) * next;
+        return { scale: next, tx, ty };
+      });
+    },
+    [toViewBox],
   );
+
+  // ── PNG export (SVG serialize → canvas → download) ──
+  const exportPng = useCallback(
+    (fileName = 'sdg-ontology.png') => exportSvgToPng(svgRef.current, fileName),
+    [],
+  );
+
+  useImperativeHandle(ref, () => ({ exportPng }), [exportPng]);
+
+  // ── highlight sets ──
+  const pathNodeSet = useMemo(
+    () => (pathIds && pathIds.length > 0 ? new Set(pathIds) : null),
+    [pathIds],
+  );
+  // consecutive pairs in the path form the highlighted path edges (undirected)
+  const pathEdgeSet = useMemo(() => {
+    if (!pathIds || pathIds.length < 2) return null;
+    const s = new Set<string>();
+    for (let i = 0; i < pathIds.length - 1; i++) {
+      s.add(edgeKey(pathIds[i], pathIds[i + 1]));
+    }
+    return s;
+  }, [pathIds]);
 
   const { nodes, links } = graph;
 
   return (
-    <svg
-      ref={svgRef}
-      viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
-      className="w-full h-full touch-none select-none"
-      role="img"
-      aria-label="SDG 데이터 온톨로지 관계도"
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
-      onPointerLeave={handlePointerUp}
-    >
-      <g>
-        {links.map((l, i) => {
-          const s = l.source as SimNode;
-          const t = l.target as SimNode;
-          if (typeof s === 'string' || typeof t === 'string') return null;
-          const active =
-            focusIds === null ||
-            (focusIds.has(linkEndId(l.source)) && focusIds.has(linkEndId(l.target)));
-          return (
-            <line
-              key={`l-${i}`}
-              x1={s.x}
-              y1={s.y}
-              x2={t.x}
-              y2={t.y}
-              stroke="#94a3b8"
-              strokeWidth={active ? 1.2 : 0.5}
-              strokeOpacity={active ? 0.55 : 0.12}
-            />
-          );
-        })}
-      </g>
-      <g>
-        {nodes.map((n) => {
-          const active = isNodeActive(n.id);
-          const r = TYPE_RADIUS[n.type];
-          return (
-            <g
-              key={n.id}
-              transform={`translate(${n.x},${n.y})`}
-              className="cursor-pointer"
-              onPointerDown={(e) => handlePointerDownNode(e, n)}
-              onClick={(e) => {
-                e.stopPropagation();
-                onNodeClick(n.id);
-              }}
-              opacity={active ? 1 : 0.18}
-            >
-              <circle
-                r={r}
-                fill={TYPE_COLOR[n.type]}
-                stroke="#ffffff"
-                strokeWidth={1.2}
-              />
-              <text
-                x={r + 3}
-                y={3}
-                fontSize={9}
-                fill="#1e293b"
-                className="pointer-events-none"
-              >
-                {n.label}
-              </text>
-            </g>
-          );
-        })}
-      </g>
-    </svg>
+    <div className="relative h-full w-full">
+      <GraphToolbar
+        onZoomIn={() => zoomBy(SCALE_STEP)}
+        onZoomOut={() => zoomBy(1 / SCALE_STEP)}
+        onReset={resetView}
+        onExport={() => exportPng()}
+      />
+
+      <svg
+        ref={svgRef}
+        viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
+        className="h-full w-full touch-none select-none"
+        role="img"
+        aria-label="SDG 데이터 온톨로지 관계도"
+        onPointerDown={handlePointerDownCanvas}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerLeave={handlePointerUp}
+        onWheel={handleWheel}
+      >
+        <g transform={`translate(${view.tx},${view.ty}) scale(${view.scale})`}>
+          <EdgeLayer
+            links={links}
+            focusIds={focusIds}
+            pathEdgeSet={pathEdgeSet}
+            hoverId={hoverId}
+          />
+          <NodeLayer
+            nodes={nodes}
+            focusIds={focusIds}
+            pathNodeSet={pathNodeSet}
+            onPointerDownNode={handlePointerDownNode}
+            onHover={setHoverId}
+            onNodeClick={onNodeClick}
+          />
+        </g>
+      </svg>
+    </div>
   );
 }
+
+const OntologyGraph = forwardRef<OntologyGraphHandle, OntologyGraphProps>(OntologyGraphImpl);
+OntologyGraph.displayName = 'OntologyGraph';
+
+export default OntologyGraph;
