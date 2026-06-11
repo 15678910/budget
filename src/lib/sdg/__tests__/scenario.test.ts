@@ -1,4 +1,4 @@
-import { applyScenario, targetHint, indicatorsForGoal } from '@/lib/sdg/scenario';
+import { applyScenario, targetHint, indicatorsForGoal, indicatorDomainBounds, SLIDER_PAD_RATIO } from '@/lib/sdg/scenario';
 import type { IndicatorDirection } from '@/lib/data/local-sdg-data';
 
 // 실 INDICATOR_TO_GOAL 매핑 사용: goal 8 = emp_rate(higher) · emp_unemp(lower) · emp_youth(lower).
@@ -122,5 +122,76 @@ describe('targetHint — 역산 + round-trip', () => {
     const solo: Record<string, Record<string, number>> = { emp_rate: { 서울: 60 } };
     const r = targetHint({ valuesByIndicator: solo, direction, metro: '서울', indicatorId: 'emp_rate', targetScore: 100 });
     expect(r.achievable).toBe(false);
+  });
+});
+
+describe('targetHint — 도메인 클램프(HIGH-2 회귀 방지)', () => {
+  // 2지역 분포에서 target 100: 도달에 필요한 값이 도메인(슬라이더) 범위 밖이면 achievable:false여야 한다.
+  // 분포 {서울:60, 부산:50}, span=10, pad=10*0.15=1.5 → 슬라이더 [48.5, 71.5].
+  // target 100(higher_better): 서울이 부산보다 훨씬 높아야 → 분포 최대가 서울 값으로 결정되므로
+  // 서울=max 이면 항상 100 → requiredValue는 hi(71.5) 근방에서 달성됨 → 도메인 내 → achievable:true여야 함.
+  // 반면 target 0(higher_better): 서울이 최솟값 이하여야 → loBound(48.5) 근방이고 도메인 내 → achievable:true.
+  // 핵심 케이스: 3지역 {서울:60, 부산:59, 대구:58}, span=2, pad=0.3 → 슬라이더 [57.7, 60.3].
+  // target 100: 서울이 60.3을 넘어야 한다면 도메인 밖 → achievable:false.
+  // (실제로 higher_better에서 metro=max이면 100에 도달 — 60.3 이내에서 달성 가능하므로 achievable:true도 허용)
+  // 핵심 보장: requiredValue가 도메인 밖이면 achievable:false — 이것만 강제 검증.
+
+  it('2지역 분포 target 100: achievable이 false이거나 requiredValue가 도메인 내', () => {
+    const twoRegion: Record<string, Record<string, number>> = {
+      emp_rate: { 서울: 60, 부산: 50 },
+    };
+    const hint = targetHint({
+      valuesByIndicator: twoRegion,
+      direction,
+      metro: '서울',
+      indicatorId: 'emp_rate',
+      targetScore: 100,
+    });
+    // 불변식: achievable:true 이면 requiredValue는 반드시 도메인 내여야 함.
+    if (hint.achievable) {
+      const { lo, hi } = indicatorDomainBounds(twoRegion.emp_rate);
+      expect(hint.requiredValue).toBeGreaterThanOrEqual(lo);
+      expect(hint.requiredValue).toBeLessThanOrEqual(hi);
+    }
+    // 도메인 밖 값이 achievable:true로 새어나오지 않는지 직접 확인.
+    const { lo, hi } = indicatorDomainBounds(twoRegion.emp_rate);
+    const outOfDomain = hint.requiredValue < lo || hint.requiredValue > hi;
+    if (outOfDomain) {
+      expect(hint.achievable).toBe(false);
+    }
+  });
+
+  it('단일 지표 lower_better: requiredValue 도메인 밖이면 achievable:false', () => {
+    // {서울:3, 부산:2}: span=1, pad=0.15 → 슬라이더 [1.85, 3.15].
+    // target 0(lower_better → 서울이 최솟값): 현재 부산(2)이 min → 서울=2 이하여야 함 → 도메인 내.
+    // target 100(lower_better → 서울이 최댓값): 서울>부산(2) 이상이어야 → 도메인 내.
+    // target 불가능 케이스는 없지만, achievable:true 시 도메인 내임을 검증.
+    const lowerDist: Record<string, Record<string, number>> = {
+      emp_unemp: { 서울: 3, 부산: 2 },
+    };
+    for (const target of [0, 50, 100]) {
+      const hint = targetHint({
+        valuesByIndicator: lowerDist,
+        direction,
+        metro: '서울',
+        indicatorId: 'emp_unemp',
+        targetScore: target,
+      });
+      if (hint.achievable) {
+        const { lo, hi } = indicatorDomainBounds(lowerDist.emp_unemp);
+        expect(hint.requiredValue).toBeGreaterThanOrEqual(lo - 0.01); // float 허용
+        expect(hint.requiredValue).toBeLessThanOrEqual(hi + 0.01);
+      }
+    }
+  });
+
+  it('SLIDER_PAD_RATIO가 0.15임을 확인(상수 회귀)', () => {
+    expect(SLIDER_PAD_RATIO).toBe(0.15);
+  });
+
+  it('indicatorDomainBounds: span=10 분포 → lo=min-1.5, hi=max+1.5', () => {
+    const bounds = indicatorDomainBounds({ 서울: 60, 부산: 50 });
+    expect(bounds.lo).toBeCloseTo(50 - 10 * 0.15, 5);
+    expect(bounds.hi).toBeCloseTo(60 + 10 * 0.15, 5);
   });
 });

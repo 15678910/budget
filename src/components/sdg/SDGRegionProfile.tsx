@@ -140,6 +140,7 @@ export function SDGRegionProfile({
       </div>
       {showSim && (
         <SDGScenarioSimulator
+          key={region}
           metro={region}
           valuesByIndicator={valuesByIndicator}
           direction={direction}

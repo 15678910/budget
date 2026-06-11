@@ -3,6 +3,24 @@
 import type { IndicatorDirection } from '@/lib/data/local-sdg-data';
 import { normalizeMinMax, INDICATOR_TO_GOAL } from './indicator-map';
 
+/**
+ * 슬라이더/도메인 범위 산출에 쓰는 패딩 비율(분포폭의 15%).
+ * SDGScenarioSimulator의 sliderRange()와 targetHint()가 동일 상수를 사용.
+ */
+export const SLIDER_PAD_RATIO = 0.15;
+
+/**
+ * 지표 원시값 분포에서 슬라이더(도메인) 경계를 계산한다.
+ * SDGScenarioSimulator.sliderRange()와 동일 로직 — 단일 소스.
+ */
+export function indicatorDomainBounds(values: Record<string, number>): { lo: number; hi: number } {
+  const nums = Object.values(values);
+  const lo0 = Math.min(...nums);
+  const hi0 = Math.max(...nums);
+  const span = hi0 - lo0 || Math.max(Math.abs(hi0), 1);
+  return { lo: lo0 - span * SLIDER_PAD_RATIO, hi: hi0 + span * SLIDER_PAD_RATIO };
+}
+
 export interface ScenarioArgs {
   /** 지표 id → (광역 → 실값) */
   valuesByIndicator: Record<string, Record<string, number>>;
@@ -109,22 +127,19 @@ export function targetHint(args: TargetHintArgs): TargetHintResult {
     return { requiredValue: NaN, achievable: false };
   }
   const dir = direction[indicatorId];
-  const others = Object.entries(dist).filter(([r]) => r !== metro).map(([, v]) => v);
-  // 다른 지역 고정 분포의 경계.
-  const otherMin = others.length ? Math.min(...others) : dist[metro];
-  const otherMax = others.length ? Math.max(...others) : dist[metro];
-
   // metro 값 v → 정규화 점수(metro). normalizeMinMax와 동일 규칙(반올림 포함).
   const scoreAt = (v: number): number => {
     const merged = { ...dist, [metro]: v };
     return normalizeMinMax(merged, dir)[metro];
   };
 
-  // 탐색 범위: 다른 지역 경계를 충분히 넘어서까지 확장(여유). 단일값 분포 대비도 처리.
-  const span = otherMax - otherMin;
-  const pad = span > 0 ? span : Math.max(Math.abs(dist[metro]), 1);
-  let lo = otherMin - pad * 2;
-  let hi = otherMax + pad * 2;
+  // 슬라이더/도메인 경계: 전체 분포(metro 포함) 기준으로 ±SLIDER_PAD_RATIO.
+  // SDGScenarioSimulator.sliderRange()와 동일 로직(indicatorDomainBounds 사용).
+  const { lo: loBound, hi: hiBound } = indicatorDomainBounds(dist);
+
+  // bisection 탐색 범위 = 도메인 경계(슬라이더 범위)로 제한.
+  let lo = loBound;
+  let hi = hiBound;
 
   // 점수는 v에 대해 단조(higher_better면 증가, lower_better면 감소).
   // bisection으로 targetScore에 가장 근접한 v를 찾는다.
@@ -145,7 +160,9 @@ export function targetHint(args: TargetHintArgs): TargetHintResult {
   }
   const requiredValue = (lo + hi) / 2;
   const achieved = scoreAt(requiredValue);
-  // 도달 가능 = 탐색 범위 내에서 targetScore에 ±1 이내로 근접.
-  const achievable = Math.abs(achieved - targetScore) <= 1;
+  // 도달 가능 = 도메인(슬라이더) 범위 내이고 targetScore에 ±1 이내로 근접.
+  // 도메인 밖 requiredValue(예: 고용률 110%)는 물리적 불가능 → achievable:false.
+  const inDomain = requiredValue >= loBound && requiredValue <= hiBound;
+  const achievable = inDomain && Math.abs(achieved - targetScore) <= 1;
   return { requiredValue: Math.round(requiredValue * 100) / 100, achievable };
 }

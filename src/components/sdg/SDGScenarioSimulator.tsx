@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { SDG_DOMAINS, type IndicatorDirection } from '@/lib/data/local-sdg-data';
 import { SDG_GOALS } from '@/lib/sdg/goals';
 import { INDICATOR_TO_GOAL } from '@/lib/sdg/indicator-map';
-import { applyScenario, targetHint, indicatorsForGoal } from '@/lib/sdg/scenario';
+import { applyScenario, targetHint, indicatorsForGoal, indicatorDomainBounds } from '@/lib/sdg/scenario';
 
 interface IndicatorMeta {
   id: string;
@@ -26,29 +26,30 @@ function goalName(num: number): string {
   return SDG_GOALS.find((g) => g.num === num)?.name ?? `Goal ${num}`;
 }
 
-/** 16광역 분포 [min,max]에 ±15% 여유를 둔 슬라이더 범위. */
+/**
+ * 16광역 분포에 ±SLIDER_PAD_RATIO 여유를 둔 슬라이더 범위.
+ * 경계 계산은 scenario.ts의 indicatorDomainBounds()에 위임(단일 소스).
+ */
 function sliderRange(values: Record<string, number>): { min: number; max: number; step: number } {
+  const { lo, hi } = indicatorDomainBounds(values);
   const nums = Object.values(values);
-  const lo = Math.min(...nums);
-  const hi = Math.max(...nums);
-  const span = hi - lo || Math.max(Math.abs(hi), 1);
-  const min = lo - span * 0.15;
-  const max = hi + span * 0.15;
+  const rawLo = Math.min(...nums);
+  const rawHi = Math.max(...nums);
+  const span = rawHi - rawLo || Math.max(Math.abs(rawHi), 1);
   const step = span > 0 ? Math.max(span / 200, 0.01) : 0.01;
-  return { min, max, step };
+  return { min: lo, max: hi, step };
 }
 
 export function SDGScenarioSimulator({
   metro,
   valuesByIndicator,
   direction,
-  baselineRow,
 }: {
   metro: string;
   valuesByIndicator: Record<string, Record<string, number>>;
   direction: Record<string, IndicatorDirection>;
-  /** matrix[metro] — baseline goal 점수(표시용) */
-  baselineRow: Record<number, number | null>;
+  /** @deprecated Δ baseline은 applyScenario({overrides:{}}) 단일 소스로 계산. 하위 호환을 위해 prop은 유지하되 무시됨. */
+  baselineRow?: Record<number, number | null>;
 }) {
   // 선택 광역이 데이터를 보유한 지표만 슬라이더로.
   const indicatorIds = useMemo(
@@ -152,11 +153,12 @@ export function SDGScenarioSimulator({
         <div className="space-y-1.5 border-t border-amber-800/40 pt-3">
           <div className="text-xs font-semibold text-amber-200">영향받는 목표 (Δ)</div>
           {affectedGoals.map((g) => {
-            const baseScore = baselineRow[g] ?? null;
             const baseRank = applyScenario({ valuesByIndicator, direction, metro, goalNum: g, overrides: {} });
             const sim = applyScenario({ valuesByIndicator, direction, metro, goalNum: g, overrides });
             if (sim.score == null) return null;
-            const refScore = baseScore ?? baseRank.score;
+            // Δ baseline 단일 소스: applyScenario({overrides:{}}) 결과만 사용.
+            // baselineRow prop fallback을 제거해 이중 소스로 인한 회귀를 방지한다.
+            const refScore = baseRank.score;
             const delta = refScore != null ? sim.score - refScore : null;
             return (
               <div key={g} className="flex items-center justify-between text-sm">
