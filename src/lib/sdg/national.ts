@@ -37,16 +37,31 @@ export interface IndicatorLabel {
  * @param directionMap       지표 id → 해석방향.
  * @param indicatorLabels    지표 id → {label, unit} (SDG_DOMAINS에서 추출).
  */
+/**
+ * 특정 goal의 대표지표를 명시적으로 오버라이드.
+ * 여기 없는 goal은 INDICATOR_TO_GOAL 선언순 첫 지표를 사용.
+ */
+const REP_INDICATOR_BY_GOAL: Record<number, string> = {
+  4: 'edu_univ', // 진학률 (기초 스코프와 일치, 교원1인당학생수 대신)
+};
+
 export function nationalByGoal(
   valuesByIndicator: Record<string, Record<string, number>>,
   population: Record<string, number>,
   directionMap: Record<string, IndicatorDirection>,
   indicatorLabels: Record<string, IndicatorLabel>,
 ): NationalByGoal {
-  // goal → 대표지표 id (선언순서상 첫 매핑 지표)
+  // goal → 대표지표 id (선언순서상 첫 매핑 지표, 오버라이드 적용)
   const repByGoal: Record<number, string> = {};
   for (const [ind, goal] of Object.entries(INDICATOR_TO_GOAL)) {
     if (!(goal in repByGoal)) repByGoal[goal] = ind;
+  }
+  // 오버라이드 적용 (데이터가 실제로 있는 경우에만)
+  for (const [goalStr, overrideInd] of Object.entries(REP_INDICATOR_BY_GOAL)) {
+    const goal = Number(goalStr);
+    if (valuesByIndicator[overrideInd] && Object.keys(valuesByIndicator[overrideInd]).length > 0) {
+      repByGoal[goal] = overrideInd;
+    }
   }
 
   const out: NationalByGoal = {};

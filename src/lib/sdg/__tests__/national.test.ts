@@ -59,4 +59,27 @@ describe('nationalByGoal', () => {
     // 가중치 없음 → 단순평균 50
     expect(out[8]!.value).toBeCloseTo(50, 5);
   });
+
+  it('Goal4 대표지표는 edu_univ(대학진학률)이어야 한다 (edu_student 대신)', () => {
+    const values = {
+      edu_student: { 서울: 15, 부산: 16 },
+      edu_univ: { 서울: 72, 부산: 68 },
+    };
+    const dir: Record<string, IndicatorDirection> = {
+      edu_student: 'lower_better',
+      edu_univ: 'higher_better',
+    };
+    const lbl: Record<string, { label: string; unit: string }> = {
+      edu_student: { label: '교원1인당학생수', unit: '명' },
+      edu_univ: { label: '대학진학률', unit: '%' },
+    };
+    const pop = { 서울: 200, 부산: 100 };
+    const out = nationalByGoal(values, pop, dir, lbl);
+    // REP_INDICATOR_BY_GOAL 오버라이드: goal4 → edu_univ
+    expect(out[4]).not.toBeNull();
+    expect(out[4]!.indicatorId).toBe('edu_univ');
+    expect(out[4]!.label).toBe('대학진학률');
+    // 가중평균: (72*200 + 68*100) / 300 = (14400 + 6800) / 300 = 70.667
+    expect(out[4]!.value).toBeCloseTo(70.667, 2);
+  });
 });

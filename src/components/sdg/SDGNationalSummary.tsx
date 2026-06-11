@@ -53,6 +53,9 @@ export function SDGNationalSummary({
                       <span className="ml-0.5 text-[11px] text-gray-500">{n.unit}</span>
                     </div>
                     <div className="text-[10px] text-gray-500 truncate">{n.label}</div>
+                    <div className="text-[9px] text-gray-500">
+                      {n.direction === 'lower_better' ? '↓ 낮을수록 양호' : '↑ 높을수록 양호'}
+                    </div>
                   </>
                 ) : (
                   <div className="text-[11px] text-gray-600">데이터 준비중</div>
