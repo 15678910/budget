@@ -50,11 +50,11 @@ function keywordFallback(query: string): string[] {
 
 async function callGemini(apiKey: string, query: string): Promise<string[] | null> {
   const summary = ontologyNodeSummary();
-  // compact: id|label|type 한 줄씩
-  const compact = summary.map((n) => `${n.id}|${n.label}|${n.type}`).join('\n');
+  // compact: id\tlabel\ttype 한 줄씩 (탭 구분 — 한글 출처명엔 탭 없음, | 의존 제거)
+  const compact = summary.map((n) => `${n.id}\t${n.label}\t${n.type}`).join('\n');
 
   const systemPrompt = `당신은 SDG 데이터 온톨로지 그래프 포커스 도우미입니다.
-아래는 그래프 노드 목록입니다(형식: id|label|type). 사용자 질의와 관련된 노드의 id만 골라
+아래는 그래프 노드 목록입니다(형식: id\tlabel\ttype, 탭 구분). 사용자 질의와 관련된 노드의 id만 골라
 JSON {"focusNodeIds": string[]} 으로만 응답하세요.
 규칙:
 - 반드시 아래 목록에 실재하는 id만 사용하세요. 새 id를 만들지 마세요.
@@ -63,12 +63,13 @@ JSON {"focusNodeIds": string[]} 으로만 응답하세요.
 노드 목록:
 ${compact}`;
 
-  for (let attempt = 0; attempt < 3; attempt++) {
-    const rate = checkGeminiRateLimit();
-    if (!rate.allowed) {
-      await new Promise((r) => setTimeout(r, rate.retryAfter * 1000));
-    }
+  // rate-limit 초과 시 즉시 null 반환 → 호출자가 keyword fallback 사용
+  const rate = checkGeminiRateLimit();
+  if (!rate.allowed) {
+    return null;
+  }
 
+  for (let attempt = 0; attempt < 3; attempt++) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), GEMINI_TIMEOUT_MS);
     try {
@@ -130,6 +131,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'query가 필요합니다.' }, { status: 400 });
     }
     const trimmed = query.trim();
+    if (trimmed.length > 200) {
+      return NextResponse.json({ error: 'query가 너무 깁니다.' }, { status: 400 });
+    }
 
     // 캐시 확인
     const cached = cacheGet(trimmed);
