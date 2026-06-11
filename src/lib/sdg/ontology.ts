@@ -4,15 +4,47 @@
 import { SDG_GOALS, SDG_DOMAINS_5 } from '@/lib/sdg/goals';
 import { INDICATOR_TO_GOAL } from '@/lib/sdg/indicator-map';
 import { SDG_DOMAINS } from '@/lib/data/local-sdg-data';
+// K-SDGs 17목표·세부목표 정적 데이터(공식 출처: 지속가능발전포털 ncsd.go.kr).
+// scripts/fetch-ksdgs.mjs 가 1회 수집해 생성. 런타임 스크래핑 없음.
+import ksdgsData from '../../../public/data/ksdgs.json';
 
-export type OntologyNodeType = 'dataset' | 'indicator' | 'goal' | 'domain';
-export type OntologyEdgeKind = 'provides' | 'maps-to' | 'belongs-to';
+export type OntologyNodeType = 'dataset' | 'indicator' | 'goal' | 'domain' | 'target';
+export type OntologyEdgeKind = 'provides' | 'maps-to' | 'belongs-to' | 'has-target';
 
 export interface OntologyNodeMeta {
   unit?: string;
   direction?: string;
   source?: string;
+  /** K-SDGs 세부목표 본문(target 노드 전용) */
+  text?: string;
+  /** K-SDGs 세부목표의 소속 목표 번호(target 노드 전용) */
+  goalNum?: number;
 }
+
+/** K-SDGs 세부목표 1건 */
+export interface KsdgsTarget {
+  /** 세부목표 코드(예: '1-1', '8-3', '16-12') */
+  code: string;
+  /** 세부목표 본문 */
+  text: string;
+  /** 개정 주석(보완/신설/신규 등) — 있을 때만 */
+  note?: string;
+}
+
+interface KsdgsGoal {
+  num: number;
+  title: string;
+  targets: KsdgsTarget[];
+}
+
+interface KsdgsData {
+  collectedAt: string;
+  source: string;
+  sourceUrl?: string;
+  goals: Record<string, KsdgsGoal>;
+}
+
+const KSDGS = ksdgsData as KsdgsData;
 
 export interface OntologyNode {
   id: string;
@@ -43,10 +75,40 @@ function datasetId(source: string): string {
 }
 
 /**
+ * 한 목표(goalNum)의 K-SDGs 세부목표 배열을 반환한다(INSPECTOR·토글용).
+ * ksdgs.json(공식 ncsd.go.kr)에서 정적 도출. 해당 목표가 없으면 빈 배열.
+ */
+export function getTargets(goalNum: number): KsdgsTarget[] {
+  const g = KSDGS.goals[String(goalNum)];
+  if (!g || !Array.isArray(g.targets)) return [];
+  return g.targets.map((t) => (t.note ? { code: t.code, text: t.text, note: t.note } : { code: t.code, text: t.text }));
+}
+
+/** ksdgs.json 의 세부목표 총수(검수·카운트용). */
+function totalTargetCount(): number {
+  return Object.values(KSDGS.goals).reduce((sum, g) => sum + (g.targets?.length ?? 0), 0);
+}
+
+/** buildOntology 옵션. */
+export interface BuildOntologyOptions {
+  /**
+   * true 면 K-SDGs 세부목표(target) 노드·has-target 엣지를 포함한다(D3 클러터 주의).
+   * targetGoals 가 주어지면 해당 목표 번호의 세부목표만 포함(선택 goal 한정 확장).
+   * 기본(false 또는 미지정): target 미포함.
+   */
+  includeTargets?: boolean;
+  /** includeTargets 시 포함할 목표 번호 집합(생략 시 전체 17목표 — 전체 확장은 호출자가 의도할 때만). */
+  targetGoals?: number[];
+}
+
+/**
  * 기존 상수에서 4계층 온톨로지(dataset → indicator → goal → domain)를 파생한다.
  * 순수 함수, 정적 import만 사용. 호출마다 동일 결과(결정론).
+ *
+ * 기본 그래프에는 K-SDGs 세부목표(target) 노드를 포함하지 않는다(D3 클러터 방지).
+ * options.includeTargets=true 일 때만 target 노드·has-target 엣지를 추가한다.
  */
-export function buildOntology(): Ontology {
+export function buildOntology(options: BuildOntologyOptions = {}): Ontology {
   const nodes: OntologyNode[] = [];
   const edges: OntologyEdge[] = [];
 
@@ -98,6 +160,23 @@ export function buildOntology(): Ontology {
   for (const d of SDG_DOMAINS_5) {
     for (const goalNum of d.goals) {
       edges.push({ from: `goal-${goalNum}`, to: `domain-${d.id}`, kind: 'belongs-to' });
+    }
+  }
+
+  // ── target 노드 + has-target 엣지 (옵션 시에만, D3 클러터 방지) ──
+  if (options.includeTargets) {
+    const allow = options.targetGoals ? new Set(options.targetGoals) : null;
+    for (const g of SDG_GOALS) {
+      if (allow && !allow.has(g.num)) continue;
+      for (const t of getTargets(g.num)) {
+        nodes.push({
+          id: `target-${t.code}`,
+          type: 'target',
+          label: t.code,
+          meta: { text: t.text, goalNum: g.num },
+        });
+        edges.push({ from: `goal-${g.num}`, to: `target-${t.code}`, kind: 'has-target' });
+      }
     }
   }
 
@@ -185,11 +264,16 @@ export function shortestPath(edges: OntologyEdge[], from: string, to: string): s
   return [];
 }
 
-/** 온톨로지 규모 카운트(엔티티=노드수, 관계=엣지수, 속성=모든 노드 meta 키 총합). */
+/**
+ * 온톨로지 규모 카운트.
+ * - entities/relationships/properties: 전달된 ontology(노드·엣지·meta 키) 기준.
+ * - targets: K-SDGs 세부목표 총수(ksdgs.json 기준, 그래프 포함 여부와 무관한 고정 카운트).
+ */
 export interface OntologyCounts {
   entities: number;
   relationships: number;
   properties: number;
+  targets: number;
 }
 
 export function ontologyCounts(ontology: Ontology): OntologyCounts {
@@ -201,5 +285,6 @@ export function ontologyCounts(ontology: Ontology): OntologyCounts {
     entities: ontology.nodes.length,
     relationships: ontology.edges.length,
     properties,
+    targets: totalTargetCount(),
   };
 }

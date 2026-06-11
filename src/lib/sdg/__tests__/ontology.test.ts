@@ -4,11 +4,18 @@ import {
   neighbors,
   shortestPath,
   ontologyCounts,
+  getTargets,
 } from '@/lib/sdg/ontology';
 import type { OntologyEdge } from '@/lib/sdg/ontology';
 import { INDICATOR_TO_GOAL } from '@/lib/sdg/indicator-map';
 import { SDG_GOALS, SDG_DOMAINS_5 } from '@/lib/sdg/goals';
 import { SDG_DOMAINS } from '@/lib/data/local-sdg-data';
+import ksdgs from '../../../../public/data/ksdgs.json';
+
+const KSDGS_TARGET_TOTAL = Object.values(ksdgs.goals).reduce(
+  (sum, g) => sum + g.targets.length,
+  0,
+);
 
 describe('buildOntology', () => {
   const { nodes, edges } = buildOntology();
@@ -198,7 +205,12 @@ describe('ontologyCounts', () => {
         { from: 'B', to: 'C', kind: 'provides' as const },
       ],
     };
-    expect(ontologyCounts(o)).toEqual({ entities: 3, relationships: 2, properties: 5 });
+    expect(ontologyCounts(o)).toEqual({
+      entities: 3,
+      relationships: 2,
+      properties: 5,
+      targets: KSDGS_TARGET_TOTAL,
+    });
   });
 
   it('실제 온톨로지 카운트가 노드/엣지 수와 일치한다', () => {
@@ -208,5 +220,88 @@ describe('ontologyCounts', () => {
     expect(counts.relationships).toBe(o.edges.length);
     const props = o.nodes.reduce((s, n) => s + (n.meta ? Object.keys(n.meta).length : 0), 0);
     expect(counts.properties).toBe(props);
+  });
+
+  it('targets 카운트가 ksdgs.json 세부목표 총수와 일치한다', () => {
+    const counts = ontologyCounts(buildOntology());
+    expect(counts.targets).toBe(KSDGS_TARGET_TOTAL);
+    expect(counts.targets).toBeGreaterThanOrEqual(100);
+  });
+});
+
+describe('K-SDGs 세부목표(target) 통합', () => {
+  it('기본 buildOntology() 노드에는 type==="target" 이 없다(토글 OFF)', () => {
+    const { nodes } = buildOntology();
+    expect(nodes.some((n) => n.type === 'target')).toBe(false);
+  });
+
+  it('기본 buildOntology() 엣지에는 has-target 이 없다', () => {
+    const { edges } = buildOntology();
+    expect(edges.some((e) => e.kind === 'has-target')).toBe(false);
+  });
+
+  it('getTargets(goalNum) 가 ksdgs.json 의 해당 목표 세부목표를 반환한다', () => {
+    for (const [numStr, g] of Object.entries(ksdgs.goals)) {
+      const num = Number(numStr);
+      const ts = getTargets(num);
+      expect(ts.length).toBe(g.targets.length);
+      expect(ts.map((t) => t.code)).toEqual(g.targets.map((t) => t.code));
+    }
+  });
+
+  it('getTargets 는 존재하지 않는 목표에 빈 배열을 반환한다', () => {
+    expect(getTargets(0)).toEqual([]);
+    expect(getTargets(99)).toEqual([]);
+  });
+
+  it('includeTargets=true 면 모든 목표의 target 노드를 추가한다', () => {
+    const { nodes } = buildOntology({ includeTargets: true });
+    const targets = nodes.filter((n) => n.type === 'target');
+    expect(targets.length).toBe(KSDGS_TARGET_TOTAL);
+  });
+
+  it('targetGoals 로 선택 목표의 target 만 확장한다(전체 동시 표시 방지)', () => {
+    const { nodes, edges } = buildOntology({ includeTargets: true, targetGoals: [1] });
+    const targets = nodes.filter((n) => n.type === 'target');
+    expect(targets.length).toBe(ksdgs.goals['1'].targets.length);
+    // 모두 goal-1 의 세부목표여야 한다
+    for (const t of targets) {
+      expect(t.meta?.goalNum).toBe(1);
+    }
+    const hasTarget = edges.filter((e) => e.kind === 'has-target');
+    expect(hasTarget.length).toBe(targets.length);
+    for (const e of hasTarget) {
+      expect(e.from).toBe('goal-1');
+    }
+  });
+
+  it('target 노드 id 가 유일하다(target-<code>)', () => {
+    const { nodes } = buildOntology({ includeTargets: true });
+    const ids = nodes.filter((n) => n.type === 'target').map((n) => n.id);
+    expect(new Set(ids).size).toBe(ids.length);
+    expect(ids).toContain('target-1-1');
+  });
+
+  it('has-target 엣지가 ksdgs.json 의 goal→target 매핑과 정확히 일치한다', () => {
+    const { edges } = buildOntology({ includeTargets: true });
+    const hasTarget = edges.filter((e) => e.kind === 'has-target');
+    expect(hasTarget.length).toBe(KSDGS_TARGET_TOTAL);
+    for (const [numStr, g] of Object.entries(ksdgs.goals)) {
+      for (const t of g.targets) {
+        const match = hasTarget.find(
+          (e) => e.from === `goal-${numStr}` && e.to === `target-${t.code}`,
+        );
+        expect(match).toBeDefined();
+      }
+    }
+  });
+
+  it('includeTargets 시 모든 has-target 엣지의 from/to 가 실재 노드를 참조한다', () => {
+    const { nodes, edges } = buildOntology({ includeTargets: true });
+    const ids = new Set(nodes.map((n) => n.id));
+    for (const e of edges.filter((x) => x.kind === 'has-target')) {
+      expect(ids.has(e.from)).toBe(true);
+      expect(ids.has(e.to)).toBe(true);
+    }
   });
 });
