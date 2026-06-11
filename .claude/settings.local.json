@@ -151,7 +151,14 @@
       "Bash(node .crop.mjs)",
       "mcp__visualize__read_me",
       "Bash(node .g10.mjs)",
-      "Bash(echo \"EXIT=$?\")"
+      "Bash(echo \"EXIT=$?\")",
+      "Bash(git commit -q -m 'feat\\(sdg\\): 16광역 병합 로직\\(region-normalize\\) — 광주전남 인구가중/합산 *)",
+      "Bash(npx tsx -e ' *)",
+      "Bash(npx eslint *)",
+      "Bash(echo \"tsc EXIT=$?\")",
+      "Bash(echo \"eslint EXIT=$?\")",
+      "Bash(echo \"TSC_EXIT: $?\")",
+      "Bash(node scripts/_probe-ncsd.mjs)"
     ]
   }
 }
