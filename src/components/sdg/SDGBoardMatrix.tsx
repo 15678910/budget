@@ -1,4 +1,3 @@
-'use client';
 import { SDG_GOALS, SDG_DOMAINS_5 } from '@/lib/sdg/goals';
 import type { Matrix } from '@/lib/sdg/matrix';
 
