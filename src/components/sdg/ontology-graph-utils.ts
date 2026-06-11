@@ -109,5 +109,8 @@ export function exportSvgToPng(svg: SVGSVGElement | null, fileName = 'sdg-ontolo
     a.download = fileName;
     a.click();
   };
+  img.onerror = () => {
+    URL.revokeObjectURL(url);
+  };
   img.src = url;
 }

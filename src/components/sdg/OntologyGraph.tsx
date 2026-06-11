@@ -198,8 +198,13 @@ function OntologyGraphImpl(
 
   const resetView = useCallback(() => setView(INITIAL_TRANSFORM), []);
 
-  const handleWheel = useCallback(
-    (e: React.WheelEvent) => {
+  // ── native wheel listener (passive:false) — prevents page scroll while zooming ──
+  // React's synthetic onWheel is passive by default in modern browsers, so
+  // preventDefault() would be silently ignored. We attach a native listener instead.
+  // toViewBox is memoized via useCallback; re-registering when it changes is correct.
+  const handleNativeWheel = useCallback(
+    (e: WheelEvent) => {
+      e.preventDefault();
       const { x: vx, y: vy } = toViewBox(e.clientX, e.clientY);
       setView((v) => {
         const factor = e.deltaY < 0 ? SCALE_STEP : 1 / SCALE_STEP;
@@ -213,6 +218,13 @@ function OntologyGraphImpl(
     },
     [toViewBox],
   );
+
+  useEffect(() => {
+    const el = svgRef.current;
+    if (!el) return;
+    el.addEventListener('wheel', handleNativeWheel, { passive: false });
+    return () => el.removeEventListener('wheel', handleNativeWheel);
+  }, [handleNativeWheel]);
 
   // ── PNG export (SVG serialize → canvas → download) ──
   const exportPng = useCallback(
@@ -258,7 +270,6 @@ function OntologyGraphImpl(
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerLeave={handlePointerUp}
-        onWheel={handleWheel}
       >
         <g transform={`translate(${view.tx},${view.ty}) scale(${view.scale})`}>
           <EdgeLayer

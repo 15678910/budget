@@ -53,9 +53,13 @@ export function EdgeLayer({ links, focusIds, pathEdgeSet, hoverId }: EdgeLayerPr
   return (
     <g>
       {links.map((l, i) => {
-        const s = l.source as SimNode;
-        const t = l.target as SimNode;
-        if (typeof s === 'string' || typeof t === 'string') return null;
+        // Guard against d3-force first-tick state where source/target may still be strings,
+        // or undefined/null before the simulation resolves node references.
+        const sRaw = l.source;
+        const tRaw = l.target;
+        if (typeof sRaw === 'string' || typeof tRaw === 'string' || sRaw == null || tRaw == null) return null;
+        const s = sRaw as SimNode;
+        const t = tRaw as SimNode;
         const sid = linkEndId(l.source);
         const tid = linkEndId(l.target);
         const onPath = pathEdgeSet?.has(edgeKey(sid, tid)) ?? false;

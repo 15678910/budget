@@ -111,6 +111,10 @@ export default function OntologyView({ nodes, edges }: OntologyViewProps) {
       setPathNote('출발/도착 노드를 모두 선택하세요.');
       return;
     }
+    if (fromId === toId) {
+      setPathNote('출발과 도착이 같습니다.');
+      return;
+    }
     const path = shortestPath(edges, fromId, toId);
     if (path.length === 0) {
       setPathIds(null);
