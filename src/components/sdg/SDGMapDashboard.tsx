@@ -104,25 +104,25 @@ export function SDGMapDashboard({ geoData, kosis }: { geoData: any; kosis: Kosis
               </div>
               {/* 하단: 공식 픽토그램(크롭본) — 자체 영역에만 표시 */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={`/sdg/sdg-${g.num}-pic.svg?v=11`} alt={g.name} className="flex-1 min-h-0 w-full object-contain pb-2 px-2" />
+              <img src={`/sdg/sdg-${g.num}-pic.svg?v=12`} alt={g.name} className="flex-1 min-h-0 w-full object-contain pb-2 px-2" />
             </button>
           );
         })}
-        {/* SDG 공식 로고 셀 (포스터 우하단 'SUSTAINABLE DEVELOPMENT GOALS' 재현) */}
-        <div className="flex flex-col items-center justify-center gap-1 aspect-square rounded-md bg-white px-1.5 py-2 text-center">
-          <span className="text-[8px] md:text-[10px] font-extrabold leading-[1.1] tracking-tight text-slate-800">
+        {/* SDG 공식 로고 셀 — UN 엠블럼(세계지도) + SUSTAINABLE DEVELOPMENT GOALS */}
+        <div className="flex flex-col items-center justify-center gap-1 aspect-square rounded-md bg-white px-1.5 py-2 text-center overflow-hidden">
+          {/* UN 엠블럼(글로브+월계수) */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/sdg/un-emblem.svg?v=1" alt="UN" className="h-[26%] w-auto" />
+          <span className="font-extrabold leading-[1.04] tracking-tight text-[11px] md:text-[15px]" style={{ color: '#5B92E5' }}>
             SUSTAINABLE<br />DEVELOPMENT
           </span>
-          <div className="flex items-center justify-center gap-[1px]">
-            <span className="text-base md:text-xl font-extrabold leading-none text-slate-800">G</span>
-            {/* 컬러 휠 = 'O' 자리 */}
-            <span className="relative inline-block rounded-full shrink-0" style={{
-              width: 18, height: 18,
+          <div className="flex items-center justify-center gap-[1px] font-extrabold leading-none text-lg md:text-2xl" style={{ color: '#5B92E5' }}>
+            <span>G</span>
+            {/* 컬러 휠 = 'O' 자리 (17색 솔리드) */}
+            <span className="inline-block rounded-full shrink-0 w-[0.9em] h-[0.9em]" style={{
               background: `conic-gradient(${SDG_GOALS.map((g, i) => `${g.color} ${(i * 360 / 17).toFixed(2)}deg ${((i + 1) * 360 / 17).toFixed(2)}deg`).join(', ')})`,
-            }}>
-              <span className="absolute inset-[30%] rounded-full bg-white" />
-            </span>
-            <span className="text-base md:text-xl font-extrabold leading-none text-slate-800">ALS</span>
+            }} />
+            <span>ALS</span>
           </div>
         </div>
       </div>
