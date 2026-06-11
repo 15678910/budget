@@ -32,6 +32,7 @@ export interface BoardData {
 
 // 광주/전남 분리 인구(2026.2 주민등록 기준). fiscal은 둘을 합쳐 제공하므로 가중치용 상수로 분리.
 // 합(약 3,165,782)은 fiscal '전남광주통합특별시' population과 정합.
+// 출처: 행정안전부 주민등록 인구통계(2026.2), 광주+전남 합 = 3,165,782 (fiscal 통합 인구와 일치)
 const GWANGJU_JEONNAM_POP: Record<string, number> = {
   광주: 1404154,
   전남: 1761628,

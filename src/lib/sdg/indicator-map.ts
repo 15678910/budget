@@ -19,7 +19,7 @@ export const INDICATOR_TO_GOAL: Record<string, number> = {
   // Goal 11 도시
   hou_supply: 11, hou_area: 11, hou_pir: 11, hou_rental: 11,
   env_park: 11, trn_public: 11, cul_facility: 11, cul_sports: 11,
-  // Goal 13 기후 (env_pm25는 RAW 미보유 → 자동 누락, env_recycle·env_sewage만 반영)
+  // Goal 13 기후 (env_pm25 RAW 보유, env_recycle·env_sewage 포함 3개 지표 모두 반영)
   env_pm25: 13, env_recycle: 13, env_sewage: 13,
   // Goal 16 제도
   saf_crime: 16, saf_traffic: 16, saf_fire: 16,

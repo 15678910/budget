@@ -20,4 +20,16 @@ describe('assembleIndicatorValues', () => {
     expect(direction['emp_rate']).toBe('higher_better');
     expect(direction['saf_crime']).toBe('lower_better');
   });
+
+  it('광주전남 emp_rate 병합값이 인구 가중 평균과 일치한다', () => {
+    // RAW 실값: 광주광역시 emp_rate currentValue = 60.5, 전라남도 = 65.5
+    // (local-sdg-data.ts RAW emp_rate 배열, METRO_NAMES 순서 index 4·13)
+    const gwangju = 60.5;
+    const jeonnam = 65.5;
+    // board-data.ts GWANGJU_JEONNAM_POP 상수와 동일한 행정안전부 주민등록(2026.2) 값
+    const popGwangju = 1404154;
+    const popJeonnam = 1761628;
+    const expected = (gwangju * popGwangju + jeonnam * popJeonnam) / (popGwangju + popJeonnam);
+    expect(valuesByIndicator['emp_rate']['광주전남']).toBeCloseTo(expected, 1);
+  });
 });
