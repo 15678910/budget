@@ -16,10 +16,10 @@ function hexA(hex: string, a: number): string {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function SDGMapDashboard({ geoData, kosis }: { geoData: any; kosis: KosisData }) {
+export function SDGMapDashboard({ geoData, kosis, initialGoal }: { geoData: any; kosis: KosisData; initialGoal?: number }) {
   // 지표 = KOSIS 수집분 우선, 없으면 코드 내장(진학률 등)
   const indicatorFor = (num: number): SDGIndicator | null => kosis?.goals?.[String(num)] ?? getGoalIndicator(num);
-  const [goalNum, setGoalNum] = useState(4); // 기본: 데이터 보유 goal
+  const [goalNum, setGoalNum] = useState(initialGoal ?? 4); // 기본: 데이터 보유 goal
   const goal = SDG_GOALS.find((g) => g.num === goalNum)!;
   const indicator = useMemo(() => indicatorFor(goalNum), [goalNum]); // eslint-disable-line react-hooks/exhaustive-deps
 

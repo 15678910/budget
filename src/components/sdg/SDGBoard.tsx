@@ -64,7 +64,7 @@ export function SDGBoard({
         )}
         {goal ? (
           <div className="border border-gray-800 rounded-lg bg-gray-900/30 p-2">
-            <SDGMapDashboard geoData={geoData} kosis={kosis} />
+            <SDGMapDashboard key={goal} initialGoal={goal} geoData={geoData} kosis={kosis} />
           </div>
         ) : (
           <div className="border border-gray-800 rounded-lg bg-gray-900/20 p-8 text-center text-gray-500 text-sm">

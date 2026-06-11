@@ -71,7 +71,7 @@ export function SDGRegionProfile({
                 {v != null && (
                   <span
                     className="block h-full"
-                    style={{ width: `${v}%`, background: g.color }}
+                    style={{ width: `${Math.max(v, 2)}%`, background: g.color }}
                   />
                 )}
               </span>

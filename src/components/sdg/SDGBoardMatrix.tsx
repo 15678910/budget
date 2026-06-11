@@ -6,7 +6,8 @@ function cellColor(v: number | null, color: string): string {
   // 0~100 → 투명도 0.15~1.0 (동적 값이라 인라인 style 허용)
   const a = 0.15 + (v / 100) * 0.85;
   const h = color.replace('#', '');
-  const n = parseInt(h, 16);
+  const h6 = h.length === 3 ? h.split('').map((c) => c + c).join('') : h;
+  const n = parseInt(h6, 16);
   return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${a.toFixed(2)})`;
 }
 
