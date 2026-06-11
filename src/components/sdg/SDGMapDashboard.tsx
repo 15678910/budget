@@ -96,16 +96,16 @@ export function SDGMapDashboard({ geoData, kosis }: { geoData: any; kosis: Kosis
           return (
             <button key={g.num} onClick={() => setGoalNum(g.num)}
               title={`SDG ${g.num} ${g.name}${hasData ? '' : ' (데이터 준비중)'}`}
-              className={`relative block aspect-square rounded-md overflow-hidden transition-all ${active ? 'brightness-105 z-10' : 'hover:brightness-110'}`}
+              className={`flex flex-col aspect-square rounded-md overflow-hidden transition-all text-left ${active ? 'brightness-105 z-10' : 'hover:brightness-110'}`}
               style={{ background: g.color }}>
-              {/* 공식 픽토그램(하단) — 풀 SVG, 상단 영문은 아래 오버레이로 가림 */}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={`/sdg/sdg-${g.num}.svg?v=4`} alt={g.name} className="absolute inset-0 w-full h-full object-contain" />
-              {/* 상단 오버레이(동일 색) — SVG 번호·영문 가리고 번호+한글 표시 */}
-              <span className="absolute top-0 left-0 right-0 h-[46%] flex items-start gap-1.5 p-2 text-white text-left leading-none" style={{ background: g.color }}>
+              {/* 상단: 번호 + 한글 (픽토그램과 분리 → 겹침/잘림 없음) */}
+              <div className="flex items-start gap-1.5 px-2 pt-2 pb-0.5 text-white leading-none">
                 <span className="font-extrabold text-xl md:text-2xl leading-none shrink-0">{g.num}</span>
                 <span className="font-bold leading-[1.15] text-[15px] md:text-xl break-keep">{g.name}</span>
-              </span>
+              </div>
+              {/* 하단: 공식 픽토그램(크롭본) — 자체 영역에만 표시 */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={`/sdg/sdg-${g.num}-pic.svg?v=6`} alt={g.name} className="flex-1 min-h-0 w-full object-contain pb-2 px-2" />
             </button>
           );
         })}
