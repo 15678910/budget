@@ -16,7 +16,8 @@
     "regional:all": "npm run regional:generate && npm run regional:build",
     "education:generate": "tsx scripts/generate-education-data.ts",
     "education:build": "tsx scripts/build-education-hierarchy.ts 2023 && tsx scripts/build-education-hierarchy.ts 2024 && tsx scripts/build-education-hierarchy.ts 2025 && tsx scripts/build-education-hierarchy.ts 2026",
-    "education:all": "npm run education:generate && npm run education:build"
+    "education:all": "npm run education:generate && npm run education:build",
+    "ksdgs:fetch": "node scripts/fetch-ksdgs.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.2",
