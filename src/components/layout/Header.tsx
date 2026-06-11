@@ -198,6 +198,13 @@ export function Header() {
               {aiMenuOpen && (
                 <div className="absolute top-full left-0 pt-1 z-50">
                   <div className="w-40 bg-background border border-border rounded-lg shadow-lg p-1.5">
+                    <Link
+                      href="/simulator"
+                      className="block px-3 py-2 text-sm rounded-md font-semibold text-foreground hover:bg-muted transition-colors"
+                    >
+                      🏛 AI기본사회 허브
+                    </Link>
+                    <div className="my-1 border-t border-border" />
                     {AI_SUB_TABS.map((tab) => (
                       <Link
                         key={tab.href}
@@ -380,6 +387,13 @@ export function Header() {
             <div className="pt-3 pb-1 border-t border-border mt-2">
               <p className="text-xs text-muted-foreground font-medium tracking-wider px-3 pb-2">AI 기본사회</p>
               <div className="pl-3 space-y-0.5">
+                <Link
+                  href="/simulator"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-3 py-2 text-sm rounded-lg font-semibold text-foreground hover:bg-muted transition-colors"
+                >
+                  🏛 AI기본사회 허브
+                </Link>
                 {AI_SUB_TABS.map((tab) => (
                   <Link
                     key={tab.href}
