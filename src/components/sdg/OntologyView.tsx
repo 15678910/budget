@@ -8,9 +8,12 @@ import {
   neighbors as computeNeighbors,
   shortestPath,
   ontologyCounts,
+  getTargets,
   type Ontology,
   type OntologyNode,
   type OntologyNodeType,
+  type OntologyEdge,
+  type KsdgsTarget,
 } from '@/lib/sdg/ontology';
 
 interface OntologyViewProps {
@@ -23,14 +26,23 @@ const TYPE_META: { type: OntologyNodeType; label: string; color: string }[] = [
   { type: 'indicator', label: '지표', color: '#4C9F38' },
   { type: 'goal', label: 'SDG 목표', color: '#E5243B' },
   { type: 'domain', label: '5대 영역', color: '#19486A' },
+  { type: 'target', label: '세부목표', color: '#FD9D24' },
 ];
+
+/** goal 노드 id(goal-N) → 목표 번호 N. 아니면 null. */
+function goalNumFromId(id: string | null): number | null {
+  if (!id) return null;
+  const m = /^goal-(\d+)$/.exec(id);
+  return m ? Number(m[1]) : null;
+}
 
 type FocusStatus = 'idle' | 'loading' | 'error';
 
 export default function OntologyView({ nodes, edges }: OntologyViewProps) {
   const [activeTypes, setActiveTypes] = useState<Set<OntologyNodeType>>(
-    () => new Set<OntologyNodeType>(['dataset', 'indicator', 'goal', 'domain']),
+    () => new Set<OntologyNodeType>(['dataset', 'indicator', 'goal', 'domain', 'target']),
   );
+  const [showTargets, setShowTargets] = useState(false);
   const [focusIds, setFocusIds] = useState<Set<string> | null>(null);
   const [pathIds, setPathIds] = useState<string[] | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -43,37 +55,66 @@ export default function OntologyView({ nodes, edges }: OntologyViewProps) {
 
   const graphRef = useRef<OntologyGraphHandle>(null);
 
-  const ontology = useMemo<Ontology>(() => ({ nodes, edges }), [nodes, edges]);
-  const counts = useMemo(() => ontologyCounts(ontology), [ontology]);
-  const nodeById = useMemo(() => new Map(nodes.map((n) => [n.id, n])), [nodes]);
+  // 선택 노드가 goal 이면 그 목표 번호(세부목표 확장·INSPECTOR용).
+  const selectedGoalNum = useMemo(() => goalNumFromId(selectedId), [selectedId]);
+
+  // 선택 goal 의 K-SDGs 세부목표(공식 ncsd.go.kr) — INSPECTOR 표시용.
+  const selectedTargets = useMemo<KsdgsTarget[]>(
+    () => (selectedGoalNum != null ? getTargets(selectedGoalNum) : []),
+    [selectedGoalNum],
+  );
+
+  // 토글 ON + goal 선택 시 그 goal 의 target 노드/엣지만 그래프에 확장(전체 동시 표시 금지).
+  const expanded = useMemo<Ontology>(() => {
+    if (!showTargets || selectedGoalNum == null) return { nodes, edges };
+    const targetNodes: OntologyNode[] = selectedTargets.map((t) => ({
+      id: `target-${t.code}`,
+      type: 'target' as const,
+      label: t.code,
+      meta: { text: t.text, goalNum: selectedGoalNum },
+    }));
+    const targetEdges: OntologyEdge[] = selectedTargets.map((t) => ({
+      from: `goal-${selectedGoalNum}`,
+      to: `target-${t.code}`,
+      kind: 'has-target' as const,
+    }));
+    return { nodes: [...nodes, ...targetNodes], edges: [...edges, ...targetEdges] };
+  }, [showTargets, selectedGoalNum, selectedTargets, nodes, edges]);
+
+  const counts = useMemo(() => ontologyCounts(expanded), [expanded]);
+  const nodeById = useMemo(() => new Map(expanded.nodes.map((n) => [n.id, n])), [expanded.nodes]);
 
   // visible ontology after type filtering
   const visibleOntology = useMemo<Ontology>(() => {
-    const visibleNodes = nodes.filter((n) => activeTypes.has(n.type));
+    const visibleNodes = expanded.nodes.filter((n) => activeTypes.has(n.type));
     const visibleIds = new Set(visibleNodes.map((n) => n.id));
-    const visibleEdges = edges.filter((e) => visibleIds.has(e.from) && visibleIds.has(e.to));
+    const visibleEdges = expanded.edges.filter(
+      (e) => visibleIds.has(e.from) && visibleIds.has(e.to),
+    );
     return { nodes: visibleNodes, edges: visibleEdges };
-  }, [nodes, edges, activeTypes]);
+  }, [expanded, activeTypes]);
 
   const selectedNode: OntologyNode | null = selectedId ? nodeById.get(selectedId) ?? null : null;
 
   // neighbors of selected node, enriched with label/type for the inspector
   const selectedNeighbors = useMemo(() => {
     if (!selectedId) return [];
-    return computeNeighbors(edges, selectedId)
+    return computeNeighbors(expanded.edges, selectedId)
       .map((nb) => {
         const node = nodeById.get(nb.nodeId);
         if (!node) return null;
         return { neighbor: nb, label: node.label, type: node.type };
       })
       .filter((x): x is { neighbor: ReturnType<typeof computeNeighbors>[number]; label: string; type: OntologyNodeType } => x !== null);
-  }, [selectedId, edges, nodeById]);
+  }, [selectedId, expanded.edges, nodeById]);
 
   // sorted node options for the path-finder selects (grouped by type implicitly via label)
   const nodeOptions = useMemo(
     () =>
-      [...nodes].sort((a, b) => a.type.localeCompare(b.type) || a.label.localeCompare(b.label)),
-    [nodes],
+      [...expanded.nodes].sort(
+        (a, b) => a.type.localeCompare(b.type) || a.label.localeCompare(b.label),
+      ),
+    [expanded.nodes],
   );
 
   const toggleType = useCallback((type: OntologyNodeType) => {
@@ -88,13 +129,19 @@ export default function OntologyView({ nodes, edges }: OntologyViewProps) {
   const selectNode = useCallback(
     (nodeId: string) => {
       setSelectedId(nodeId);
-      const ns = computeNeighbors(edges, nodeId);
-      setFocusIds(new Set<string>([nodeId, ...ns.map((n) => n.nodeId)]));
+      const ns = computeNeighbors(expanded.edges, nodeId);
+      const focus = new Set<string>([nodeId, ...ns.map((n) => n.nodeId)]);
+      // 토글 ON + goal 선택 시, 다음 렌더에서 확장될 target 들도 미리 포커스에 포함.
+      const gNum = goalNumFromId(nodeId);
+      if (showTargets && gNum != null) {
+        for (const t of getTargets(gNum)) focus.add(`target-${t.code}`);
+      }
+      setFocusIds(focus);
       setPathIds(null);
       setPathNote(null);
       setNote('노드 선택: 직접 연결된 이웃을 강조합니다.');
     },
-    [edges],
+    [expanded.edges, showTargets],
   );
 
   const clearFocus = useCallback(() => {
@@ -115,7 +162,7 @@ export default function OntologyView({ nodes, edges }: OntologyViewProps) {
       setPathNote('출발과 도착이 같습니다.');
       return;
     }
-    const path = shortestPath(edges, fromId, toId);
+    const path = shortestPath(expanded.edges, fromId, toId);
     if (path.length === 0) {
       setPathIds(null);
       setPathNote('경로 없음: 두 노드가 연결되어 있지 않습니다.');
@@ -125,7 +172,7 @@ export default function OntologyView({ nodes, edges }: OntologyViewProps) {
     setFocusIds(null);
     setSelectedId(null);
     setPathNote(`경로 ${path.length}개 노드를 강조합니다.`);
-  }, [fromId, toId, edges]);
+  }, [fromId, toId, expanded.edges]);
 
   const submitQuery = useCallback(
     async (e: React.FormEvent) => {
@@ -191,6 +238,38 @@ export default function OntologyView({ nodes, edges }: OntologyViewProps) {
           })}
         </div>
 
+        {/* 세부목표 노드 표시 토글 */}
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setShowTargets((v) => !v)}
+            aria-pressed={showTargets}
+            className={`flex items-center gap-2 rounded-full border px-3 py-1 text-sm transition ${
+              showTargets
+                ? 'border-amber-400 bg-amber-50 text-amber-700'
+                : 'border-slate-300 bg-white text-slate-500'
+            }`}
+          >
+            <span
+              className={`inline-block h-3.5 w-6 rounded-full transition ${
+                showTargets ? 'bg-amber-400' : 'bg-slate-300'
+              }`}
+            >
+              <span
+                className={`block h-3.5 w-3.5 rounded-full bg-white shadow transition ${
+                  showTargets ? 'translate-x-2.5' : 'translate-x-0'
+                }`}
+              />
+            </span>
+            세부목표 노드 표시
+          </button>
+          <span className="text-xs text-slate-400">
+            {showTargets
+              ? 'SDG 목표 노드를 선택하면 그 목표의 K-SDGs 세부목표가 그래프에 펼쳐집니다.'
+              : 'K-SDGs 세부목표를 그래프 노드로 확장하려면 켜세요(목표 선택 시 해당 목표만).'}
+          </span>
+        </div>
+
         {/* NL 명령창 */}
         <form onSubmit={submitQuery} className="flex flex-wrap items-center gap-2">
           <input
@@ -248,14 +327,14 @@ export default function OntologyView({ nodes, edges }: OntologyViewProps) {
             </div>
           ))}
           <span className="text-sm text-slate-400">
-            엣지: 데이터셋→지표(제공) · 지표→목표(매핑) · 목표→영역(소속)
+            엣지: 데이터셋→지표(제공) · 지표→목표(매핑) · 목표→영역(소속) · 목표→세부목표(K-SDGs)
           </span>
         </div>
 
         {/* 고지 */}
         <p className="rounded-lg bg-slate-100 p-3 text-xs leading-relaxed text-slate-500">
           정의된 데이터셋·지표·목표 관계도이며, AI는 기존 관계를 강조할 뿐 새 관계를 만들지
-          않습니다.
+          않습니다. K-SDGs 세부목표 출처: 지속가능발전포털(ncsd.go.kr).
         </p>
       </div>
 
@@ -274,6 +353,7 @@ export default function OntologyView({ nodes, edges }: OntologyViewProps) {
         <OntologyInspector
           node={selectedNode}
           neighbors={selectedNeighbors}
+          targets={selectedTargets}
           onSelectNode={selectNode}
         />
       </aside>

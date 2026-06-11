@@ -7,7 +7,7 @@ export function InsightsPanel({ counts }: { counts: OntologyCounts }) {
   return (
     <div className="rounded-lg border border-slate-200 bg-white p-4">
       <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-400">INSIGHTS</h3>
-      <dl className="mt-2 grid grid-cols-3 gap-2 text-center">
+      <dl className="mt-2 grid grid-cols-2 gap-2 text-center">
         <div>
           <dt className="text-[11px] text-slate-400">엔티티</dt>
           <dd className="text-lg font-bold text-slate-800">{counts.entities}</dd>
@@ -19,6 +19,10 @@ export function InsightsPanel({ counts }: { counts: OntologyCounts }) {
         <div>
           <dt className="text-[11px] text-slate-400">속성</dt>
           <dd className="text-lg font-bold text-slate-800">{counts.properties}</dd>
+        </div>
+        <div>
+          <dt className="text-[11px] text-slate-400">세부목표</dt>
+          <dd className="text-lg font-bold text-slate-800">{counts.targets}</dd>
         </div>
       </dl>
     </div>

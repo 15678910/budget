@@ -4,6 +4,7 @@ import type {
   OntologyNode,
   OntologyNodeType,
   OntologyNeighbor,
+  KsdgsTarget,
 } from '@/lib/sdg/ontology';
 
 const TYPE_LABEL: Record<OntologyNodeType, string> = {
@@ -11,6 +12,7 @@ const TYPE_LABEL: Record<OntologyNodeType, string> = {
   indicator: '지표',
   goal: 'SDG 목표',
   domain: '5대 영역',
+  target: 'K-SDGs 세부목표',
 };
 
 const TYPE_COLOR: Record<OntologyNodeType, string> = {
@@ -18,12 +20,14 @@ const TYPE_COLOR: Record<OntologyNodeType, string> = {
   indicator: '#4C9F38',
   goal: '#E5243B',
   domain: '#19486A',
+  target: '#FD9D24',
 };
 
 const EDGE_KIND_LABEL: Record<string, string> = {
   provides: '제공',
   'maps-to': '매핑',
   'belongs-to': '소속',
+  'has-target': '세부목표',
 };
 
 /** 노드 meta 키 → 한글 라벨(파생 실데이터만 표시). */
@@ -31,13 +35,23 @@ const META_LABEL: Record<string, string> = {
   source: '출처',
   unit: '단위',
   direction: '방향',
+  text: '내용',
+  goalNum: '소속 목표',
 };
+
+/** 지속가능발전포털 출처 URL(K-SDGs). */
+const KSDGS_SOURCE_URL = 'https://www.ncsd.go.kr/ksdgs/goals';
 
 interface OntologyInspectorProps {
   /** 선택된 노드. null이면 안내 문구만. */
   node: OntologyNode | null;
   /** 선택 노드의 직접 이웃(neighbors 결과) + 이웃 라벨 동반. */
   neighbors: { neighbor: OntologyNeighbor; label: string; type: OntologyNodeType }[];
+  /**
+   * 선택 노드가 goal 일 때 표시할 K-SDGs 세부목표 목록(코드+텍스트).
+   * goal 이 아니거나 데이터가 없으면 빈 배열.
+   */
+  targets?: KsdgsTarget[];
   /** 이웃 노드 클릭 시 해당 노드로 이동. */
   onSelectNode: (nodeId: string) => void;
 }
@@ -45,6 +59,7 @@ interface OntologyInspectorProps {
 export default function OntologyInspector({
   node,
   neighbors,
+  targets = [],
   onSelectNode,
 }: OntologyInspectorProps) {
   if (!node) {
@@ -88,6 +103,38 @@ export default function OntologyInspector({
             </div>
           ))}
         </dl>
+      )}
+
+      {/* K-SDGs 세부목표(goal 노드 선택 시) */}
+      {node.type === 'goal' && targets.length > 0 && (
+        <div className="mt-3 border-t border-slate-100 pt-3">
+          <p className="text-xs font-medium text-slate-500">
+            K-SDGs 세부목표 ({targets.length})
+          </p>
+          <ul className="mt-1.5 space-y-1.5">
+            {targets.map((t) => (
+              <li key={t.code} className="flex gap-2 text-xs leading-relaxed">
+                <span className="shrink-0 rounded bg-amber-100 px-1.5 py-0.5 font-mono text-[10px] font-semibold text-amber-700">
+                  {t.code}
+                  {t.note ? ` (${t.note})` : ''}
+                </span>
+                <span className="min-w-0 flex-1 text-slate-700">{t.text}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-2 text-[10px] text-slate-400">
+            출처: 지속가능발전포털(
+            <a
+              href={KSDGS_SOURCE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-slate-600"
+            >
+              ncsd.go.kr
+            </a>
+            )
+          </p>
+        </div>
       )}
 
       {/* 연결된 노드 목록(neighbors) */}

@@ -30,6 +30,7 @@ export const TYPE_COLOR: Record<OntologyNodeType, string> = {
   indicator: '#4C9F38',
   goal: '#E5243B',
   domain: '#19486A',
+  target: '#FD9D24',
 };
 
 export const TYPE_RADIUS: Record<OntologyNodeType, number> = {
@@ -37,12 +38,14 @@ export const TYPE_RADIUS: Record<OntologyNodeType, number> = {
   indicator: 6,
   goal: 11,
   domain: 14,
+  target: 5,
 };
 
 export const EDGE_KIND_LABEL: Record<OntologyEdgeKind, string> = {
   provides: '제공',
   'maps-to': '매핑',
   'belongs-to': '소속',
+  'has-target': '세부목표',
 };
 
 export const WIDTH = 900;
