@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="20 175 365 215">
-  <!-- SDG 10 REDUCED INEQUALITIES — 원(링) 안에 등호 중앙 배치 -->
-  <circle cx="202" cy="271" r="86" fill="none" stroke="#ffffff" stroke-width="24"/>
-  <rect x="163" y="254" width="78" height="16" rx="8" fill="#ffffff"/>
-  <rect x="163" y="286" width="78" height="16" rx="8" fill="#ffffff"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 162 405 243">
+  <!-- SDG 10 REDUCED INEQUALITIES 공식형: 링(원) + 중앙 등호 (원본 비례) -->
+  <circle cx="202" cy="275" r="74" fill="none" stroke="#ffffff" stroke-width="20"/>
+  <rect x="173" y="260" width="58" height="13" rx="6.5" fill="#ffffff"/>
+  <rect x="173" y="284" width="58" height="13" rx="6.5" fill="#ffffff"/>
 </svg>

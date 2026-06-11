@@ -5,7 +5,6 @@ import { geoMercator, geoPath } from 'd3-geo';
 import { feature } from 'topojson-client';
 import { SDG_GOALS, getGoalIndicator, SIDO_FULL_TO_SHORT, type SDGIndicator } from '@/lib/sdg/goals';
 
-type Topology = { type: 'Topology'; objects: Record<string, unknown>; arcs: unknown[]; [k: string]: unknown };
 interface KosisData { goals: Record<string, SDGIndicator> }
 const W = 360, H = 440;
 
@@ -105,10 +104,27 @@ export function SDGMapDashboard({ geoData, kosis }: { geoData: any; kosis: Kosis
               </div>
               {/* 하단: 공식 픽토그램(크롭본) — 자체 영역에만 표시 */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={`/sdg/sdg-${g.num}-pic.svg?v=6`} alt={g.name} className="flex-1 min-h-0 w-full object-contain pb-2 px-2" />
+              <img src={`/sdg/sdg-${g.num}-pic.svg?v=8`} alt={g.name} className="flex-1 min-h-0 w-full object-contain pb-2 px-2" />
             </button>
           );
         })}
+        {/* SDG 공식 로고 셀 (포스터 우하단 'SUSTAINABLE DEVELOPMENT GOALS' 재현) */}
+        <div className="flex flex-col items-center justify-center gap-1 aspect-square rounded-md bg-white px-1.5 py-2 text-center">
+          <span className="text-[8px] md:text-[10px] font-extrabold leading-[1.1] tracking-tight text-slate-800">
+            SUSTAINABLE<br />DEVELOPMENT
+          </span>
+          <div className="flex items-center justify-center gap-[1px]">
+            <span className="text-base md:text-xl font-extrabold leading-none text-slate-800">G</span>
+            {/* 컬러 휠 = 'O' 자리 */}
+            <span className="relative inline-block rounded-full shrink-0" style={{
+              width: 18, height: 18,
+              background: `conic-gradient(${SDG_GOALS.map((g, i) => `${g.color} ${(i * 360 / 17).toFixed(2)}deg ${((i + 1) * 360 / 17).toFixed(2)}deg`).join(', ')})`,
+            }}>
+              <span className="absolute inset-[30%] rounded-full bg-white" />
+            </span>
+            <span className="text-base md:text-xl font-extrabold leading-none text-slate-800">ALS</span>
+          </div>
+        </div>
       </div>
 
       {/* 선택 goal 헤더 */}
