@@ -55,7 +55,7 @@ async function isAdminLoggedIn(request: NextRequest): Promise<boolean> {
   const secret = process.env.ADMIN_JWT_SECRET;
   if (!token || !secret) return false;
   try {
-    const { payload } = await jwtVerify(token, new TextEncoder().encode(secret));
+    const { payload } = await jwtVerify(token, new TextEncoder().encode(secret), { algorithms: ['HS256'] });
     const email = String(payload.email ?? '').toLowerCase();
     return email !== '' && adminEmails.includes(email);
   } catch {
@@ -157,7 +157,7 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL('/admin', request.url));
     }
     try {
-      await jwtVerify(token, new TextEncoder().encode(secret));
+      await jwtVerify(token, new TextEncoder().encode(secret), { algorithms: ['HS256'] });
     } catch {
       return NextResponse.redirect(new URL('/admin', request.url));
     }

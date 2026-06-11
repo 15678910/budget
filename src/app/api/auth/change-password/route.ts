@@ -15,6 +15,17 @@ const WINDOW_MS = 5 * 60 * 1000; // 5분
 
 export async function POST(request: NextRequest) {
   try {
+    // CSRF 방어: 상태변경 엔드포인트는 동일 출처만 허용 (Origin↔Host 대조)
+    const origin = request.headers.get('origin');
+    if (origin) {
+      const host = request.headers.get('host');
+      let originHost: string | null = null;
+      try { originHost = new URL(origin).host; } catch { originHost = null; }
+      if (!originHost || originHost !== host) {
+        return NextResponse.json({ error: '잘못된 요청 출처입니다.' }, { status: 403 });
+      }
+    }
+
     const token = request.cookies.get(COOKIE_NAME)?.value;
     if (!token) {
       return NextResponse.json({ error: '로그인이 필요합니다.' }, { status: 401 });
@@ -33,9 +44,13 @@ export async function POST(request: NextRequest) {
     if (!currentPassword || !newPassword) {
       return NextResponse.json({ error: '현재 비밀번호와 새 비밀번호를 입력해주세요.' }, { status: 400 });
     }
-    // 새 비밀번호 정책: 8자 이상, 영문+숫자 포함
+    // 새 비밀번호 정책: 8~128자, 영문+숫자 포함
     if (newPassword.length < 8) {
       return NextResponse.json({ error: '새 비밀번호는 8자 이상이어야 합니다.' }, { status: 400 });
+    }
+    // 길이 상한: bcrypt 72바이트 silent truncation 및 과대입력 DoS 표면 차단
+    if (newPassword.length > 128) {
+      return NextResponse.json({ error: '새 비밀번호는 128자 이하여야 합니다.' }, { status: 400 });
     }
     if (!/[A-Za-z]/.test(newPassword) || !/[0-9]/.test(newPassword)) {
       return NextResponse.json({ error: '새 비밀번호는 영문과 숫자를 포함해야 합니다.' }, { status: 400 });

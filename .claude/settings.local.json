@@ -150,7 +150,8 @@
       "Bash(curl -s -o /dev/null -w \"[%{http_code}] \" --max-time 15 \"https://upload.wikimedia.org/wikipedia/commons/d/d2/Sustainable_Development_Goals.svg\")",
       "Bash(node .crop.mjs)",
       "mcp__visualize__read_me",
-      "Bash(node .g10.mjs)"
+      "Bash(node .g10.mjs)",
+      "Bash(echo \"EXIT=$?\")"
     ]
   }
 }

@@ -15,10 +15,14 @@ function loadKosis() {
   } catch { return { goals: {} }; }
 }
 
+function loadGeo() {
+  try {
+    return JSON.parse(fs.readFileSync(path.join(process.cwd(), 'data', 'geo', 'korea-provinces-topo.json'), 'utf-8'));
+  } catch { return null; } // 토포 파일 손상/누락 시 페이지 크래시 대신 빈 지도로 degrade
+}
+
 export default function SDGPage() {
-  const geoData = JSON.parse(
-    fs.readFileSync(path.join(process.cwd(), 'data', 'geo', 'korea-provinces-topo.json'), 'utf-8'),
-  );
+  const geoData = loadGeo();
   const kosis = loadKosis();
   return (
     <div className="w-full max-w-6xl mx-auto">

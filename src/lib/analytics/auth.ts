@@ -12,7 +12,8 @@ function getJWTSecret() {
 const COOKIE_NAME = 'user_token';
 
 export async function hashPassword(password: string): Promise<string> {
-  return bcrypt.hash(password, 10);
+  // cost factor 12 (OWASP 2026 권장 하한) — 오프라인 크래킹 마진 확보
+  return bcrypt.hash(password, 12);
 }
 
 export async function verifyPassword(password: string, hash: string): Promise<boolean> {
@@ -35,7 +36,8 @@ export async function createUserToken(user: UserPayload): Promise<string> {
 
 export async function verifyUserToken(token: string): Promise<UserPayload | null> {
   try {
-    const { payload } = await jwtVerify(token, getJWTSecret());
+    // 알고리즘 allowlist 강제 (HS256 고정) — alg confusion/none 표면 차단
+    const { payload } = await jwtVerify(token, getJWTSecret(), { algorithms: ['HS256'] });
     return {
       userId: payload.userId as number,
       email: payload.email as string,

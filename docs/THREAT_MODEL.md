@@ -48,6 +48,10 @@
 | T-A1 | ADMIN_PASSWORD 평문 비교 (timing attack) | A1 | Low (이미 수정) | High | bcrypt 비교 적용 (C4 fix 2026-05-27) | test_a1_admin_password_bcrypt |
 | T-A2 | 관리자 세션 hijacking | A1 | Med | High | HttpOnly 쿠키 + CSRF 토큰 필요 (TODO: 검증) | test_a2_session_hijack |
 | T-A3 | ADMIN_PASSWORD 미설정 → 빈 문자열 비교 허용 | A1 | Low | Critical | fail-fast: 미설정 시 서버 거부 필요 (TODO) | test_a3_admin_pw_failfast |
+| T-A4 | user_token JWT 알고리즘 혼동(alg confusion/none) | A6 | Low | High | **HS256 allowlist 강제** (auth.ts·middleware ×3, fix 2026-06-11) | test_a4_jwt_alg_allowlist |
+| T-A5 | change-password CSRF (쿠키 전용 인증) | A1, A6 | Low | High | **Origin↔Host 대조 + 현재비번 재확인** (fix 2026-06-11) | test_a5_change_pw_csrf |
+| T-A6 | change-password 무차별 대입 — 서버리스 in-memory rate-limit 우회 | A1 | Med | Med | best-effort Map(현재) → **분산 카운터(Neon/Redis) 필요 (DEFER)** | test_a6_change_pw_ratelimit |
+| T-A7 | 비번 변경 후 기존 JWT(7일) 계속 유효 — 세션 무효화 부재 | A6 | Med | Med | tokenVersion 클레임 + 변경 시 재발급 **필요 (DEFER)** | test_a7_session_invalidate |
 
 ### B. 권한·Scope
 
@@ -113,8 +117,10 @@
 |----|----|----|---------|------|
 | T-A2 | 세션 CSRF 토큰 검증 | 미구현 | 3h | High |
 | T-A3 | ADMIN_PASSWORD fail-fast | 미구현 | 1h | High |
+| T-A6 | change-password 분산 rate-limit (서버리스 우회 차단) | 인프라(Neon/Redis) 필요 | 3h | Medium |
+| T-A7 | 비번 변경 후 세션 무효화 (tokenVersion) | JWT 스키마+DB 컬럼 변경 | 3h | Medium |
 | T-B1 | 관리자 미들웨어 전수 확인 | API route 늘어남에 따라 | 2h | High |
-| T-D1 | Neon raw query SQL injection 감사 | 전수 코드 리뷰 필요 | 4h | High |
+| T-D1 | Neon raw query SQL injection 감사 | 2026-06-11 리뷰: db.ts 전수 파라미터화 확인됨(통과). 신규 쿼리 시 재점검 | 1h | Low |
 
 ---
 
@@ -137,3 +143,4 @@
 | 날짜 | 변경 | 작성 |
 |------|----|----|
 | 2026-05-30 | 초기 작성 — Glasswing 영감 P1-D, bcrypt 패치(C4 2026-05-27) 반영 | P1-D |
+| 2026-06-11 | 사용자 인증(user_token) 보안 리뷰 — **수정**: JWT HS256 allowlist(T-A4), change-password CSRF Origin검증(T-A5), bcrypt cost 10→12, 새 비번 길이상한(8~128자). **DEFER**: 분산 rate-limit(T-A6), 세션 무효화(T-A7). SQL injection(db.ts)·평문저장·하드코딩 시크릿 = 통과 | code/security-reviewer |

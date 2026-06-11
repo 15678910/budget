@@ -30,7 +30,7 @@ const INDICATORS = [
 async function fetchIndicator(ind) {
   const url = `https://kosis.kr/openapi/Param/statisticsParameterData.do?method=getList&apiKey=${KEY}`
     + `&orgId=${ind.orgId}&tblId=${ind.tblId}&objL1=ALL&itmId=${ind.itmId}&prdSe=Y&newEstPrdCnt=1&format=json&jsonVD=Y`;
-  const res = await fetch(url);
+  const res = await fetch(url, { signal: AbortSignal.timeout(10000) }); // 10s 타임아웃 (무한 대기 방지)
   const j = await res.json();
   if (!Array.isArray(j)) throw new Error(JSON.stringify(j).slice(0, 120));
   const rows = j.filter((r) => r.ITM_ID === ind.itmId);
@@ -58,7 +58,7 @@ async function fetchIndicator(ind) {
     await sleep(1500);
   }
   mkdirSync('public/data', { recursive: true });
-  writeFileSync('public/data/sdg-sido.json', JSON.stringify({ collectedAt: '', goals }));
+  writeFileSync('public/data/sdg-sido.json', JSON.stringify({ collectedAt: new Date().toISOString(), goals }));
   console.log(`\n저장: public/data/sdg-sido.json (목표 ${Object.keys(goals).length}개)`);
   // 검증 출력
   for (const [g, d] of Object.entries(goals)) {

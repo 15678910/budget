@@ -23,20 +23,26 @@ export function SDGMapDashboard({ geoData, kosis }: { geoData: any; kosis: Kosis
   const goal = SDG_GOALS.find((g) => g.num === goalNum)!;
   const indicator = useMemo(() => indicatorFor(goalNum), [goalNum]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // 시도 경로 + 값 매핑
+  // 시도 경로 + 값 매핑 (토포 데이터 손상/누락 시 빈 배열로 안전 degrade)
   const provinces = useMemo(() => {
+    if (!geoData?.objects || typeof geoData.objects !== 'object') return [];
     const objName = Object.keys(geoData.objects)[0];
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const fc = feature(geoData as any, (geoData as any).objects[objName]) as any;
-    const proj = geoMercator().fitSize([W, H], fc);
-    const pg = geoPath(proj);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return fc.features.map((f: any) => {
-      const full = f.properties.name as string;
-      const short = SIDO_FULL_TO_SHORT[full] ?? full;
-      const c = pg.centroid(f);
-      return { full, short, d: pg(f) ?? '', cx: c[0], cy: c[1], value: indicator?.bySido[short] ?? null };
-    });
+    if (!objName) return [];
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const fc = feature(geoData as any, (geoData as any).objects[objName]) as any;
+      const proj = geoMercator().fitSize([W, H], fc);
+      const pg = geoPath(proj);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return fc.features.map((f: any) => {
+        const full = f.properties.name as string;
+        const short = SIDO_FULL_TO_SHORT[full] ?? full;
+        const c = pg.centroid(f);
+        return { full, short, d: pg(f) ?? '', cx: c[0], cy: c[1], value: indicator?.bySido[short] ?? null };
+      });
+    } catch {
+      return [];
+    }
   }, [geoData, indicator]);
 
   const { min, max } = useMemo(() => {
