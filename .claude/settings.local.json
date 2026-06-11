@@ -148,7 +148,8 @@
       "Bash(curl -s --max-time 15 \"https://api.github.com/repos/joaomlourenco/SDGs/contents/Icons/EN/SVG\")",
       "Bash(node -e 'let d=\"\";process.stdin.on\\(\"data\",c=>d+=c\\);process.stdin.on\\(\"end\",\\(\\)=>{try{const j=JSON.parse\\(d\\);const logos=j.filter\\(f=>/logo|wheel|0-|sdg|cover|combined/i.test\\(f.name\\)\\);console.log\\(\"로고 후보:\",logos.map\\(f=>f.name\\).join\\(\", \"\\)||\"\\(0-i/0-m? 확인\\)\"\\);console.log\\(\"전체 파일 예:\",j.slice\\(0,6\\).map\\(f=>f.name\\).join\\(\", \"\\)\\);}catch\\(e\\){console.log\\(d.slice\\(0,120\\)\\);}}\\)')",
       "Bash(curl -s -o /dev/null -w \"[%{http_code}] \" --max-time 15 \"https://upload.wikimedia.org/wikipedia/commons/d/d2/Sustainable_Development_Goals.svg\")",
-      "Bash(node .crop.mjs)"
+      "Bash(node .crop.mjs)",
+      "mcp__visualize__read_me"
     ]
   }
 }
