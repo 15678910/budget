@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { SDG_GOALS } from '@/lib/sdg/goals';
 import type { Matrix } from '@/lib/sdg/matrix';
 import type { IndicatorDirection } from '@/lib/data/local-sdg-data';
+import { regionGoalAchievement } from '@/lib/sdg/achievement';
+import { trafficColor } from '@/lib/sdg/scoring';
+import { TrafficBadge } from './TrafficBadge';
 import { SDGScenarioSimulator } from './SDGScenarioSimulator';
 
 export interface FiscalContext {
@@ -43,6 +46,11 @@ export function SDGRegionProfile({
 }) {
   const [showSim, setShowSim] = useState(false);
   const row = matrix[region] ?? {};
+  // 목표값 기준 달성도(신호등) — 상대점수(row)와 별개.
+  const achievement = useMemo(
+    () => regionGoalAchievement(valuesByIndicator, region, direction),
+    [valuesByIndicator, region, direction],
+  );
   const scored = SDG_GOALS.map((g) => ({ g, v: row[g.num] })).filter(
     (x): x is { g: (typeof SDG_GOALS)[number]; v: number } => x.v != null,
   );
@@ -82,25 +90,47 @@ export function SDGRegionProfile({
         {SDG_GOALS.map((g) => {
           const v = row[g.num];
           const rk = v != null ? goalRank(matrix, region, g.num) : null;
+          const a = achievement[g.num];
+          // 게이지 채우기: 달성도 있으면 신호등 색, 없으면 goal 색.
+          const barColor = a ? trafficColor(a.light) : g.color;
+          const targetNote = a
+            ? a.indicators
+                .map((ind) => `${ind.indicatorId}: 목표 ${ind.green} (${ind.type})`)
+                .join(' · ')
+            : '';
           return (
             <button
               key={g.num}
               onClick={() => onSelectGoal(g.num)}
+              title={targetNote || undefined}
               className="flex items-center gap-2 text-left hover:bg-gray-800/40 rounded px-1 py-0.5"
             >
               <span className="w-5 text-[11px] font-mono text-gray-500">{g.num}</span>
               <span className="w-14 text-[11px] text-gray-300 truncate">{g.name}</span>
               <span className="flex-1 h-2 rounded bg-gray-800 overflow-hidden">
-                {v != null && (
+                {a ? (
                   <span
                     className="block h-full"
-                    style={{ width: `${Math.max(v, 2)}%`, background: g.color }}
+                    style={{ width: `${Math.max(a.score, 2)}%`, background: barColor }}
                   />
+                ) : (
+                  v != null && (
+                    <span
+                      className="block h-full"
+                      style={{ width: `${Math.max(v, 2)}%`, background: g.color }}
+                    />
+                  )
                 )}
               </span>
-              <span className="w-7 text-right text-[11px] font-mono text-gray-400">
-                {v ?? '–'}
-              </span>
+              {a ? (
+                <span className="w-7 text-right">
+                  <TrafficBadge score={a.score} light={a.light} size="sm" />
+                </span>
+              ) : (
+                <span className="w-7 text-right text-[11px] font-mono text-gray-400">
+                  {v ?? '–'}
+                </span>
+              )}
               <span className="w-12 text-right text-[10px] font-mono text-gray-500">
                 {rk ? `${rk.rank}/${rk.total}위` : ''}
               </span>
@@ -148,10 +178,17 @@ export function SDGRegionProfile({
         />
       )}
 
-      <p className="text-[11px] text-gray-600 border-t border-gray-800 pt-2">
-        점수 = 16광역 분포 대비 대표지표 정규화값(0~100), 순위(N/M위) = 데이터 보유 광역 중 순위.
-        종합 SDG 달성도와 다를 수 있으며, 지역 여건 차이를 고려해 해석하세요.
-      </p>
+      <div className="text-[11px] text-gray-600 border-t border-gray-800 pt-2 space-y-1">
+        <p>
+          <span style={{ color: '#16a34a' }}>●</span> 게이지·배지 ={' '}
+          <strong className="text-gray-500">목표값 기준 달성도(0~100)</strong> · SDSN SDG Index 방법론 적응.
+          목표값(green)은 유형(공식·규범·벤치마크)·출처를 명시하며, 게이지 위에 마우스를 올리면 표시됩니다.
+        </p>
+        <p>
+          순위(N/M위) = 16광역 분포 대비 <strong className="text-gray-500">상대 정규화 순위</strong>로,
+          위 달성도와 의미가 <strong className="text-gray-500">구분</strong>됩니다(상대 ≠ 목표 달성). 데이터 미보유 목표는 회색.
+        </p>
+      </div>
     </div>
   );
 }

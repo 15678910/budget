@@ -9,6 +9,7 @@ import { SDGMunicipalProfile } from './SDGMunicipalProfile';
 import type { Matrix } from '@/lib/sdg/matrix';
 import type { SDGIndicator } from '@/lib/sdg/goals';
 import type { NationalByGoal } from '@/lib/sdg/national';
+import type { GoalAchievementByGoal } from '@/lib/sdg/scoring';
 import type { IndicatorDirection } from '@/lib/data/local-sdg-data';
 
 interface KosisData {
@@ -19,6 +20,7 @@ export function SDGBoard({
   matrix,
   metros,
   national,
+  nationalAchievement,
   fiscalByRegion,
   geoData,
   kosis,
@@ -28,6 +30,7 @@ export function SDGBoard({
   matrix: Matrix;
   metros: readonly string[];
   national: NationalByGoal;
+  nationalAchievement: GoalAchievementByGoal;
   fiscalByRegion: Record<string, FiscalContext>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any -- topojson(geoData)는 외부 토포 구조라 런타임 가드만 가능
   geoData: any;
@@ -65,7 +68,11 @@ export function SDGBoard({
       <div className="grid lg:grid-cols-2 gap-4">
         <div>
           {scope === 'national' && (
-            <SDGNationalSummary national={national} onSelectGoal={setGoal} />
+            <SDGNationalSummary
+              national={national}
+              achievement={nationalAchievement}
+              onSelectGoal={setGoal}
+            />
           )}
           {scope === 'metro' &&
             (selectedMetro ? (

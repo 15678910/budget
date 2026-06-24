@@ -4,6 +4,7 @@ import { buildMatrix } from '@/lib/sdg/matrix';
 import { INDICATOR_TO_GOAL } from '@/lib/sdg/indicator-map';
 import { CANON_16, mergeToCanon16 } from '@/lib/sdg/region-normalize';
 import { nationalByGoal, type IndicatorLabel } from '@/lib/sdg/national';
+import { nationalGoalAchievement } from '@/lib/sdg/achievement';
 import { getMetroFiscalData } from '@/lib/data/fiscal-health-data';
 import { SDG_DOMAINS } from '@/lib/data/local-sdg-data';
 import { SIDO_FULL_TO_SHORT } from '@/lib/sdg/goals';
@@ -99,6 +100,12 @@ export default function SDGPage() {
     direction,
     buildIndicatorLabels(),
   );
+  // 목표값 기준 전국 달성도(신호등) — 상대점수와 별개.
+  const nationalAchievement = nationalGoalAchievement(
+    valuesByIndicator,
+    canonPopulation,
+    direction,
+  );
 
   return (
     <div className="w-full max-w-6xl mx-auto">
@@ -114,6 +121,7 @@ export default function SDGPage() {
         matrix={matrix}
         metros={CANON_16}
         national={national}
+        nationalAchievement={nationalAchievement}
         fiscalByRegion={fiscalByRegion}
         geoData={geoData}
         kosis={kosis}
