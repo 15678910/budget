@@ -66,3 +66,50 @@ body {
   transform: scaleY(1.06);
   filter: brightness(1.18);
 }
+
+/* ───────────────────────────────────────────────────────────
+   인쇄(PDF) — VLR 리포트 전용 (window.print(), html2canvas 미사용)
+   글로벌 헤더·AI허브 사이드바·챗봇·컨트롤을 숨기고 리포트만 전체폭으로.
+   .vlr-report-root 가 존재하는 페이지에서만 의미가 있다.
+   ─────────────────────────────────────────────────────────── */
+@media print {
+  /* 글로벌 헤더 */
+  body > header,
+  header.sticky {
+    display: none !important;
+  }
+  /* AI허브 사이드바(데스크톱 aside / 모바일 details) */
+  aside,
+  .md\:hidden {
+    display: none !important;
+  }
+  /* 고정 오버레이(챗봇·가이드 투어 등) */
+  [class*="fixed"],
+  .fixed {
+    display: none !important;
+  }
+  /* VLR 컨트롤 바(지역 선택·인쇄 버튼) */
+  .vlr-controls {
+    display: none !important;
+  }
+
+  /* 본문 컨테이너 전체폭 + 흰 배경(잉크 절약·가독) */
+  main {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  body {
+    background: #ffffff !important;
+    color: #111111 !important;
+  }
+  .vlr-report-root {
+    max-width: 100% !important;
+    color: #111111 !important;
+  }
+  /* 섹션 단위 페이지 브레이크(섹션 중간 끊김 방지) */
+  .vlr-section {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}

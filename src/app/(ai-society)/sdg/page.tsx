@@ -109,7 +109,13 @@ export default function SDGPage() {
 
   return (
     <div className="w-full max-w-6xl mx-auto">
-      <div className="flex justify-end mb-2">
+      <div className="flex justify-end gap-2 mb-2">
+        <a
+          href="/sdg/vlr"
+          className="inline-flex items-center gap-1 text-sm px-3 py-1.5 rounded-lg border border-emerald-600/60 bg-emerald-950/30 text-emerald-200 hover:bg-emerald-900/40 font-medium"
+        >
+          📄 VLR 지역 자기평가 리포트
+        </a>
         <a
           href="/sdg/ontology"
           className="inline-flex items-center gap-1 text-sm px-3 py-1.5 rounded-lg border border-sky-700/60 bg-sky-950/30 text-sky-200 hover:bg-sky-900/40"
