@@ -4,7 +4,7 @@ import { CANON_16 } from '@/lib/sdg/region-normalize';
 import { getMetroFiscalData } from '@/lib/data/fiscal-health-data';
 import { SIDO_FULL_TO_SHORT } from '@/lib/sdg/goals';
 import { getTargets } from '@/lib/sdg/ontology';
-import { buildVLR, type VLRFiscal, type VLRReport as VLRReportData } from '@/lib/sdg/vlr';
+import { buildVLR, type VLRFiscal, type VLRReport as VLRReportData, DEFAULT_NATIONAL_AVG } from '@/lib/sdg/vlr';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -42,13 +42,13 @@ function buildFiscalByRegion(): Record<string, VLRFiscal> {
   return out;
 }
 
-/** 16광역 재정 평균(재정 취약 판정 기준). 데이터 없으면 0. */
+/** 16광역 재정 평균(재정 취약 판정 기준). 데이터 없으면 DEFAULT_NATIONAL_AVG 폴백. */
 function nationalAvgOf(fiscalByRegion: Record<string, VLRFiscal>): {
   independence: number;
   autonomy: number;
 } {
   const arr = Object.values(fiscalByRegion);
-  if (arr.length === 0) return { independence: 0, autonomy: 0 };
+  if (arr.length === 0) return DEFAULT_NATIONAL_AVG;
   const ind = arr.reduce((s, f) => s + f.independence, 0) / arr.length;
   const aut = arr.reduce((s, f) => s + f.autonomy, 0) / arr.length;
   return {

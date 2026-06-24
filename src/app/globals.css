@@ -84,7 +84,6 @@ body {
     display: none !important;
   }
   /* 고정 오버레이(챗봇·가이드 투어 등) */
-  [class*="fixed"],
   .fixed {
     display: none !important;
   }
