@@ -4,6 +4,7 @@ import { useMemo, useState, useCallback, useRef } from 'react';
 import OntologyGraph, { type OntologyGraphHandle } from '@/components/sdg/OntologyGraph';
 import OntologyInspector from '@/components/sdg/OntologyInspector';
 import { InsightsPanel, PathFinderPanel } from '@/components/sdg/OntologyPanels';
+import HelpTip from '@/components/sdg/HelpTip';
 import {
   neighbors as computeNeighbors,
   shortestPath,
@@ -24,13 +25,43 @@ interface OntologyViewProps {
   edges: Ontology['edges'];
 }
 
-const TYPE_META: { type: OntologyNodeType; label: string; color: string }[] = [
-  { type: 'dataset', label: '데이터셋', color: '#0A97D9' },
-  { type: 'indicator', label: '지표', color: '#4C9F38' },
-  { type: 'goal', label: 'SDG 목표', color: '#E5243B' },
-  { type: 'domain', label: '5대 영역', color: '#19486A' },
-  { type: 'target', label: 'K-SDGs 세부목표', color: '#FD9D24' },
-  { type: 'un-target', label: 'UN 세부목표', color: '#6366F1' },
+const TYPE_META: { type: OntologyNodeType; label: string; color: string; tip: string }[] = [
+  {
+    type: 'dataset',
+    label: '데이터셋',
+    color: '#0A97D9',
+    tip: '지표를 제공하는 공식 출처(기관·통계조사). 예: 통계청, 한국교육개발원. 파란 노드입니다. 칩을 누르면 그래프에서 켜고 끌 수 있어요.',
+  },
+  {
+    type: 'indicator',
+    label: '지표',
+    color: '#4C9F38',
+    tip: 'SDG 달성을 측정하는 실데이터 항목(예: 고용률·자살률). 데이터셋이 제공하고 SDG 목표로 매핑됩니다. 초록 노드.',
+  },
+  {
+    type: 'goal',
+    label: 'SDG 목표',
+    color: '#E5243B',
+    tip: '유엔 지속가능발전목표 17개. 지표가 이 목표로 매핑되고, 목표는 5대 영역에 속합니다. 빨강 노드. 클릭하면 세부목표가 인스펙터에 표시됩니다.',
+  },
+  {
+    type: 'domain',
+    label: '5대 영역',
+    color: '#19486A',
+    tip: 'SDG를 묶는 5P — 사람·지구·번영·평화·파트너십. 각 목표가 이 영역에 속합니다. 남색 노드.',
+  },
+  {
+    type: 'target',
+    label: 'K-SDGs 세부목표',
+    color: '#FD9D24',
+    tip: '한국형 SDG 세부목표(출처: 지속가능발전포털). 목표를 한국 맥락으로 구체화한 항목. 주황 노드. ‘K-SDGs 노드 표시’ 토글로 그래프에 펼칠 수 있어요.',
+  },
+  {
+    type: 'un-target',
+    label: 'UN 세부목표',
+    color: '#6366F1',
+    tip: '유엔 공식 169개 세부목표(A/RES/70/1). 영문은 공식 축자, 국문은 비공식 참고 번역. 국제 원본. 인디고 노드. ‘UN 169 노드 표시’ 토글로 펼칩니다.',
+  },
 ];
 
 /** goal 노드 id(goal-N) → 목표 번호 N. 아니면 null. */
@@ -261,22 +292,23 @@ export default function OntologyView({ nodes, edges }: OntologyViewProps) {
           {TYPE_META.map((t) => {
             const on = activeTypes.has(t.type);
             return (
-              <button
-                key={t.type}
-                type="button"
-                onClick={() => toggleType(t.type)}
-                className={`flex items-center gap-1.5 rounded-full border px-3 py-1 text-sm transition ${
-                  on ? 'border-transparent text-white' : 'border-slate-300 bg-white text-slate-400'
-                }`}
-                style={on ? { backgroundColor: t.color } : undefined}
-                aria-pressed={on}
-              >
-                <span
-                  className="inline-block h-2.5 w-2.5 rounded-full"
-                  style={{ backgroundColor: on ? '#ffffff' : t.color }}
-                />
-                {t.label}
-              </button>
+              <HelpTip key={t.type} tip={t.tip} align="center">
+                <button
+                  type="button"
+                  onClick={() => toggleType(t.type)}
+                  className={`flex items-center gap-1.5 rounded-full border px-3 py-1 text-sm transition ${
+                    on ? 'border-transparent text-white' : 'border-slate-300 bg-white text-slate-400'
+                  }`}
+                  style={on ? { backgroundColor: t.color } : undefined}
+                  aria-pressed={on}
+                >
+                  <span
+                    className="inline-block h-2.5 w-2.5 rounded-full"
+                    style={{ backgroundColor: on ? '#ffffff' : t.color }}
+                  />
+                  {t.label}
+                </button>
+              </HelpTip>
             );
           })}
         </div>

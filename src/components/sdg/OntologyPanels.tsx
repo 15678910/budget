@@ -1,6 +1,7 @@
 'use client';
 
 import type { OntologyNode, OntologyCounts } from '@/lib/sdg/ontology';
+import HelpTip from '@/components/sdg/HelpTip';
 
 /** INSIGHTS: 엔티티/관계/속성 카운트 패널. */
 export function InsightsPanel({ counts }: { counts: OntologyCounts }) {
@@ -9,23 +10,58 @@ export function InsightsPanel({ counts }: { counts: OntologyCounts }) {
       <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-400">INSIGHTS</h3>
       <dl className="mt-2 grid grid-cols-2 gap-2 text-center">
         <div>
-          <dt className="text-[11px] text-slate-400">엔티티</dt>
+          <dt className="flex justify-center text-xs text-slate-400">
+            <HelpTip
+              align="right"
+              tip="그래프의 노드 총수입니다. 데이터셋·지표·SDG 목표·5대 영역을 모두 셉니다(펼친 세부목표 포함)."
+            >
+              엔티티
+            </HelpTip>
+          </dt>
           <dd className="text-lg font-bold text-slate-800">{counts.entities}</dd>
         </div>
         <div>
-          <dt className="text-[11px] text-slate-400">관계</dt>
+          <dt className="flex justify-center text-xs text-slate-400">
+            <HelpTip
+              align="right"
+              tip="노드를 잇는 연결(엣지)의 총수입니다. 제공(데이터셋→지표)·매핑(지표→목표)·소속(목표→영역)·세부목표 관계를 포함합니다."
+            >
+              관계
+            </HelpTip>
+          </dt>
           <dd className="text-lg font-bold text-slate-800">{counts.relationships}</dd>
         </div>
         <div>
-          <dt className="text-[11px] text-slate-400">속성</dt>
+          <dt className="flex justify-center text-xs text-slate-400">
+            <HelpTip
+              align="right"
+              tip="노드에 부여된 메타 속성의 합입니다. 예: 지표의 단위·해석 방향(높을수록/낮을수록 좋음)·출처."
+            >
+              속성
+            </HelpTip>
+          </dt>
           <dd className="text-lg font-bold text-slate-800">{counts.properties}</dd>
         </div>
         <div>
-          <dt className="text-[11px] text-slate-400">K-SDGs 세부목표</dt>
+          <dt className="flex justify-center text-xs text-slate-400">
+            <HelpTip
+              align="right"
+              tip="한국형 SDG 세부목표의 총수입니다(출처: 지속가능발전포털, 118개). 그래프 표시 여부와 무관한 전체 수."
+            >
+              K-SDGs 세부목표
+            </HelpTip>
+          </dt>
           <dd className="text-lg font-bold text-slate-800">{counts.targets}</dd>
         </div>
         <div className="col-span-2">
-          <dt className="text-[11px] text-slate-400">UN 169 세부목표</dt>
+          <dt className="flex justify-center text-xs text-slate-400">
+            <HelpTip
+              align="right"
+              tip="유엔 공식 SDG 세부목표의 총수입니다(169개, A/RES/70/1). 그래프 표시 여부와 무관한 전체 수."
+            >
+              UN 169 세부목표
+            </HelpTip>
+          </dt>
           <dd className="text-lg font-bold text-slate-800">{counts.unTargets}</dd>
         </div>
       </dl>
@@ -58,7 +94,9 @@ export function PathFinderPanel({
       <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-400">PATH FINDER</h3>
       <div className="mt-2 space-y-2">
         <label className="block">
-          <span className="text-[11px] font-medium text-slate-600">출발</span>
+          <span className="inline-flex text-xs font-medium text-slate-600">
+            <HelpTip align="right" tip="경로 탐색을 시작할 노드를 선택합니다.">출발</HelpTip>
+          </span>
           <select
             value={fromId}
             onChange={(e) => onFromChange(e.target.value)}
@@ -73,7 +111,14 @@ export function PathFinderPanel({
           </select>
         </label>
         <label className="block">
-          <span className="text-[11px] font-medium text-slate-600">도착</span>
+          <span className="inline-flex text-xs font-medium text-slate-600">
+            <HelpTip
+              align="right"
+              tip="경로가 끝날 노드를 선택합니다. [경로 찾기]를 누르면 출발–도착 사이 최단 연결 경로를 그래프에 강조해 보여줍니다."
+            >
+              도착
+            </HelpTip>
+          </span>
           <select
             value={toId}
             onChange={(e) => onToChange(e.target.value)}
