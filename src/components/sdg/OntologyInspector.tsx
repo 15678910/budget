@@ -80,10 +80,10 @@ export default function OntologyInspector({
   if (!node) {
     return (
       <div className="rounded-lg border border-slate-200 bg-white p-4">
-        <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+        <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-400">
           INSPECTOR
         </h3>
-        <p className="mt-2 text-sm text-slate-400">노드를 선택하세요.</p>
+        <p className="mt-2 text-base text-slate-400">노드를 선택하세요.</p>
       </div>
     );
   }
@@ -104,15 +104,15 @@ export default function OntologyInspector({
           className="inline-block h-3 w-3 shrink-0 rounded-full"
           style={{ backgroundColor: TYPE_COLOR[node.type] }}
         />
-        <span className="text-xs font-medium text-slate-500">{TYPE_LABEL[node.type]}</span>
+        <span className="text-sm font-medium text-slate-500">{TYPE_LABEL[node.type]}</span>
       </div>
-      <p className="mt-1 break-words text-sm font-semibold text-slate-800">{node.label}</p>
+      <p className="mt-1 break-words text-lg font-semibold text-slate-800">{node.label}</p>
 
       {/* 메타(출처/단위/방향 등 실데이터) */}
       {metaEntries.length > 0 && (
         <dl className="mt-3 space-y-1 border-t border-slate-100 pt-3">
           {metaEntries.map(([key, value]) => (
-            <div key={key} className="flex gap-2 text-xs">
+            <div key={key} className="flex gap-2 text-sm">
               <dt className="w-12 shrink-0 text-slate-400">{META_LABEL[key] ?? key}</dt>
               <dd className="break-words text-slate-700">{String(value)}</dd>
             </div>
@@ -124,15 +124,15 @@ export default function OntologyInspector({
       {node.type === 'un-target' && (
         <div className="mt-3 border-t border-slate-100 pt-3 space-y-1.5">
           {node.meta?.en && (
-            <p className="text-xs leading-relaxed text-slate-700">{node.meta.en}</p>
+            <p className="text-sm leading-relaxed text-slate-700">{node.meta.en}</p>
           )}
           {node.meta?.ko && (
-            <p className="text-xs leading-relaxed text-slate-500">
-              <span className="mr-1 rounded bg-indigo-50 px-1 py-0.5 text-[10px] text-indigo-500">비공식</span>
+            <p className="text-sm leading-relaxed text-slate-500">
+              <span className="mr-1 rounded bg-indigo-50 px-1 py-0.5 text-xs text-indigo-500">비공식</span>
               {node.meta.ko}
             </p>
           )}
-          <p className="text-[10px] text-slate-400">
+          <p className="text-xs text-slate-400">
             출처: UN Statistics Division SDG API (A/RES/70/1)
           </p>
         </div>
@@ -141,13 +141,13 @@ export default function OntologyInspector({
       {/* K-SDGs 세부목표(goal 노드 선택 시) */}
       {node.type === 'goal' && targets.length > 0 && (
         <div className="mt-3 border-t border-slate-100 pt-3">
-          <p className="text-xs font-medium text-slate-500">
+          <p className="text-sm font-medium text-slate-500">
             K-SDGs 세부목표 ({targets.length})
           </p>
           <ul className="mt-1.5 space-y-1.5">
             {targets.map((t) => (
-              <li key={t.code} className="flex gap-2 text-xs leading-relaxed">
-                <span className="shrink-0 rounded bg-amber-100 px-1.5 py-0.5 font-mono text-[10px] font-semibold text-amber-700">
+              <li key={t.code} className="flex gap-2 text-sm leading-relaxed">
+                <span className="shrink-0 rounded bg-amber-100 px-1.5 py-0.5 font-mono text-xs font-semibold text-amber-700">
                   {t.code}
                   {t.note ? ` (${t.note})` : ''}
                 </span>
@@ -155,7 +155,7 @@ export default function OntologyInspector({
               </li>
             ))}
           </ul>
-          <p className="mt-2 text-[10px] text-slate-400">
+          <p className="mt-2 text-xs text-slate-400">
             출처: 지속가능발전포털(
             <a
               href={KSDGS_SOURCE_URL}
@@ -177,11 +177,11 @@ export default function OntologyInspector({
 
       {/* 연결된 노드 목록(neighbors) */}
       <div className="mt-3 border-t border-slate-100 pt-3">
-        <p className="text-xs font-medium text-slate-500">
+        <p className="text-sm font-medium text-slate-500">
           연결된 노드 ({neighbors.length})
         </p>
         {neighbors.length === 0 ? (
-          <p className="mt-1 text-xs text-slate-400">직접 연결된 노드가 없습니다.</p>
+          <p className="mt-1 text-sm text-slate-400">직접 연결된 노드가 없습니다.</p>
         ) : (
           <ul className="mt-1.5 space-y-1">
             {neighbors.map(({ neighbor, label, type }) => (
@@ -189,14 +189,14 @@ export default function OntologyInspector({
                 <button
                   type="button"
                   onClick={() => onSelectNode(neighbor.nodeId)}
-                  className="flex w-full items-center gap-1.5 rounded px-1.5 py-1 text-left text-xs text-slate-700 transition hover:bg-slate-100"
+                  className="flex w-full items-center gap-1.5 rounded px-1.5 py-1 text-left text-sm text-slate-700 transition hover:bg-slate-100"
                 >
                   <span
                     className="inline-block h-2 w-2 shrink-0 rounded-full"
                     style={{ backgroundColor: TYPE_COLOR[type] }}
                   />
                   <span className="min-w-0 flex-1 truncate">{label}</span>
-                  <span className="shrink-0 rounded bg-slate-100 px-1.5 py-0.5 text-[10px] text-slate-500">
+                  <span className="shrink-0 rounded bg-slate-100 px-1.5 py-0.5 text-xs text-slate-500">
                     {EDGE_KIND_LABEL[neighbor.edgeKind] ?? neighbor.edgeKind}
                   </span>
                 </button>
