@@ -1,0 +1,886 @@
+{
+  "source": "UN Statistics Division SDG API (A/RES/70/1)",
+  "url": "https://unstats.un.org/sdgapi/v1/sdg/Target/List?includechildren=false",
+  "fetchedAt": "2026-06-25T07:33:22.575Z",
+  "goals": {
+    "1": [
+      {
+        "code": "1.1",
+        "en": "By 2030, eradicate extreme poverty for all people everywhere, currently measured as people living on less than $1.25 a day",
+        "ko": "2030년까지 현재 하루 1.25달러 미만으로 생활하는 것으로 측정되는 극심한 빈곤을 모든 곳의 모든 사람에 대해 근절한다."
+      },
+      {
+        "code": "1.2",
+        "en": "By 2030, reduce at least by half the proportion of men, women and children of all ages living in poverty in all its dimensions according to national definitions",
+        "ko": "2030년까지 국가별 정의에 따라 모든 차원의 빈곤 속에 사는 모든 연령대 남성·여성·아동의 비율을 최소 절반으로 줄인다."
+      },
+      {
+        "code": "1.3",
+        "en": "Implement nationally appropriate social protection systems and measures for all, including floors, and by 2030 achieve substantial coverage of the poor and the vulnerable",
+        "ko": "최저보장을 포함해 모두를 위한 국가 실정에 맞는 사회보호제도와 대책을 시행하고, 2030년까지 빈곤층과 취약계층에 대한 실질적 보장을 달성한다."
+      },
+      {
+        "code": "1.4",
+        "en": "By 2030, ensure that all men and women, in particular the poor and the vulnerable, have equal rights to economic resources, as well as access to basic services, ownership and control over land and other forms of property, inheritance, natural resources, appropriate new technology and financial services, including microfinance",
+        "ko": "2030년까지 모든 남녀, 특히 빈곤층과 취약계층이 경제적 자원에 대한 평등한 권리와 더불어 기초서비스, 토지 및 기타 형태 재산에 대한 소유·통제권, 상속, 천연자원, 적정 신기술, 소액금융을 포함한 금융서비스에 접근할 수 있도록 보장한다."
+      },
+      {
+        "code": "1.5",
+        "en": "By 2030, build the resilience of the poor and those in vulnerable situations and reduce their exposure and vulnerability to climate-related extreme events and other economic, social and environmental shocks and disasters",
+        "ko": "2030년까지 빈곤층과 취약한 처지의 사람들의 회복력을 키우고, 기후 관련 극단적 사건 및 기타 경제·사회·환경적 충격과 재난에 대한 노출과 취약성을 감소시킨다."
+      },
+      {
+        "code": "1.a",
+        "en": "Ensure significant mobilization of resources from a variety of sources, including through enhanced development cooperation, in order to provide adequate and predictable means for developing countries, in particular least developed countries, to implement programmes and policies to end poverty in all its dimensions",
+        "ko": "개발도상국, 특히 최빈개도국이 모든 차원의 빈곤을 종식하기 위한 프로그램과 정책을 시행할 수 있도록 적절하고 예측 가능한 수단을 제공하기 위해, 개발협력 강화를 포함한 다양한 출처로부터 상당한 자원이 동원되도록 보장한다."
+      },
+      {
+        "code": "1.b",
+        "en": "Create sound policy frameworks at the national, regional and international levels, based on pro-poor and gender-sensitive development strategies, to support accelerated investment in poverty eradication actions",
+        "ko": "빈곤층 친화적이고 성인지적인 개발전략에 기반하여, 빈곤 근절 활동에 대한 투자 가속을 지원하는 건전한 정책 틀을 국가·지역·국제 차원에서 구축한다."
+      }
+    ],
+    "2": [
+      {
+        "code": "2.1",
+        "en": "By 2030, end hunger and ensure access by all people, in particular the poor and people in vulnerable situations, including infants, to safe, nutritious and sufficient food all year round",
+        "ko": "2030년까지 기아를 종식하고, 모든 사람, 특히 빈곤층과 영유아를 포함한 취약한 처지의 사람들이 연중 내내 안전하고 영양가 있으며 충분한 식량에 접근할 수 있도록 보장한다."
+      },
+      {
+        "code": "2.2",
+        "en": "By 2030, end all forms of malnutrition, including achieving, by 2025, the internationally agreed targets on stunting and wasting in children under 5 years of age, and address the nutritional needs of adolescent girls, pregnant and lactating women and older persons",
+        "ko": "2030년까지 모든 형태의 영양실조를 종식하되, 2025년까지 5세 미만 아동의 발육부진·소모성영양불량에 관한 국제 합의 목표를 달성하고, 청소년기 소녀·임산부·수유부·노인의 영양 필요를 해결한다."
+      },
+      {
+        "code": "2.3",
+        "en": "By 2030, double the agricultural productivity and incomes of small-scale food producers, in particular women, indigenous peoples, family farmers, pastoralists and fishers, including through secure and equal access to land, other productive resources and inputs, knowledge, financial services, markets and opportunities for value addition and non-farm employment",
+        "ko": "2030년까지 토지·기타 생산자원·투입재, 지식, 금융서비스, 시장, 부가가치 창출 및 비농업 고용 기회에 대한 안전하고 평등한 접근을 포함하여, 소규모 식량생산자, 특히 여성·원주민·가족농·목축민·어민의 농업 생산성과 소득을 두 배로 늘린다."
+      },
+      {
+        "code": "2.4",
+        "en": "By 2030, ensure sustainable food production systems and implement resilient agricultural practices that increase productivity and production, that help maintain ecosystems, that strengthen capacity for adaptation to climate change, extreme weather, drought, flooding and other disasters and that progressively improve land and soil quality",
+        "ko": "2030년까지 지속가능한 식량생산체계를 보장하고, 생산성과 생산량을 높이며 생태계 유지를 돕고 기후변화·극한기상·가뭄·홍수 및 기타 재난에 대한 적응 역량을 강화하며 토지와 토양의 질을 점진적으로 개선하는 회복력 있는 농업방식을 시행한다."
+      },
+      {
+        "code": "2.5",
+        "en": "By 2020, maintain the genetic diversity of seeds, cultivated plants and farmed and domesticated animals and their related wild species, including through soundly managed and diversified seed and plant banks at the national, regional and international levels, and promote access to and fair and equitable sharing of benefits arising from the utilization of genetic resources and associated traditional knowledge, as internationally agreed",
+        "ko": "2020년까지 국가·지역·국제 차원의 건전하게 관리되고 다양화된 종자·식물 은행을 포함하여 종자, 재배식물, 사육·가축 동물 및 그 관련 야생종의 유전적 다양성을 유지하고, 국제 합의에 따라 유전자원과 관련 전통지식의 활용에서 발생하는 이익에 대한 접근 및 공정하고 공평한 공유를 촉진한다."
+      },
+      {
+        "code": "2.a",
+        "en": "Increase investment, including through enhanced international cooperation, in rural infrastructure, agricultural research and extension services, technology development and plant and livestock gene banks in order to enhance agricultural productive capacity in developing countries, in particular least developed countries",
+        "ko": "개발도상국, 특히 최빈개도국의 농업 생산역량을 높이기 위해 국제협력 강화를 포함하여 농촌 기반시설, 농업 연구·지도 서비스, 기술개발, 식물·가축 유전자은행에 대한 투자를 늘린다."
+      },
+      {
+        "code": "2.b",
+        "en": "Correct and prevent trade restrictions and distortions in world agricultural markets, including through the parallel elimination of all forms of agricultural export subsidies and all export measures with equivalent effect, in accordance with the mandate of the Doha Development Round",
+        "ko": "도하개발라운드의 권한에 따라 모든 형태의 농업 수출보조금 및 동등한 효과를 갖는 수출조치의 병행 철폐를 포함하여, 세계 농산물 시장의 무역 제한과 왜곡을 시정하고 예방한다."
+      },
+      {
+        "code": "2.c",
+        "en": "Adopt measures to ensure the proper functioning of food commodity markets and their derivatives and facilitate timely access to market information, including on food reserves, in order to help limit extreme food price volatility",
+        "ko": "극심한 식량가격 변동성을 억제하기 위해, 식량 원자재 시장과 그 파생상품의 정상적 기능을 보장하고 식량 비축에 관한 정보를 포함한 시장정보에 적시 접근하도록 돕는 대책을 채택한다."
+      }
+    ],
+    "3": [
+      {
+        "code": "3.1",
+        "en": "By 2030, reduce the global maternal mortality ratio to less than 70 per 100,000 live births",
+        "ko": "2030년까지 전 세계 모성사망비를 출생아 10만 명당 70명 미만으로 줄인다."
+      },
+      {
+        "code": "3.2",
+        "en": "By 2030, end preventable deaths of newborns and children under 5 years of age, with all countries aiming to reduce neonatal mortality to at least as low as 12 per 1,000 live births and under-5 mortality to at least as low as 25 per 1,000 live births",
+        "ko": "2030년까지 신생아와 5세 미만 아동의 예방 가능한 사망을 종식하되, 모든 국가가 신생아 사망률을 출생아 1,000명당 12명 이하로, 5세 미만 사망률을 1,000명당 25명 이하로 줄이는 것을 목표로 한다."
+      },
+      {
+        "code": "3.3",
+        "en": "By 2030, end the epidemics of AIDS, tuberculosis, malaria and neglected tropical diseases and combat hepatitis, water-borne diseases and other communicable diseases",
+        "ko": "2030년까지 에이즈·결핵·말라리아·소외열대질환의 유행을 종식하고, 간염·수인성 질환 및 기타 전염병에 대응한다."
+      },
+      {
+        "code": "3.4",
+        "en": "By 2030, reduce by one third premature mortality from non-communicable diseases through prevention and treatment and promote mental health and well-being",
+        "ko": "2030년까지 예방과 치료를 통해 비전염성 질환으로 인한 조기 사망을 3분의 1로 줄이고, 정신건강과 웰빙을 증진한다."
+      },
+      {
+        "code": "3.5",
+        "en": "Strengthen the prevention and treatment of substance abuse, including narcotic drug abuse and harmful use of alcohol",
+        "ko": "마약 남용과 유해한 음주를 포함한 약물 남용의 예방과 치료를 강화한다."
+      },
+      {
+        "code": "3.6",
+        "en": "By 2020, halve the number of global deaths and injuries from road traffic accidents",
+        "ko": "2020년까지 도로교통사고로 인한 전 세계 사망자와 부상자 수를 절반으로 줄인다."
+      },
+      {
+        "code": "3.7",
+        "en": "By 2030, ensure universal access to sexual and reproductive health-care services, including for family planning, information and education, and the integration of reproductive health into national strategies and programmes",
+        "ko": "2030년까지 가족계획, 정보·교육을 포함한 성·생식 보건의료 서비스에 대한 보편적 접근을 보장하고, 생식보건을 국가 전략과 프로그램에 통합한다."
+      },
+      {
+        "code": "3.8",
+        "en": "Achieve universal health coverage, including financial risk protection, access to quality essential health-care services and access to safe, effective, quality and affordable essential medicines and vaccines for all",
+        "ko": "재정적 위험 보호, 양질의 필수 보건의료 서비스 접근, 안전하고 효과적이며 양질이고 적정 가격의 필수 의약품·백신에 대한 모두의 접근을 포함하는 보편적 건강보장을 달성한다."
+      },
+      {
+        "code": "3.9",
+        "en": "By 2030, substantially reduce the number of deaths and illnesses from hazardous chemicals and air, water and soil pollution and contamination",
+        "ko": "2030년까지 유해 화학물질과 대기·수질·토양 오염으로 인한 사망자와 질병 발생을 대폭 줄인다."
+      },
+      {
+        "code": "3.a",
+        "en": "Strengthen the implementation of the World Health Organization Framework Convention on Tobacco Control in all countries, as appropriate",
+        "ko": "모든 국가에서 적절히 세계보건기구 담배규제기본협약의 이행을 강화한다."
+      },
+      {
+        "code": "3.b",
+        "en": "Support the research and development of vaccines and medicines for the communicable and non-communicable diseases that primarily affect developing countries, provide access to affordable essential medicines and vaccines, in accordance with the Doha Declaration on the TRIPS Agreement and Public Health, which affirms the right of developing countries to use to the full the provisions in the Agreement on Trade-Related Aspects of Intellectual Property Rights regarding flexibilities to protect public health, and, in particular, provide access to medicines for all",
+        "ko": "주로 개발도상국에 영향을 미치는 전염성·비전염성 질환에 대한 백신과 의약품의 연구개발을 지원하고, 공중보건 보호를 위한 무역관련 지적재산권협정(TRIPS)의 유연성 조항을 개발도상국이 충분히 활용할 권리를 확인한 TRIPS협정과 공중보건에 관한 도하선언에 따라 적정 가격의 필수 의약품·백신에 대한 접근을 제공하며, 특히 모두를 위한 의약품 접근을 제공한다."
+      },
+      {
+        "code": "3.c",
+        "en": "Substantially increase health financing and the recruitment, development, training and retention of the health workforce in developing countries, especially in least developed countries and small island developing States",
+        "ko": "개발도상국, 특히 최빈개도국과 군소도서개발국에서 보건 재원과 보건 인력의 채용·양성·교육·유지를 대폭 확대한다."
+      },
+      {
+        "code": "3.d",
+        "en": "Strengthen the capacity of all countries, in particular developing countries, for early warning, risk reduction and management of national and global health risks",
+        "ko": "모든 국가, 특히 개발도상국이 국가적·전 세계적 보건 위험을 조기 경보하고 위험을 줄이며 관리하는 역량을 강화한다."
+      }
+    ],
+    "4": [
+      {
+        "code": "4.1",
+        "en": "By 2030, ensure that all girls and boys complete free, equitable and quality primary and secondary education leading to relevant and effective learning outcomes",
+        "ko": "2030년까지 모든 여아와 남아가 적절하고 효과적인 학습 성과로 이어지는 무상의 공평하고 양질인 초·중등 교육을 이수하도록 보장한다."
+      },
+      {
+        "code": "4.2",
+        "en": "By 2030, ensure that all girls and boys have access to quality early childhood development, care and pre-primary education so that they are ready for primary education",
+        "ko": "2030년까지 모든 여아와 남아가 초등교육에 대비할 수 있도록 양질의 영유아 발달·돌봄·취학 전 교육에 접근할 수 있도록 보장한다."
+      },
+      {
+        "code": "4.3",
+        "en": "By 2030, ensure equal access for all women and men to affordable and quality technical, vocational and tertiary education, including university",
+        "ko": "2030년까지 모든 여성과 남성이 대학을 포함한 적정 가격의 양질인 기술·직업·고등교육에 평등하게 접근하도록 보장한다."
+      },
+      {
+        "code": "4.4",
+        "en": "By 2030, substantially increase the number of youth and adults who have relevant skills, including technical and vocational skills, for employment, decent jobs and entrepreneurship",
+        "ko": "2030년까지 취업·양질의 일자리·창업을 위한 기술·직업 능력을 포함한 적절한 역량을 갖춘 청년과 성인의 수를 대폭 늘린다."
+      },
+      {
+        "code": "4.5",
+        "en": "By 2030, eliminate gender disparities in education and ensure equal access to all levels of education and vocational training for the vulnerable, including persons with disabilities, indigenous peoples and children in vulnerable situations",
+        "ko": "2030년까지 교육에서의 성별 격차를 없애고, 장애인·원주민·취약한 처지의 아동을 포함한 취약계층이 모든 수준의 교육과 직업훈련에 평등하게 접근하도록 보장한다."
+      },
+      {
+        "code": "4.6",
+        "en": "By 2030, ensure that all youth and a substantial proportion of adults, both men and women, achieve literacy and numeracy",
+        "ko": "2030년까지 모든 청년과 남녀 성인의 상당 비율이 문해력과 수리력을 갖추도록 보장한다."
+      },
+      {
+        "code": "4.7",
+        "en": "By 2030, ensure that all learners acquire the knowledge and skills needed to promote sustainable development, including, among others, through education for sustainable development and sustainable lifestyles, human rights, gender equality, promotion of a culture of peace and non-violence, global citizenship and appreciation of cultural diversity and of culture's contribution to sustainable development",
+        "ko": "2030년까지 모든 학습자가 지속가능발전과 지속가능한 생활방식 교육, 인권, 성평등, 평화·비폭력 문화 증진, 세계시민의식, 문화 다양성과 문화의 지속가능발전 기여에 대한 이해 등을 통해 지속가능발전을 촉진하는 데 필요한 지식과 기술을 습득하도록 보장한다."
+      },
+      {
+        "code": "4.a",
+        "en": "Build and upgrade education facilities that are child, disability and gender sensitive and provide safe, non-violent, inclusive and effective learning environments for all",
+        "ko": "아동·장애·성인지적인 교육시설을 짓고 개선하며, 모두를 위한 안전하고 비폭력적이며 포용적이고 효과적인 학습 환경을 제공한다."
+      },
+      {
+        "code": "4.b",
+        "en": "By 2020, substantially expand globally the number of scholarships available to developing countries, in particular least developed countries, small island developing States and African countries, for enrolment in higher education, including vocational training and information and communications technology, technical, engineering and scientific programmes, in developed countries and other developing countries",
+        "ko": "2020년까지 개발도상국, 특히 최빈개도국·군소도서개발국·아프리카 국가의 학생이 선진국 및 기타 개발도상국에서 직업훈련, 정보통신기술, 기술·공학·과학 프로그램을 포함한 고등교육에 등록할 수 있도록 제공되는 장학금의 수를 전 세계적으로 대폭 확대한다."
+      },
+      {
+        "code": "4.c",
+        "en": "By 2030, substantially increase the supply of qualified teachers, including through international cooperation for teacher training in developing countries, especially least developed countries and small island developing States",
+        "ko": "2030년까지 개발도상국, 특히 최빈개도국과 군소도서개발국에서의 교원 양성을 위한 국제협력을 포함하여 자격을 갖춘 교사의 공급을 대폭 늘린다."
+      }
+    ],
+    "5": [
+      {
+        "code": "5.1",
+        "en": "End all forms of discrimination against all women and girls everywhere",
+        "ko": "모든 곳에서 모든 여성과 소녀에 대한 모든 형태의 차별을 종식한다."
+      },
+      {
+        "code": "5.2",
+        "en": "Eliminate all forms of violence against all women and girls in the public and private spheres, including trafficking and sexual and other types of exploitation",
+        "ko": "인신매매와 성적 및 기타 형태의 착취를 포함하여 공적·사적 영역에서 모든 여성과 소녀에 대한 모든 형태의 폭력을 근절한다."
+      },
+      {
+        "code": "5.3",
+        "en": "Eliminate all harmful practices, such as child, early and forced marriage and female genital mutilation",
+        "ko": "아동·조혼·강제 결혼과 여성 성기 절제 같은 모든 유해한 관습을 근절한다."
+      },
+      {
+        "code": "5.4",
+        "en": "Recognize and value unpaid care and domestic work through the provision of public services, infrastructure and social protection policies and the promotion of shared responsibility within the household and the family as nationally appropriate",
+        "ko": "공공서비스·기반시설·사회보호정책의 제공과 국가 실정에 맞는 가구·가족 내 책임 분담 촉진을 통해 무급 돌봄노동과 가사노동을 인정하고 그 가치를 평가한다."
+      },
+      {
+        "code": "5.5",
+        "en": "Ensure women's full and effective participation and equal opportunities for leadership at all levels of decision-making in political, economic and public life",
+        "ko": "정치·경제·공적 생활의 모든 의사결정 수준에서 여성의 완전하고 효과적인 참여와 리더십에 대한 평등한 기회를 보장한다."
+      },
+      {
+        "code": "5.6",
+        "en": "Ensure universal access to sexual and reproductive health and reproductive rights as agreed in accordance with the Programme of Action of the International Conference on Population and Development and the Beijing Platform for Action and the outcome documents of their review conferences",
+        "ko": "국제인구개발회의 행동계획과 베이징 행동강령 및 그 검토회의 결과문서에 따라 합의된 대로 성·생식 보건과 생식 권리에 대한 보편적 접근을 보장한다."
+      },
+      {
+        "code": "5.a",
+        "en": "Undertake reforms to give women equal rights to economic resources, as well as access to ownership and control over land and other forms of property, financial services, inheritance and natural resources, in accordance with national laws",
+        "ko": "국내법에 따라 여성에게 경제적 자원에 대한 평등한 권리와 더불어 토지 및 기타 형태 재산에 대한 소유·통제권, 금융서비스, 상속, 천연자원에 대한 접근권을 부여하는 개혁을 추진한다."
+      },
+      {
+        "code": "5.b",
+        "en": "Enhance the use of enabling technology, in particular information and communications technology, to promote the empowerment of women",
+        "ko": "여성의 역량 강화를 촉진하기 위해 정보통신기술 등 가능 기술의 활용을 확대한다."
+      },
+      {
+        "code": "5.c",
+        "en": "Adopt and strengthen sound policies and enforceable legislation for the promotion of gender equality and the empowerment of all women and girls at all levels",
+        "ko": "모든 수준에서 성평등 증진과 모든 여성·소녀의 역량 강화를 위한 건전한 정책과 집행 가능한 법률을 채택하고 강화한다."
+      }
+    ],
+    "6": [
+      {
+        "code": "6.1",
+        "en": "By 2030, achieve universal and equitable access to safe and affordable drinking water for all",
+        "ko": "2030년까지 모두를 위한 안전하고 적정 가격의 식수에 대한 보편적이고 공평한 접근을 달성한다."
+      },
+      {
+        "code": "6.2",
+        "en": "By 2030, achieve access to adequate and equitable sanitation and hygiene for all and end open defecation, paying special attention to the needs of women and girls and those in vulnerable situations",
+        "ko": "2030년까지 여성·소녀와 취약한 처지의 사람들의 필요에 특별히 유의하여 모두를 위한 적절하고 공평한 위생시설·위생에 대한 접근을 달성하고 노상 배변을 종식한다."
+      },
+      {
+        "code": "6.3",
+        "en": "By 2030, improve water quality by reducing pollution, eliminating dumping and minimizing release of hazardous chemicals and materials, halving the proportion of untreated wastewater and substantially increasing recycling and safe reuse globally",
+        "ko": "2030년까지 오염 저감, 투기 근절, 유해 화학물질·물질의 배출 최소화, 미처리 폐수 비율 절반 감축, 전 세계적 재활용과 안전한 재이용의 대폭 확대를 통해 수질을 개선한다."
+      },
+      {
+        "code": "6.4",
+        "en": "By 2030, substantially increase water-use efficiency across all sectors and ensure sustainable withdrawals and supply of freshwater to address water scarcity and substantially reduce the number of people suffering from water scarcity",
+        "ko": "2030년까지 모든 부문의 물 사용 효율을 대폭 높이고, 물 부족 문제 해결을 위해 지속가능한 담수 취수와 공급을 보장하며, 물 부족으로 고통받는 사람의 수를 대폭 줄인다."
+      },
+      {
+        "code": "6.5",
+        "en": "By 2030, implement integrated water resources management at all levels, including through transboundary cooperation as appropriate",
+        "ko": "2030년까지 적절한 경우 초국경 협력을 포함하여 모든 수준에서 통합 수자원 관리를 시행한다."
+      },
+      {
+        "code": "6.6",
+        "en": "By 2020, protect and restore water-related ecosystems, including mountains, forests, wetlands, rivers, aquifers and lakes",
+        "ko": "2020년까지 산·숲·습지·하천·대수층·호수를 포함한 물 관련 생태계를 보호하고 복원한다."
+      },
+      {
+        "code": "6.a",
+        "en": "By 2030, expand international cooperation and capacity-building support to developing countries in water- and sanitation-related activities and programmes, including water harvesting, desalination, water efficiency, wastewater treatment, recycling and reuse technologies",
+        "ko": "2030년까지 빗물 집수, 담수화, 물 효율, 폐수 처리, 재활용·재이용 기술을 포함한 물·위생 관련 활동과 프로그램에서 개발도상국에 대한 국제협력과 역량강화 지원을 확대한다."
+      },
+      {
+        "code": "6.b",
+        "en": "Support and strengthen the participation of local communities in improving water and sanitation management",
+        "ko": "물·위생 관리 개선에 대한 지역사회의 참여를 지원하고 강화한다."
+      }
+    ],
+    "7": [
+      {
+        "code": "7.1",
+        "en": "By 2030, ensure universal access to affordable, reliable and modern energy services",
+        "ko": "2030년까지 적정 가격의 신뢰할 수 있는 현대적 에너지 서비스에 대한 보편적 접근을 보장한다."
+      },
+      {
+        "code": "7.2",
+        "en": "By 2030, increase substantially the share of renewable energy in the global energy mix",
+        "ko": "2030년까지 전 세계 에너지 믹스에서 재생에너지 비중을 대폭 높인다."
+      },
+      {
+        "code": "7.3",
+        "en": "By 2030, double the global rate of improvement in energy efficiency",
+        "ko": "2030년까지 전 세계 에너지 효율 개선 속도를 두 배로 높인다."
+      },
+      {
+        "code": "7.a",
+        "en": "By 2030, enhance international cooperation to facilitate access to clean energy research and technology, including renewable energy, energy efficiency and advanced and cleaner fossil-fuel technology, and promote investment in energy infrastructure and clean energy technology",
+        "ko": "2030년까지 재생에너지, 에너지 효율, 진보된 청정 화석연료 기술을 포함한 청정에너지 연구·기술에 대한 접근을 촉진하기 위해 국제협력을 강화하고, 에너지 기반시설과 청정에너지 기술에 대한 투자를 촉진한다."
+      },
+      {
+        "code": "7.b",
+        "en": "By 2030, expand infrastructure and upgrade technology for supplying modern and sustainable energy services for all in developing countries, in particular least developed countries, small island developing States and landlocked developing countries, in accordance with their respective programmes of support",
+        "ko": "2030년까지 개발도상국, 특히 최빈개도국·군소도서개발국·내륙개도국에서 각국의 지원 프로그램에 따라 모두를 위한 현대적이고 지속가능한 에너지 서비스를 공급하기 위한 기반시설을 확대하고 기술을 향상한다."
+      }
+    ],
+    "8": [
+      {
+        "code": "8.2",
+        "en": "Achieve higher levels of economic productivity through diversification, technological upgrading and innovation, including through a focus on high-value added and labour-intensive sectors",
+        "ko": "고부가가치·노동집약 부문에 대한 집중을 포함하여 다각화, 기술 고도화, 혁신을 통해 더 높은 수준의 경제 생산성을 달성한다."
+      },
+      {
+        "code": "8.3",
+        "en": "Promote development-oriented policies that support productive activities, decent job creation, entrepreneurship, creativity and innovation, and encourage the formalization and growth of micro-, small- and medium-sized enterprises, including through access to financial services",
+        "ko": "생산적 활동, 양질의 일자리 창출, 창업, 창의성과 혁신을 지원하는 개발 지향적 정책을 촉진하고, 금융서비스 접근 등을 통해 영세·중소기업의 공식화와 성장을 장려한다."
+      },
+      {
+        "code": "8.4",
+        "en": "Improve progressively, through 2030, global resource efficiency in consumption and production and endeavour to decouple economic growth from environmental degradation, in accordance with the 10-Year Framework of Programmes on Sustainable Consumption and Production, with developed countries taking the lead",
+        "ko": "2030년까지 지속가능한 소비·생산에 관한 10개년 프로그램 기본틀에 따라 선진국이 선도하면서 소비와 생산의 전 세계 자원 효율을 점진적으로 개선하고, 경제성장을 환경 악화로부터 분리하기 위해 노력한다."
+      },
+      {
+        "code": "8.5",
+        "en": "By 2030, achieve full and productive employment and decent work for all women and men, including for young people and persons with disabilities, and equal pay for work of equal value",
+        "ko": "2030년까지 청년과 장애인을 포함한 모든 여성과 남성을 위한 완전하고 생산적인 고용과 양질의 일자리, 동일 가치 노동에 대한 동일 임금을 달성한다."
+      },
+      {
+        "code": "8.6",
+        "en": "By 2020, substantially reduce the proportion of youth not in employment, education or training",
+        "ko": "2020년까지 고용·교육·훈련 상태에 있지 않은 청년의 비율을 대폭 줄인다."
+      },
+      {
+        "code": "8.7",
+        "en": "Take immediate and effective measures to eradicate forced labour, end modern slavery and human trafficking and secure the prohibition and elimination of the worst forms of child labour, including recruitment and use of child soldiers, and by 2025 end child labour in all its forms",
+        "ko": "강제노동을 근절하고 현대판 노예제와 인신매매를 종식하며 소년병 모집·사용을 포함한 최악 형태의 아동노동의 금지와 근절을 확보하기 위한 즉각적이고 효과적인 조치를 취하고, 2025년까지 모든 형태의 아동노동을 종식한다."
+      },
+      {
+        "code": "8.1",
+        "en": "Sustain per capita economic growth in accordance with national circumstances and, in particular, at least 7 per cent gross domestic product growth per annum in the least developed countries",
+        "ko": "국가 실정에 따라 1인당 경제성장을 지속하되, 특히 최빈개도국에서는 연간 최소 7%의 국내총생산 성장을 유지한다."
+      },
+      {
+        "code": "8.8",
+        "en": "Protect labour rights and promote safe and secure working environments for all workers, including migrant workers, in particular women migrants, and those in precarious employment",
+        "ko": "이주노동자, 특히 여성 이주자와 불안정 고용 상태의 노동자를 포함한 모든 노동자의 노동권을 보호하고 안전하고 안정적인 근로환경을 촉진한다."
+      },
+      {
+        "code": "8.9",
+        "en": "By 2030, devise and implement policies to promote sustainable tourism that creates jobs and promotes local culture and products",
+        "ko": "2030년까지 일자리를 창출하고 지역 문화와 상품을 진흥하는 지속가능한 관광을 촉진하는 정책을 마련하고 시행한다."
+      },
+      {
+        "code": "8.10",
+        "en": "Strengthen the capacity of domestic financial institutions to encourage and expand access to banking, insurance and financial services for all",
+        "ko": "모두를 위한 은행·보험·금융 서비스 접근을 장려하고 확대하기 위해 국내 금융기관의 역량을 강화한다."
+      },
+      {
+        "code": "8.a",
+        "en": "Increase Aid for Trade support for developing countries, in particular least developed countries, including through the Enhanced Integrated Framework for Trade-related Technical Assistance to Least Developed Countries",
+        "ko": "최빈개도국에 대한 무역관련 기술지원 강화통합기본틀(EIF)을 포함하여 개발도상국, 특히 최빈개도국에 대한 무역을 위한 원조(Aid for Trade) 지원을 늘린다."
+      },
+      {
+        "code": "8.b",
+        "en": "By 2020, develop and operationalize a global strategy for youth employment and implement the Global Jobs Pact of the International Labour Organization",
+        "ko": "2020년까지 청년 고용을 위한 전 세계 전략을 개발·운영하고 국제노동기구의 세계일자리협약을 이행한다."
+      }
+    ],
+    "9": [
+      {
+        "code": "9.1",
+        "en": "Develop quality, reliable, sustainable and resilient infrastructure, including regional and trans-border infrastructure, to support economic development and human well-being, with a focus on affordable and equitable access for all",
+        "ko": "모두를 위한 적정 가격의 공평한 접근에 중점을 두고, 경제 발전과 인간의 웰빙을 지원하기 위해 지역·초국경 기반시설을 포함한 양질의 신뢰할 수 있고 지속가능하며 회복력 있는 기반시설을 구축한다."
+      },
+      {
+        "code": "9.2",
+        "en": "Promote inclusive and sustainable industrialization and, by 2030, significantly raise industry's share of employment and gross domestic product, in line with national circumstances, and double its share in least developed countries",
+        "ko": "포용적이고 지속가능한 산업화를 촉진하고, 2030년까지 국가 실정에 맞게 고용과 국내총생산에서 산업이 차지하는 비중을 크게 높이며 최빈개도국에서는 그 비중을 두 배로 늘린다."
+      },
+      {
+        "code": "9.3",
+        "en": "Increase the access of small-scale industrial and other enterprises, in particular in developing countries, to financial services, including affordable credit, and their integration into value chains and markets",
+        "ko": "특히 개발도상국의 소규모 산업체 및 기타 기업이 적정 가격의 신용을 포함한 금융서비스에 접근하고 가치사슬과 시장에 통합되는 정도를 높인다."
+      },
+      {
+        "code": "9.4",
+        "en": "By 2030, upgrade infrastructure and retrofit industries to make them sustainable, with increased resource-use efficiency and greater adoption of clean and environmentally sound technologies and industrial processes, with all countries taking action in accordance with their respective capabilities",
+        "ko": "2030년까지 모든 국가가 각자의 역량에 따라 행동하면서, 자원 사용 효율을 높이고 청정하고 환경적으로 건전한 기술과 산업공정을 더 많이 채택하여 기반시설을 향상하고 산업을 개조해 지속가능하게 만든다."
+      },
+      {
+        "code": "9.5",
+        "en": "Enhance scientific research, upgrade the technological capabilities of industrial sectors in all countries, in particular developing countries, including, by 2030, encouraging innovation and substantially increasing the number of research and development workers per 1 million people and public and private research and development spending",
+        "ko": "과학 연구를 강화하고, 모든 국가 특히 개발도상국 산업 부문의 기술 역량을 향상하되, 2030년까지 혁신을 장려하고 인구 100만 명당 연구개발 인력 수와 공공·민간 연구개발 지출을 대폭 늘린다."
+      },
+      {
+        "code": "9.a",
+        "en": "Facilitate sustainable and resilient infrastructure development in developing countries through enhanced financial, technological and technical support to African countries, least developed countries, landlocked developing countries and small island developing States",
+        "ko": "아프리카 국가, 최빈개도국, 내륙개도국, 군소도서개발국에 대한 재정·기술·기능 지원 강화를 통해 개발도상국의 지속가능하고 회복력 있는 기반시설 개발을 촉진한다."
+      },
+      {
+        "code": "9.b",
+        "en": "Support domestic technology development, research and innovation in developing countries, including by ensuring a conducive policy environment for, inter alia, industrial diversification and value addition to commodities",
+        "ko": "특히 산업 다각화와 원자재의 부가가치 창출에 유리한 정책 환경 조성을 포함하여 개발도상국의 국내 기술개발·연구·혁신을 지원한다."
+      },
+      {
+        "code": "9.c",
+        "en": "Significantly increase access to information and communications technology and strive to provide universal and affordable access to the Internet in least developed countries by 2020",
+        "ko": "정보통신기술에 대한 접근을 크게 늘리고, 2020년까지 최빈개도국에서 인터넷에 대한 보편적이고 적정 가격의 접근을 제공하기 위해 노력한다."
+      }
+    ],
+    "10": [
+      {
+        "code": "10.1",
+        "en": "By 2030, progressively achieve and sustain income growth of the bottom 40 per cent of the population at a rate higher than the national average",
+        "ko": "2030년까지 하위 40% 인구의 소득 증가를 국가 평균보다 높은 속도로 점진적으로 달성하고 지속한다."
+      },
+      {
+        "code": "10.2",
+        "en": "By 2030, empower and promote the social, economic and political inclusion of all, irrespective of age, sex, disability, race, ethnicity, origin, religion or economic or other status",
+        "ko": "2030년까지 연령·성별·장애·인종·민족·출신·종교 또는 경제적 지위 등에 관계없이 모든 사람의 사회·경제·정치적 포용을 강화하고 촉진한다."
+      },
+      {
+        "code": "10.3",
+        "en": "Ensure equal opportunity and reduce inequalities of outcome, including by eliminating discriminatory laws, policies and practices and promoting appropriate legislation, policies and action in this regard",
+        "ko": "차별적 법률·정책·관행을 없애고 이와 관련한 적절한 법률·정책·조치를 촉진하는 것을 포함하여 균등한 기회를 보장하고 결과의 불평등을 줄인다."
+      },
+      {
+        "code": "10.4",
+        "en": "Adopt policies, especially fiscal, wage and social protection policies, and progressively achieve greater equality",
+        "ko": "특히 재정·임금·사회보호 정책을 채택하고 점진적으로 더 큰 평등을 달성한다."
+      },
+      {
+        "code": "10.5",
+        "en": "Improve the regulation and monitoring of global financial markets and institutions and strengthen the implementation of such regulations",
+        "ko": "전 세계 금융시장과 금융기관에 대한 규제와 감독을 개선하고 그러한 규제의 이행을 강화한다."
+      },
+      {
+        "code": "10.6",
+        "en": "Ensure enhanced representation and voice for developing countries in decision-making in global international economic and financial institutions in order to deliver more effective, credible, accountable and legitimate institutions",
+        "ko": "더 효과적이고 신뢰할 수 있으며 책임 있고 정당한 기구를 만들기 위해 전 세계 국제 경제·금융 기구의 의사결정에서 개발도상국의 대표성과 발언권 강화를 보장한다."
+      },
+      {
+        "code": "10.7",
+        "en": "Facilitate orderly, safe, regular and responsible migration and mobility of people, including through the implementation of planned and well-managed migration policies",
+        "ko": "계획적이고 잘 관리된 이주정책의 시행을 포함하여 질서 있고 안전하며 정규적이고 책임 있는 사람의 이주와 이동을 촉진한다."
+      },
+      {
+        "code": "10.a",
+        "en": "Implement the principle of special and differential treatment for developing countries, in particular least developed countries, in accordance with World Trade Organization agreements",
+        "ko": "세계무역기구 협정에 따라 개발도상국, 특히 최빈개도국에 대한 특별·차등 대우 원칙을 시행한다."
+      },
+      {
+        "code": "10.b",
+        "en": "Encourage official development assistance and financial flows, including foreign direct investment, to States where the need is greatest, in particular least developed countries, African countries, small island developing States and landlocked developing countries, in accordance with their national plans and programmes",
+        "ko": "필요가 가장 큰 국가, 특히 최빈개도국·아프리카 국가·군소도서개발국·내륙개도국에 대해 각국의 국가 계획과 프로그램에 따라 공적개발원조와 외국인직접투자를 포함한 자금 흐름을 장려한다."
+      },
+      {
+        "code": "10.c",
+        "en": "By 2030, reduce to less than 3 per cent the transaction costs of migrant remittances and eliminate remittance corridors with costs higher than 5 per cent",
+        "ko": "2030년까지 이주민 송금의 거래 비용을 3% 미만으로 낮추고 비용이 5%를 초과하는 송금 경로를 없앤다."
+      }
+    ],
+    "11": [
+      {
+        "code": "11.1",
+        "en": "By 2030, ensure access for all to adequate, safe and affordable housing and basic services and upgrade slums",
+        "ko": "2030년까지 모두를 위한 적절하고 안전하며 적정 가격의 주거와 기초서비스에 대한 접근을 보장하고 빈민가를 개선한다."
+      },
+      {
+        "code": "11.2",
+        "en": "By 2030, provide access to safe, affordable, accessible and sustainable transport systems for all, improving road safety, notably by expanding public transport, with special attention to the needs of those in vulnerable situations, women, children, persons with disabilities and older persons",
+        "ko": "2030년까지 취약한 처지의 사람들, 여성, 아동, 장애인, 노인의 필요에 특별히 유의하여 대중교통 확대를 통해 도로 안전을 개선하면서 모두를 위한 안전하고 적정 가격이며 접근 가능하고 지속가능한 교통체계에 대한 접근을 제공한다."
+      },
+      {
+        "code": "11.3",
+        "en": "By 2030, enhance inclusive and sustainable urbanization and capacity for participatory, integrated and sustainable human settlement planning and management in all countries",
+        "ko": "2030년까지 모든 국가에서 포용적이고 지속가능한 도시화와 참여적·통합적·지속가능한 정주지 계획·관리 역량을 강화한다."
+      },
+      {
+        "code": "11.4",
+        "en": "Strengthen efforts to protect and safeguard the world's cultural and natural heritage",
+        "ko": "세계의 문화·자연 유산을 보호하고 보전하려는 노력을 강화한다."
+      },
+      {
+        "code": "11.5",
+        "en": "By 2030, significantly reduce the number of deaths and the number of people affected and substantially decrease the direct economic losses relative to global gross domestic product caused by disasters, including water-related disasters, with a focus on protecting the poor and people in vulnerable situations",
+        "ko": "2030년까지 빈곤층과 취약한 처지의 사람들 보호에 중점을 두고, 수해를 포함한 재난으로 인한 사망자 수와 피해 인구를 크게 줄이며 전 세계 국내총생산 대비 직접 경제손실을 대폭 감소시킨다."
+      },
+      {
+        "code": "11.6",
+        "en": "By 2030, reduce the adverse per capita environmental impact of cities, including by paying special attention to air quality and municipal and other waste management",
+        "ko": "2030년까지 대기질과 도시 및 기타 폐기물 관리에 특별히 유의하는 것을 포함하여 도시의 1인당 부정적 환경 영향을 줄인다."
+      },
+      {
+        "code": "11.7",
+        "en": "By 2030, provide universal access to safe, inclusive and accessible, green and public spaces, in particular for women and children, older persons and persons with disabilities",
+        "ko": "2030년까지 특히 여성·아동·노인·장애인을 위해 안전하고 포용적이며 접근 가능한 녹지·공공 공간에 대한 보편적 접근을 제공한다."
+      },
+      {
+        "code": "11.a",
+        "en": "Support positive economic, social and environmental links between urban, peri-urban and rural areas by strengthening national and regional development planning",
+        "ko": "국가·지역 개발계획을 강화하여 도시·근교·농촌 지역 간의 긍정적인 경제·사회·환경적 연계를 지원한다."
+      },
+      {
+        "code": "11.b",
+        "en": "By 2020, substantially increase the number of cities and human settlements adopting and implementing integrated policies and plans towards inclusion, resource efficiency, mitigation and adaptation to climate change, resilience to disasters, and develop and implement, in line with the Sendai Framework for Disaster Risk Reduction 2015-2030, holistic disaster risk management at all levels",
+        "ko": "2020년까지 포용, 자원 효율, 기후변화 완화·적응, 재난 회복력을 지향하는 통합 정책과 계획을 채택·시행하는 도시와 정주지의 수를 대폭 늘리고, 2015-2030 센다이 재해위험경감 기본틀에 따라 모든 수준에서 총체적 재난위험 관리를 개발하고 시행한다."
+      },
+      {
+        "code": "11.c",
+        "en": "Support least developed countries, including through financial and technical assistance, in building sustainable and resilient buildings utilizing local materials",
+        "ko": "재정·기술 지원을 포함하여 최빈개도국이 현지 자재를 활용해 지속가능하고 회복력 있는 건축물을 짓도록 지원한다."
+      }
+    ],
+    "12": [
+      {
+        "code": "12.1",
+        "en": "Implement the 10-Year Framework of Programmes on Sustainable Consumption and Production Patterns, all countries taking action, with developed countries taking the lead, taking into account the development and capabilities of developing countries",
+        "ko": "개발도상국의 발전과 역량을 고려하여 선진국이 선도하면서 모든 국가가 행동하는 가운데 지속가능한 소비·생산 양식에 관한 10개년 프로그램 기본틀을 이행한다."
+      },
+      {
+        "code": "12.2",
+        "en": "By 2030, achieve the sustainable management and efficient use of natural resources",
+        "ko": "2030년까지 천연자원의 지속가능한 관리와 효율적 이용을 달성한다."
+      },
+      {
+        "code": "12.3",
+        "en": "By 2030, halve per capita global food waste at the retail and consumer levels and reduce food losses along production and supply chains, including post-harvest losses",
+        "ko": "2030년까지 소매·소비 단계의 1인당 전 세계 식품 폐기물을 절반으로 줄이고, 수확 후 손실을 포함한 생산·공급 사슬 전반의 식량 손실을 감소시킨다."
+      },
+      {
+        "code": "12.4",
+        "en": "By 2020, achieve the environmentally sound management of chemicals and all wastes throughout their life cycle, in accordance with agreed international frameworks, and significantly reduce their release to air, water and soil in order to minimize their adverse impacts on human health and the environment",
+        "ko": "2020년까지 합의된 국제 기본틀에 따라 화학물질과 모든 폐기물을 생애주기 전반에 걸쳐 환경적으로 건전하게 관리하고, 인간 건강과 환경에 대한 부정적 영향을 최소화하기 위해 대기·수질·토양으로의 배출을 크게 줄인다."
+      },
+      {
+        "code": "12.5",
+        "en": "By 2030, substantially reduce waste generation through prevention, reduction, recycling and reuse",
+        "ko": "2030년까지 예방, 감축, 재활용, 재이용을 통해 폐기물 발생을 대폭 줄인다."
+      },
+      {
+        "code": "12.6",
+        "en": "Encourage companies, especially large and transnational companies, to adopt sustainable practices and to integrate sustainability information into their reporting cycle",
+        "ko": "기업, 특히 대기업과 다국적기업이 지속가능한 관행을 채택하고 지속가능성 정보를 보고 주기에 통합하도록 장려한다."
+      },
+      {
+        "code": "12.7",
+        "en": "Promote public procurement practices that are sustainable, in accordance with national policies and priorities",
+        "ko": "국가 정책과 우선순위에 따라 지속가능한 공공조달 관행을 촉진한다."
+      },
+      {
+        "code": "12.8",
+        "en": "By 2030, ensure that people everywhere have the relevant information and awareness for sustainable development and lifestyles in harmony with nature",
+        "ko": "2030년까지 모든 곳의 사람들이 지속가능발전과 자연과 조화로운 생활방식을 위한 적절한 정보와 인식을 갖추도록 보장한다."
+      },
+      {
+        "code": "12.a",
+        "en": "Support developing countries to strengthen their scientific and technological capacity to move towards more sustainable patterns of consumption and production",
+        "ko": "개발도상국이 더 지속가능한 소비·생산 양식으로 나아가기 위한 과학·기술 역량을 강화하도록 지원한다."
+      },
+      {
+        "code": "12.b",
+        "en": "Develop and implement tools to monitor sustainable development impacts for sustainable tourism that creates jobs and promotes local culture and products",
+        "ko": "일자리를 창출하고 지역 문화와 상품을 진흥하는 지속가능한 관광을 위해 지속가능발전 영향을 모니터링하는 도구를 개발하고 시행한다."
+      },
+      {
+        "code": "12.c",
+        "en": "Rationalize inefficient fossil-fuel subsidies that encourage wasteful consumption by removing market distortions, in accordance with national circumstances, including by restructuring taxation and phasing out those harmful subsidies, where they exist, to reflect their environmental impacts, taking fully into account the specific needs and conditions of developing countries and minimizing the possible adverse impacts on their development in a manner that protects the poor and the affected communities",
+        "ko": "개발도상국의 특수한 필요와 여건을 충분히 고려하고 빈곤층과 피해 지역사회를 보호하는 방식으로 그 개발에 대한 부정적 영향을 최소화하면서, 환경 영향을 반영하도록 과세를 재구성하고 유해 보조금을 단계적으로 폐지하는 것을 포함하여 국가 실정에 따라 시장 왜곡을 제거함으로써 낭비적 소비를 조장하는 비효율적 화석연료 보조금을 합리화한다."
+      }
+    ],
+    "13": [
+      {
+        "code": "13.1",
+        "en": "Strengthen resilience and adaptive capacity to climate-related hazards and natural disasters in all countries",
+        "ko": "모든 국가에서 기후 관련 위험과 자연재해에 대한 회복력과 적응 역량을 강화한다."
+      },
+      {
+        "code": "13.2",
+        "en": "Integrate climate change measures into national policies, strategies and planning",
+        "ko": "기후변화 대책을 국가 정책·전략·계획에 통합한다."
+      },
+      {
+        "code": "13.3",
+        "en": "Improve education, awareness-raising and human and institutional capacity on climate change mitigation, adaptation, impact reduction and early warning",
+        "ko": "기후변화 완화·적응·영향 저감·조기 경보에 관한 교육, 인식 제고, 인적·제도적 역량을 개선한다."
+      },
+      {
+        "code": "13.a",
+        "en": "Implement the commitment undertaken by developed-country parties to the United Nations Framework Convention on Climate Change to a goal of mobilizing jointly $100 billion annually by 2020 from all sources to address the needs of developing countries in the context of meaningful mitigation actions and transparency on implementation and fully operationalize the Green Climate Fund through its capitalization as soon as possible",
+        "ko": "의미 있는 완화 행동과 이행 투명성을 전제로 개발도상국의 필요를 해결하기 위해 2020년까지 모든 출처로부터 매년 공동으로 1,000억 달러를 동원한다는 목표에 대해 유엔기후변화협약 선진국 당사국이 한 약속을 이행하고, 가능한 한 빨리 녹색기후기금에 출자하여 이를 완전히 운영한다."
+      },
+      {
+        "code": "13.b",
+        "en": "Promote mechanisms for raising capacity for effective climate change-related planning and management in least developed countries and small island developing States, including focusing on women, youth and local and marginalized communities",
+        "ko": "여성·청년·지역사회·소외계층에 대한 집중을 포함하여 최빈개도국과 군소도서개발국에서 효과적인 기후변화 관련 계획·관리 역량을 키우는 체계를 촉진한다."
+      }
+    ],
+    "14": [
+      {
+        "code": "14.1",
+        "en": "By 2025, prevent and significantly reduce marine pollution of all kinds, in particular from land-based activities, including marine debris and nutrient pollution",
+        "ko": "2025년까지 해양 쓰레기와 영양물질 오염을 포함하여 특히 육상 활동에서 비롯되는 모든 종류의 해양 오염을 예방하고 크게 줄인다."
+      },
+      {
+        "code": "14.6",
+        "en": "By 2020, prohibit certain forms of fisheries subsidies which contribute to overcapacity and overfishing, eliminate subsidies that contribute to illegal, unreported and unregulated fishing and refrain from introducing new such subsidies, recognizing that appropriate and effective special and differential treatment for developing and least developed countries should be an integral part of the World Trade Organization fisheries subsidies negotiation [c]",
+        "ko": "개발도상국과 최빈개도국에 대한 적절하고 효과적인 특별·차등 대우가 세계무역기구 수산보조금 협상의 필수 요소여야 함을 인정하면서, 2020년까지 과잉어획능력과 남획을 조장하는 특정 형태의 수산보조금을 금지하고, 불법·비보고·비규제 어업을 조장하는 보조금을 없애며, 그러한 신규 보조금 도입을 자제한다. [c]"
+      },
+      {
+        "code": "14.2",
+        "en": "By 2020, sustainably manage and protect marine and coastal ecosystems to avoid significant adverse impacts, including by strengthening their resilience, and take action for their restoration in order to achieve healthy and productive oceans",
+        "ko": "2020년까지 건강하고 생산적인 바다를 이루기 위해 회복력 강화를 포함하여 중대한 부정적 영향을 피하도록 해양·연안 생태계를 지속가능하게 관리·보호하고 그 복원을 위한 조치를 취한다."
+      },
+      {
+        "code": "14.7",
+        "en": "By 2030, increase the economic benefits to small island developing States and least developed countries from the sustainable use of marine resources, including through sustainable management of fisheries, aquaculture and tourism",
+        "ko": "2030년까지 수산업·양식·관광의 지속가능한 관리를 포함하여 해양 자원의 지속가능한 이용에서 군소도서개발국과 최빈개도국이 얻는 경제적 이익을 늘린다."
+      },
+      {
+        "code": "14.3",
+        "en": "Minimize and address the impacts of ocean acidification, including through enhanced scientific cooperation at all levels",
+        "ko": "모든 수준에서의 과학적 협력 강화를 포함하여 해양 산성화의 영향을 최소화하고 해결한다."
+      },
+      {
+        "code": "14.a",
+        "en": "Increase scientific knowledge, develop research capacity and transfer marine technology, taking into account the Intergovernmental Oceanographic Commission Criteria and Guidelines on the Transfer of Marine Technology, in order to improve ocean health and to enhance the contribution of marine biodiversity to the development of developing countries, in particular small island developing States and least developed countries",
+        "ko": "해양 건강을 개선하고 개발도상국, 특히 군소도서개발국과 최빈개도국의 발전에 대한 해양 생물다양성의 기여를 높이기 위해, 정부간해양학위원회의 해양기술 이전 기준·지침을 고려하여 과학 지식을 늘리고 연구 역량을 개발하며 해양기술을 이전한다."
+      },
+      {
+        "code": "14.4",
+        "en": "By 2020, effectively regulate harvesting and end overfishing, illegal, unreported and unregulated fishing and destructive fishing practices and implement science-based management plans, in order to restore fish stocks in the shortest time feasible, at least to levels that can produce maximum sustainable yield as determined by their biological characteristics",
+        "ko": "2020년까지 어획을 효과적으로 규제하고 남획, 불법·비보고·비규제 어업, 파괴적 어업 관행을 종식하며, 어족자원을 가능한 한 빠른 시간 내에 적어도 그 생물학적 특성에 따라 결정되는 최대 지속가능 어획량을 낼 수 있는 수준으로 회복하기 위해 과학에 기반한 관리계획을 시행한다."
+      },
+      {
+        "code": "14.b",
+        "en": "Provide access for small-scale artisanal fishers to marine resources and markets",
+        "ko": "소규모 영세 어민에게 해양 자원과 시장에 대한 접근을 제공한다."
+      },
+      {
+        "code": "14.5",
+        "en": "By 2020, conserve at least 10 per cent of coastal and marine areas, consistent with national and international law and based on the best available scientific information",
+        "ko": "2020년까지 국내법·국제법에 부합하고 이용 가능한 최선의 과학 정보에 기반하여 연안·해양 지역의 최소 10%를 보전한다."
+      },
+      {
+        "code": "14.c",
+        "en": "Enhance the conservation and sustainable use of oceans and their resources by implementing international law as reflected in the United Nations Convention on the Law of the Sea, which provides the legal framework for the conservation and sustainable use of oceans and their resources, as recalled in paragraph 158 of 'The future we want'",
+        "ko": "'우리가 원하는 미래' 158항에서 상기된 바와 같이, 바다와 그 자원의 보전·지속가능한 이용을 위한 법적 틀을 제공하는 유엔해양법협약에 반영된 국제법을 이행함으로써 바다와 그 자원의 보전과 지속가능한 이용을 강화한다."
+      }
+    ],
+    "15": [
+      {
+        "code": "15.1",
+        "en": "By 2020, ensure the conservation, restoration and sustainable use of terrestrial and inland freshwater ecosystems and their services, in particular forests, wetlands, mountains and drylands, in line with obligations under international agreements",
+        "ko": "2020년까지 국제 협약상의 의무에 따라 특히 숲·습지·산·건조지를 비롯한 육상·내륙 담수 생태계와 그 서비스의 보전·복원·지속가능한 이용을 보장한다."
+      },
+      {
+        "code": "15.2",
+        "en": "By 2020, promote the implementation of sustainable management of all types of forests, halt deforestation, restore degraded forests and substantially increase afforestation and reforestation globally",
+        "ko": "2020년까지 모든 유형의 산림에 대한 지속가능한 관리 시행을 촉진하고, 산림 파괴를 중단하며, 황폐화된 산림을 복원하고, 전 세계적으로 신규 조림과 재조림을 대폭 늘린다."
+      },
+      {
+        "code": "15.3",
+        "en": "By 2030, combat desertification, restore degraded land and soil, including land affected by desertification, drought and floods, and strive to achieve a land degradation-neutral world",
+        "ko": "2030년까지 사막화에 대응하고, 사막화·가뭄·홍수의 영향을 받은 토지를 포함한 황폐화된 토지와 토양을 복원하며, 토지 황폐화 중립 세계를 달성하기 위해 노력한다."
+      },
+      {
+        "code": "15.4",
+        "en": "By 2030, ensure the conservation of mountain ecosystems, including their biodiversity, in order to enhance their capacity to provide benefits that are essential for sustainable development",
+        "ko": "2030년까지 지속가능발전에 필수적인 혜택을 제공하는 산악 생태계의 역량을 높이기 위해 그 생물다양성을 포함한 산악 생태계의 보전을 보장한다."
+      },
+      {
+        "code": "15.5",
+        "en": "Take urgent and significant action to reduce the degradation of natural habitats, halt the loss of biodiversity and, by 2020, protect and prevent the extinction of threatened species",
+        "ko": "자연 서식지의 훼손을 줄이고 생물다양성 손실을 중단하기 위한 긴급하고 중대한 조치를 취하며, 2020년까지 멸종위기종을 보호하고 그 멸종을 방지한다."
+      },
+      {
+        "code": "15.6",
+        "en": "Promote fair and equitable sharing of the benefits arising from the utilization of genetic resources and promote appropriate access to such resources, as internationally agreed",
+        "ko": "국제 합의에 따라 유전자원의 활용에서 발생하는 이익의 공정하고 공평한 공유를 촉진하고 그러한 자원에 대한 적절한 접근을 촉진한다."
+      },
+      {
+        "code": "15.7",
+        "en": "Take urgent action to end poaching and trafficking of protected species of flora and fauna and address both demand and supply of illegal wildlife products",
+        "ko": "보호 동식물종의 밀렵과 밀매를 종식하고 불법 야생동식물 제품의 수요와 공급을 모두 해결하기 위한 긴급 조치를 취한다."
+      },
+      {
+        "code": "15.8",
+        "en": "By 2020, introduce measures to prevent the introduction and significantly reduce the impact of invasive alien species on land and water ecosystems and control or eradicate the priority species",
+        "ko": "2020년까지 외래 침입종의 유입을 막고 육상·수생 생태계에 대한 그 영향을 크게 줄이기 위한 조치를 도입하며 우선 관리종을 통제하거나 박멸한다."
+      },
+      {
+        "code": "15.9",
+        "en": "By 2020, integrate ecosystem and biodiversity values into national and local planning, development processes, poverty reduction strategies and accounts",
+        "ko": "2020년까지 생태계와 생물다양성의 가치를 국가·지방 계획, 개발 과정, 빈곤 감소 전략, 회계에 통합한다."
+      },
+      {
+        "code": "15.a",
+        "en": "Mobilize and significantly increase financial resources from all sources to conserve and sustainably use biodiversity and ecosystems",
+        "ko": "생물다양성과 생태계를 보전하고 지속가능하게 이용하기 위해 모든 출처로부터 재원을 동원하고 크게 늘린다."
+      },
+      {
+        "code": "15.b",
+        "en": "Mobilize significant resources from all sources and at all levels to finance sustainable forest management and provide adequate incentives to developing countries to advance such management, including for conservation and reforestation",
+        "ko": "지속가능한 산림관리에 재원을 대고 보전·재조림을 포함한 그러한 관리를 진전시키도록 개발도상국에 적절한 유인을 제공하기 위해 모든 출처와 모든 수준에서 상당한 자원을 동원한다."
+      },
+      {
+        "code": "15.c",
+        "en": "Enhance global support for efforts to combat poaching and trafficking of protected species, including by increasing the capacity of local communities to pursue sustainable livelihood opportunities",
+        "ko": "지역사회가 지속가능한 생계 기회를 추구할 수 있는 역량을 키우는 것을 포함하여 보호종의 밀렵·밀매에 대응하는 노력에 대한 전 세계적 지원을 강화한다."
+      }
+    ],
+    "16": [
+      {
+        "code": "16.1",
+        "en": "Significantly reduce all forms of violence and related death rates everywhere",
+        "ko": "모든 곳에서 모든 형태의 폭력과 그로 인한 사망률을 크게 줄인다."
+      },
+      {
+        "code": "16.2",
+        "en": "End abuse, exploitation, trafficking and all forms of violence against and torture of children",
+        "ko": "아동에 대한 학대, 착취, 인신매매, 모든 형태의 폭력과 고문을 종식한다."
+      },
+      {
+        "code": "16.3",
+        "en": "Promote the rule of law at the national and international levels and ensure equal access to justice for all",
+        "ko": "국가·국제 차원에서 법치를 촉진하고 모두를 위한 사법 접근의 평등을 보장한다."
+      },
+      {
+        "code": "16.4",
+        "en": "By 2030, significantly reduce illicit financial and arms flows, strengthen the recovery and return of stolen assets and combat all forms of organized crime",
+        "ko": "2030년까지 불법 자금과 무기 흐름을 크게 줄이고, 탈취 자산의 회수·반환을 강화하며, 모든 형태의 조직범죄에 대응한다."
+      },
+      {
+        "code": "16.5",
+        "en": "Substantially reduce corruption and bribery in all their forms",
+        "ko": "모든 형태의 부패와 뇌물을 대폭 줄인다."
+      },
+      {
+        "code": "16.6",
+        "en": "Develop effective, accountable and transparent institutions at all levels",
+        "ko": "모든 수준에서 효과적이고 책임 있으며 투명한 제도를 발전시킨다."
+      },
+      {
+        "code": "16.7",
+        "en": "Ensure responsive, inclusive, participatory and representative decision-making at all levels",
+        "ko": "모든 수준에서 응답적이고 포용적이며 참여적이고 대표성 있는 의사결정을 보장한다."
+      },
+      {
+        "code": "16.8",
+        "en": "Broaden and strengthen the participation of developing countries in the institutions of global governance",
+        "ko": "전 세계 거버넌스 기구에 대한 개발도상국의 참여를 넓히고 강화한다."
+      },
+      {
+        "code": "16.9",
+        "en": "By 2030, provide legal identity for all, including birth registration",
+        "ko": "2030년까지 출생등록을 포함하여 모두에게 법적 신분을 제공한다."
+      },
+      {
+        "code": "16.10",
+        "en": "Ensure public access to information and protect fundamental freedoms, in accordance with national legislation and international agreements",
+        "ko": "국내 법률과 국제 협약에 따라 정보에 대한 대중의 접근을 보장하고 기본적 자유를 보호한다."
+      },
+      {
+        "code": "16.a",
+        "en": "Strengthen relevant national institutions, including through international cooperation, for building capacity at all levels, in particular in developing countries, to prevent violence and combat terrorism and crime",
+        "ko": "폭력을 예방하고 테러·범죄에 대응하기 위해, 특히 개발도상국에서 모든 수준의 역량을 키우도록 국제협력을 포함하여 관련 국가 기관을 강화한다."
+      },
+      {
+        "code": "16.b",
+        "en": "Promote and enforce non-discriminatory laws and policies for sustainable development",
+        "ko": "지속가능발전을 위한 비차별적 법률과 정책을 촉진하고 집행한다."
+      }
+    ],
+    "17": [
+      {
+        "code": "17.1",
+        "en": "Strengthen domestic resource mobilization, including through international support to developing countries, to improve domestic capacity for tax and other revenue collection",
+        "ko": "조세 및 기타 세입 징수를 위한 국내 역량을 개선하기 위해 개발도상국에 대한 국제적 지원을 포함하여 국내 재원 동원을 강화한다."
+      },
+      {
+        "code": "17.2",
+        "en": "Developed countries to implement fully their official development assistance commitments, including the commitment by many developed countries to achieve the target of 0.7 per cent of gross national income for official development assistance (ODA/GNI) to developing countries and 0.15 to 0.20 per cent of ODA/GNI to least developed countries; ODA providers are encouraged to consider setting a target to provide at least 0.20 per cent of ODA/GNI to least developed countries",
+        "ko": "선진국은 개발도상국에 대한 공적개발원조(ODA/GNI) 0.7% 및 최빈개도국에 대한 ODA/GNI 0.15~0.20% 목표 달성이라는 많은 선진국의 약속을 포함하여 공적개발원조 약속을 완전히 이행한다. ODA 공여국은 최빈개도국에 ODA/GNI의 최소 0.20%를 제공하는 목표 설정을 검토하도록 권장된다."
+      },
+      {
+        "code": "17.3",
+        "en": "Mobilize additional financial resources for developing countries from multiple sources",
+        "ko": "다양한 출처로부터 개발도상국을 위한 추가 재원을 동원한다."
+      },
+      {
+        "code": "17.4",
+        "en": "Assist developing countries in attaining long-term debt sustainability through coordinated policies aimed at fostering debt financing, debt relief and debt restructuring, as appropriate, and address the external debt of highly indebted poor countries to reduce debt distress",
+        "ko": "적절한 경우 채무 조달, 채무 경감, 채무 재조정을 촉진하기 위한 조율된 정책을 통해 개발도상국이 장기 채무 지속가능성을 달성하도록 지원하고, 채무 압박을 줄이기 위해 고채무 빈곤국의 대외 채무를 해결한다."
+      },
+      {
+        "code": "17.5",
+        "en": "Adopt and implement investment promotion regimes for least developed countries",
+        "ko": "최빈개도국을 위한 투자 촉진 제도를 채택하고 시행한다."
+      },
+      {
+        "code": "17.6",
+        "en": "Enhance North-South, South-South and triangular regional and international cooperation on and access to science, technology and innovation and enhance knowledge-sharing on mutually agreed terms, including through improved coordination among existing mechanisms, in particular at the United Nations level, and through a global technology facilitation mechanism",
+        "ko": "특히 유엔 차원의 기존 체계 간 조율 개선과 전 세계 기술촉진체계를 통해 과학·기술·혁신에 관한 남북·남남·삼각 지역·국제 협력과 접근을 강화하고, 상호 합의된 조건으로 지식 공유를 확대한다."
+      },
+      {
+        "code": "17.7",
+        "en": "Promote the development, transfer, dissemination and diffusion of environmentally sound technologies to developing countries on favourable terms, including on concessional and preferential terms, as mutually agreed",
+        "ko": "상호 합의된 대로 양허·우대 조건을 포함한 유리한 조건으로 환경적으로 건전한 기술을 개발도상국에 개발·이전·보급·확산하는 것을 촉진한다."
+      },
+      {
+        "code": "17.8",
+        "en": "Fully operationalize the technology bank and science, technology and innovation capacity-building mechanism for least developed countries by 2017 and enhance the use of enabling technology, in particular information and communications technology",
+        "ko": "2017년까지 최빈개도국을 위한 기술은행과 과학·기술·혁신 역량강화 체계를 완전히 운영하고, 특히 정보통신기술 등 가능 기술의 활용을 확대한다."
+      },
+      {
+        "code": "17.9",
+        "en": "Enhance international support for implementing effective and targeted capacity-building in developing countries to support national plans to implement all the Sustainable Development Goals, including through North-South, South-South and triangular cooperation",
+        "ko": "남북·남남·삼각 협력을 포함하여 모든 지속가능발전목표 이행을 위한 국가 계획을 지원하기 위해 개발도상국에서 효과적이고 표적화된 역량강화를 시행하는 데 대한 국제적 지원을 강화한다."
+      },
+      {
+        "code": "17.10",
+        "en": "Promote a universal, rules-based, open, non-discriminatory and equitable multilateral trading system under the World Trade Organization, including through the conclusion of negotiations under its Doha Development Agenda",
+        "ko": "도하개발의제 협상의 타결을 포함하여 세계무역기구 하의 보편적이고 규칙 기반이며 개방적이고 비차별적이며 공평한 다자무역체제를 촉진한다."
+      },
+      {
+        "code": "17.11",
+        "en": "Significantly increase the exports of developing countries, in particular with a view to doubling the least developed countries' share of global exports by 2020",
+        "ko": "특히 2020년까지 최빈개도국의 전 세계 수출 비중을 두 배로 늘리는 것을 목표로 개발도상국의 수출을 크게 늘린다."
+      },
+      {
+        "code": "17.12",
+        "en": "Realize timely implementation of duty-free and quota-free market access on a lasting basis for all least developed countries, consistent with World Trade Organization decisions, including by ensuring that preferential rules of origin applicable to imports from least developed countries are transparent and simple, and contribute to facilitating market access",
+        "ko": "최빈개도국으로부터의 수입에 적용되는 특혜 원산지 규정이 투명하고 단순하며 시장 접근 촉진에 기여하도록 보장하는 것을 포함하여, 세계무역기구 결정에 부합하게 모든 최빈개도국에 대한 무관세·무쿼터 시장 접근을 지속적으로 적시에 시행한다."
+      },
+      {
+        "code": "17.13",
+        "en": "Enhance global macroeconomic stability, including through policy coordination and policy coherence",
+        "ko": "정책 조율과 정책 일관성을 포함하여 전 세계 거시경제 안정을 강화한다."
+      },
+      {
+        "code": "17.14",
+        "en": "Enhance policy coherence for sustainable development",
+        "ko": "지속가능발전을 위한 정책 일관성을 강화한다."
+      },
+      {
+        "code": "17.15",
+        "en": "Respect each country's policy space and leadership to establish and implement policies for poverty eradication and sustainable development",
+        "ko": "빈곤 근절과 지속가능발전을 위한 정책을 수립·시행하는 각국의 정책 공간과 리더십을 존중한다."
+      },
+      {
+        "code": "17.16",
+        "en": "Enhance the Global Partnership for Sustainable Development, complemented by multi-stakeholder partnerships that mobilize and share knowledge, expertise, technology and financial resources, to support the achievement of the Sustainable Development Goals in all countries, in particular developing countries",
+        "ko": "모든 국가, 특히 개발도상국에서 지속가능발전목표의 달성을 지원하기 위해, 지식·전문성·기술·재원을 동원하고 공유하는 다중이해관계자 파트너십으로 보완된 지속가능발전을 위한 글로벌 파트너십을 강화한다."
+      },
+      {
+        "code": "17.17",
+        "en": "Encourage and promote effective public, public-private and civil society partnerships, building on the experience and resourcing strategies of partnerships",
+        "ko": "파트너십의 경험과 자원조달 전략을 토대로 효과적인 공공, 민관, 시민사회 파트너십을 장려하고 촉진한다."
+      },
+      {
+        "code": "17.18",
+        "en": "By 2020, enhance capacity-building support to developing countries, including for least developed countries and small island developing States, to increase significantly the availability of high-quality, timely and reliable data disaggregated by income, gender, age, race, ethnicity, migratory status, disability, geographic location and other characteristics relevant in national contexts",
+        "ko": "2020년까지 소득·성별·연령·인종·민족·이주 상태·장애·지리적 위치 및 국가별 상황과 관련된 기타 특성으로 세분화된 양질의 적시성 있고 신뢰할 수 있는 데이터의 가용성을 크게 높이기 위해, 최빈개도국과 군소도서개발국을 포함한 개발도상국에 대한 역량강화 지원을 강화한다."
+      },
+      {
+        "code": "17.19",
+        "en": "By 2030, build on existing initiatives to develop measurements of progress on sustainable development that complement gross domestic product, and support statistical capacity-building in developing countries",
+        "ko": "2030년까지 기존 이니셔티브를 토대로 국내총생산을 보완하는 지속가능발전 진척도 측정 방법을 개발하고, 개발도상국의 통계 역량 강화를 지원한다."
+      }
+    ]
+  }
+}

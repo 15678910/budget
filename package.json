@@ -17,7 +17,8 @@
     "education:generate": "tsx scripts/generate-education-data.ts",
     "education:build": "tsx scripts/build-education-hierarchy.ts 2023 && tsx scripts/build-education-hierarchy.ts 2024 && tsx scripts/build-education-hierarchy.ts 2025 && tsx scripts/build-education-hierarchy.ts 2026",
     "education:all": "npm run education:generate && npm run education:build",
-    "ksdgs:fetch": "node scripts/fetch-ksdgs.mjs"
+    "ksdgs:fetch": "node scripts/fetch-ksdgs.mjs",
+    "un-targets:fetch": "node scripts/fetch-un-targets.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.2",
