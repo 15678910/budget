@@ -14,8 +14,8 @@ export default function SDGOntologyPage() {
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-8">
       <header className="mb-6">
-        <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-50">SDG 데이터 온톨로지 관계도</h1>
-        <p className="mt-2 text-sm text-slate-500 dark:text-slate-300">
+        <h1 className="text-2xl font-bold text-foreground">SDG 데이터 온톨로지 관계도</h1>
+        <p className="mt-2 text-sm text-muted-foreground">
           데이터셋이 어떤 지표를 제공하고, 지표가 어떤 SDG 목표로 매핑되며, 목표가 어떤 5대 영역에
           속하는지 보여줍니다. 노드를 클릭하면 직접 연결된 이웃이 강조되고, 자연어 명령으로 특정
           관계만 포커스할 수 있습니다. SDG 목표를 선택하면 K-SDGs 세부목표(출처: 지속가능발전포털
