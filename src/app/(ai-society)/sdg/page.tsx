@@ -132,6 +132,12 @@ export default function SDGPage() {
         >
           🔗 데이터 온톨로지 관계도
         </a>
+        <a
+          href="/sdg/interlinkage"
+          className="inline-flex items-center gap-1 text-sm px-3 py-1.5 rounded-lg border border-violet-700/60 bg-violet-950/30 text-violet-200 hover:bg-violet-900/40"
+        >
+          🧩 연계성 분석(시너지·상충)
+        </a>
       </div>
       <SDGBoard
         matrix={matrix}
