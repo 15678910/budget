@@ -82,7 +82,8 @@ export function EdgeLayer({ links, focusIds, pathEdgeSet, hoverId }: EdgeLayerPr
               strokeWidth={emphasized ? 2 : dimmed ? 0.5 : 1.2}
               strokeOpacity={emphasized ? 0.9 : dimmed ? 0.1 : 0.55}
             />
-            {showLabel && !dimmed && (
+            {/* 'has-target'(세부목표) 엣지는 라벨 생략 — 세부목표 펼침 시 라벨이 과밀해 가독성 저하. 노드로 충분히 드러남. */}
+            {showLabel && !dimmed && l.kind !== 'has-target' && (
               <text
                 x={mx}
                 y={my - 2}
