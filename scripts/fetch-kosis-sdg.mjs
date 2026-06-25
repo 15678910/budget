@@ -2,9 +2,14 @@
 /**
  * KOSIS 시도별 SDG 대표 지표 수집 — 통계청 KOSIS OpenAPI
  * 산출물: public/data/sdg-sido.json
- *   { collectedAt, goals: { <goalNum>: {label,source,year,unit,higherBetter,bySido:{<시도약칭>:값}} } }
+ *   { collectedAt, goals: { <goalNum>: {
+ *       label, source, year(최신연도), unit, higherBetter,
+ *       bySido: { <시도약칭>: 최신연도값 },                    // 기존 호환 보존
+ *       seriesBySido: { <시도약칭>: { <연도>: 값, ... } },     // 다년 실측 시계열(보간 아님)
+ *   } } }
  * 사용: KOSIS_API_KEY=<키> node scripts/fetch-kosis-sdg.mjs
- * ※ 지표 추가 시 INDICATORS에 {goal,orgId,tblId,itmId,...} 한 줄 추가.
+ * ※ 지표 추가 시 INDICATORS에 {goal,orgId,tblId,itmId,...} 한 줄 추가(사전 API 검증 통과분만).
+ * ※ newEstPrdCnt=10 → 최근 10년 시계열. 시도별 각 연도(PRD_DE) 행을 파싱.
  */
 import { writeFileSync, mkdirSync } from 'node:fs';
 
@@ -29,21 +34,38 @@ const INDICATORS = [
 
 async function fetchIndicator(ind) {
   const url = `https://kosis.kr/openapi/Param/statisticsParameterData.do?method=getList&apiKey=${KEY}`
-    + `&orgId=${ind.orgId}&tblId=${ind.tblId}&objL1=ALL&itmId=${ind.itmId}&prdSe=Y&newEstPrdCnt=1&format=json&jsonVD=Y`;
+    + `&orgId=${ind.orgId}&tblId=${ind.tblId}&objL1=ALL&itmId=${ind.itmId}&prdSe=Y&newEstPrdCnt=10&format=json&jsonVD=Y`;
   const res = await fetch(url, { signal: AbortSignal.timeout(10000) }); // 10s 타임아웃 (무한 대기 방지)
   const j = await res.json();
   if (!Array.isArray(j)) throw new Error(JSON.stringify(j).slice(0, 120));
   const rows = j.filter((r) => r.ITM_ID === ind.itmId);
-  const bySido = {};
-  let year = '';
+
+  // 시도별 연도→값 시계열 누적. PRD_DE=연도(YYYY), C1_NM=시도, DT=값.
+  const seriesBySido = {}; // { short: { year: value } }
+  let latestYear = '';
   for (const r of rows) {
     const short = FULL_TO_SHORT[(r.C1_NM || '').trim()];
     if (!short) continue; // 계/전국/미매칭 제외
+    const yr = String(r.PRD_DE || '').trim();
+    if (!/^\d{4}$/.test(yr)) continue; // 연도(YYYY)만 허용
     const v = Number(String(r.DT).replace(/[^0-9.\-]/g, ''));
-    if (Number.isFinite(v)) bySido[short] = v;
-    year = r.PRD_DE || year;
+    if (!Number.isFinite(v)) continue;
+    (seriesBySido[short] ||= {})[yr] = v;
+    if (yr > latestYear) latestYear = yr;
   }
-  return { label: ind.label, source: ind.source, year, unit: ind.unit, higherBetter: ind.higherBetter, bySido };
+
+  // bySido = 각 시도의 최신연도 단일값(기존 소비처 호환). 시도별로 자기 최신연도를 사용.
+  const bySido = {};
+  for (const [short, series] of Object.entries(seriesBySido)) {
+    const years = Object.keys(series).sort();
+    const last = years[years.length - 1];
+    if (last != null) bySido[short] = series[last];
+  }
+
+  return {
+    label: ind.label, source: ind.source, year: latestYear,
+    unit: ind.unit, higherBetter: ind.higherBetter, bySido, seriesBySido,
+  };
 }
 
 (async () => {
@@ -60,9 +82,16 @@ async function fetchIndicator(ind) {
   mkdirSync('public/data', { recursive: true });
   writeFileSync('public/data/sdg-sido.json', JSON.stringify({ collectedAt: new Date().toISOString(), goals }));
   console.log(`\n저장: public/data/sdg-sido.json (목표 ${Object.keys(goals).length}개)`);
-  // 검증 출력
+  // 검증 출력 — 최신 상위 3 + 시계열 연도범위
   for (const [g, d] of Object.entries(goals)) {
     const top = Object.entries(d.bySido).sort((a, b) => b[1] - a[1]).slice(0, 3);
-    console.log(`  Goal ${g}: ${top.map(([s, v]) => `${s} ${v}${d.unit}`).join(', ')} …`);
+    const allYears = new Set();
+    for (const series of Object.values(d.seriesBySido ?? {})) {
+      for (const yr of Object.keys(series)) allYears.add(yr);
+    }
+    const ys = [...allYears].sort();
+    const seoul = d.seriesBySido?.['서울'] ? Object.keys(d.seriesBySido['서울']).length : 0;
+    console.log(`  Goal ${g}: ${top.map(([s, v]) => `${s} ${v}${d.unit}`).join(', ')} … ` +
+      `[시계열 ${ys[0] ?? '?'}~${ys[ys.length - 1] ?? '?'} · 서울 ${seoul}개연도]`);
   }
 })();
