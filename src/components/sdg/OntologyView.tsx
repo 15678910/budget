@@ -252,7 +252,7 @@ export default function OntologyView({ nodes, edges }: OntologyViewProps) {
   );
 
   return (
-    <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1fr)_300px]">
+    <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1fr)_400px]">
       {/* ── 좌측/중앙: 컨트롤 + 그래프 + 범례 ── */}
       <div className="flex flex-col gap-4">
         {/* 카테고리 필터 칩 */}
