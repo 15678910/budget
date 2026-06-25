@@ -7,6 +7,10 @@ import { SDG_DOMAINS } from '@/lib/data/local-sdg-data';
 // K-SDGs 17목표·세부목표 정적 데이터(공식 출처: 지속가능발전포털 ncsd.go.kr).
 // scripts/fetch-ksdgs.mjs 가 1회 수집해 생성. 런타임 스크래핑 없음.
 import ksdgsData from '../../../public/data/ksdgs.json';
+// UN 169 세부목표(공식 영문 + 비공식 국문 참고 번역) 정적 데이터.
+// 출처: UN Statistics Division SDG API (A/RES/70/1). scripts/fetch-un-targets.mjs 가 1회 수집.
+// 영문(en)=공식 축자 인용(권위), 국문(ko)=비공식 참고 번역(UI에서 "비공식" 라벨).
+import unTargetsData from '../../../public/data/un-targets.json';
 
 export type OntologyNodeType = 'dataset' | 'indicator' | 'goal' | 'domain' | 'target';
 export type OntologyEdgeKind = 'provides' | 'maps-to' | 'belongs-to' | 'has-target';
@@ -45,6 +49,25 @@ interface KsdgsData {
 }
 
 const KSDGS = ksdgsData as KsdgsData;
+
+/** UN 169 세부목표 1건(국제 원본). */
+export interface UNTarget {
+  /** UN 세부목표 코드(예: '1.1', '8.10', '17.19') */
+  code: string;
+  /** 공식 영문(축자, UN 권위 데이터) */
+  en: string;
+  /** 비공식 국문 참고 번역(UI에서 "비공식" 명시) */
+  ko: string;
+}
+
+interface UNTargetsData {
+  source: string;
+  url: string;
+  fetchedAt: string;
+  goals: Record<string, UNTarget[]>;
+}
+
+const UN_TARGETS = unTargetsData as UNTargetsData;
 
 export interface OntologyNode {
   id: string;
@@ -87,6 +110,33 @@ export function getTargets(goalNum: number): KsdgsTarget[] {
 /** ksdgs.json 의 세부목표 총수(검수·카운트용). */
 function totalTargetCount(): number {
   return Object.values(KSDGS.goals).reduce((sum, g) => sum + (g.targets?.length ?? 0), 0);
+}
+
+/**
+ * 한 목표(goalNum)의 UN 169 세부목표(국제 원본) 배열을 반환한다(INSPECTOR용).
+ * un-targets.json(공식 UN SDG API)에서 정적 도출. en=공식 영문(축자), ko=비공식 참고 번역.
+ * 해당 목표가 없으면 빈 배열.
+ */
+export function getUNTargets(goalNum: number): UNTarget[] {
+  const arr = UN_TARGETS.goals[String(goalNum)];
+  if (!Array.isArray(arr)) return [];
+  return arr.map((t) => ({ code: t.code, en: t.en, ko: t.ko }));
+}
+
+/** un-targets.json 의 UN 세부목표 총수(169, 검수·카운트용). */
+function totalUNTargetCount(): number {
+  return Object.values(UN_TARGETS.goals).reduce((sum, arr) => sum + (arr?.length ?? 0), 0);
+}
+
+/** UN 세부목표 출처 메타(UI 배지·고지용). source/url/fetchedAt. */
+export interface UNTargetsMeta {
+  source: string;
+  url: string;
+  fetchedAt: string;
+}
+
+export function getUNTargetsMeta(): UNTargetsMeta {
+  return { source: UN_TARGETS.source, url: UN_TARGETS.url, fetchedAt: UN_TARGETS.fetchedAt };
 }
 
 /** buildOntology 옵션. */
@@ -274,6 +324,8 @@ export interface OntologyCounts {
   relationships: number;
   properties: number;
   targets: number;
+  /** UN 169 세부목표 총수(un-targets.json 기준 고정 카운트). */
+  unTargets: number;
 }
 
 export function ontologyCounts(ontology: Ontology): OntologyCounts {
@@ -286,5 +338,6 @@ export function ontologyCounts(ontology: Ontology): OntologyCounts {
     relationships: ontology.edges.length,
     properties,
     targets: totalTargetCount(),
+    unTargets: totalUNTargetCount(),
   };
 }

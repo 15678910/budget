@@ -5,15 +5,23 @@ import {
   shortestPath,
   ontologyCounts,
   getTargets,
+  getUNTargets,
+  getUNTargetsMeta,
 } from '@/lib/sdg/ontology';
 import type { OntologyEdge } from '@/lib/sdg/ontology';
 import { INDICATOR_TO_GOAL } from '@/lib/sdg/indicator-map';
 import { SDG_GOALS, SDG_DOMAINS_5 } from '@/lib/sdg/goals';
 import { SDG_DOMAINS } from '@/lib/data/local-sdg-data';
 import ksdgs from '../../../../public/data/ksdgs.json';
+import unTargets from '../../../../public/data/un-targets.json';
 
 const KSDGS_TARGET_TOTAL = Object.values(ksdgs.goals).reduce(
   (sum, g) => sum + g.targets.length,
+  0,
+);
+
+const UN_TARGET_TOTAL = Object.values(unTargets.goals).reduce(
+  (sum, arr) => sum + arr.length,
   0,
 );
 
@@ -210,6 +218,7 @@ describe('ontologyCounts', () => {
       relationships: 2,
       properties: 5,
       targets: KSDGS_TARGET_TOTAL,
+      unTargets: UN_TARGET_TOTAL,
     });
   });
 
@@ -226,6 +235,12 @@ describe('ontologyCounts', () => {
     const counts = ontologyCounts(buildOntology());
     expect(counts.targets).toBe(KSDGS_TARGET_TOTAL);
     expect(counts.targets).toBeGreaterThanOrEqual(100);
+  });
+
+  it('unTargets 카운트가 un-targets.json 세부목표 총수(169)와 일치한다', () => {
+    const counts = ontologyCounts(buildOntology());
+    expect(counts.unTargets).toBe(UN_TARGET_TOTAL);
+    expect(counts.unTargets).toBe(169);
   });
 });
 
@@ -302,6 +317,68 @@ describe('K-SDGs 세부목표(target) 통합', () => {
     for (const e of edges.filter((x) => x.kind === 'has-target')) {
       expect(ids.has(e.from)).toBe(true);
       expect(ids.has(e.to)).toBe(true);
+    }
+  });
+});
+
+describe('UN 169 세부목표(국제 원본) 통합', () => {
+  it('un-targets.json 이 총 169개·목표 1~17 을 가진다(무결성)', () => {
+    expect(UN_TARGET_TOTAL).toBe(169);
+    expect(Object.keys(unTargets.goals).length).toBe(17);
+    for (let g = 1; g <= 17; g += 1) {
+      const arr = (unTargets.goals as Record<string, unknown[]>)[String(g)];
+      expect(Array.isArray(arr)).toBe(true);
+      expect(arr.length).toBeGreaterThan(0);
+    }
+  });
+
+  it('source/url/fetchedAt 메타가 존재한다(출처 표기)', () => {
+    const meta = getUNTargetsMeta();
+    expect(meta.source).toContain('UN');
+    expect(meta.url).toMatch(/^https:\/\/unstats\.un\.org\//);
+    expect(meta.fetchedAt).toMatch(/^\d{4}-\d{2}-\d{2}T/);
+  });
+
+  it('getUNTargets(goalNum) 가 un-targets.json 의 해당 목표 세부목표를 반환한다', () => {
+    for (const [numStr, arr] of Object.entries(unTargets.goals)) {
+      const num = Number(numStr);
+      const got = getUNTargets(num);
+      expect(got.length).toBe(arr.length);
+      expect(got.map((t) => t.code)).toEqual(arr.map((t) => t.code));
+    }
+  });
+
+  it('getUNTargets 는 존재하지 않는 목표에 빈 배열을 반환한다', () => {
+    expect(getUNTargets(0)).toEqual([]);
+    expect(getUNTargets(99)).toEqual([]);
+  });
+
+  it('모든 UN 세부목표가 code(^\\d+\\.) 형식과 비어있지 않은 en·ko 를 가진다', () => {
+    for (let g = 1; g <= 17; g += 1) {
+      for (const t of getUNTargets(g)) {
+        expect(t.code).toMatch(/^\d+\.[0-9a-z]+$/);
+        expect(typeof t.en).toBe('string');
+        expect(t.en.trim().length).toBeGreaterThan(0);
+        expect(typeof t.ko).toBe('string');
+        expect(t.ko.trim().length).toBeGreaterThan(0);
+      }
+    }
+  });
+
+  it('UN 세부목표 code 는 전역 유일하다(중복 0)', () => {
+    const codes: string[] = [];
+    for (let g = 1; g <= 17; g += 1) for (const t of getUNTargets(g)) codes.push(t.code);
+    expect(codes.length).toBe(169);
+    expect(new Set(codes).size).toBe(codes.length);
+  });
+
+  it('getUNTargets 결과의 en 이 un-targets.json 원문과 축자 일치한다(영문 보존)', () => {
+    for (const [numStr, arr] of Object.entries(unTargets.goals)) {
+      const got = getUNTargets(Number(numStr));
+      const byCode = new Map(got.map((t) => [t.code, t.en]));
+      for (const t of arr) {
+        expect(byCode.get(t.code)).toBe(t.en);
+      }
     }
   });
 });

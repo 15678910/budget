@@ -9,11 +9,14 @@ import {
   shortestPath,
   ontologyCounts,
   getTargets,
+  getUNTargets,
+  getUNTargetsMeta,
   type Ontology,
   type OntologyNode,
   type OntologyNodeType,
   type OntologyEdge,
   type KsdgsTarget,
+  type UNTarget,
 } from '@/lib/sdg/ontology';
 
 interface OntologyViewProps {
@@ -63,6 +66,15 @@ export default function OntologyView({ nodes, edges }: OntologyViewProps) {
     () => (selectedGoalNum != null ? getTargets(selectedGoalNum) : []),
     [selectedGoalNum],
   );
+
+  // 선택 goal 의 UN 169 세부목표(국제 원본, UN SDG API) — INSPECTOR 표시용.
+  const selectedUNTargets = useMemo<UNTarget[]>(
+    () => (selectedGoalNum != null ? getUNTargets(selectedGoalNum) : []),
+    [selectedGoalNum],
+  );
+
+  // UN 세부목표 출처 메타(배지·고지용, 정적 고정값).
+  const unMeta = useMemo(() => getUNTargetsMeta(), []);
 
   // 토글 ON + goal 선택 시 그 goal 의 target 노드/엣지만 그래프에 확장(전체 동시 표시 금지).
   const expanded = useMemo<Ontology>(() => {
@@ -354,6 +366,8 @@ export default function OntologyView({ nodes, edges }: OntologyViewProps) {
           node={selectedNode}
           neighbors={selectedNeighbors}
           targets={selectedTargets}
+          unTargets={selectedUNTargets}
+          unMeta={unMeta}
           onSelectNode={selectNode}
         />
       </aside>

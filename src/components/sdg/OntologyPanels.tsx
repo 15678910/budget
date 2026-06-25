@@ -21,8 +21,12 @@ export function InsightsPanel({ counts }: { counts: OntologyCounts }) {
           <dd className="text-lg font-bold text-slate-800">{counts.properties}</dd>
         </div>
         <div>
-          <dt className="text-[11px] text-slate-400">세부목표</dt>
+          <dt className="text-[11px] text-slate-400">K-SDGs 세부목표</dt>
           <dd className="text-lg font-bold text-slate-800">{counts.targets}</dd>
+        </div>
+        <div className="col-span-2">
+          <dt className="text-[11px] text-slate-400">UN 169 세부목표</dt>
+          <dd className="text-lg font-bold text-slate-800">{counts.unTargets}</dd>
         </div>
       </dl>
     </div>

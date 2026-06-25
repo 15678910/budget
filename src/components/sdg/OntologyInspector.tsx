@@ -5,7 +5,10 @@ import type {
   OntologyNodeType,
   OntologyNeighbor,
   KsdgsTarget,
+  UNTarget,
+  UNTargetsMeta,
 } from '@/lib/sdg/ontology';
+import UNTargetsSection from '@/components/sdg/UNTargetsSection';
 
 const TYPE_LABEL: Record<OntologyNodeType, string> = {
   dataset: '데이터셋',
@@ -52,6 +55,12 @@ interface OntologyInspectorProps {
    * goal 이 아니거나 데이터가 없으면 빈 배열.
    */
   targets?: KsdgsTarget[];
+  /**
+   * 선택 노드가 goal 일 때 표시할 UN 169 세부목표(국제 원본). goal 이 아니면 빈 배열.
+   */
+  unTargets?: UNTarget[];
+  /** UN 세부목표 출처 메타(source/url/fetchedAt). */
+  unMeta: UNTargetsMeta;
   /** 이웃 노드 클릭 시 해당 노드로 이동. */
   onSelectNode: (nodeId: string) => void;
 }
@@ -60,6 +69,8 @@ export default function OntologyInspector({
   node,
   neighbors,
   targets = [],
+  unTargets = [],
+  unMeta,
   onSelectNode,
 }: OntologyInspectorProps) {
   if (!node) {
@@ -135,6 +146,11 @@ export default function OntologyInspector({
             )
           </p>
         </div>
+      )}
+
+      {/* UN 169 세부목표(국제 기준) — goal 노드 선택 시 K-SDGs 아래에 표시 */}
+      {node.type === 'goal' && (
+        <UNTargetsSection targets={unTargets} meta={unMeta} />
       )}
 
       {/* 연결된 노드 목록(neighbors) */}
