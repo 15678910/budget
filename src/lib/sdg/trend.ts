@@ -127,7 +127,20 @@ export function trendCR(
   const agra = Math.pow(current / base, 1 / dtActual) - 1;
   const agrr = Math.pow(green / base, 1 / dtTarget) - 1;
 
+  // base가 이미 목표를 충족/초과: AGRr 부호가 역전되어 CR 신호가 뒤집힌다.
+  // (예: higher_better base=110, green=100 → AGRr<0, AGRa>0 → CR<0 → 'decreasing' 오신호)
+  // base 충족 시 CR 계산을 건너뛰고 current 상태로 직접 화살표 결정.
+  const baseMeets = meetsTarget(base, green, direction);
+  if (baseMeets) {
+    const curMeets = meetsTarget(current, green, direction);
+    const improved =
+      direction === 'lower_better' ? current <= base : current >= base;
+    const arrow: TrendArrow = curMeets ? (improved ? 'on_track' : 'improving') : 'decreasing';
+    return { agra, agrr, cr: curMeets ? 1 : -1, arrow };
+  }
+
   // 목표≈기준: 필요 성장률 0 → CR 불안정. current 목표 충족 여부로 직접 판정.
+  // (baseMeets의 부분집합이지만 |agrr|<ε 수치 방어로 유지)
   if (Math.abs(agrr) < AGRR_EPS) {
     const arrow: TrendArrow = meetsTarget(current, green, direction) ? 'on_track' : 'decreasing';
     return { agra, agrr, cr: meetsTarget(current, green, direction) ? 1 : -1, arrow };
@@ -178,7 +191,7 @@ export function goalTrend(
     if (current == null || base == null) continue;
     const dir = direction[ind] ?? 'higher_better';
     const t = trendCR(base, current, target.green, dir, opts);
-    if (t) crs.push(t.cr);
+    if (t) crs.push(Math.max(-2, Math.min(2, t.cr)));
   }
   if (crs.length === 0) return null;
   const cr = crs.reduce((s, v) => s + v, 0) / crs.length;

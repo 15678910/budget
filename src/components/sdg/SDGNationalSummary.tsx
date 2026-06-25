@@ -89,6 +89,9 @@ export function SDGNationalSummary({
       </div>
 
       <div className="text-[11px] text-gray-600 border-t border-gray-800 pt-2 space-y-1">
+        <p className="text-[10px] text-yellow-700/70">
+          ※ 위 수치는 대표지표 1개, 배지·화살표·목표갭은 목표 매핑 지표 종합 기준입니다.
+        </p>
         <p>
           전국값 = 16개 광역 실값의 <strong className="text-gray-500">인구 가중 평균(절대값)</strong>이며,
           목표별 <strong className="text-gray-500">대표지표 1개</strong> 기준입니다. 정규화 점수가 아니라

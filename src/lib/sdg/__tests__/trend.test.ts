@@ -140,6 +140,48 @@ describe('trendCR — 경계 방어', () => {
   });
 });
 
+describe('trendCR — base가 이미 목표를 충족/초과한 경우 (CRITICAL CR 역전 방지)', () => {
+  // higher_better, green=100, base=110(초과). AGRr<0이 되어 CR이 역전되는 케이스.
+
+  it('[higher_better] base>green, current>base → on_track (개선·목표충족)', () => {
+    // 강원 hou_supply류: base=110, green=100, current=112 (더 개선됨)
+    const t = trendCR(110, 112, 100, 'higher_better');
+    expect(t).not.toBeNull();
+    expect(t!.arrow).toBe('on_track');
+    expect(t!.cr).toBe(1);
+  });
+
+  it('[higher_better] base>green, current<green → decreasing (목표 밑으로 하락)', () => {
+    // base=110, green=100, current=95 → 목표 아래로 떨어짐
+    const t = trendCR(110, 95, 100, 'higher_better');
+    expect(t).not.toBeNull();
+    expect(t!.arrow).toBe('decreasing');
+    expect(t!.cr).toBe(-1);
+  });
+
+  it('[lower_better] base<green, current<base → on_track (개선·목표충족)', () => {
+    // lower_better, green=30, base=20(이미 목표 달성), current=18(더 낮아짐)
+    const t = trendCR(20, 18, 30, 'lower_better');
+    expect(t).not.toBeNull();
+    expect(t!.arrow).toBe('on_track');
+    expect(t!.cr).toBe(1);
+  });
+
+  it('[lower_better] base<green, current>green → decreasing (목표 위로 상승)', () => {
+    // lower_better, green=30, base=20(이미 달성), current=35 → 목표 초과(악화)
+    const t = trendCR(20, 35, 30, 'lower_better');
+    expect(t).not.toBeNull();
+    expect(t!.arrow).toBe('decreasing');
+    expect(t!.cr).toBe(-1);
+  });
+
+  it('[sanity] 강원 hou_supply (base=110, current=112, green=100, higher_better) → 강원 더 이상 decreasing 아님', () => {
+    // 실데이터 상사치 검증 — 이 케이스가 'decreasing'이면 CRITICAL 버그 재발.
+    const t = trendCR(110, 112, 100, 'higher_better');
+    expect(t!.arrow).not.toBe('decreasing');
+  });
+});
+
 describe('goalTrend', () => {
   const direction: Record<string, IndicatorDirection> = {
     emp_rate: 'higher_better',
