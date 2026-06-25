@@ -138,6 +138,12 @@ export default function SDGPage() {
         >
           🧩 연계성 분석(시너지·상충)
         </a>
+        <a
+          href="/sdg/effectiveness"
+          className="inline-flex items-center gap-1 text-sm px-3 py-1.5 rounded-lg border border-amber-700/60 bg-amber-950/30 text-amber-200 hover:bg-amber-900/40"
+        >
+          📊 실효성 분석(예산-성과)
+        </a>
       </div>
       <SDGBoard
         matrix={matrix}
