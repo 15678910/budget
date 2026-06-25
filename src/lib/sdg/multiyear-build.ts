@@ -3,13 +3,15 @@
 // ============================================================
 //
 // goal8(고용률)·goal9(GRDP)의 KOSIS 다년 시계열(seriesBySido)을:
-//   1) 연도별로 16광역(mergeToCanon16, ratio)으로 병합 → 광역별 시계열
-//   2) 선택 광역(또는 전국 평균)의 실측 연도점 → linearTrend / multiYearArrow
+//   1) 연도별로 16광역(mergeToCanon16)으로 병합 → 광역별 시계열
+//      - 비율 지표(3·5·8·9·11): 'ratio' — 광주전남 인구가중평균, 전국=광역 평균
+//      - 절대량 지표(7=toe): 'sum' — 광주전남 합산, 전국=광역 합계
+//   2) 선택 광역(또는 전국)의 실측 연도점 → linearTrend / multiYearArrow
 //
 // ⚠️ 정직성: 실측 연도점만(보간 0). 인과 0. 2점 개략(trend.ts)과 구분되는 "실측 N년 회귀".
 //   green은 방어 가능한 지표만 사용(goal8=고용률 70% 정책목표). 없으면 slope 부호 판정.
 
-import { mergeToCanon16 } from './region-normalize';
+import { mergeToCanon16, type MergeKind } from './region-normalize';
 import { linearTrend, multiYearArrow, type YearPoint, type MultiYearTrend } from './multiyear-trend';
 import type { TrendArrow } from './trend';
 
@@ -18,6 +20,13 @@ import type { TrendArrow } from './trend';
  * - green!=null: 방어 가능한 정책/규범 목표(라벨에 명시). null: slope 부호 판정.
  * 표 추가 시 이 맵에 한 줄 추가(사전 검증 통과분만).
  */
+/**
+ * 절대량(toe 등) 지표 goal 집합 — mergeToCanon16 'sum' 모드 사용.
+ * 광주+전남 = 합산(평균 아님), 전국 = 광역 합계.
+ * 비율/퍼센트 지표(3·5·8·9·11)는 이 집합에 없으므로 기존 'ratio' + 전국=평균 유지.
+ */
+export const MULTIYEAR_ABSOLUTE: ReadonlySet<number> = new Set([7]); // 신재생에너지 생산량(toe)
+
 export const MULTIYEAR_GREEN: Record<number, number | null> = {
   3: null, // 자살률: 방어 가능한 단일 목표값 없음 → slope 부호 판정(lower_better=하락 양호).
   5: null, // 여성 경제활동참가율: 단일 목표값 부재 → slope 부호 판정(상승=양호).
@@ -30,7 +39,11 @@ export const MULTIYEAR_GREEN: Record<number, number | null> = {
 export interface RegionSeries {
   /** 16광역 약칭 → 실측 연도점(연도 오름차순). */
   byRegion: Record<string, YearPoint[]>;
-  /** 전국(16광역 ratio 병합 후 단순평균) 실측 연도점. */
+  /**
+   * 전국 실측 연도점.
+   * - mergeKind='ratio': 16광역 평균(비율·퍼센트 지표용)
+   * - mergeKind='sum':   16광역 합계(절대량 지표용 — 예: toe)
+   */
   national: YearPoint[];
   /** 시계열에 등장한 모든 연도(오름차순). */
   years: number[];
@@ -38,14 +51,16 @@ export interface RegionSeries {
 
 /**
  * seriesBySido(원시 17 시도 약칭 → {연도: 값})를 16광역으로 병합한 연도별 시계열로 변환.
- * 각 연도마다 mergeToCanon16(ratio)을 적용해 광주+전남을 병합한다(pop 미제공 시 단순평균).
  *
  * @param seriesBySido 시도 약칭 → {연도(YYYY): 값}
  * @param pop          ratio 병합 가중치(시도 약칭 → 인구). 선택.
+ * @param mergeKind    'ratio'(기본): 광주전남=인구가중평균·전국=평균 (비율·퍼센트 지표).
+ *                     'sum': 광주전남=합산·전국=합계 (절대량 지표 — 예: goal7 toe).
  */
 export function buildRegionSeries(
   seriesBySido: Record<string, Record<string, number>>,
   pop?: Record<string, number>,
+  mergeKind: MergeKind = 'ratio',
 ): RegionSeries {
   // 등장 연도 수집
   const yearSet = new Set<string>();
@@ -67,7 +82,7 @@ export function buildRegionSeries(
     }
     if (Object.keys(valuesThisYear).length === 0) continue;
 
-    const merged = mergeToCanon16(valuesThisYear, 'ratio', pop);
+    const merged = mergeToCanon16(valuesThisYear, mergeKind, mergeKind === 'ratio' ? pop : undefined);
     const yearNum = Number(yr);
     yearsWithData.push(yearNum);
     let sum = 0;
@@ -85,9 +100,10 @@ export function buildRegionSeries(
     byRegion[region].sort((a, b) => a.year - b.year);
   }
 
+  // 전국: 절대량은 광역 합계(sum), 비율은 광역 평균(sum/cnt).
   const national: YearPoint[] = nationalAcc
     .sort((a, b) => a.year - b.year)
-    .map((a) => ({ year: a.year, value: a.sum / a.cnt }));
+    .map((a) => ({ year: a.year, value: mergeKind === 'sum' ? a.sum : a.sum / a.cnt }));
 
   return { byRegion, national, years: yearsWithData.sort((a, b) => a - b) };
 }

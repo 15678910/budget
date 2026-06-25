@@ -31,6 +31,7 @@ const FULL_TO_SHORT = {
   경기도: '경기', 강원도: '강원', 강원특별자치도: '강원', 충청북도: '충북', 충청남도: '충남',
   전라북도: '전북', 전북특별자치도: '전북', 전라남도: '전남', 경상북도: '경북', 경상남도: '경남',
   제주특별자치도: '제주',
+  제주도: '제주', // goal3 사망원인통계: C2_NM='제주도'(C2=39)로 제공됨 — 신구 명칭 모두 매핑.
 };
 
 // 유효 시도 약칭 집합 — 일부 표(예: 신재생 orgId337)는 C2_NM이 이미 약칭("서울")으로 옴.
@@ -133,6 +134,14 @@ async function fetchIndicator(ind) {
     const last = years[years.length - 1];
     if (last != null) bySido[short] = series[last];
   }
+
+  // ── post-parse sanity: 시도수·연도수 품질 경고 (차단 아님) ──
+  const sidoCount = Object.keys(seriesBySido).length;
+  const allYrSet = new Set();
+  for (const s of Object.values(seriesBySido)) for (const yr of Object.keys(s)) allYrSet.add(yr);
+  const yrCount = allYrSet.size;
+  if (sidoCount < 15) console.warn(`⚠️ Goal ${ind.goal} sanity: 시도 ${sidoCount}개(<15) — 누락 시도 확인 필요`);
+  if (yrCount < 5) console.warn(`⚠️ Goal ${ind.goal} sanity: 연도 ${yrCount}개(<5) — 다년 시계열 부족`);
 
   return {
     label: ind.label, source: ind.source, year: latestYear,

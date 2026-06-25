@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react';
 import { geoMercator, geoPath } from 'd3-geo';
 import { feature } from 'topojson-client';
 import { SDG_GOALS, getGoalIndicator, SIDO_FULL_TO_SHORT, type SDGIndicator } from '@/lib/sdg/goals';
-import { buildRegionSeries, regionMultiYearTrend } from '@/lib/sdg/multiyear-build';
+import { buildRegionSeries, regionMultiYearTrend, MULTIYEAR_ABSOLUTE } from '@/lib/sdg/multiyear-build';
 import { MultiYearTrendBadge } from './MultiYearTrendBadge';
 
 interface KosisData { goals: Record<string, SDGIndicator> }
@@ -66,15 +66,21 @@ export function SDGMapDashboard({ geoData, kosis, initialGoal }: { geoData: any;
     [provinces, indicator],
   );
 
-  // 실측 다년(KOSIS) 추세 — seriesBySido 보유 goal(8·9)만. 전국(시도수 광역 평균) 시계열 회귀.
+  // 실측 다년(KOSIS) 추세 — seriesBySido 보유 goal(3·5·7·8·9·11). 전국 시계열 회귀.
   // 보간 아님: 실측 연도점만 사용. 미보유 goal은 null → 기존 2점(B) 추세 유지.
+  // goal7(toe) = 절대량 → 광주전남=합산, 전국=합계(mergeKind='sum').
+  // 비율 지표(3·5·8·9·11) = 'ratio' → 광주전남=인구가중평균, 전국=광역 평균.
   const multiYear = useMemo(() => {
     const series = indicator?.seriesBySido;
     if (!series || !indicator) return null;
-    const { national, byRegion } = buildRegionSeries(series);
+    const mergeKind = MULTIYEAR_ABSOLUTE.has(goalNum) ? 'sum' : 'ratio';
+    const { national, byRegion } = buildRegionSeries(series, undefined, mergeKind);
     if (national.length < 3) return null;
     const regionCount = Object.keys(byRegion).length;
-    return { ...regionMultiYearTrend(national, goalNum, indicator.higherBetter), regionCount };
+    const scopeLabel = mergeKind === 'sum'
+      ? `전국(${regionCount}광역 합계)`
+      : `전국(${regionCount}광역 평균)`;
+    return { ...regionMultiYearTrend(national, goalNum, indicator.higherBetter), regionCount, scopeLabel };
   }, [indicator, goalNum]);
 
   return (
@@ -106,7 +112,7 @@ export function SDGMapDashboard({ geoData, kosis, initialGoal }: { geoData: any;
         데이터 미보유 goal은 <strong>&apos;데이터 준비중&apos;</strong>(KOSIS 수집 예정)으로 표기합니다.
         <br />
         <span className="text-amber-200/70">
-          추세 표기 구분 — <strong>실측 다년(KOSIS)</strong>=선형회귀(보간 아님, goal 8·9) ·
+          추세 표기 구분 — <strong>실측 다년(KOSIS)</strong>=선형회귀(보간 아님, 현재 goal 3·5·7·8·9·11) ·
           그 외는 <strong>2점 개략</strong>(2018→최신, SDSN CR). 모두 속도 신호일 뿐 <strong>인과 아님</strong>.
         </span>
       </div>
@@ -160,13 +166,13 @@ export function SDGMapDashboard({ geoData, kosis, initialGoal }: { geoData: any;
           : <span className="text-xs text-amber-300/80">데이터 준비중 — KOSIS 수집 예정(Phase C)</span>}
       </div>
 
-      {/* 실측 다년(KOSIS) 추세 — 보유 goal(8·9)만 표시. 나머지는 매트릭스/프로파일의 2점(B) 추세 유지. */}
+      {/* 실측 다년(KOSIS) 추세 — seriesBySido 보유 goal(3·5·7·8·9·11) 표시. 나머지는 매트릭스/프로파일의 2점(B) 추세 유지. */}
       {multiYear && indicator && (
         <MultiYearTrendBadge
           mt={multiYear}
           unit={indicator.unit}
           higherBetter={indicator.higherBetter}
-          scopeLabel={`전국(${multiYear.regionCount}광역 평균)`}
+          scopeLabel={multiYear.scopeLabel}
         />
       )}
 
