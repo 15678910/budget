@@ -66,14 +66,15 @@ export function SDGMapDashboard({ geoData, kosis, initialGoal }: { geoData: any;
     [provinces, indicator],
   );
 
-  // 실측 다년(KOSIS) 추세 — seriesBySido 보유 goal(8·9)만. 전국(16광역 평균) 시계열 회귀.
+  // 실측 다년(KOSIS) 추세 — seriesBySido 보유 goal(8·9)만. 전국(시도수 광역 평균) 시계열 회귀.
   // 보간 아님: 실측 연도점만 사용. 미보유 goal은 null → 기존 2점(B) 추세 유지.
   const multiYear = useMemo(() => {
     const series = indicator?.seriesBySido;
     if (!series || !indicator) return null;
-    const { national } = buildRegionSeries(series);
+    const { national, byRegion } = buildRegionSeries(series);
     if (national.length < 3) return null;
-    return regionMultiYearTrend(national, goalNum, indicator.higherBetter);
+    const regionCount = Object.keys(byRegion).length;
+    return { ...regionMultiYearTrend(national, goalNum, indicator.higherBetter), regionCount };
   }, [indicator, goalNum]);
 
   return (
@@ -100,9 +101,9 @@ export function SDGMapDashboard({ geoData, kosis, initialGoal }: { geoData: any;
 
       {/* 중립·지표해석 고지 */}
       <div className="border-l-2 border-amber-500/60 bg-amber-950/20 rounded-r-md py-2.5 px-3.5 text-[13px] text-amber-100/85 leading-relaxed">
-        <strong className="text-amber-300">⚖ 지표 해석 고지</strong> — 한국 지역 단위 공식 'SDG 종합점수'는 미공개입니다.
+        <strong className="text-amber-300">⚖ 지표 해석 고지</strong> — 한국 지역 단위 공식 &apos;SDG 종합점수&apos;는 미공개입니다.
         본 지도는 goal별 <strong>대표 지표(출처 명시)</strong>로 시각화하며, 지표값을 곧 SDG 달성도로 단정하지 않습니다.
-        데이터 미보유 goal은 <strong>'데이터 준비중'</strong>(KOSIS 수집 예정)으로 표기합니다.
+        데이터 미보유 goal은 <strong>&apos;데이터 준비중&apos;</strong>(KOSIS 수집 예정)으로 표기합니다.
         <br />
         <span className="text-amber-200/70">
           추세 표기 구분 — <strong>실측 다년(KOSIS)</strong>=선형회귀(보간 아님, goal 8·9) ·
@@ -165,7 +166,7 @@ export function SDGMapDashboard({ geoData, kosis, initialGoal }: { geoData: any;
           mt={multiYear}
           unit={indicator.unit}
           higherBetter={indicator.higherBetter}
-          scopeLabel="전국"
+          scopeLabel={`전국(${multiYear.regionCount}광역 평균)`}
         />
       )}
 

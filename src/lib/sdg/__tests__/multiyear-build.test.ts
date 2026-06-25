@@ -73,7 +73,8 @@ describe('regionMultiYearTrend', () => {
     expect(r.green).toBe(70);
     expect(r.trend).not.toBeNull();
     expect(r.trend!.slope).toBeGreaterThan(0);
-    expect(['on_track', 'improving', 'stagnating', 'decreasing']).toContain(r.arrow);
+    // slope=+1/yr, requiredPerYear=(70-65)/(2030-2016)≈0.357, CR≈2.8 → on_track(≥0.95)
+    expect(r.arrow).toBe('on_track');
   });
 
   it('goal9(green=null) → slope 부호 판정', () => {

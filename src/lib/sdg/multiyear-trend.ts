@@ -117,6 +117,8 @@ export function multiYearArrow(
   const dirSign = higherBetter ? 1 : -1;
 
   if (green == null) {
+    // ⚠️ 한계: slope(회귀 기울기)로만 판정 — firstValue(실측 생값)와 혼용 아님. green 없는 goal(9 등)은
+    //   방향 신호만 가능하며, 목표 달성 페이스(CR) 산정은 불가. 방어 가능한 green 확보 시 이 분기 제거.
     const adjSlope = t.slope * dirSign; // >0=개선, <0=악화
     if (adjSlope > 0) return 'on_track';
     if (adjSlope < 0) return 'decreasing';

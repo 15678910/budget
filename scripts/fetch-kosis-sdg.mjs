@@ -11,7 +11,7 @@
  * ※ 지표 추가 시 INDICATORS에 {goal,orgId,tblId,itmId,...} 한 줄 추가(사전 API 검증 통과분만).
  * ※ newEstPrdCnt=10 → 최근 10년 시계열. 시도별 각 연도(PRD_DE) 행을 파싱.
  */
-import { writeFileSync, mkdirSync } from 'node:fs';
+import { writeFileSync, mkdirSync, readFileSync } from 'node:fs';
 
 const KEY = process.env.KOSIS_API_KEY;
 if (!KEY) { console.error('KOSIS_API_KEY 필요'); process.exit(1); }
@@ -79,9 +79,20 @@ async function fetchIndicator(ind) {
     } catch (e) { console.error(`❌ Goal ${ind.goal} ${ind.label}: ${e.message}`); }
     await sleep(1500);
   }
+  // ── read-merge-preserve: 0건이면 기존 파일 보존, 1건 이상이면 성공분만 갱신 ──
+  if (Object.keys(goals).length === 0) {
+    console.error('❌ 수집 성공 0건 — 기존 public/data/sdg-sido.json 보존 (덮어쓰기 중단)');
+    process.exit(1);
+  }
   mkdirSync('public/data', { recursive: true });
-  writeFileSync('public/data/sdg-sido.json', JSON.stringify({ collectedAt: new Date().toISOString(), goals }));
-  console.log(`\n저장: public/data/sdg-sido.json (목표 ${Object.keys(goals).length}개)`);
+  let prevGoals = {};
+  try {
+    const prev = JSON.parse(readFileSync('public/data/sdg-sido.json', 'utf8'));
+    prevGoals = prev.goals ?? {};
+  } catch { /* 파일 없음 또는 파싱 실패 — 새로 생성 */ }
+  const merged = { ...prevGoals, ...goals }; // 성공 goal만 갱신, 실패 goal은 기존값 보존
+  writeFileSync('public/data/sdg-sido.json', JSON.stringify({ collectedAt: new Date().toISOString(), goals: merged }));
+  console.log(`\n저장: public/data/sdg-sido.json (이번 수집 ${Object.keys(goals).length}개, 병합 후 총 ${Object.keys(merged).length}개)`);
   // 검증 출력 — 최신 상위 3 + 시계열 연도범위
   for (const [g, d] of Object.entries(goals)) {
     const top = Object.entries(d.bySido).sort((a, b) => b[1] - a[1]).slice(0, 3);
