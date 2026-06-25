@@ -19,8 +19,12 @@ import type { TrendArrow } from './trend';
  * 표 추가 시 이 맵에 한 줄 추가(사전 검증 통과분만).
  */
 export const MULTIYEAR_GREEN: Record<number, number | null> = {
+  3: null, // 자살률: 방어 가능한 단일 목표값 없음 → slope 부호 판정(lower_better=하락 양호).
+  5: null, // 여성 경제활동참가율: 단일 목표값 부재 → slope 부호 판정(상승=양호).
+  7: null, // 신재생에너지 생산량: 단일 목표값 부재 → slope 부호 판정(상승=양호).
   8: 70, // 고용률 70% 정책목표(aspirational). emp_rate green과 일관.
   9: null, // 1인당 GRDP: 방어 가능한 단일 목표값 없음 → slope 부호 판정(상승=양호).
+  11: null, // 주택보급률: 단일 목표값 부재(100% 논쟁적) → slope 부호 판정(상승=양호).
 };
 
 export interface RegionSeries {
