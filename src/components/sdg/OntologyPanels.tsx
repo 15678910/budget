@@ -58,11 +58,11 @@ export function PathFinderPanel({
       <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-400">PATH FINDER</h3>
       <div className="mt-2 space-y-2">
         <label className="block">
-          <span className="text-[11px] text-slate-400">출발</span>
+          <span className="text-[11px] font-medium text-slate-600">출발</span>
           <select
             value={fromId}
             onChange={(e) => onFromChange(e.target.value)}
-            className="mt-0.5 w-full rounded-md border border-slate-300 px-2 py-1.5 text-xs focus:border-slate-500 focus:outline-none"
+            className="mt-0.5 w-full rounded-md border border-slate-300 bg-white px-2 py-1.5 text-xs font-medium text-slate-800 focus:border-slate-500 focus:outline-none"
           >
             <option value="">선택…</option>
             {options.map((n) => (
@@ -73,11 +73,11 @@ export function PathFinderPanel({
           </select>
         </label>
         <label className="block">
-          <span className="text-[11px] text-slate-400">도착</span>
+          <span className="text-[11px] font-medium text-slate-600">도착</span>
           <select
             value={toId}
             onChange={(e) => onToChange(e.target.value)}
-            className="mt-0.5 w-full rounded-md border border-slate-300 px-2 py-1.5 text-xs focus:border-slate-500 focus:outline-none"
+            className="mt-0.5 w-full rounded-md border border-slate-300 bg-white px-2 py-1.5 text-xs font-medium text-slate-800 focus:border-slate-500 focus:outline-none"
           >
             <option value="">선택…</option>
             {options.map((n) => (
