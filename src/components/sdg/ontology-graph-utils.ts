@@ -31,6 +31,7 @@ export const TYPE_COLOR: Record<OntologyNodeType, string> = {
   goal: '#E5243B',
   domain: '#19486A',
   target: '#FD9D24',
+  'un-target': '#6366F1',
 };
 
 export const TYPE_RADIUS: Record<OntologyNodeType, number> = {
@@ -39,6 +40,7 @@ export const TYPE_RADIUS: Record<OntologyNodeType, number> = {
   goal: 11,
   domain: 14,
   target: 5,
+  'un-target': 5,
 };
 
 export const EDGE_KIND_LABEL: Record<OntologyEdgeKind, string> = {

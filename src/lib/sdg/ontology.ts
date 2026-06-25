@@ -12,7 +12,7 @@ import ksdgsData from '../../../public/data/ksdgs.json';
 // 영문(en)=공식 축자 인용(권위), 국문(ko)=비공식 참고 번역(UI에서 "비공식" 라벨).
 import unTargetsData from '../../../public/data/un-targets.json';
 
-export type OntologyNodeType = 'dataset' | 'indicator' | 'goal' | 'domain' | 'target';
+export type OntologyNodeType = 'dataset' | 'indicator' | 'goal' | 'domain' | 'target' | 'un-target';
 export type OntologyEdgeKind = 'provides' | 'maps-to' | 'belongs-to' | 'has-target';
 
 export interface OntologyNodeMeta {
@@ -21,8 +21,12 @@ export interface OntologyNodeMeta {
   source?: string;
   /** K-SDGs 세부목표 본문(target 노드 전용) */
   text?: string;
-  /** K-SDGs 세부목표의 소속 목표 번호(target 노드 전용) */
+  /** K-SDGs / UN 세부목표의 소속 목표 번호(target·un-target 노드 전용) */
   goalNum?: number;
+  /** UN 세부목표 공식 영문(un-target 노드 전용, 축자 인용) */
+  en?: string;
+  /** UN 세부목표 비공식 국문 참고 번역(un-target 노드 전용) */
+  ko?: string;
 }
 
 /** K-SDGs 세부목표 1건 */

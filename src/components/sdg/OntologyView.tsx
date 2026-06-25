@@ -29,7 +29,8 @@ const TYPE_META: { type: OntologyNodeType; label: string; color: string }[] = [
   { type: 'indicator', label: '지표', color: '#4C9F38' },
   { type: 'goal', label: 'SDG 목표', color: '#E5243B' },
   { type: 'domain', label: '5대 영역', color: '#19486A' },
-  { type: 'target', label: '세부목표', color: '#FD9D24' },
+  { type: 'target', label: 'K-SDGs 세부목표', color: '#FD9D24' },
+  { type: 'un-target', label: 'UN 세부목표', color: '#6366F1' },
 ];
 
 /** goal 노드 id(goal-N) → 목표 번호 N. 아니면 null. */
@@ -43,9 +44,10 @@ type FocusStatus = 'idle' | 'loading' | 'error';
 
 export default function OntologyView({ nodes, edges }: OntologyViewProps) {
   const [activeTypes, setActiveTypes] = useState<Set<OntologyNodeType>>(
-    () => new Set<OntologyNodeType>(['dataset', 'indicator', 'goal', 'domain', 'target']),
+    () => new Set<OntologyNodeType>(['dataset', 'indicator', 'goal', 'domain', 'target', 'un-target']),
   );
   const [showTargets, setShowTargets] = useState(false);
+  const [showUNTargets, setShowUNTargets] = useState(false);
   const [focusIds, setFocusIds] = useState<Set<string> | null>(null);
   const [pathIds, setPathIds] = useState<string[] | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -76,22 +78,48 @@ export default function OntologyView({ nodes, edges }: OntologyViewProps) {
   // UN 세부목표 출처 메타(배지·고지용, 정적 고정값).
   const unMeta = useMemo(() => getUNTargetsMeta(), []);
 
-  // 토글 ON + goal 선택 시 그 goal 의 target 노드/엣지만 그래프에 확장(전체 동시 표시 금지).
+  // 토글 ON + goal 선택 시 그 goal 의 target/un-target 노드·엣지만 그래프에 확장(전체 동시 표시 금지).
   const expanded = useMemo<Ontology>(() => {
-    if (!showTargets || selectedGoalNum == null) return { nodes, edges };
-    const targetNodes: OntologyNode[] = selectedTargets.map((t) => ({
-      id: `target-${t.code}`,
-      type: 'target' as const,
-      label: t.code,
-      meta: { text: t.text, goalNum: selectedGoalNum },
-    }));
-    const targetEdges: OntologyEdge[] = selectedTargets.map((t) => ({
-      from: `goal-${selectedGoalNum}`,
-      to: `target-${t.code}`,
-      kind: 'has-target' as const,
-    }));
-    return { nodes: [...nodes, ...targetNodes], edges: [...edges, ...targetEdges] };
-  }, [showTargets, selectedGoalNum, selectedTargets, nodes, edges]);
+    const extraNodes: OntologyNode[] = [];
+    const extraEdges: OntologyEdge[] = [];
+
+    // K-SDGs 세부목표 확장
+    if (showTargets && selectedGoalNum != null) {
+      for (const t of selectedTargets) {
+        extraNodes.push({
+          id: `target-${t.code}`,
+          type: 'target' as const,
+          label: t.code,
+          meta: { text: t.text, goalNum: selectedGoalNum },
+        });
+        extraEdges.push({
+          from: `goal-${selectedGoalNum}`,
+          to: `target-${t.code}`,
+          kind: 'has-target' as const,
+        });
+      }
+    }
+
+    // UN 169 세부목표 확장(목표별 한정, id prefix 달라 K-SDGs와 충돌 없음)
+    if (showUNTargets && selectedGoalNum != null) {
+      for (const t of selectedUNTargets) {
+        extraNodes.push({
+          id: `un-target-${t.code}`,
+          type: 'un-target' as const,
+          label: t.code,
+          meta: { en: t.en, ko: t.ko, goalNum: selectedGoalNum },
+        });
+        extraEdges.push({
+          from: `goal-${selectedGoalNum}`,
+          to: `un-target-${t.code}`,
+          kind: 'has-target' as const,
+        });
+      }
+    }
+
+    if (extraNodes.length === 0) return { nodes, edges };
+    return { nodes: [...nodes, ...extraNodes], edges: [...edges, ...extraEdges] };
+  }, [showTargets, showUNTargets, selectedGoalNum, selectedTargets, selectedUNTargets, nodes, edges]);
 
   const counts = useMemo(() => ontologyCounts(expanded), [expanded]);
   const nodeById = useMemo(() => new Map(expanded.nodes.map((n) => [n.id, n])), [expanded.nodes]);
@@ -143,17 +171,20 @@ export default function OntologyView({ nodes, edges }: OntologyViewProps) {
       setSelectedId(nodeId);
       const ns = computeNeighbors(expanded.edges, nodeId);
       const focus = new Set<string>([nodeId, ...ns.map((n) => n.nodeId)]);
-      // 토글 ON + goal 선택 시, 다음 렌더에서 확장될 target 들도 미리 포커스에 포함.
+      // 토글 ON + goal 선택 시, 다음 렌더에서 확장될 target/un-target 들도 미리 포커스에 포함.
       const gNum = goalNumFromId(nodeId);
       if (showTargets && gNum != null) {
         for (const t of getTargets(gNum)) focus.add(`target-${t.code}`);
+      }
+      if (showUNTargets && gNum != null) {
+        for (const t of getUNTargets(gNum)) focus.add(`un-target-${t.code}`);
       }
       setFocusIds(focus);
       setPathIds(null);
       setPathNote(null);
       setNote('노드 선택: 직접 연결된 이웃을 강조합니다.');
     },
-    [expanded.edges, showTargets],
+    [expanded.edges, showTargets, showUNTargets],
   );
 
   const clearFocus = useCallback(() => {
@@ -250,8 +281,9 @@ export default function OntologyView({ nodes, edges }: OntologyViewProps) {
           })}
         </div>
 
-        {/* 세부목표 노드 표시 토글 */}
-        <div className="flex flex-wrap items-center gap-2">
+        {/* 세부목표 노드 표시 토글 (K-SDGs + UN 169) */}
+        <div className="flex flex-wrap items-center gap-3">
+          {/* K-SDGs 세부목표 토글 */}
           <button
             type="button"
             onClick={() => setShowTargets((v) => !v)}
@@ -273,12 +305,42 @@ export default function OntologyView({ nodes, edges }: OntologyViewProps) {
                 }`}
               />
             </span>
-            세부목표 노드 표시
+            K-SDGs 노드 표시
           </button>
+
+          {/* UN 169 세부목표 토글 */}
+          <button
+            type="button"
+            onClick={() => setShowUNTargets((v) => !v)}
+            aria-pressed={showUNTargets}
+            className={`flex items-center gap-2 rounded-full border px-3 py-1 text-sm transition ${
+              showUNTargets
+                ? 'border-indigo-400 bg-indigo-50 text-indigo-700'
+                : 'border-slate-300 bg-white text-slate-500'
+            }`}
+          >
+            <span
+              className={`inline-block h-3.5 w-6 rounded-full transition ${
+                showUNTargets ? 'bg-indigo-400' : 'bg-slate-300'
+              }`}
+            >
+              <span
+                className={`block h-3.5 w-3.5 rounded-full bg-white shadow transition ${
+                  showUNTargets ? 'translate-x-2.5' : 'translate-x-0'
+                }`}
+              />
+            </span>
+            UN 169 노드 표시
+          </button>
+
           <span className="text-xs text-slate-400">
-            {showTargets
+            {showTargets && showUNTargets
+              ? 'SDG 목표 노드를 선택하면 K-SDGs 세부목표와 UN 169 세부목표가 함께 그래프에 펼쳐집니다.'
+              : showTargets
               ? 'SDG 목표 노드를 선택하면 그 목표의 K-SDGs 세부목표가 그래프에 펼쳐집니다.'
-              : 'K-SDGs 세부목표를 그래프 노드로 확장하려면 켜세요(목표 선택 시 해당 목표만).'}
+              : showUNTargets
+              ? 'SDG 목표 노드를 선택하면 그 목표의 UN 169 세부목표가 그래프에 펼쳐집니다.'
+              : '세부목표를 그래프 노드로 확장하려면 토글을 켜세요(목표 선택 시 해당 목표만).'}
           </span>
         </div>
 
@@ -339,7 +401,7 @@ export default function OntologyView({ nodes, edges }: OntologyViewProps) {
             </div>
           ))}
           <span className="text-sm text-slate-400">
-            엣지: 데이터셋→지표(제공) · 지표→목표(매핑) · 목표→영역(소속) · 목표→세부목표(K-SDGs)
+            엣지: 데이터셋→지표(제공) · 지표→목표(매핑) · 목표→영역(소속) · 목표→세부목표(K-SDGs·UN)
           </span>
         </div>
 

@@ -16,6 +16,7 @@ const TYPE_LABEL: Record<OntologyNodeType, string> = {
   goal: 'SDG 목표',
   domain: '5대 영역',
   target: 'K-SDGs 세부목표',
+  'un-target': 'UN 세부목표',
 };
 
 const TYPE_COLOR: Record<OntologyNodeType, string> = {
@@ -24,6 +25,7 @@ const TYPE_COLOR: Record<OntologyNodeType, string> = {
   goal: '#E5243B',
   domain: '#19486A',
   target: '#FD9D24',
+  'un-target': '#6366F1',
 };
 
 const EDGE_KIND_LABEL: Record<string, string> = {
@@ -40,6 +42,8 @@ const META_LABEL: Record<string, string> = {
   direction: '방향',
   text: '내용',
   goalNum: '소속 목표',
+  en: '영문(공식)',
+  ko: '국문(비공식)',
 };
 
 /** 지속가능발전포털 출처 URL(K-SDGs). */
@@ -114,6 +118,24 @@ export default function OntologyInspector({
             </div>
           ))}
         </dl>
+      )}
+
+      {/* UN 세부목표 노드 선택 시: 코드 + 영문(공식) + 국문(비공식) 표시 */}
+      {node.type === 'un-target' && (
+        <div className="mt-3 border-t border-slate-100 pt-3 space-y-1.5">
+          {node.meta?.en && (
+            <p className="text-xs leading-relaxed text-slate-700">{node.meta.en}</p>
+          )}
+          {node.meta?.ko && (
+            <p className="text-xs leading-relaxed text-slate-500">
+              <span className="mr-1 rounded bg-indigo-50 px-1 py-0.5 text-[10px] text-indigo-500">비공식</span>
+              {node.meta.ko}
+            </p>
+          )}
+          <p className="text-[10px] text-slate-400">
+            출처: UN Statistics Division SDG API (A/RES/70/1)
+          </p>
+        </div>
       )}
 
       {/* K-SDGs 세부목표(goal 노드 선택 시) */}
