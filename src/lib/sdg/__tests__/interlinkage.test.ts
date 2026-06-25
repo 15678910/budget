@@ -1,4 +1,5 @@
 import { spearman, interlinkageMatrix } from '@/lib/sdg/interlinkage';
+// rankWithTies 는 내부 함수로 export 안 되므로 spearman 을 통해 간접 검증
 
 describe('spearman', () => {
   it('완전 양의 상관 → 1', () => {
@@ -30,13 +31,33 @@ describe('spearman', () => {
     expect(r as number).toBeCloseTo(1, 5);
   });
 
-  it('무상관 ≈ 0', () => {
-    // 순위 교란 배열 — 합으로 0에 가까움
+  it('무상관 — 값 고정 회귀 방어', () => {
+    // 순위 교란 배열 — scipy.stats.spearmanr 기준 ≈ 0.30952
     const x = [1, 2, 3, 4, 5, 6, 7, 8];
     const y = [4, 1, 7, 2, 8, 3, 6, 5];
     const r = spearman(x, y);
     expect(r).not.toBeNull();
-    expect(Math.abs(r as number)).toBeLessThan(0.5);
+    expect(r as number).toBeCloseTo(0.3095, 3);
+  });
+
+  it('동순위 평균순위 — 비대칭 ties spearman 값 고정(rankWithTies 간접 검증)', () => {
+    // x: [1,2,2,3] → 순위 [1, 2.5, 2.5, 4]
+    // y: [10,20,30,30] → 순위 [1, 2, 3.5, 3.5]
+    // ties 위치가 서로 다른 비대칭 케이스 — scipy 기준 ≈ 0.833333
+    const x = [1, 2, 2, 3];
+    const y = [10, 20, 30, 30];
+    const r = spearman(x, y);
+    expect(r).not.toBeNull();
+    expect(r as number).toBeCloseTo(0.8333, 3);
+  });
+
+  it('동순위 평균순위 — [10,20,20,30] 의 순위가 [1, 2.5, 2.5, 4] 임을 spearman 으로 보장', () => {
+    // 두 벡터가 동일한 순서이면 spearman=1 (평균순위가 올바르게 계산되는지 확인)
+    const v = [10, 20, 20, 30];
+    const r = spearman(v, v);
+    // 상수 벡터가 아니므로 null 이 아니어야 하고, 완전 양상관(자기 자신과)
+    expect(r).not.toBeNull();
+    expect(r as number).toBeCloseTo(1, 5);
   });
 
   it('길이 불일치 → null', () => {

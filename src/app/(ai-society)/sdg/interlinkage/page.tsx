@@ -5,7 +5,7 @@ import { buildInterlinkage } from '@/lib/sdg/interlinkage-build';
 export const metadata: Metadata = {
   title: '정책 연계성(시너지·상충) | 마을살림/나라살림',
   description:
-    '16개 광역의 SDG 목표 달성도 점수 상관(Spearman)으로 목표 간 시너지·상충 경향을 탐색적으로 관측합니다. 상관은 인과가 아니며, 표본 16광역으로 검정력이 낮습니다.',
+    '최대 16개 광역의 SDG 목표 달성도 점수 상관(Spearman)으로 목표 간 시너지·상충 경향을 탐색적으로 관측합니다. 쌍별 공통 지역 5~16곳이며 상관은 인과가 아닙니다.',
 };
 
 export default function SDGInterlinkagePage() {
