@@ -21,24 +21,24 @@ export default function UNTargetsSection({ targets, meta }: UNTargetsSectionProp
 
   return (
     <div className="mt-3 border-t border-slate-100 pt-3">
-      <p className="text-sm font-medium text-slate-500">
+      <p className="text-base font-medium text-slate-500">
         UN 169 세부목표 · 국제 기준 ({targets.length})
       </p>
-      <p className="mt-1 inline-block rounded bg-sky-50 px-1.5 py-0.5 text-xs text-sky-700">
+      <p className="mt-1 inline-block rounded bg-sky-50 px-1.5 py-0.5 text-sm text-sky-700">
         UN SDG API · 영문 공식 · 국문 비공식 참고
       </p>
-      <ul className="mt-1.5 space-y-2">
+      <ul className="mt-1.5 space-y-2.5">
         {targets.map((t) => (
-          <li key={t.code} className="text-sm leading-relaxed">
+          <li key={t.code} className="text-base leading-relaxed">
             <div className="flex gap-2">
-              <span className="shrink-0 rounded bg-sky-100 px-1.5 py-0.5 font-mono text-xs font-semibold text-sky-700">
+              <span className="shrink-0 rounded bg-sky-100 px-1.5 py-0.5 font-mono text-sm font-semibold text-sky-700">
                 {t.code}
               </span>
               <span className="min-w-0 flex-1 text-slate-700">{t.en}</span>
             </div>
             {t.ko && (
-              <p className="mt-0.5 pl-[2.6rem] text-[13px] text-slate-500">
-                <span className="mr-1 rounded bg-slate-100 px-1 py-px text-[11px] text-slate-400">
+              <p className="mt-0.5 pl-[2.6rem] text-sm text-slate-500">
+                <span className="mr-1 rounded bg-slate-100 px-1 py-px text-xs text-slate-400">
                   비공식
                 </span>
                 {t.ko}
@@ -47,7 +47,7 @@ export default function UNTargetsSection({ targets, meta }: UNTargetsSectionProp
           </li>
         ))}
       </ul>
-      <p className="mt-2 text-xs text-slate-400">
+      <p className="mt-2 text-sm text-slate-400">
         출처: {meta.source} (
         <a
           href={meta.url}
