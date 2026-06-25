@@ -4,6 +4,8 @@ import { useMemo, useState } from 'react';
 import { geoMercator, geoPath } from 'd3-geo';
 import { feature } from 'topojson-client';
 import { SDG_GOALS, getGoalIndicator, SIDO_FULL_TO_SHORT, type SDGIndicator } from '@/lib/sdg/goals';
+import { buildRegionSeries, regionMultiYearTrend } from '@/lib/sdg/multiyear-build';
+import { MultiYearTrendBadge } from './MultiYearTrendBadge';
 
 interface KosisData { goals: Record<string, SDGIndicator> }
 const W = 360, H = 440;
@@ -64,6 +66,16 @@ export function SDGMapDashboard({ geoData, kosis, initialGoal }: { geoData: any;
     [provinces, indicator],
   );
 
+  // 실측 다년(KOSIS) 추세 — seriesBySido 보유 goal(8·9)만. 전국(16광역 평균) 시계열 회귀.
+  // 보간 아님: 실측 연도점만 사용. 미보유 goal은 null → 기존 2점(B) 추세 유지.
+  const multiYear = useMemo(() => {
+    const series = indicator?.seriesBySido;
+    if (!series || !indicator) return null;
+    const { national } = buildRegionSeries(series);
+    if (national.length < 3) return null;
+    return regionMultiYearTrend(national, goalNum, indicator.higherBetter);
+  }, [indicator, goalNum]);
+
   return (
     <div className="space-y-5 text-gray-200">
       {/* 헤더 — SDG 휠 로고(17색) + 제목 */}
@@ -91,6 +103,11 @@ export function SDGMapDashboard({ geoData, kosis, initialGoal }: { geoData: any;
         <strong className="text-amber-300">⚖ 지표 해석 고지</strong> — 한국 지역 단위 공식 'SDG 종합점수'는 미공개입니다.
         본 지도는 goal별 <strong>대표 지표(출처 명시)</strong>로 시각화하며, 지표값을 곧 SDG 달성도로 단정하지 않습니다.
         데이터 미보유 goal은 <strong>'데이터 준비중'</strong>(KOSIS 수집 예정)으로 표기합니다.
+        <br />
+        <span className="text-amber-200/70">
+          추세 표기 구분 — <strong>실측 다년(KOSIS)</strong>=선형회귀(보간 아님, goal 8·9) ·
+          그 외는 <strong>2점 개략</strong>(2018→최신, SDSN CR). 모두 속도 신호일 뿐 <strong>인과 아님</strong>.
+        </span>
       </div>
 
       {/* 17 Goal 선택 그리드 — UN 공식 픽토그램(CC0) */}
@@ -141,6 +158,16 @@ export function SDGMapDashboard({ geoData, kosis, initialGoal }: { geoData: any;
           ? <span className="text-xs text-gray-400">지표: <strong className="text-gray-200">{indicator.label}</strong> · {indicator.year} · 출처 {indicator.source}</span>
           : <span className="text-xs text-amber-300/80">데이터 준비중 — KOSIS 수집 예정(Phase C)</span>}
       </div>
+
+      {/* 실측 다년(KOSIS) 추세 — 보유 goal(8·9)만 표시. 나머지는 매트릭스/프로파일의 2점(B) 추세 유지. */}
+      {multiYear && indicator && (
+        <MultiYearTrendBadge
+          mt={multiYear}
+          unit={indicator.unit}
+          higherBetter={indicator.higherBetter}
+          scopeLabel="전국"
+        />
+      )}
 
       <div className="grid lg:grid-cols-2 gap-4">
         {/* 지도 */}
