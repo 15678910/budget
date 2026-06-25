@@ -1,7 +1,9 @@
 import { SDG_GOALS } from '@/lib/sdg/goals';
 import type { NationalByGoal } from '@/lib/sdg/national';
 import type { GoalAchievementByGoal } from '@/lib/sdg/scoring';
+import type { GoalTrendByGoal } from '@/lib/sdg/trend-build';
 import { TrafficBadge } from './TrafficBadge';
+import { TrendArrow } from './TrendArrow';
 
 /** 절대값 표시 포맷 (정수면 그대로, 소수면 1자리). */
 function fmt(v: number): string {
@@ -11,10 +13,12 @@ function fmt(v: number): string {
 export function SDGNationalSummary({
   national,
   achievement,
+  trend,
   onSelectGoal,
 }: {
   national: NationalByGoal;
   achievement: GoalAchievementByGoal;
+  trend: GoalTrendByGoal;
   onSelectGoal: (g: number) => void;
 }) {
   const haveCount = SDG_GOALS.filter((g) => national[g.num] != null).length;
@@ -35,6 +39,7 @@ export function SDGNationalSummary({
         {SDG_GOALS.map((g) => {
           const n = national[g.num];
           const a = achievement[g.num];
+          const tr = trend[g.num];
           return (
             <button
               key={g.num}
@@ -52,7 +57,16 @@ export function SDGNationalSummary({
                   <div className="text-[11px] text-gray-400 truncate">
                     {g.num}. {g.short}
                   </div>
-                  {a && <TrafficBadge score={a.score} light={a.light} size="sm" />}
+                  <span className="flex items-center gap-1 shrink-0">
+                    {tr && (
+                      <TrendArrow
+                        arrow={tr.arrow}
+                        gap={a ? 100 - a.score : null}
+                        size="sm"
+                      />
+                    )}
+                    {a && <TrafficBadge score={a.score} light={a.light} size="sm" />}
+                  </span>
                 </div>
                 {n ? (
                   <>
@@ -85,6 +99,12 @@ export function SDGNationalSummary({
           <strong className="text-gray-500">목표값 기준 달성도(0~100)</strong> · SDSN SDG Index 방법론 적응.
           목표값은 유형(공식·규범·벤치마크)과 출처를 명시하며{' '}
           <strong className="text-gray-500">16광역 상대점수와 구분</strong>됩니다(목표별 매핑 지표 평균).
+        </p>
+        <p>
+          <span className="text-gray-500">↗→↘↓</span> 추세 ={' '}
+          <strong className="text-gray-500">2점(2018→최신) 개략</strong> · 중간연도 미반영 · 목표 2030 ·
+          SDSN CR(AGRa/AGRr) 방법론. 속도 신호일 뿐 인과 주장이 아니며 달성도와 의미가 구분됩니다.
+          &apos;목표갭&apos;은 100−달성도(남은 거리)입니다.
         </p>
       </div>
     </div>

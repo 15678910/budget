@@ -3,8 +3,10 @@ import { SDG_GOALS } from '@/lib/sdg/goals';
 import type { Matrix } from '@/lib/sdg/matrix';
 import type { IndicatorDirection } from '@/lib/data/local-sdg-data';
 import { regionGoalAchievement } from '@/lib/sdg/achievement';
+import { regionGoalTrend } from '@/lib/sdg/trend-build';
 import { trafficColor } from '@/lib/sdg/scoring';
 import { TrafficBadge } from './TrafficBadge';
+import { TrendArrow } from './TrendArrow';
 import { SDGScenarioSimulator } from './SDGScenarioSimulator';
 
 export interface FiscalContext {
@@ -35,6 +37,7 @@ export function SDGRegionProfile({
   fiscal,
   onSelectGoal,
   valuesByIndicator,
+  base2018ByIndicator,
   direction,
 }: {
   region: string;
@@ -42,6 +45,7 @@ export function SDGRegionProfile({
   fiscal: FiscalContext | null;
   onSelectGoal: (g: number) => void;
   valuesByIndicator: Record<string, Record<string, number>>;
+  base2018ByIndicator: Record<string, Record<string, number>>;
   direction: Record<string, IndicatorDirection>;
 }) {
   const [showSim, setShowSim] = useState(false);
@@ -50,6 +54,11 @@ export function SDGRegionProfile({
   const achievement = useMemo(
     () => regionGoalAchievement(valuesByIndicator, region, direction),
     [valuesByIndicator, region, direction],
+  );
+  // 추세(2점 2018→최신 SDSN CR) — 달성도와 의미 구분(개략).
+  const trend = useMemo(
+    () => regionGoalTrend(valuesByIndicator, base2018ByIndicator, region, direction),
+    [valuesByIndicator, base2018ByIndicator, region, direction],
   );
   const scored = SDG_GOALS.map((g) => ({ g, v: row[g.num] })).filter(
     (x): x is { g: (typeof SDG_GOALS)[number]; v: number } => x.v != null,
@@ -91,6 +100,7 @@ export function SDGRegionProfile({
           const v = row[g.num];
           const rk = v != null ? goalRank(matrix, region, g.num) : null;
           const a = achievement[g.num];
+          const tr = trend[g.num];
           // 게이지 채우기: 달성도 있으면 신호등 색, 없으면 goal 색.
           const barColor = a ? trafficColor(a.light) : g.color;
           const targetNote = a
@@ -122,6 +132,11 @@ export function SDGRegionProfile({
                   )
                 )}
               </span>
+              {tr && (
+                <span className="w-9 text-right">
+                  <TrendArrow arrow={tr.arrow} gap={a ? 100 - a.score : null} size="sm" />
+                </span>
+              )}
               {a ? (
                 <span className="w-7 text-right">
                   <TrafficBadge score={a.score} light={a.light} size="sm" />
@@ -187,6 +202,11 @@ export function SDGRegionProfile({
         <p>
           순위(N/M위) = 16광역 분포 대비 <strong className="text-gray-500">상대 정규화 순위</strong>로,
           위 달성도와 의미가 <strong className="text-gray-500">구분</strong>됩니다(상대 ≠ 목표 달성). 데이터 미보유 목표는 회색.
+        </p>
+        <p>
+          <span className="text-gray-500">↗→↘↓</span> 추세 ={' '}
+          <strong className="text-gray-500">2점(2018→최신) 개략</strong> · 중간연도 미반영 · 목표 2030 ·
+          SDSN CR(AGRa/AGRr). 속도 신호일 뿐 인과 주장이 아니며, &apos;갭N&apos;은 100−달성도(남은 거리)입니다.
         </p>
       </div>
     </div>

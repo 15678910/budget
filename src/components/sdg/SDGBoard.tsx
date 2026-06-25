@@ -10,6 +10,7 @@ import type { Matrix } from '@/lib/sdg/matrix';
 import type { SDGIndicator } from '@/lib/sdg/goals';
 import type { NationalByGoal } from '@/lib/sdg/national';
 import type { GoalAchievementByGoal } from '@/lib/sdg/scoring';
+import type { GoalTrendByGoal } from '@/lib/sdg/trend-build';
 import type { IndicatorDirection } from '@/lib/data/local-sdg-data';
 
 interface KosisData {
@@ -21,21 +22,25 @@ export function SDGBoard({
   metros,
   national,
   nationalAchievement,
+  nationalTrend,
   fiscalByRegion,
   geoData,
   kosis,
   valuesByIndicator,
+  base2018ByIndicator,
   direction,
 }: {
   matrix: Matrix;
   metros: readonly string[];
   national: NationalByGoal;
   nationalAchievement: GoalAchievementByGoal;
+  nationalTrend: GoalTrendByGoal;
   fiscalByRegion: Record<string, FiscalContext>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any -- topojson(geoData)는 외부 토포 구조라 런타임 가드만 가능
   geoData: any;
   kosis: KosisData;
   valuesByIndicator: Record<string, Record<string, number>>;
+  base2018ByIndicator: Record<string, Record<string, number>>;
   direction: Record<string, IndicatorDirection>;
 }) {
   const [scope, setScope] = useState<SDGScope>('national');
@@ -71,6 +76,7 @@ export function SDGBoard({
             <SDGNationalSummary
               national={national}
               achievement={nationalAchievement}
+              trend={nationalTrend}
               onSelectGoal={setGoal}
             />
           )}
@@ -82,6 +88,7 @@ export function SDGBoard({
                 fiscal={fiscalByRegion[selectedMetro] ?? null}
                 onSelectGoal={setGoal}
                 valuesByIndicator={valuesByIndicator}
+                base2018ByIndicator={base2018ByIndicator}
                 direction={direction}
               />
             ) : (

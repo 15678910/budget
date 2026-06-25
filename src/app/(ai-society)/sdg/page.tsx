@@ -1,10 +1,12 @@
 import { SDGBoard } from '@/components/sdg/SDGBoard';
 import { assembleIndicatorValues } from '@/lib/sdg/board-data';
+import { assembleBase2018 } from '@/lib/sdg/base2018';
 import { buildMatrix } from '@/lib/sdg/matrix';
 import { INDICATOR_TO_GOAL } from '@/lib/sdg/indicator-map';
 import { CANON_16, mergeToCanon16 } from '@/lib/sdg/region-normalize';
 import { nationalByGoal, type IndicatorLabel } from '@/lib/sdg/national';
 import { nationalGoalAchievement } from '@/lib/sdg/achievement';
+import { nationalGoalTrend } from '@/lib/sdg/trend-build';
 import { getMetroFiscalData } from '@/lib/data/fiscal-health-data';
 import { SDG_DOMAINS } from '@/lib/data/local-sdg-data';
 import { SIDO_FULL_TO_SHORT } from '@/lib/sdg/goals';
@@ -83,6 +85,7 @@ export default function SDGPage() {
   const geoData = loadGeo();
   const kosis = loadKosis();
   const { valuesByIndicator, direction, population } = assembleIndicatorValues();
+  const base2018ByIndicator = assembleBase2018();
   const matrix = buildMatrix({
     metros: CANON_16,
     indicatorToGoal: INDICATOR_TO_GOAL,
@@ -103,6 +106,13 @@ export default function SDGPage() {
   // 목표값 기준 전국 달성도(신호등) — 상대점수와 별개.
   const nationalAchievement = nationalGoalAchievement(
     valuesByIndicator,
+    canonPopulation,
+    direction,
+  );
+  // 전국 추세(2점 2018→최신 SDSN CR) — 달성도와 의미 구분(개략).
+  const nationalTrend = nationalGoalTrend(
+    valuesByIndicator,
+    base2018ByIndicator,
     canonPopulation,
     direction,
   );
@@ -128,10 +138,12 @@ export default function SDGPage() {
         metros={CANON_16}
         national={national}
         nationalAchievement={nationalAchievement}
+        nationalTrend={nationalTrend}
         fiscalByRegion={fiscalByRegion}
         geoData={geoData}
         kosis={kosis}
         valuesByIndicator={valuesByIndicator}
+        base2018ByIndicator={base2018ByIndicator}
         direction={direction}
       />
     </div>
