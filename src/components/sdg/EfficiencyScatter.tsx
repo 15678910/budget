@@ -131,7 +131,7 @@ function ScatterDot({
         stroke={selected ? '#f8fafc' : 'transparent'}
         strokeWidth={selected ? 2.5 : 0}
         fillOpacity={selected ? 1 : 0.82}
-        style={{ transition: 'r 120ms' }}
+        className="transition-all duration-[120ms]"
       />
       <text x={cx + (selected ? 12 : 8)} y={cy + 4}
         className={selected ? 'fill-slate-100 font-semibold' : 'fill-slate-300'}

@@ -175,8 +175,8 @@ export interface OutcomeSummary {
     achievement: number | null;
     /** goal별 신호등 분포. */
     lightCounts: LightCounts;
-    /** 추세: up=on_track/improving, down=stagnating/decreasing 카운트. */
-    trend: { up: number; down: number };
+    /** 추세: up=on_track/improving, flat=stagnating, down=decreasing 카운트. */
+    trend: { up: number; flat: number; down: number };
   };
   /** Benchmarking: 16광역 순위(전달된 경우). */
   rank?: number;
@@ -212,14 +212,16 @@ export function outcomeSummary(
     if (g) lightCounts[g.light as TrafficLight] += 1;
   }
 
-  // 추세 분포 (B 추세 재사용).
+  // 추세 분포 (B 추세 재사용). 3분류: up=on_track/improving, flat=stagnating, down=decreasing.
   const trendByGoal = regionGoalTrend(valuesByIndicator, base2018ByIndicator, region, direction);
   let up = 0;
+  let flat = 0;
   let down = 0;
   for (const t of Object.values(trendByGoal)) {
     if (!t) continue;
     if (t.arrow === 'on_track' || t.arrow === 'improving') up += 1;
-    else if (t.arrow === 'stagnating' || t.arrow === 'decreasing') down += 1;
+    else if (t.arrow === 'stagnating') flat += 1;
+    else if (t.arrow === 'decreasing') down += 1;
   }
 
   return {
@@ -231,7 +233,7 @@ export function outcomeSummary(
     outcome: {
       achievement: overallAchievement(region, valuesByIndicator, direction),
       lightCounts,
-      trend: { up, down },
+      trend: { up, flat, down },
     },
     rank,
   };

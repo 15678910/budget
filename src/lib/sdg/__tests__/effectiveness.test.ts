@@ -174,13 +174,14 @@ describe('outcomeSummary', () => {
     expect(s.outcome.lightCounts.orange).toBe(0);
   });
 
-  it('trend: up=on_track/improving, down=stagnating/decreasing 카운트', () => {
+  it('trend: up=on_track/improving, flat=stagnating, down=decreasing 3분류 카운트', () => {
     // goal3 hlt_life: base=82, current=86(green). 상승·목표충족 → on_track → up.
     // goal8 emp_rate: base=64, current=60. green=70. 하락 → decreasing → down.
     const values = mkValues({ 서울: { hlt_life: 86, emp_rate: 60 } });
     const base = mkValues({ 서울: { hlt_life: 82, emp_rate: 64 } });
     const s = outcomeSummary('서울', fiscal, values, direction, base);
     expect(s.outcome.trend.up).toBe(1);
+    expect(s.outcome.trend.flat).toBe(0);
     expect(s.outcome.trend.down).toBe(1);
   });
 });

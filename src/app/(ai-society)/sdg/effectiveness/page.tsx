@@ -59,7 +59,7 @@ export default function SDGEffectivenessPage() {
 
   // 효율 점이 산정된 광역만 패널 대상(달성도·재정 보유). 달성도 순위로 rank 부여.
   const rankByAch = [...efficiency.points]
-    .sort((a, b) => b.achievement - a.achievement)
+    .sort((a, b) => (b.achievement - a.achievement) || a.region.localeCompare(b.region))
     .reduce<Record<string, number>>((m, p, i) => {
       m[p.region] = i + 1;
       return m;

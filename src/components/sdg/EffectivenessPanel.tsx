@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import EfficiencyScatter from './EfficiencyScatter';
 import { trafficColor } from '@/lib/sdg/scoring';
 import type {
@@ -26,14 +26,6 @@ const LIGHT_LABEL: Record<keyof LightCounts, string> = {
 export default function EffectivenessPanel({ efficiency, summaries, regions }: Props) {
   const [selected, setSelected] = useState<string>(regions[0] ?? '');
   const summary = summaries[selected];
-
-  // 달성도 내림차순 순위 맵(벤치마킹). points 기준.
-  const rankOf = useMemo(() => {
-    const sorted = [...efficiency.points].sort((a, b) => b.achievement - a.achievement);
-    const m: Record<string, number> = {};
-    sorted.forEach((p, i) => { m[p.region] = i + 1; });
-    return m;
-  }, [efficiency.points]);
 
   return (
     <div className="space-y-6">
@@ -66,7 +58,7 @@ export default function EffectivenessPanel({ efficiency, summaries, regions }: P
           <OutputCard summary={summary} region={selected} />
           <OutcomeCard summary={summary} />
           <ImpactCard />
-          <BenchmarkCard rank={rankOf[selected]} total={efficiency.points.length} />
+          <BenchmarkCard rank={summary.rank} total={efficiency.points.length} />
         </section>
       )}
     </div>
@@ -140,6 +132,7 @@ function OutcomeCard({ summary }: { summary: OutcomeSummary }) {
       </div>
       <p className="mt-2 text-sm text-slate-300">
         추세(2018→최신, 개략): <span className="text-emerald-400">↗ {trend.up}</span>{' '}
+        <span className="text-slate-400">→ {trend.flat}</span>{' '}
         <span className="text-rose-400">↘ {trend.down}</span>
       </p>
     </div>
