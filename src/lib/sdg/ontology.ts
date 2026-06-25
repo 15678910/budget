@@ -56,8 +56,8 @@ export interface UNTarget {
   code: string;
   /** 공식 영문(축자, UN 권위 데이터) */
   en: string;
-  /** 비공식 국문 참고 번역(UI에서 "비공식" 명시) */
-  ko: string;
+  /** 비공식 국문 참고 번역(UI에서 "비공식" 명시) — 향후 UN API 신규 코드 추가 시 일시 누락 가능 */
+  ko?: string;
 }
 
 interface UNTargetsData {
@@ -120,7 +120,7 @@ function totalTargetCount(): number {
 export function getUNTargets(goalNum: number): UNTarget[] {
   const arr = UN_TARGETS.goals[String(goalNum)];
   if (!Array.isArray(arr)) return [];
-  return arr.map((t) => ({ code: t.code, en: t.en, ko: t.ko }));
+  return arr.map((t) => ({ code: t.code, en: t.en, ...(t.ko ? { ko: t.ko } : {}) }));
 }
 
 /** un-targets.json 의 UN 세부목표 총수(169, 검수·카운트용). */

@@ -353,14 +353,17 @@ describe('UN 169 세부목표(국제 원본) 통합', () => {
     expect(getUNTargets(99)).toEqual([]);
   });
 
-  it('모든 UN 세부목표가 code(^\\d+\\.) 형식과 비어있지 않은 en·ko 를 가진다', () => {
+  it('모든 UN 세부목표가 code(^\\d+\\.) 형식과 비어있지 않은 en 을 가진다(ko 는 옵셔널)', () => {
     for (let g = 1; g <= 17; g += 1) {
       for (const t of getUNTargets(g)) {
         expect(t.code).toMatch(/^\d+\.[0-9a-z]+$/);
         expect(typeof t.en).toBe('string');
         expect(t.en.trim().length).toBeGreaterThan(0);
-        expect(typeof t.ko).toBe('string');
-        expect(t.ko.trim().length).toBeGreaterThan(0);
+        // ko 는 옵셔널 — 존재하면 비어있지 않아야 한다.
+        if (t.ko !== undefined) {
+          expect(typeof t.ko).toBe('string');
+          expect(t.ko.trim().length).toBeGreaterThan(0);
+        }
       }
     }
   });
@@ -380,5 +383,28 @@ describe('UN 169 세부목표(국제 원본) 통합', () => {
         expect(byCode.get(t.code)).toBe(t.en);
       }
     }
+  });
+
+  // ── en 축자 스냅샷 회귀 테스트(외부 변조 방지) ──
+  // 아래 문자열은 UN 공식 영문 원본(A/RES/70/1)이며 un-targets.json 현재 값과 일치.
+  // 이 값이 바뀌면 UN 데이터가 변조됐거나 재수집이 필요하다는 신호.
+
+  it('1.1 en 이 UN 공식 축자와 정확히 일치한다(회귀)', () => {
+    const targets = getUNTargets(1);
+    const t11 = targets.find((t) => t.code === '1.1');
+    expect(t11).toBeDefined();
+    expect(t11!.en).toBe(
+      'By 2030, eradicate extreme poverty for all people everywhere, currently measured as people living on less than $1.25 a day',
+    );
+  });
+
+  it('13.2 en 이 UN 공식 축자와 정확히 일치한다(회귀)', () => {
+    const targets = getUNTargets(13);
+    const t132 = targets.find((t) => t.code === '13.2');
+    expect(t132).toBeDefined();
+    expect(t132!.en).toBe(
+      'Integrate climate change measures into national policies, strategies and planning',
+    );
+    expect(t132!.en).toContain('national policies, strategies and planning');
   });
 });

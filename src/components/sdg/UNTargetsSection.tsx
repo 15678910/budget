@@ -36,12 +36,14 @@ export default function UNTargetsSection({ targets, meta }: UNTargetsSectionProp
               </span>
               <span className="min-w-0 flex-1 text-slate-700">{t.en}</span>
             </div>
-            <p className="mt-0.5 pl-[2.6rem] text-[11px] text-slate-500">
-              <span className="mr-1 rounded bg-slate-100 px-1 py-px text-[9px] text-slate-400">
-                비공식
-              </span>
-              {t.ko}
-            </p>
+            {t.ko && (
+              <p className="mt-0.5 pl-[2.6rem] text-[11px] text-slate-500">
+                <span className="mr-1 rounded bg-slate-100 px-1 py-px text-[9px] text-slate-400">
+                  비공식
+                </span>
+                {t.ko}
+              </p>
+            )}
           </li>
         ))}
       </ul>

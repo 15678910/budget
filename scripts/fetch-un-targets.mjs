@@ -133,6 +133,20 @@ function readExistingKo() {
     }
   }
 
+  // ko 누락 코드 경고(새 UN 코드가 추가됐을 때 번역 필요 알림 — exit 막지 않음).
+  const missingKo = Object.values(goals)
+    .flat()
+    .filter((t) => typeof t.ko !== 'string' || !t.ko)
+    .map((t) => t.code);
+  if (missingKo.length > 0) {
+    console.warn(
+      `\n⚠️  [ko 누락 경고] ${missingKo.length}개 세부목표에 비공식 국문(ko)이 없습니다. 번역 추가 필요:`,
+    );
+    for (const code of missingKo) {
+      console.warn(`   - ${code}`);
+    }
+  }
+
   mkdirSync('public/data', { recursive: true });
   const out = {
     source: SOURCE,
