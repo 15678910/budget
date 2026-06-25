@@ -12,7 +12,7 @@ export default function SDGOntologyPage() {
   const { nodes, edges } = buildOntology();
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-8">
+    <div className="w-full max-w-[1600px] px-4 py-8">
       <header className="mb-6">
         <h1 className="text-2xl font-bold text-foreground">SDG 데이터 온톨로지 관계도</h1>
         <p className="mt-2 text-sm text-muted-foreground">
