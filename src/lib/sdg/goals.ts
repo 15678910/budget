@@ -45,7 +45,12 @@ export interface SDGIndicator {
   year: string;         // 기준연도
   unit: string;         // 단위
   higherBetter: boolean; // 해석방향 (true=높을수록 좋음)
-  bySido: Record<string, number>; // 시도 약칭 → 값
+  bySido: Record<string, number>; // 시도 약칭 → 최신연도 값 (기존 호환 보존)
+  /**
+   * 다년 실측 시계열 (KOSIS newEstPrdCnt=10). 시도 약칭 → {연도(YYYY): 값}.
+   * 보유 지표(goal8·9)만 존재 — optional이므로 기존 소비처(bySido) 회귀 없음.
+   */
+  seriesBySido?: Record<string, Record<string, number>>;
 }
 
 /** goal별 대표 지표 (시도 실데이터 보유분만; 나머지는 null = KOSIS 수집 예정) */
