@@ -28,8 +28,8 @@ export function ScenarioPicker({ selectedId, onSelect }: ScenarioPickerProps) {
                 : 'border-border bg-muted/20 hover:bg-muted/50'
             }`}
           >
-            <p className="text-sm font-semibold text-foreground">{preset.label}</p>
-            <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+            <p className="text-base font-semibold text-foreground">{preset.label}</p>
+            <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
               {preset.description}
             </p>
           </button>

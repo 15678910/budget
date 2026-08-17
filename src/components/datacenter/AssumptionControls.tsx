@@ -26,11 +26,11 @@ function Slider({ label, tag, value, display, min, max, step, note, onChange }: 
   return (
     <div className="rounded-lg border border-border bg-muted/20 p-3">
       <div className="flex items-baseline justify-between gap-2">
-        <label className="text-sm font-medium text-foreground">
+        <label className="text-base font-medium text-foreground">
           {label}
-          <span className="ml-1.5 text-[11px] font-normal text-muted-foreground">{tag}</span>
+          <span className="ml-1.5 text-xs font-normal text-muted-foreground">{tag}</span>
         </label>
-        <span className="text-sm font-bold tabular-nums text-foreground">{display}</span>
+        <span className="text-base font-bold tabular-nums text-foreground">{display}</span>
       </div>
       <input
         type="range"
@@ -42,7 +42,7 @@ function Slider({ label, tag, value, display, min, max, step, note, onChange }: 
         className="mt-2 w-full accent-blue-600"
         aria-label={label}
       />
-      <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">{note}</p>
+      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{note}</p>
     </div>
   );
 }
@@ -53,7 +53,7 @@ export function AssumptionControls({ assumptions, onChange, onReset }: Assumptio
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <p className="text-sm text-muted-foreground">
+        <p className="text-base text-muted-foreground">
           가정을 바꾸면 결과가 어떻게 움직이는지 확인하세요. 판단은 사용자가 합니다.
         </p>
         <button

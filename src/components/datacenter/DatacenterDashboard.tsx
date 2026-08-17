@@ -25,9 +25,9 @@ function Section({
 }) {
   return (
     <section id={id} className="scroll-mt-20">
-      <h2 className="text-lg font-bold text-foreground">{title}</h2>
+      <h2 className="text-xl font-bold text-foreground">{title}</h2>
       {description && (
-        <p className="mt-1 mb-3 text-sm leading-relaxed text-muted-foreground">{description}</p>
+        <p className="mt-1.5 mb-3 text-base leading-relaxed text-muted-foreground">{description}</p>
       )}
       <div className={description ? '' : 'mt-3'}>{children}</div>
     </section>
@@ -45,10 +45,10 @@ function ReportDiscrepancy() {
 
   return (
     <div className="rounded-lg border border-amber-500/40 bg-amber-500/10 p-4">
-      <p className="text-sm font-semibold text-foreground">
+      <p className="text-base font-semibold text-foreground">
         보고서의 비관 시나리오는 이자를 다른 기준으로 계산했다
       </p>
-      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+      <p className="mt-2 text-base leading-relaxed text-muted-foreground">
         보고서는 비관 시나리오에서 투자비를 470억 달러로 올리면서, 이자 28억 달러는 380억 달러
         기준으로 계산한 값을 그대로 썼다. 같은 금리를 실제 투자비에 일관되게 적용하면 회수기간이
         달라진다.
@@ -127,7 +127,7 @@ export function DatacenterDashboard() {
         <h1 className="text-2xl font-bold text-foreground md:text-3xl">
           AI 데이터센터 경제성 진단
         </h1>
-        <p className="mt-2 max-w-3xl text-sm leading-relaxed text-muted-foreground">
+        <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg">
           1GW 데이터센터가 몇 년 만에 원금을 회수하는지, 그 답이 GPU 수명 안에 들어오는지 따져본다.
           원보고서의 계산을 그대로 재현한 뒤, 같은 보고서가 리스크로 지적한 항목을 실제로 반영하면
           결과가 어떻게 바뀌는지 비교한다.
@@ -189,7 +189,7 @@ export function DatacenterDashboard() {
           {CAVEATS.map((caveat) => (
             <li
               key={caveat}
-              className="flex gap-2 text-sm leading-relaxed text-muted-foreground"
+              className="flex gap-2 text-base leading-relaxed text-muted-foreground"
             >
               <span aria-hidden="true">·</span>
               <span>{caveat}</span>

@@ -32,9 +32,9 @@ const TONE_CLASS: Record<CardProps['tone'], string> = {
 function Card({ label, value, hint, tone }: CardProps) {
   return (
     <div className={`rounded-lg border p-4 ${TONE_CLASS[tone]}`}>
-      <p className="text-xs font-medium text-muted-foreground">{label}</p>
+      <p className="text-sm font-medium text-muted-foreground">{label}</p>
       <p className="mt-1 text-2xl font-bold text-foreground tabular-nums">{value}</p>
-      <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">{hint}</p>
+      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{hint}</p>
     </div>
   );
 }

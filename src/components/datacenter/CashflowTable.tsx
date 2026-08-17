@@ -20,7 +20,7 @@ export function CashflowTable({ rows, assumptions, paybackYears }: CashflowTable
 
   return (
     <div className="overflow-x-auto rounded-lg border border-border">
-      <table className="w-full min-w-[720px] text-sm">
+      <table className="w-full min-w-[760px] text-base">
         <thead className="bg-muted/50">
           <tr className="text-right">
             <th className="px-3 py-2 text-left font-semibold text-foreground">연차</th>
@@ -50,7 +50,7 @@ export function CashflowTable({ rows, assumptions, paybackYears }: CashflowTable
                 <td className="px-3 py-2 text-left font-medium text-foreground">
                   {row.year}년
                   {eol && (
-                    <span className="ml-1.5 text-[11px] font-normal text-warning">
+                    <span className="ml-1.5 text-xs font-normal text-warning">
                       GPU 수명
                     </span>
                   )}
@@ -78,7 +78,7 @@ export function CashflowTable({ rows, assumptions, paybackYears }: CashflowTable
           })}
         </tbody>
         <tfoot>
-          <tr className="border-t-2 border-border bg-muted/30 text-right text-xs text-muted-foreground">
+          <tr className="border-t-2 border-border bg-muted/30 text-right text-sm text-muted-foreground">
             <td className="px-3 py-2 text-left" colSpan={7}>
               총 투자비 {formatEokUsd(capexUsd)} 대비 누적 회수 비율. 회수율 100%가 원금 회수 시점이다.
               {assumptions.loanType === 'interestOnly' &&
