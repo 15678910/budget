@@ -24,6 +24,7 @@ const HUB_GROUPS: HubGroup[] = [
       { href: '/simulator', label: 'AI기본사회' },
       { href: '/local-simulator', label: '자치구AI' },
       { href: '/industry-sim', label: '산업시뮬' },
+      { href: '/datacenter', label: '데이터센터' },
     ],
   },
   {

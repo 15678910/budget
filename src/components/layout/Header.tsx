@@ -30,6 +30,7 @@ const AI_SUB_TABS = [
   { href: "/local-simulator", label: "자치구AI" },
   { href: "/goals", label: "목표추적" },
   { href: "/industry-sim", label: "산업시뮬" },
+  { href: "/datacenter", label: "데이터센터" },
   { href: "/ai-efficiency", label: "AI효율화" },
   { href: "/fiscal-innovation", label: "재정혁신" },
   { href: "/public-bank", label: "공공은행" },
