@@ -4,10 +4,12 @@ import { useMemo, useState } from 'react';
 import { analyze } from '@/lib/datacenter/finance';
 import { validateFinance } from '@/lib/datacenter/assumptions';
 import { PRESETS, reportPessimistic, consistentPessimistic } from '@/lib/datacenter/scenarios';
+import type { Cooling } from '@/lib/datacenter/regional';
 import type { FinanceAssumptions } from '@/lib/datacenter/types';
 import { AssumptionControls } from './AssumptionControls';
 import { CashflowTable } from './CashflowTable';
 import { EmploymentSection } from './EmploymentSection';
+import { RegionalSection } from './RegionalSection';
 import { ScenarioPicker } from './ScenarioPicker';
 import { SummaryCards } from './SummaryCards';
 import { formatPayback, USD_KRW } from './formatting';
@@ -89,13 +91,15 @@ const CAVEATS = [
   '부채비율 70%는 보고서에 명시된 값이 아니라 제시된 이자 금액에서 역산한 값이다.',
   '세금·감가상각·법인세는 이 모델에 포함되지 않았다. 운영비 안의 세금 항목(16%)만 반영된다.',
   `원화 환산은 ${USD_KRW.toLocaleString('ko-KR')}원/달러 고정 환율 [추정]이며, 환율 변동은 모델링하지 않는다.`,
-  '단일 1GW 시설 기준이다. 국가 단위 집계(18.4GW)와 지역 영향(전력·용수·탄소·부지), 지방세수는 다음 단계에서 추가된다.',
+  '단일 1GW 시설 기준이다. 국가 단위 집계(18.4GW)와 지방세수는 다음 단계에서 추가된다.',
   '고용 벤치마크는 100MW 기준값을 선형 확대한 것이다. 규모의 경제나 입지별 차이는 반영하지 않는다.',
+  '용수 원단위와 공랭식 전력 증가율은 국내 실측 자료가 공개되지 않아 가정값 [추정]이다. 결과 해석 시 이 점을 감안해야 한다.',
 ];
 
 export function DatacenterDashboard() {
   const [selectedId, setSelectedId] = useState<string>(PRESETS[0].id);
   const [overrides, setOverrides] = useState<Partial<FinanceAssumptions>>({});
+  const [cooling, setCooling] = useState<Cooling>('water');
 
   const preset = PRESETS.find((p) => p.id === selectedId) ?? PRESETS[0];
 
@@ -174,6 +178,18 @@ export function DatacenterDashboard() {
         description="투자액이 아무리 커도 상시 일자리는 많지 않다. 발표된 고용효과가 무엇으로 설명되는지 따져본다."
       >
         <EmploymentSection assumptions={assumptions} capacityMw={CAPACITY_MW} />
+      </Section>
+
+      <Section
+        id="regional"
+        title="지역 영향"
+        description="전력·용수·탄소·부지는 어느 지역이든 실제로 감당해야 하는 몫이다. 냉각 방식을 바꾸면 용수와 전력이 맞교환된다."
+      >
+        <RegionalSection
+          capacityMw={CAPACITY_MW}
+          cooling={cooling}
+          onCoolingChange={setCooling}
+        />
       </Section>
 
       <Section

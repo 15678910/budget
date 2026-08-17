@@ -14,6 +14,7 @@ const PAGE_SECTIONS = [
   { id: 'discrepancy', label: '보고서 검산' },
   { id: 'assumptions', label: '가정 조절' },
   { id: 'employment', label: '고용' },
+  { id: 'regional', label: '지역 영향' },
   { id: 'cashflow', label: '연도별 현금흐름' },
   { id: 'caveats', label: '이 도구의 한계' },
 ];
