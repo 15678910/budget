@@ -93,7 +93,8 @@ function HubLinks() {
                         'block ml-3 mt-0.5 px-2.5 py-1 text-xs rounded-md transition-colors',
                         subActive
                           ? 'text-foreground bg-muted/50 font-medium'
-                          : 'text-muted-foreground/80 hover:bg-muted hover:text-foreground'
+                          // 투명도를 주면 라이트 테마에서 대비가 3.2까지 떨어져 AA에 미달한다.
+                          : 'text-muted-foreground hover:bg-muted hover:text-foreground'
                       )}
                     >
                       ▸ {tool.sub.label}

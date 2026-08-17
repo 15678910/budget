@@ -50,9 +50,13 @@ export function AISidebar({ title, sections }: AISidebarProps) {
   }, []);
 
   return (
-    <aside className="hidden lg:block w-48 shrink-0 border-r border-gray-800 bg-gray-950/50 sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto">
+    <aside className="hidden lg:block w-48 shrink-0 border-r border-border bg-background/40 sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto">
       <nav className="p-4">
-        <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+        {/*
+          테마 토큰을 쓴다. 이전에는 gray 계열로 하드코딩돼 라이트 테마에서 어두운 사이드바가
+          남았고, 제목은 대비 4.12로 AA(4.5)에 미달했다. AISocietySidebar와 같은 방식이다.
+        */}
+        <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
           {title}
         </h3>
         <ul className="space-y-0.5">
@@ -63,8 +67,8 @@ export function AISidebar({ title, sections }: AISidebarProps) {
                 onClick={(e) => handleClick(e, section.id)}
                 className={`block px-3 py-1.5 text-sm rounded-md transition-colors ${
                   activeId === section.id
-                    ? 'text-blue-400 bg-blue-500/10 border-l-2 border-blue-400 font-medium'
-                    : 'text-gray-400 hover:text-gray-200 hover:bg-gray-800/30'
+                    ? 'text-foreground bg-blue-500/10 border-l-2 border-blue-500 font-medium'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-muted'
                 }`}
               >
                 {section.label}
