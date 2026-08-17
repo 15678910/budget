@@ -34,6 +34,22 @@ export function formatEokKrw(usd: number, digits = 0): string {
   })}억 원`;
 }
 
+/** 이미 원화인 금액을 억 원으로. 세수처럼 계산 결과가 원화인 경우에 쓴다. */
+export function formatEokFromKrw(krw: number, digits = 0): string {
+  return `${(krw / 1e8).toLocaleString('ko-KR', {
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits,
+  })}억 원`;
+}
+
+/** 이미 원화인 금액을 조 원으로. */
+export function formatJoFromKrw(krw: number, digits = 1): string {
+  return `${(krw / 1e12).toLocaleString('ko-KR', {
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits,
+  })}조 원`;
+}
+
 /** 조 원 단위. 국가 단위 집계에서 쓴다. */
 export function formatJoKrw(usd: number, digits = 1): string {
   const jo = (usd * USD_KRW) / 1e12;

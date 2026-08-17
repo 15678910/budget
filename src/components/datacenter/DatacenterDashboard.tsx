@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { analyze } from '@/lib/datacenter/finance';
+import { estimateJobs } from '@/lib/datacenter/employment';
 import { validateFinance } from '@/lib/datacenter/assumptions';
 import { PRESETS, reportPessimistic, consistentPessimistic } from '@/lib/datacenter/scenarios';
 import type { Cooling } from '@/lib/datacenter/regional';
@@ -9,7 +10,10 @@ import type { FinanceAssumptions } from '@/lib/datacenter/types';
 import { AssumptionControls } from './AssumptionControls';
 import { CashflowTable } from './CashflowTable';
 import { EmploymentSection } from './EmploymentSection';
+import { MegaprojectSection } from './MegaprojectSection';
 import { RegionalSection } from './RegionalSection';
+import { SensitivitySection } from './SensitivitySection';
+import { TaxSection } from './TaxSection';
 import { ScenarioPicker } from './ScenarioPicker';
 import { SummaryCards } from './SummaryCards';
 import { formatPayback, USD_KRW } from './formatting';
@@ -100,6 +104,7 @@ export function DatacenterDashboard() {
   const [selectedId, setSelectedId] = useState<string>(PRESETS[0].id);
   const [overrides, setOverrides] = useState<Partial<FinanceAssumptions>>({});
   const [cooling, setCooling] = useState<Cooling>('water');
+  const [targetYear, setTargetYear] = useState(2035);
 
   const preset = PRESETS.find((p) => p.id === selectedId) ?? PRESETS[0];
 
@@ -119,6 +124,11 @@ export function DatacenterDashboard() {
   }, [preset, overrides]);
 
   const { rows, summary } = useMemo(() => analyze(assumptions), [assumptions]);
+  // 지방세의 '일자리당 세수'는 고용 레이어의 중앙값을 그대로 쓴다.
+  const permanentJobsMid = useMemo(
+    () => estimateJobs(CAPACITY_MW, assumptions.capexUsd).permanent.mid,
+    [assumptions.capexUsd],
+  );
 
   const handleSelect = (id: string) => {
     setSelectedId(id);
@@ -190,6 +200,38 @@ export function DatacenterDashboard() {
           cooling={cooling}
           onCoolingChange={setCooling}
         />
+      </Section>
+
+      <Section
+        id="tax"
+        title="지방세수"
+        description="투자 규모가 아무리 커도 지방세는 그 일부에만 붙는다. 과세표준이 어떻게 갈라지는지 분해해 보여준다."
+      >
+        <TaxSection
+          assumptions={assumptions}
+          capacityMw={CAPACITY_MW}
+          permanentJobs={permanentJobsMid}
+        />
+      </Section>
+
+      <Section
+        id="megaproject"
+        title="국가 단위 집계"
+        description="3대 메가프로젝트의 데이터센터 부문을 같은 계산으로 확대한다. 단순 선형 스케일업이라는 한계를 함께 밝힌다."
+      >
+        <MegaprojectSection
+          targetYear={targetYear}
+          onYearChange={setTargetYear}
+          cooling={cooling}
+        />
+      </Section>
+
+      <Section
+        id="sensitivity"
+        title="민감도와 역산"
+        description="어느 가정이 결과를 지배하는지, 그리고 목표를 달성하려면 그 가정이 얼마여야 하는지 되묻는다."
+      >
+        <SensitivitySection assumptions={assumptions} />
       </Section>
 
       <Section

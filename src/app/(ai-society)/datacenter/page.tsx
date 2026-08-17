@@ -15,6 +15,9 @@ const PAGE_SECTIONS = [
   { id: 'assumptions', label: '가정 조절' },
   { id: 'employment', label: '고용' },
   { id: 'regional', label: '지역 영향' },
+  { id: 'tax', label: '지방세수' },
+  { id: 'megaproject', label: '국가 단위 집계' },
+  { id: 'sensitivity', label: '민감도와 역산' },
   { id: 'cashflow', label: '연도별 현금흐름' },
   { id: 'caveats', label: '이 도구의 한계' },
 ];
