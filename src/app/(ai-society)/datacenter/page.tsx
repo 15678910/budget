@@ -13,6 +13,7 @@ const PAGE_SECTIONS = [
   { id: 'summary', label: '핵심 지표' },
   { id: 'discrepancy', label: '보고서 검산' },
   { id: 'assumptions', label: '가정 조절' },
+  { id: 'employment', label: '고용' },
   { id: 'cashflow', label: '연도별 현금흐름' },
   { id: 'caveats', label: '이 도구의 한계' },
 ];

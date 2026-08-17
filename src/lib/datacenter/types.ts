@@ -30,7 +30,14 @@ export interface Figure {
   kind: FigureKind;
   /** 발표 주체 */
   source: string;
-  url: string;
+  /**
+   * 원문 링크.
+   *
+   * 설계문서 §3.3은 url을 필수로 규정했으나, 원보고서의 출처 목록이 설계문서에 옮겨지지
+   * 않아 현재 확보된 값이 없다. 링크를 지어내지 않기 위해 선택 항목으로 두고, 대신
+   * source·date·kind를 필수로 강제한다. 원문 확보 시 채운다.
+   */
+  url?: string;
   /** YYYY-MM */
   date: string;
   note?: string;

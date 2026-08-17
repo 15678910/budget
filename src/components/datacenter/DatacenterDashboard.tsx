@@ -7,6 +7,7 @@ import { PRESETS, reportPessimistic, consistentPessimistic } from '@/lib/datacen
 import type { FinanceAssumptions } from '@/lib/datacenter/types';
 import { AssumptionControls } from './AssumptionControls';
 import { CashflowTable } from './CashflowTable';
+import { EmploymentSection } from './EmploymentSection';
 import { ScenarioPicker } from './ScenarioPicker';
 import { SummaryCards } from './SummaryCards';
 import { formatPayback, USD_KRW } from './formatting';
@@ -79,13 +80,17 @@ function ReportDiscrepancy() {
   );
 }
 
+/** 분석 대상 시설 용량. 국가 단위 집계(18.4GW)를 붙일 때 파라미터로 바뀐다. */
+const CAPACITY_MW = 1000;
+
 const CAVEATS = [
   '이 도구는 결론을 내리지 않는다. 공식 발표치와 제3자 실측치를 나란히 놓고, 가정을 바꿨을 때 결과가 어떻게 움직이는지 보여줄 뿐이다.',
   '모든 수치에는 성격 태그가 붙는다 — [실측]은 제3자가 관측한 값, [발표]는 기업·정부가 발표한 검증 대상 값, [역산]은 공개된 다른 수치에서 계산해낸 값, [추정]은 이 도구가 가정을 두고 만든 값이다.',
   '부채비율 70%는 보고서에 명시된 값이 아니라 제시된 이자 금액에서 역산한 값이다.',
   '세금·감가상각·법인세는 이 모델에 포함되지 않았다. 운영비 안의 세금 항목(16%)만 반영된다.',
   `원화 환산은 ${USD_KRW.toLocaleString('ko-KR')}원/달러 고정 환율 [추정]이며, 환율 변동은 모델링하지 않는다.`,
-  '단일 1GW 시설 기준이다. 국가 단위 집계(18.4GW)와 지역 영향·고용·지방세는 다음 단계에서 추가된다.',
+  '단일 1GW 시설 기준이다. 국가 단위 집계(18.4GW)와 지역 영향(전력·용수·탄소·부지), 지방세수는 다음 단계에서 추가된다.',
+  '고용 벤치마크는 100MW 기준값을 선형 확대한 것이다. 규모의 경제나 입지별 차이는 반영하지 않는다.',
 ];
 
 export function DatacenterDashboard() {
@@ -161,6 +166,14 @@ export function DatacenterDashboard() {
           onChange={(patch) => setOverrides((prev) => ({ ...prev, ...patch }))}
           onReset={() => setOverrides({})}
         />
+      </Section>
+
+      <Section
+        id="employment"
+        title="고용"
+        description="투자액이 아무리 커도 상시 일자리는 많지 않다. 발표된 고용효과가 무엇으로 설명되는지 따져본다."
+      >
+        <EmploymentSection assumptions={assumptions} capacityMw={CAPACITY_MW} />
       </Section>
 
       <Section
