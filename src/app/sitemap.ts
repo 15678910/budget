@@ -26,6 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/simulator`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${base}/local-simulator`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${base}/industry-sim`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${base}/datacenter`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
 
     // ── 시각화·분석 도구 ─────────────────────────
     { url: `${base}/table`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
