@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+/*
+ * `dark:` 유틸리티를 .dark 클래스에 연결한다.
+ *
+ * 테마 전환은 next-themes의 attribute="class" 방식이라 <html>에 .dark가 붙는데,
+ * Tailwind v4의 `dark:`는 이 선언이 없으면 OS 설정(prefers-color-scheme)을 따른다.
+ * 둘이 어긋나면 사이트는 다크인데 밝은 배경이 남아 글씨가 보이지 않는다.
+ */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* 앵커 이동 시 헤더 높이만큼 보정 */
 [id] {
   scroll-margin-top: 5rem;
