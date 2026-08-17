@@ -74,7 +74,7 @@ export function EmploymentSection({ assumptions, capacityMw }: EmploymentSection
       </div>
 
       {/* §2.4 발표 고용효과 검증 */}
-      <div className="rounded-lg border border-amber-300 bg-amber-50 p-4 dark:border-amber-900 dark:bg-amber-950/30">
+      <div className="rounded-lg border border-amber-500/40 bg-amber-500/10 p-4">
         <p className="text-sm font-semibold text-foreground">
           발표된 고용창출 효과는 상시 인력의 {Math.round(verdict.multiple)}배다
         </p>
@@ -94,7 +94,7 @@ export function EmploymentSection({ assumptions, capacityMw }: EmploymentSection
       <div
         className={`rounded-lg border p-4 ${
           crosscheck.overlaps
-            ? 'border-emerald-300 bg-emerald-50 dark:border-emerald-900 dark:bg-emerald-950/30'
+            ? 'border-emerald-500/40 bg-emerald-500/10'
             : 'border-border bg-muted/30'
         }`}
       >

@@ -16,10 +16,17 @@ interface CardProps {
   tone: 'neutral' | 'warn' | 'good';
 }
 
+/**
+ * 색조는 반투명 틴트로만 준다.
+ *
+ * 이 프로젝트의 테마 전환은 .dark 클래스 방식인데 Tailwind v4의 `dark:` 유틸리티는
+ * @custom-variant 선언이 없으면 OS 설정을 따른다. 둘이 어긋나면 밝은 배경에 밝은 글씨가
+ * 남으므로, 테마와 무관하게 성립하는 알파 틴트와 -600 계열 글자색만 쓴다.
+ */
 const TONE_CLASS: Record<CardProps['tone'], string> = {
   neutral: 'border-border bg-muted/30',
-  warn: 'border-red-300 bg-red-50 dark:border-red-900 dark:bg-red-950/40',
-  good: 'border-emerald-300 bg-emerald-50 dark:border-emerald-900 dark:bg-emerald-950/40',
+  warn: 'border-red-500/40 bg-red-500/10',
+  good: 'border-emerald-500/40 bg-emerald-500/10',
 };
 
 function Card({ label, value, hint, tone }: CardProps) {

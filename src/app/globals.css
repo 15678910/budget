@@ -15,9 +15,24 @@
   --card-foreground: #171717;
   --primary: #2563eb;
   --primary-foreground: #ffffff;
+
+  /*
+   * 상태 색 토큰.
+   *
+   * 테마 전환은 .dark 클래스 방식인데 Tailwind v4의 `dark:` 유틸리티는 @custom-variant
+   * 선언이 없으면 OS 설정(prefers-color-scheme)을 따른다. 둘이 어긋나면 밝은 배경에
+   * 밝은 글씨가 남는다. 상태 색을 토큰으로 두면 `dark:` 없이도 테마를 따라간다.
+   * 각 값은 해당 테마 배경에서 WCAG AA(4.5:1) 이상을 만족한다.
+   */
+  --success: #047857;
+  --danger: #b91c1c;
+  --warning: #b45309;
 }
 
 @theme inline {
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+  --color-warning: var(--warning);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
@@ -39,6 +54,11 @@
   --card-foreground: #ededed;
   --primary: #3b82f6;
   --primary-foreground: #ffffff;
+
+  /* 어두운 배경에서 AA를 만족하는 밝은 대응색 */
+  --success: #34d399;
+  --danger: #f87171;
+  --warning: #fbbf24;
 }
 
 body {

@@ -44,7 +44,7 @@ function ReportDiscrepancy() {
       : null;
 
   return (
-    <div className="rounded-lg border border-amber-300 bg-amber-50 p-4 dark:border-amber-900 dark:bg-amber-950/30">
+    <div className="rounded-lg border border-amber-500/40 bg-amber-500/10 p-4">
       <p className="text-sm font-semibold text-foreground">
         보고서의 비관 시나리오는 이자를 다른 기준으로 계산했다
       </p>
@@ -71,7 +71,7 @@ function ReportDiscrepancy() {
         </div>
         <div className="rounded-md border border-border bg-background/60 p-3">
           <p className="text-xs text-muted-foreground">차이</p>
-          <p className="text-xl font-bold tabular-nums text-red-600 dark:text-red-400">
+          <p className="text-xl font-bold tabular-nums text-danger">
             {gap === null ? '산출 불가' : `+${gap.toFixed(2)}년`}
           </p>
         </div>
@@ -135,7 +135,7 @@ export function DatacenterDashboard() {
       </header>
 
       {error && (
-        <p className="rounded-md border border-red-300 bg-red-50 p-3 text-sm text-red-700 dark:border-red-900 dark:bg-red-950/40 dark:text-red-300">
+        <p className="rounded-md border border-red-500/40 bg-red-500/10 p-3 text-sm text-danger">
           {error} — 시나리오 기본값으로 계산했습니다.
         </p>
       )}

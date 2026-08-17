@@ -24,7 +24,7 @@ export function ScenarioPicker({ selectedId, onSelect }: ScenarioPickerProps) {
             aria-pressed={active}
             className={`rounded-lg border p-3 text-left transition-colors ${
               active
-                ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/40'
+                ? 'border-blue-500 bg-blue-500/10'
                 : 'border-border bg-muted/20 hover:bg-muted/50'
             }`}
           >

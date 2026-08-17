@@ -41,16 +41,16 @@ export function CashflowTable({ rows, assumptions, paybackYears }: CashflowTable
                 key={row.year}
                 className={`border-t border-border text-right tabular-nums ${
                   isPaybackYear(row, paybackYears)
-                    ? 'bg-emerald-50 dark:bg-emerald-950/30'
+                    ? 'bg-emerald-500/10'
                     : eol
-                      ? 'bg-amber-50 dark:bg-amber-950/30'
+                      ? 'bg-amber-500/10'
                       : ''
                 }`}
               >
                 <td className="px-3 py-2 text-left font-medium text-foreground">
                   {row.year}년
                   {eol && (
-                    <span className="ml-1.5 text-[11px] font-normal text-amber-700 dark:text-amber-400">
+                    <span className="ml-1.5 text-[11px] font-normal text-warning">
                       GPU 수명
                     </span>
                   )}
@@ -60,7 +60,7 @@ export function CashflowTable({ rows, assumptions, paybackYears }: CashflowTable
                 <td className="px-3 py-2 text-muted-foreground">{formatEokUsd(row.interest)}</td>
                 <td
                   className={`px-3 py-2 font-medium ${
-                    row.netCash < 0 ? 'text-red-600 dark:text-red-400' : 'text-foreground'
+                    row.netCash < 0 ? 'text-danger' : 'text-foreground'
                   }`}
                 >
                   {formatSignedEokUsd(row.netCash)}
@@ -68,7 +68,7 @@ export function CashflowTable({ rows, assumptions, paybackYears }: CashflowTable
                 <td className="px-3 py-2 text-foreground">{formatSignedEokUsd(row.cumulative)}</td>
                 <td
                   className={`px-3 py-2 font-semibold ${
-                    recovery >= 1 ? 'text-emerald-600 dark:text-emerald-400' : 'text-foreground'
+                    recovery >= 1 ? 'text-success' : 'text-foreground'
                   }`}
                 >
                   {(recovery * 100).toFixed(0)}%
