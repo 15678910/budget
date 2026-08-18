@@ -141,7 +141,12 @@ export function DatacenterDashboard() {
         <h1 className="text-2xl font-bold text-foreground md:text-3xl">
           AI 데이터센터 경제성 진단
         </h1>
-        <p className="mt-3 max-w-5xl text-base leading-relaxed text-muted-foreground md:text-lg">
+        {/*
+          폭을 1060px로 잡은 이유: 1035px 미만이면 '리스크를'이 둘째 줄로 넘어가고,
+          1089px을 넘으면 '반영해'까지 첫 줄로 올라온다. 그 사이에서 어절이 의미 단위로
+          끊긴다. 한글 단어가 중간에 갈라지는 것은 globals.css의 word-break:keep-all이 막는다.
+        */}
+        <p className="mt-3 max-w-[1060px] text-base leading-relaxed text-muted-foreground md:text-lg">
           1GW 데이터센터가 몇 년 만에 원금을 회수하는지, GPU 수명 안에 들어오는지 따져본다.
           원보고서를 재현한 뒤 같은 보고서가 지적한 리스크를 반영해 결과를 비교한다.
         </p>
