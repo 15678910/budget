@@ -95,7 +95,7 @@ const CAVEATS = [
   '부채비율 70%는 보고서에 명시된 값이 아니라 제시된 이자 금액에서 역산한 값이다.',
   '세금·감가상각·법인세는 이 모델에 포함되지 않았다. 운영비 안의 세금 항목(16%)만 반영된다.',
   `원화 환산은 ${USD_KRW.toLocaleString('ko-KR')}원/달러 고정 환율 [추정]이며, 환율 변동은 모델링하지 않는다.`,
-  '단일 1GW 시설 기준이다. 국가 단위 집계(18.4GW)와 지방세수는 다음 단계에서 추가된다.',
+  '기본 분석 단위는 1GW 시설이며, 국가 단위(8.4GW·18.4GW)는 이를 선형 확대한 값이다. 규모의 경제나 입지별 차이는 반영하지 않는다.',
   '고용 벤치마크는 100MW 기준값을 선형 확대한 것이다. 규모의 경제나 입지별 차이는 반영하지 않는다.',
   '용수 원단위와 공랭식 전력 증가율은 국내 실측 자료가 공개되지 않아 가정값 [추정]이다. 결과 해석 시 이 점을 감안해야 한다.',
 ];
@@ -141,10 +141,9 @@ export function DatacenterDashboard() {
         <h1 className="text-2xl font-bold text-foreground md:text-3xl">
           AI 데이터센터 경제성 진단
         </h1>
-        <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg">
-          1GW 데이터센터가 몇 년 만에 원금을 회수하는지, 그 답이 GPU 수명 안에 들어오는지 따져본다.
-          원보고서의 계산을 그대로 재현한 뒤, 같은 보고서가 리스크로 지적한 항목을 실제로 반영하면
-          결과가 어떻게 바뀌는지 비교한다.
+        <p className="mt-3 max-w-5xl text-base leading-relaxed text-muted-foreground md:text-lg">
+          1GW 데이터센터가 몇 년 만에 원금을 회수하는지, GPU 수명 안에 들어오는지 따져본다.
+          원보고서를 재현한 뒤 같은 보고서가 지적한 리스크를 반영해 결과를 비교한다.
         </p>
       </header>
 
