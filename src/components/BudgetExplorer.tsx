@@ -43,7 +43,7 @@ const BudgetDetailPanel = dynamic(
 import type { BudgetTreeNode, ViewMode, VisualizationMode } from '@/types/budget';
 import { formatKoreanWon, formatPerCapita, cn } from '@/lib/utils/format';
 import { formatUnitConversion, type BudgetUnit } from '@/lib/utils/units';
-import { POPULATION_BY_YEAR } from '@/lib/constants';
+import { POPULATION_BY_YEAR, BUDGET_RESET_EVENT } from '@/lib/constants';
 
 interface BudgetExplorerProps {
   initialData: BudgetTreeNode;
@@ -175,6 +175,21 @@ export function BudgetExplorer({
     navigateTo([]);
     setSelectedNodeName(null);
   }, [viewMode, activeData, navigateTo]);
+
+  /*
+   * 트리맵이 곧 홈페이지(/)이므로 헤더 로고를 눌러도 라우터는 같은 경로로 판단해
+   * 아무 동작을 하지 않는다. 드릴다운 경로는 URL이 아닌 컴포넌트 상태라 그대로 남는다.
+   * 로고가 발생시키는 이벤트를 받아 최상위로 되돌린다.
+   */
+  useEffect(() => {
+    const handleReset = () => {
+      navigateTo([]);
+      setSelectedNodeName(null);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    window.addEventListener(BUDGET_RESET_EVENT, handleReset);
+    return () => window.removeEventListener(BUDGET_RESET_EVENT, handleReset);
+  }, [navigateTo]);
 
   const totalValue = calculateTotal(currentNode);
   const shallowData = useMemo(() => createShallowTree(currentNode), [currentNode]);

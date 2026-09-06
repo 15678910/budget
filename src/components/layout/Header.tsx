@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils/format";
+import { BUDGET_RESET_EVENT } from "@/lib/constants";
 import { startTour } from "@/components/shared/GuidedTour";
 import { useUser } from "@/components/providers/UserProvider";
 
@@ -95,6 +96,13 @@ export function Header() {
           {/* Left: Logo */}
           <Link
             href="/"
+            onClick={() => {
+              // 트리맵이 홈페이지 자체라 같은 경로로는 화면이 바뀌지 않는다.
+              // 이미 홈에 있으면 트리맵을 최상위로 되돌리도록 알린다.
+              if (pathname === "/") {
+                window.dispatchEvent(new Event(BUDGET_RESET_EVENT));
+              }
+            }}
             className="flex items-center gap-2 hover:opacity-80 transition-opacity"
           >
             <Image src="/logo-icon.svg" alt="마을살림" width={28} height={28} className="rounded-md" priority />

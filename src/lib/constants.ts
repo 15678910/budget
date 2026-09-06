@@ -31,6 +31,15 @@ export const AVAILABLE_YEARS: number[] = [2023, 2024, 2025, 2026];
 /** Default year to display on initial load */
 export const DEFAULT_YEAR = 2026;
 
+/**
+ * 헤더 로고 클릭 시 트리맵을 최상위로 되돌리기 위한 이벤트 이름.
+ *
+ * 트리맵은 홈페이지(/) 자체이므로 로고의 <Link href="/">는 같은 경로로 판단돼
+ * 화면을 바꾸지 못한다. 드릴다운 경로가 URL이 아닌 컴포넌트 상태이기 때문이다.
+ * 헤더가 이 이벤트를 발생시키고 BudgetExplorer가 받아 초기화한다.
+ */
+export const BUDGET_RESET_EVENT = 'budget:reset';
+
 // ---------------------------------------------------------------------------
 // Population data (단위: 명)
 // Source: 통계청 장래인구추계 / 주민등록인구현황
