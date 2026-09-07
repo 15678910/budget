@@ -56,4 +56,34 @@ describe('시도별 영향', () => {
     expect(seoul).toBeDefined();
     expect(seoul!.payrollRatio).toBeCloseTo(72391 / 119935, 9);
   });
+
+  it('학생 수 합계가 5,015,310이다 (2025 초·중·고)', () => {
+    const result = regionalImpact(10000);
+    const total = result.reduce((sum, r) => sum + r.students, 0);
+    expect(total).toBe(5015310);
+  });
+
+  it('세종의 studentChange가 양수인 유일한 지역이다', () => {
+    const result = regionalImpact(10000);
+    const positive = result.filter((r) => r.studentChange > 0);
+    expect(positive).toHaveLength(1);
+    expect(positive[0].name).toBe('세종');
+  });
+
+  it('cutEok가 0이면 모든 perStudentWon이 0이다', () => {
+    const result = regionalImpact(0);
+    for (const r of result) {
+      expect(r.perStudentWon).toBe(0);
+    }
+  });
+
+  it('21조원 감소 시 전남의 perStudentWon이 서울보다 크다 (1인당으로는 농산어촌이 더 크게 맞는다)', () => {
+    const cutEok = 210000;
+    const result = regionalImpact(cutEok);
+    const jeonnam = result.find((r) => r.name === '전남');
+    const seoul = result.find((r) => r.name === '서울');
+    expect(jeonnam).toBeDefined();
+    expect(seoul).toBeDefined();
+    expect(jeonnam!.perStudentWon).toBeGreaterThan(seoul!.perStudentWon);
+  });
 });

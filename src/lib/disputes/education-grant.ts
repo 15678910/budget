@@ -178,6 +178,12 @@ export const educationGrant: Dispute = {
       date: '2026-09-08',
       url: 'https://www.eduinfo.go.kr/portal/theme/pfincbriefPage.do',
     },
+    {
+      title: '2025년 교육기본통계 (별첨 표 3 시도별 유·초·중등 학생 수)',
+      publisher: '교육부·한국교육개발원',
+      date: '2025-08-29',
+      url: 'https://www.moe.go.kr/boardCnts/viewRenew.do?boardID=294&boardSeq=103992',
+    },
   ],
 
   updatedAt: '2026-09-07',

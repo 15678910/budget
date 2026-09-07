@@ -5,9 +5,10 @@ export function RegionalImpactTable({ cutEok }: { cutEok: number }) {
 
   return (
     <div className="overflow-x-auto rounded-lg border border-border">
-      <table className="w-full min-w-[560px] text-base">
+      <table className="w-full min-w-[760px] text-base">
         <caption className="p-3 text-left font-mono text-sm text-muted-foreground">
-          기존 20.79% 연동 대비 차액 · 재정 수치는 2024 회계연도 결산(지방교육재정알리미 교육청별 재정도표)
+          기존 20.79% 연동 대비 차액 · 재정 수치는 2024 회계연도 결산(지방교육재정알리미 교육청별 재정도표) ·
+          학생 수는 2025-04-01 기준(교육부·한국교육개발원 2025년 교육기본통계)
         </caption>
         <thead>
           <tr className="border-b border-border text-left text-sm text-muted-foreground">
@@ -16,6 +17,12 @@ export function RegionalImpactTable({ cutEok }: { cutEok: number }) {
             </th>
             <th scope="col" className="px-4 py-2 text-right font-medium">
               기존 연동 대비 차액(억원)
+            </th>
+            <th scope="col" className="px-4 py-2 text-right font-medium">
+              학생 1인당
+            </th>
+            <th scope="col" className="px-4 py-2 text-right font-medium">
+              학생 수 변화율
             </th>
             <th scope="col" className="px-4 py-2 text-right font-medium">
               인건비 비중
@@ -28,6 +35,8 @@ export function RegionalImpactTable({ cutEok }: { cutEok: number }) {
         <tbody>
           {rows.map((r) => {
             const overCapacity = r.pressure > 1;
+            const studentIncrease = r.studentChange > 0;
+            const changeSign = studentIncrease ? '+' : '';
             return (
               <tr
                 key={r.name}
@@ -36,6 +45,17 @@ export function RegionalImpactTable({ cutEok }: { cutEok: number }) {
                 <td className="px-4 py-3 text-foreground">{r.name}</td>
                 <td className="px-4 py-3 text-right font-bold tabular-nums text-foreground">
                   {Math.round(r.cutEok).toLocaleString('ko-KR')}
+                </td>
+                <td className="px-4 py-3 text-right tabular-nums text-foreground">
+                  {Math.round(r.perStudentWon / 10000).toLocaleString('ko-KR')}만원
+                </td>
+                <td
+                  className={`px-4 py-3 text-right tabular-nums text-foreground ${
+                    studentIncrease ? 'bg-blue-500/10' : ''
+                  }`}
+                >
+                  {changeSign}
+                  {(r.studentChange * 100).toFixed(2)}%
                 </td>
                 <td className="px-4 py-3 text-right tabular-nums text-foreground">
                   {(r.payrollRatio * 100).toFixed(1)}%
