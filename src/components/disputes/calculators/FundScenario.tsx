@@ -58,7 +58,8 @@ export function FundScenario() {
 
       <p className="text-sm leading-relaxed text-muted-foreground">
         여유자금 {IDLE_FUND_JO}조원이 전액 같은 수익률로 운용된다고 가정한 단순 복리
-        계산입니다. 실제 운용은 자산군별 배분과 인출 일정에 따라 달라집니다.
+        계산이며, 아직 검토 단계인 민간 위탁 운용의 경우를 모델로 삼은 것입니다. 실제 운용은
+        자산군별 배분과 인출 일정에 따라 달라집니다.
       </p>
     </div>
   );
@@ -98,6 +99,7 @@ function Slider({
         onChange={(e) => onChange(Number(e.target.value))}
         className="mt-2 w-full accent-blue-600"
         aria-label={label}
+        aria-valuetext={display}
       />
       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{note}</p>
     </div>

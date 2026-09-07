@@ -2,11 +2,19 @@
 
 import { useState } from 'react';
 import { computeGrant } from '@/lib/disputes/grant-formula';
+import { FIGURE_KIND_LABEL } from '@/lib/datacenter/types';
+import type { FigureKind } from '@/lib/datacenter/types';
 
 /** 2026년 본예산 교부금 (조원) */
 const PREVIOUS_GRANT_JO = 71.67;
-/** 비교용 내국세 총액 (조원) */
-const INTERNAL_TAX_JO = 481;
+/**
+ * 비교용 내국세 총액 (조원) — 역산값이다.
+ *
+ * 정부가 밝힌 '기존 산식 유지 시 약 100조원'을 20.79%로 나눠(100 ÷ 0.2079) 되돌린
+ * 수치이지, 출처가 있는 내국세 전망치가 아니다. 따라서 이 값으로 계산한 '기존 20.79%
+ * 연동' 결과는 약 100조원을 독립적으로 검증한 것이 아니라 그대로 재확인한 것이다.
+ */
+const INTERNAL_TAX_BACKSOLVED_JO = 481;
 
 export function GrantFormula() {
   const [growth, setGrowth] = useState(0.062);
@@ -18,7 +26,7 @@ export function GrantFormula() {
     nominalGrowth: growth,
     schoolAgeChange: change,
     reflectRate: rate,
-    internalTaxJo: INTERNAL_TAX_JO,
+    internalTaxJo: INTERNAL_TAX_BACKSOLVED_JO,
   });
 
   return (
@@ -60,6 +68,7 @@ export function GrantFormula() {
         <Figure label="새 산식" value={`${result.grantJo.toFixed(1)}조원`} />
         <Figure
           label="기존 20.79% 연동"
+          kind="derived"
           value={result.legacyJo === null ? '—' : `${result.legacyJo.toFixed(1)}조원`}
         />
         <Figure
@@ -80,11 +89,14 @@ export function GrantFormula() {
       )}
 
       <p className="text-sm leading-relaxed text-muted-foreground">
-        전년도 교부금 {PREVIOUS_GRANT_JO}조원, 내국세 {INTERNAL_TAX_JO}조원을 기준값으로 둔
-        계산입니다. 실제 편성에서는 추가세수를 제외한 내국세가 기준이 되므로 비교값은
-        참고용입니다. 이 기본값대로 계산하면 새 산식 결과는 약 75.3조원으로, 정부가 발표한
-        78조 8,718억원과는 차이가 나는데, 발표치에는 이 산식만으로는 설명되지 않는 정산분
-        등이 추가로 반영돼 있기 때문입니다.
+        전년도 교부금 {PREVIOUS_GRANT_JO}조원을 기준값으로 둔 계산입니다. 오른쪽 &lsquo;기존
+        20.79% 연동&rsquo; 값은 정부가 밝힌 &lsquo;약 100조원&rsquo;을 20.79%로 역산해
+        내국세({INTERNAL_TAX_BACKSOLVED_JO}조원)를 되돌린 뒤 다시 곱한 것이라, 그 수치를
+        독립적으로 검증한 것이 아니라 같은 값을 재확인한 것입니다. 이 기본값대로 계산하면 새
+        산식 결과는 약 75.3조원으로, 정부가 발표한 78조 8,718억원과는 차이가 나는데,
+        발표치에는 이 산식만으로는 설명되지 않는 정산분 등이 추가로 반영돼 있기 때문입니다.
+        그래서 &lsquo;차이&rsquo; 칸도 같은 간극을 그대로 물려받아 요약에 적은 차액 약
+        21조원보다 크게 나오며, 두 값 사이의 거리가 곧 정산분 등 산식 밖 항목의 크기입니다.
       </p>
     </div>
   );
@@ -124,16 +136,28 @@ function Slider({
         onChange={(e) => onChange(Number(e.target.value))}
         className="mt-2 w-full accent-blue-600"
         aria-label={label}
+        aria-valuetext={display}
       />
       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{note}</p>
     </div>
   );
 }
 
-function Figure({ label, value }: { label: string; value: string }) {
+function Figure({
+  label,
+  value,
+  kind,
+}: {
+  label: string;
+  value: string;
+  kind?: FigureKind;
+}) {
   return (
     <div className="rounded-lg border border-border bg-muted/30 p-4">
-      <p className="text-sm text-muted-foreground">{label}</p>
+      <p className="text-sm text-muted-foreground">
+        {label}
+        {kind && <span className="ml-1 font-mono text-xs">{FIGURE_KIND_LABEL[kind]}</span>}
+      </p>
       <p className="mt-1 text-2xl font-bold tabular-nums text-foreground">{value}</p>
     </div>
   );

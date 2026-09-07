@@ -3,8 +3,9 @@ import type { Dispute } from './types';
 export const futureFund: Dispute = {
   slug: 'future-fund',
   title: '미래대응기금 신설과 위탁 운용',
-  question: '162조원 규모 신설 기금의 여유자금 104조원을 민간에 위탁해 운용할 것인가',
-  stage: 'committee',
+  question:
+    '162조원 규모로 신설되는 기금과, 민간 위탁이 검토되고 있는 여유자금 104조원을 국회 심의 밖에 두는 것이 타당한가',
+  stage: 'proposed',
   scale: '162조 3,000억원',
   nextMilestone: { date: '2026-12-02', label: '예산 법정 처리기한' },
 
@@ -13,18 +14,21 @@ export const futureFund: Dispute = {
       label: '기금 총 규모',
       value: '162조 3,000억원',
       kind: 'announced',
+      source: '기획예산처 2027년 예산안',
     },
     {
       label: '여유자금',
       value: '104조 4,000억원',
       note: '사업비 45조 4,000억원과 국채발행 축소분 12조 5,000억원을 뺀 금액',
-      kind: 'announced',
+      kind: 'derived',
+      source: '기획예산처 2027년 예산안',
     },
     {
       label: '교육·인재계정',
       value: '10조 1,000억원',
       note: '전체의 약 6%. 교부금 개편 차액이 이 계정으로 들어간다',
       kind: 'announced',
+      source: '기획예산처 2027년 예산안',
     },
   ],
 
@@ -61,14 +65,6 @@ export const futureFund: Dispute = {
         '기금 사업을 변경할 때의 요건과 절차를 지금보다 엄격하게 정해야 한다',
       source: '참여연대 논평',
     },
-    {
-      side: 'neutral',
-      actor: '노르웨이 국부펀드(GPFG) 사례',
-      claim:
-        '국내 자산 투자를 전면 금지하고 원금 인출을 막는 규정으로 정치적 사용을 차단한다',
-      evidence: '한국 미래대응기금에는 이에 해당하는 규정이 아직 없다',
-      source: '자본시장연구원 OCIO 개선과제',
-    },
   ],
 
   calculator: 'fund-scenario',
@@ -76,7 +72,8 @@ export const futureFund: Dispute = {
   caveats: [
     '민간 위탁(OCIO) 운용은 확정된 것이 아니라 검토 단계다. 장관 발표문에는 위탁 운용 언급 없이 재정 안정화 기능만 설명돼 있다.',
     '세수 결손으로 기금을 헐어야 하는 시점과 자산가격이 떨어지는 시점은 대체로 겹친다. 손실을 확정하고 인출하게 되는 구조다.',
-    '교육·인재계정은 전체의 6%다. 교부금 차액이 이 계정으로 보장된다는 설명은 계정 간 이동이지 증액이 아니다.',
+    '교육·인재계정은 전체의 6%다. 교부금 차액이 이 계정으로 보장된다는 설명은 계정 간 이동이지 증액이 아니다. 게다가 계정 규모 10조 1,000억원은 교부금 개편 차액 약 21조원의 절반에 못 미친다.',
+    '비교 대상으로 자주 거론되는 노르웨이 국부펀드(GPFG)는 국내 자산 투자를 전면 금지하고 원금 인출을 막는 규정으로 정치적 사용을 차단하는데, 한국 미래대응기금에는 이에 해당하는 규정이 아직 없다 (자본시장연구원 OCIO 제도 개선과제).',
   ],
 
   sources: [

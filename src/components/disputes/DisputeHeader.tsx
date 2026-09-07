@@ -28,6 +28,7 @@ export function DisputeHeader({ dispute }: { dispute: Dispute }) {
             {f.note && (
               <dd className="mt-2 text-sm leading-relaxed text-muted-foreground">{f.note}</dd>
             )}
+            <dd className="mt-2 font-mono text-xs text-muted-foreground">출처 — {f.source}</dd>
           </div>
         ))}
       </dl>

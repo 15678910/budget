@@ -25,6 +25,9 @@ export function DisputeComparison({
                 {r.note && (
                   <span className="block text-sm text-muted-foreground">{r.note}</span>
                 )}
+                <span className="mt-1 block font-mono text-xs text-muted-foreground">
+                  출처 — {r.source}
+                </span>
               </td>
               <td className="px-4 py-3 text-right font-bold tabular-nums text-foreground">
                 {r.value}

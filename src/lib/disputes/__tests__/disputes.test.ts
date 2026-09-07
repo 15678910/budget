@@ -8,10 +8,10 @@ describe('분쟁 데이터 무결성', () => {
     expect(new Set(slugs).size).toBe(slugs.length);
   });
 
-  it('모든 수치가 출처 태그를 갖는다', () => {
+  it('모든 수치에 개별 출처가 달려 있다', () => {
     for (const d of ALL_DISPUTES) {
-      for (const f of d.figures) {
-        expect(['measured', 'announced', 'derived', 'estimated']).toContain(f.kind);
+      for (const f of [...d.figures, ...(d.comparison?.rows ?? [])]) {
+        expect(f.source.trim()).not.toBe('');
       }
     }
   });

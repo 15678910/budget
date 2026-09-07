@@ -1,5 +1,11 @@
 import type { TimelineEvent } from '@/lib/disputes/types';
 
+const STATUS_LABEL: Record<TimelineEvent['status'], string> = {
+  done: '완료',
+  current: '진행 중',
+  upcoming: '예정',
+};
+
 const STATUS_CLASS: Record<TimelineEvent['status'], string> = {
   done: 'border-l-muted-foreground/40',
   current: 'border-l-blue-500 bg-blue-500/10',
@@ -15,6 +21,9 @@ export function DisputeTimeline({ events }: { events: TimelineEvent[] }) {
           className={`rounded-md border-l-4 bg-muted/20 px-4 py-3 ${STATUS_CLASS[e.status]}`}
         >
           <div className="flex flex-wrap items-baseline gap-3">
+            <span className="font-mono text-xs text-muted-foreground">
+              {STATUS_LABEL[e.status]}
+            </span>
             <span className="font-mono text-sm tabular-nums text-muted-foreground">{e.date}</span>
             <span className="text-base font-semibold text-foreground">{e.label}</span>
             {e.source && (

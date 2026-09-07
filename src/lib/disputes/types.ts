@@ -35,6 +35,12 @@ export interface DisputeFigure {
   value: string;
   note?: string;
   kind: FigureKind;
+  /**
+   * 이 수치 하나에 대한 출처. 분쟁 단위의 sources[]만으로는 어느 숫자가 어느 문서에서
+   * 왔는지 독자가 되짚을 수 없어, 데이터센터 모듈의 Figure와 같이 필수로 둔다.
+   * 발행 주체와 문서 이름 정도로 짧게 쓴다.
+   */
+  source: string;
 }
 
 export interface TimelineEvent {
