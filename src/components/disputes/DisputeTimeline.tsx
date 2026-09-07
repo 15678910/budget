@@ -21,17 +21,17 @@ export function DisputeTimeline({ events }: { events: TimelineEvent[] }) {
           className={`rounded-md border-l-4 bg-muted/20 px-4 py-3 ${STATUS_CLASS[e.status]}`}
         >
           <div className="flex flex-wrap items-baseline gap-3">
-            <span className="font-mono text-xs text-muted-foreground">
+            <span className="font-mono text-sm text-muted-foreground">
               {STATUS_LABEL[e.status]}
             </span>
-            <span className="font-mono text-sm tabular-nums text-muted-foreground">{e.date}</span>
+            <span className="font-mono text-base tabular-nums text-muted-foreground">{e.date}</span>
             <span className="text-base font-semibold text-foreground">{e.label}</span>
             {e.source && (
-              <span className="font-mono text-xs text-muted-foreground">{e.source}</span>
+              <span className="font-mono text-sm text-muted-foreground">{e.source}</span>
             )}
           </div>
           {e.detail && (
-            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{e.detail}</p>
+            <p className="mt-1 text-base leading-relaxed text-muted-foreground">{e.detail}</p>
           )}
         </li>
       ))}

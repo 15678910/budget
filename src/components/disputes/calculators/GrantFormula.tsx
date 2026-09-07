@@ -82,13 +82,13 @@ export function GrantFormula() {
       </div>
 
       {result.floorApplied && (
-        <p className="rounded-md border border-amber-500/40 bg-amber-500/10 p-3 text-sm leading-relaxed text-foreground">
+        <p className="rounded-md border border-amber-500/40 bg-amber-500/10 p-3 text-base leading-relaxed text-foreground">
           산식 결과가 전년보다 적어 <b>감소분 보전 규정</b>이 적용됐습니다. 다만 이 보전은
           명목 금액 기준이라 호봉 승급과 공공요금 인상은 반영되지 않습니다.
         </p>
       )}
 
-      <p className="text-sm leading-relaxed text-muted-foreground">
+      <p className="text-base leading-relaxed text-muted-foreground">
         전년도 교부금 {PREVIOUS_GRANT_JO}조원을 기준값으로 둔 계산입니다. 오른쪽 &lsquo;기존
         20.79% 연동&rsquo; 값은 정부가 밝힌 &lsquo;약 100조원&rsquo;을 20.79%로 역산해
         내국세({INTERNAL_TAX_BACKSOLVED_JO}조원)를 되돌린 뒤 다시 곱한 것이라, 그 수치를
@@ -138,7 +138,7 @@ function Slider({
         aria-label={label}
         aria-valuetext={display}
       />
-      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{note}</p>
+      <p className="mt-2 text-base leading-relaxed text-muted-foreground">{note}</p>
     </div>
   );
 }
@@ -154,9 +154,9 @@ function Figure({
 }) {
   return (
     <div className="rounded-lg border border-border bg-muted/30 p-4">
-      <p className="text-sm text-muted-foreground">
+      <p className="text-base text-muted-foreground">
         {label}
-        {kind && <span className="ml-1 font-mono text-xs">{FIGURE_KIND_LABEL[kind]}</span>}
+        {kind && <span className="ml-1 font-mono text-sm">{FIGURE_KIND_LABEL[kind]}</span>}
       </p>
       <p className="mt-1 text-2xl font-bold tabular-nums text-foreground">{value}</p>
     </div>

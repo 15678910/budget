@@ -49,14 +49,14 @@ export function FundScenario() {
       </div>
 
       {isLoss && (
-        <p className="rounded-md border border-red-500/40 bg-red-500/10 p-3 text-sm leading-relaxed text-foreground">
+        <p className="rounded-md border border-red-500/40 bg-red-500/10 p-3 text-base leading-relaxed text-foreground">
           손실 구간입니다. 세수 결손으로 재정 보강이 필요해지는 시점은 자산가격이 떨어지는
           시점과 대체로 겹칩니다. 손실을 확정한 채로 인출해야 하는 상황이 이 기금의 구조적
           위험입니다.
         </p>
       )}
 
-      <p className="text-sm leading-relaxed text-muted-foreground">
+      <p className="text-base leading-relaxed text-muted-foreground">
         여유자금 {IDLE_FUND_JO}조원이 전액 같은 수익률로 운용된다고 가정한 단순 복리
         계산이며, 아직 검토 단계인 민간 위탁 운용의 경우를 모델로 삼은 것입니다. 실제 운용은
         자산군별 배분과 인출 일정에 따라 달라집니다.
@@ -101,7 +101,7 @@ function Slider({
         aria-label={label}
         aria-valuetext={display}
       />
-      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{note}</p>
+      <p className="mt-2 text-base leading-relaxed text-muted-foreground">{note}</p>
     </div>
   );
 }
@@ -109,7 +109,7 @@ function Slider({
 function Figure({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-lg border border-border bg-muted/30 p-4">
-      <p className="text-sm text-muted-foreground">{label}</p>
+      <p className="text-base text-muted-foreground">{label}</p>
       <p className="mt-1 text-2xl font-bold tabular-nums text-foreground">{value}</p>
     </div>
   );

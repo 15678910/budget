@@ -21,14 +21,14 @@ export function DisputePositions({ positions }: { positions: Position[] }) {
           className={`rounded-md border border-border border-l-4 bg-muted/20 p-4 ${SIDE_CLASS[p.side]}`}
         >
           <div className="flex flex-wrap items-baseline gap-2">
-            <span className="font-mono text-xs text-muted-foreground">{SIDE_LABEL[p.side]}</span>
+            <span className="font-mono text-sm text-muted-foreground">{SIDE_LABEL[p.side]}</span>
             <span className="text-base font-bold text-foreground">{p.actor}</span>
           </div>
           <p className="mt-2 text-base leading-relaxed text-foreground">{p.claim}</p>
           {p.evidence && (
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{p.evidence}</p>
+            <p className="mt-2 text-base leading-relaxed text-muted-foreground">{p.evidence}</p>
           )}
-          <p className="mt-2 font-mono text-xs text-muted-foreground">출처 — {p.source}</p>
+          <p className="mt-2 font-mono text-sm text-muted-foreground">출처 — {p.source}</p>
         </article>
       ))}
     </div>

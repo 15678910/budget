@@ -11,7 +11,7 @@ export function DisputeComparison({
   return (
     <div className="overflow-x-auto rounded-lg border border-border">
       <table className="w-full min-w-[420px] text-base">
-        <caption className="p-3 text-left font-mono text-xs text-muted-foreground">
+        <caption className="p-3 text-left font-mono text-sm text-muted-foreground">
           {caption}
         </caption>
         <tbody>
@@ -19,13 +19,13 @@ export function DisputeComparison({
             <tr key={r.label} className="border-t border-border">
               <td className="px-4 py-3 text-foreground">
                 {r.label}{' '}
-                <span className="font-mono text-xs text-muted-foreground">
+                <span className="font-mono text-sm text-muted-foreground">
                   {FIGURE_KIND_LABEL[r.kind]}
                 </span>
                 {r.note && (
-                  <span className="block text-sm text-muted-foreground">{r.note}</span>
+                  <span className="block text-base text-muted-foreground">{r.note}</span>
                 )}
-                <span className="mt-1 block font-mono text-xs text-muted-foreground">
+                <span className="mt-1 block font-mono text-sm text-muted-foreground">
                   출처 — {r.source}
                 </span>
               </td>

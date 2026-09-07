@@ -11,10 +11,10 @@ export function DisputeFooter({ dispute }: { dispute: Dispute }) {
           </li>
         ))}
       </ul>
-      <h3 className="mt-6 text-base font-bold text-foreground">출처</h3>
+      <h3 className="mt-6 text-lg font-bold text-foreground">출처</h3>
       <ol className="mt-2 list-decimal space-y-1 pl-5">
         {dispute.sources.map((s) => (
-          <li key={s.title} className="text-sm text-muted-foreground">
+          <li key={s.title} className="text-base text-muted-foreground">
             {s.publisher}, 「{s.title}」, {s.date}
             {s.url && (
               <>
