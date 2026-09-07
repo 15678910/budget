@@ -20,9 +20,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const dispute = getDispute(slug);
-  if (!dispute) return { title: '예산분쟁 | 마을살림/나라살림' };
+  if (!dispute) return { title: '예산분쟁' };
   return {
-    title: `${dispute.title} | 마을살림/나라살림`,
+    title: dispute.title,
     description: dispute.question,
   };
 }

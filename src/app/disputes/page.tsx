@@ -3,7 +3,7 @@ import { ALL_DISPUTES } from '@/lib/disputes';
 import { DisputeCard } from '@/components/disputes/DisputeCard';
 
 export const metadata: Metadata = {
-  title: '예산분쟁 | 마을살림/나라살림',
+  title: '예산분쟁',
   description: '매년 반복되는 예산 갈등의 쟁점·진행·근거를 정리합니다.',
 };
 
