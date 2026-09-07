@@ -172,6 +172,12 @@ export const educationGrant: Dispute = {
       publisher: '교육플러스',
       date: '2026-09-04',
     },
+    {
+      title: '교육청별 재정도표 (2024 회계연도 결산)',
+      publisher: '지방교육재정알리미',
+      date: '2026-09-08',
+      url: 'https://www.eduinfo.go.kr/portal/theme/pfincbriefPage.do',
+    },
   ],
 
   updatedAt: '2026-09-07',

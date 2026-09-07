@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { computeGrant } from '@/lib/disputes/grant-formula';
 import { FIGURE_KIND_LABEL } from '@/lib/datacenter/types';
 import type { FigureKind } from '@/lib/datacenter/types';
+import { RegionalImpactTable } from './RegionalImpactTable';
 
 /** 2026년 본예산 교부금 (조원) */
 const PREVIOUS_GRANT_JO = 71.67;
@@ -28,6 +29,8 @@ export function GrantFormula() {
     reflectRate: rate,
     internalTaxJo: INTERNAL_TAX_BACKSOLVED_JO,
   });
+
+  const cutEok = result.gapJo !== null && result.gapJo < 0 ? Math.abs(result.gapJo) * 10000 : 0;
 
   return (
     <div className="flex flex-col gap-4">
@@ -87,6 +90,16 @@ export function GrantFormula() {
           명목 금액 기준이라 호봉 승급과 공공요금 인상은 반영되지 않습니다.
         </p>
       )}
+
+      <div className="flex flex-col gap-2">
+        <h3 className="text-lg font-bold text-foreground">우리 지역 교육청은 얼마나 감당해야 하나</h3>
+        <p className="text-base leading-relaxed text-muted-foreground">
+          전국 감소액을 시도별 이전수입 비중으로 나눈 값입니다. 이전수입에는 교부금 외에
+          국고보조금과 지방자치단체 전입금이 섞여 있어 정확한 교부금 배분액은 아니며, 지역
+          간 상대적 크기를 보기 위한 근사입니다.
+        </p>
+        <RegionalImpactTable cutEok={cutEok} />
+      </div>
 
       <p className="text-base leading-relaxed text-muted-foreground">
         전년도 교부금 {PREVIOUS_GRANT_JO}조원을 기준값으로 둔 계산입니다. 오른쪽 &lsquo;기존
