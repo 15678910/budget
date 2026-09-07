@@ -30,6 +30,13 @@ export const futureFund: Dispute = {
       kind: 'announced',
       source: '기획예산처 2027년 예산안',
     },
+    {
+      label: '국회 심사 없이 바꿀 수 있는 범위',
+      value: '30%',
+      note: '국회가 정한 주요항목 지출금액 기준. 다른 비금융성 기금의 한도 20%보다 10%포인트 넓다',
+      kind: 'announced',
+      source: '비즈니스포스트 보도',
+    },
   ],
 
   timeline: [
@@ -106,6 +113,17 @@ export const futureFund: Dispute = {
       publisher: 'APG',
       date: '2022',
       url: 'https://apg.nl/en/publication/pension-fund-abp-exists-100-years/',
+    },
+    {
+      title: "정부 '100조 전망' 미래대응기금 '30% 탄력 운용' 설계, 국회 통제 범위 쟁점",
+      publisher: '비즈니스포스트',
+      date: '2026-08-25',
+      url: 'https://www.businesspost.co.kr/BP?command=article_view&num=445553',
+    },
+    {
+      title: '국가재정법 제70조 (기금운용계획의 변경)',
+      publisher: '국가법령정보센터',
+      date: '2024-12-31',
     },
   ],
 

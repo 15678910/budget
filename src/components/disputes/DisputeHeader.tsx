@@ -3,6 +3,8 @@ import { STAGE_LABEL } from '@/lib/disputes/types';
 import { FIGURE_KIND_LABEL } from '@/lib/datacenter/types';
 
 export function DisputeHeader({ dispute }: { dispute: Dispute }) {
+  const columns = dispute.figures.length === 4 ? 'sm:grid-cols-2' : 'sm:grid-cols-3';
+
   return (
     <header>
       <div className="flex flex-wrap items-center gap-2">
@@ -17,7 +19,7 @@ export function DisputeHeader({ dispute }: { dispute: Dispute }) {
       <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg">
         {dispute.question}
       </p>
-      <dl className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
+      <dl className={`mt-6 grid grid-cols-1 gap-3 ${columns}`}>
         {dispute.figures.map((f) => (
           <div key={f.label} className="rounded-lg border border-border bg-muted/30 p-4">
             <dt className="text-base text-muted-foreground">
