@@ -61,11 +61,11 @@ export const futureFund: Dispute = {
       url: 'https://www.newstomato.com/ReadNews.aspx?no=1312211',
     },
     {
-      side: 'against',
+      side: 'neutral',
       actor: '참여연대',
       claim:
-        '기금 사업을 변경할 때의 요건과 절차를 지금보다 엄격하게 정해야 한다',
-      source: '참여연대 논평',
+        '세수 변동에 대비해 일부 재원을 따로 관리하는 방식 자체는 의미가 있다. 다만 일시적 세수와 구조적 세수를 구분하는 기준을 명확히 세워 자의적 운용을 막아야 한다',
+      source: '참여연대 조세재정개혁센터 논평',
       url: 'https://www.ngonews.kr/news/articleView.html?idxno=236930',
     },
   ],
