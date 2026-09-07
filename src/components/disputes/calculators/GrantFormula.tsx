@@ -6,8 +6,8 @@ import { FIGURE_KIND_LABEL } from '@/lib/datacenter/types';
 import type { FigureKind } from '@/lib/datacenter/types';
 import { RegionalImpactTable } from './RegionalImpactTable';
 
-/** 2026년 본예산 교부금 (조원) */
-const PREVIOUS_GRANT_JO = 71.67;
+/** 개정안 부칙 제3조가 정한 법정 기준금액 (75조 6,901억 8,400만원) */
+const PREVIOUS_GRANT_JO = 75.69018;
 /**
  * 비교용 내국세 총액 (조원) — 역산값이다.
  *
@@ -19,7 +19,7 @@ const INTERNAL_TAX_BACKSOLVED_JO = 481;
 
 export function GrantFormula() {
   const [growth, setGrowth] = useState(0.062);
-  const [change, setChange] = useState(-0.03);
+  const [change, setChange] = useState(-0.0537);
   const [rate, setRate] = useState(0.35);
 
   const result = computeGrant({
@@ -52,7 +52,7 @@ export function GrantFormula() {
           max={0.12}
           step={0.002}
           display={`${(growth * 100).toFixed(1)}%`}
-          note="3년 연평균. 명목 GDP 증가율이라 물가가 이미 포함돼 있다"
+          note="3년 연평균. 명목 GDP 증가율이라 물가가 이미 포함돼 있다. 정부가 실제로 사용한 값은 공개되지 않았다"
           onChange={setGrowth}
         />
         <Slider
@@ -60,9 +60,9 @@ export function GrantFormula() {
           value={change}
           min={-0.1}
           max={0}
-          step={0.005}
+          step={0.001}
           display={`${(change * 100).toFixed(1)}%`}
-          note="3년 연평균. 음수는 감소를 뜻한다"
+          note="개정안 제3조 제3항은 학령인구를 3세부터 17세까지로 정의한다. 교부금은 초·중등 재원인데 영유아가 포함된다"
           onChange={setChange}
         />
       </div>
@@ -111,14 +111,19 @@ export function GrantFormula() {
       </div>
 
       <p className="text-base leading-relaxed text-muted-foreground">
-        전년도 교부금 {PREVIOUS_GRANT_JO}조원을 기준값으로 둔 계산입니다. 오른쪽 &lsquo;기존
-        20.79% 연동&rsquo; 값은 정부가 밝힌 &lsquo;약 100조원&rsquo;을 20.79%로 역산해
-        내국세({INTERNAL_TAX_BACKSOLVED_JO}조원)를 되돌린 뒤 다시 곱한 것이라, 그 수치를
-        독립적으로 검증한 것이 아니라 같은 값을 재확인한 것입니다. 이 기본값대로 계산하면 새
-        산식 결과는 약 75.3조원으로, 정부가 발표한 78조 8,718억원과는 차이가 나는데,
-        발표치에는 이 산식만으로는 설명되지 않는 정산분 등이 추가로 반영돼 있기 때문입니다.
-        그래서 &lsquo;차이&rsquo; 칸도 같은 간극을 그대로 물려받아 요약에 적은 차액 약
-        21조원보다 크게 나오며, 두 값 사이의 거리가 곧 정산분 등 산식 밖 항목의 크기입니다.
+        전년도 교부금 {PREVIOUS_GRANT_JO}조원은 개정안 부칙 제3조가 정한 법정 기준금액(75조
+        6,901억 8,400만원)입니다. 학령인구 변화율의 기본값 −5.4%는 정부가 발표한 2027년
+        교부금 78조 8,718억원을 역산해 얻은 값입니다. 정부는 실제로 사용한 경상성장률과
+        학령인구 변화율을 공개하지 않았으므로, 이 값은 경상성장률을 6.2%로 가정했을 때
+        발표치를 재현하는 조합일 뿐입니다.
+      </p>
+      <p className="text-base leading-relaxed text-muted-foreground">
+        참고로 2025년 초·중·고 학생 수의 실제 감소율은 2.3%였습니다. 발표치를 재현하려면
+        그보다 훨씬 가파른 감소율이 필요한데, 이는 개정안이 학령인구를 3~17세로 정의해
+        영유아까지 포함한 결과로 보입니다. 오른쪽 &lsquo;기존 20.79% 연동&rsquo; 값은 정부가
+        밝힌 &lsquo;약 100조원&rsquo;을 20.79%로 역산해 내국세({INTERNAL_TAX_BACKSOLVED_JO}
+        조원)를 되돌린 뒤 다시 곱한 것이라, 독립적인 검증이 아니라 같은 값을 재확인한
+        것입니다.
       </p>
     </div>
   );
