@@ -43,7 +43,10 @@ describe('분쟁 데이터 무결성', () => {
 
   it('입장에 찬반이 모두 담겨 있다', () => {
     for (const d of ALL_DISPUTES) {
-      expect(d.positions.length).toBeGreaterThanOrEqual(2);
+      const hasFavorable = d.positions.some((p) => p.side === 'for');
+      const hasOpposed = d.positions.some((p) => p.side === 'against');
+      expect(hasFavorable).toBe(true);
+      expect(hasOpposed).toBe(true);
     }
   });
 
