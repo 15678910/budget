@@ -68,3 +68,4 @@ public/*.pdf
 /scripts/output/
 /lofin_meta.xlsx
 scripts/_regions.json
+data/
