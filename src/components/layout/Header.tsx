@@ -19,6 +19,7 @@ const MAIN_TABS = [
   { href: "/regional", label: "지역지도" },
   { href: "/fiscal-health", label: "재정건전성" },
   { href: "/debt-clock", label: "국채시계" },
+  { href: "/disputes", label: "분쟁" },
 ];
 
 const PLEDGE_TABS = [
