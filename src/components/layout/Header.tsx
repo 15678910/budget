@@ -113,13 +113,13 @@ export function Header() {
           </Link>
 
           {/* Desktop nav (hidden on mobile) */}
-          <nav data-tour="nav" className="hidden md:flex items-center gap-1">
+          <nav data-tour="nav" className="hidden md:flex items-center gap-0.5 xl:gap-1">
             {MAIN_TABS.map((tab) => (
               <Link
                 key={tab.href}
                 href={tab.href}
                 className={cn(
-                  "px-3 py-1.5 text-sm rounded-md transition-colors whitespace-nowrap",
+                  "px-2.5 xl:px-3 py-1.5 text-sm rounded-md transition-colors whitespace-nowrap",
                   pathname === tab.href
                     ? "text-foreground bg-muted/50"
                     : "text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -139,7 +139,7 @@ export function Header() {
               <Link
                 href="/promise-check"
                 className={cn(
-                  "flex items-center gap-1 px-3 py-1.5 text-sm rounded-md transition-colors whitespace-nowrap",
+                  "flex items-center gap-1 px-2.5 xl:px-3 py-1.5 text-sm rounded-md transition-colors whitespace-nowrap",
                   isPledgeActive
                     ? "text-foreground bg-muted/50"
                     : "text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -184,7 +184,7 @@ export function Header() {
               <Link
                 href="/simulator"
                 className={cn(
-                  "flex items-center gap-1 px-3 py-1.5 text-sm rounded-md transition-colors whitespace-nowrap",
+                  "flex items-center gap-1 px-2.5 xl:px-3 py-1.5 text-sm rounded-md transition-colors whitespace-nowrap",
                   isAIActive
                     ? "text-foreground bg-muted/50"
                     : "text-muted-foreground hover:bg-muted hover:text-foreground"
