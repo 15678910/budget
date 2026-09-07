@@ -28,7 +28,21 @@ export function DisputePositions({ positions }: { positions: Position[] }) {
           {p.evidence && (
             <p className="mt-2 text-base leading-relaxed text-muted-foreground">{p.evidence}</p>
           )}
-          <p className="mt-2 font-mono text-sm text-muted-foreground">출처 — {p.source}</p>
+          <p className="mt-2 font-mono text-sm text-muted-foreground">
+            출처 —{' '}
+            {p.url ? (
+              <a
+                href={p.url}
+                className="underline hover:text-foreground"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {p.source}
+              </a>
+            ) : (
+              p.source
+            )}
+          </p>
         </article>
       ))}
     </div>

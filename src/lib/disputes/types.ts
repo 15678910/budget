@@ -59,6 +59,8 @@ export interface Position {
   claim: string;
   evidence?: string;
   source: string;
+  /** 주장을 확인할 수 있는 원문 링크. 확인된 것만 넣는다 — 없으면 링크 없이 출처만 표시된다 */
+  url?: string;
 }
 
 export interface DisputeSource {

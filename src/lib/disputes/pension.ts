@@ -58,6 +58,7 @@ export const pension: Dispute = {
       actor: '기획예산처',
       claim: '그간 성역으로 여겨져 온 의무지출의 구조개편에 착수한다',
       source: '2026~2030년 국가재정운용계획',
+      url: 'https://www.korea.kr/briefing/pressReleaseView.do?newsId=156776382',
     },
     {
       side: 'neutral',

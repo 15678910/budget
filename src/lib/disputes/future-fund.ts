@@ -50,13 +50,15 @@ export const futureFund: Dispute = {
       claim:
         '전략적 투자 플랫폼이자 경기 변동에 대응하는 재정 안정화 장치다',
       source: '2027년 예산안 보도자료',
+      url: 'https://www.korea.kr/briefing/pressReleaseView.do?newsId=156776382',
     },
     {
       side: 'against',
       actor: '임이자 의원',
       claim:
         '국회 심의를 피해 언제든 꺼내 쓸 수 있는 상시 추경 통로가 된다',
-      source: '국정감사 질의',
+      source: '뉴스토마토 보도',
+      url: 'https://www.newstomato.com/ReadNews.aspx?no=1312211',
     },
     {
       side: 'against',
@@ -64,6 +66,7 @@ export const futureFund: Dispute = {
       claim:
         '기금 사업을 변경할 때의 요건과 절차를 지금보다 엄격하게 정해야 한다',
       source: '참여연대 논평',
+      url: 'https://www.ngonews.kr/news/articleView.html?idxno=236930',
     },
   ],
 

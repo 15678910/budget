@@ -65,6 +65,7 @@ export const educationGrant: Dispute = {
       claim:
         '현행 제도는 학령인구 감소를 반영하지 못하고, 내국세 변동에 따라 교부금이 급등락한다',
       source: '2026~2030년 국가재정운용계획 17쪽',
+      url: 'https://www.korea.kr/briefing/pressReleaseView.do?newsId=156776382',
     },
     {
       side: 'for',
@@ -72,6 +73,7 @@ export const educationGrant: Dispute = {
       claim:
         '세수에 연동된 교육재정이 오히려 불안정하다. 초과세수가 나면 소진성 사업이 급조된다',
       source: '더스쿠프 보도',
+      url: 'https://www.thescoop.co.kr/news/articleView.html?idxno=311328',
     },
     {
       side: 'against',
@@ -79,6 +81,7 @@ export const educationGrant: Dispute = {
       claim:
         '학생이 줄어도 학교 운영비·시설 관리비·교직원 인건비는 같은 비율로 줄지 않는다',
       source: '교육감협의회 성명',
+      url: 'https://www.edpl.co.kr/news/articleView.html?idxno=21442',
     },
     {
       side: 'against',
@@ -86,6 +89,7 @@ export const educationGrant: Dispute = {
       claim:
         '내국세 연동제는 교육재정을 정부의 단기 판단과 그때그때의 재정 여건으로부터 떼어놓는 장치다',
       source: '더스쿠프 보도',
+      url: 'https://www.thescoop.co.kr/news/articleView.html?idxno=311408',
     },
     {
       side: 'against',
@@ -94,6 +98,7 @@ export const educationGrant: Dispute = {
         '감소분 보전은 명목 동결일 뿐이다. 물가·공공요금·호봉 승급에만 연 약 2조 4,000억원이 든다',
       evidence: '명목 금액이 같아도 실질로는 매년 삭감된다',
       source: '지방교육재정교부금 개편 대응 긴급행동 기자회견',
+      url: 'https://www.edpl.co.kr/news/articleView.html?idxno=21463',
     },
     {
       side: 'neutral',
@@ -102,6 +107,7 @@ export const educationGrant: Dispute = {
         '학생 수를 측정단위로 삼는 항목은 8.8%뿐이며, 반영률을 0.35로 정한 근거가 충분히 제시되지 않았다',
       evidence: '대안으로 국회가 반영률을 심의·확정하고 상·하한을 법률로 정할 것을 제안',
       source: '교육플러스 보도',
+      url: 'https://www.edpl.co.kr/news/articleView.html?idxno=21443',
     },
   ],
 
