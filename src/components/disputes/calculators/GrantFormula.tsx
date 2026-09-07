@@ -92,11 +92,20 @@ export function GrantFormula() {
       )}
 
       <div className="flex flex-col gap-2">
-        <h3 className="text-lg font-bold text-foreground">우리 지역 교육청은 얼마나 감당해야 하나</h3>
+        <h3 className="text-lg font-bold text-foreground">
+          기존 연동을 유지했다면, 우리 지역은 얼마를 더 받았나
+        </h3>
         <p className="text-base leading-relaxed text-muted-foreground">
-          전국 감소액을 시도별 이전수입 비중으로 나눈 값입니다. 이전수입에는 교부금 외에
-          국고보조금과 지방자치단체 전입금이 섞여 있어 정확한 교부금 배분액은 아니며, 지역
-          간 상대적 크기를 보기 위한 근사입니다.
+          이 표의 차액은 전년도 대비 삭감액이 아닙니다. 기존 20.79% 연동을 유지했다면 받았을
+          금액과 새 산식 결과의 차이이며, 개정안에는 전년도 금액 아래로 내려가지 않도록 하는
+          보전 규정이 있습니다. 전국 차액을 시도별 이전수입 비중으로 안분했는데, 이전수입에는
+          교부금 외에 국고보조금과 지방자치단체 전입금이 섞여 있어 정확한 교부금 배분액은
+          아니고 지역 간 상대적 크기를 보기 위한 근사입니다.
+        </p>
+        <p className="text-base leading-relaxed text-muted-foreground">
+          &lsquo;비인건비 세출 대비&rsquo;는 그 차액이 인건비를 뺀 세출에서 차지하는
+          비율입니다. 인건비는 단기에 줄이기 어려우므로, 이 비율이 높을수록 시설·교육과정·
+          복지에서 감당해야 할 몫이 큽니다.
         </p>
         <RegionalImpactTable cutEok={cutEok} />
       </div>

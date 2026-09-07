@@ -7,7 +7,7 @@ export function RegionalImpactTable({ cutEok }: { cutEok: number }) {
     <div className="overflow-x-auto rounded-lg border border-border">
       <table className="w-full min-w-[560px] text-base">
         <caption className="p-3 text-left font-mono text-sm text-muted-foreground">
-          2024 회계연도 결산 · 지방교육재정알리미 교육청별 재정도표
+          기존 20.79% 연동 대비 차액 · 재정 수치는 2024 회계연도 결산(지방교육재정알리미 교육청별 재정도표)
         </caption>
         <thead>
           <tr className="border-b border-border text-left text-sm text-muted-foreground">
@@ -15,13 +15,13 @@ export function RegionalImpactTable({ cutEok }: { cutEok: number }) {
               지역
             </th>
             <th scope="col" className="px-4 py-2 text-right font-medium">
-              감소액(억원)
+              기존 연동 대비 차액(억원)
             </th>
             <th scope="col" className="px-4 py-2 text-right font-medium">
               인건비 비중
             </th>
             <th scope="col" className="px-4 py-2 text-right font-medium">
-              비인건비 대비
+              비인건비 세출 대비
             </th>
           </tr>
         </thead>
