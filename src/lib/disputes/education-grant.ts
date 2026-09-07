@@ -116,6 +116,11 @@ export const educationGrant: Dispute = {
 
   sources: [
     {
+      title: '2027년 예산안',
+      publisher: '기획예산처',
+      date: '2026-09-01',
+    },
+    {
       title: '2026~2030년 국가재정운용계획',
       publisher: '기획예산처',
       date: '2026-09-01',
