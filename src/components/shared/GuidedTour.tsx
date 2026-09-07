@@ -78,12 +78,22 @@ export function GuidedTour() {
     const el = match
       ? document.querySelector(`[${match[1]}="${match[2]}"]`)
       : document.querySelector(`[${step.target}]`);
-    if (el) {
-      const rect = el.getBoundingClientRect();
-      setTargetRect(rect);
-      el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    } else {
+    const rect = el?.getBoundingClientRect() ?? null;
+    // hidden 요소도 DOM에는 남아있어 querySelector에 잡히고, getBoundingClientRect가
+    // 0×0 사각형을 반환한다 — el이 null이 아니어도 화면에 보이지 않는 상태이므로
+    // 요소 존재 여부 대신 사각형 크기로 판단해 다음 단계로 건너뛴다.
+    const isHiddenOrMissing = !rect || (rect.width === 0 && rect.height === 0);
+    if (isHiddenOrMissing) {
       setTargetRect(null);
+      if (currentStep < TOUR_STEPS.length - 1) {
+        setCurrentStep((prev) => prev + 1);
+      } else {
+        setIsActive(false);
+        localStorage.setItem('narasalim-tour-done', 'true');
+      }
+    } else {
+      setTargetRect(rect);
+      el?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
   }, [isActive, currentStep]);
 

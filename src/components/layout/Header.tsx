@@ -113,13 +113,13 @@ export function Header() {
           </Link>
 
           {/* Desktop nav (hidden on mobile) */}
-          <nav data-tour="nav" className="hidden md:flex items-center gap-0.5 xl:gap-1">
+          <nav data-tour="nav" className="hidden xl:flex items-center gap-1">
             {MAIN_TABS.map((tab) => (
               <Link
                 key={tab.href}
                 href={tab.href}
                 className={cn(
-                  "px-2.5 xl:px-3 py-1.5 text-sm rounded-md transition-colors whitespace-nowrap",
+                  "px-3 py-1.5 text-sm rounded-md transition-colors whitespace-nowrap",
                   pathname === tab.href
                     ? "text-foreground bg-muted/50"
                     : "text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -139,7 +139,7 @@ export function Header() {
               <Link
                 href="/promise-check"
                 className={cn(
-                  "flex items-center gap-1 px-2.5 xl:px-3 py-1.5 text-sm rounded-md transition-colors whitespace-nowrap",
+                  "flex items-center gap-1 px-3 py-1.5 text-sm rounded-md transition-colors whitespace-nowrap",
                   isPledgeActive
                     ? "text-foreground bg-muted/50"
                     : "text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -184,7 +184,7 @@ export function Header() {
               <Link
                 href="/simulator"
                 className={cn(
-                  "flex items-center gap-1 px-2.5 xl:px-3 py-1.5 text-sm rounded-md transition-colors whitespace-nowrap",
+                  "flex items-center gap-1 px-3 py-1.5 text-sm rounded-md transition-colors whitespace-nowrap",
                   isAIActive
                     ? "text-foreground bg-muted/50"
                     : "text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -240,7 +240,7 @@ export function Header() {
             {/* Hamburger menu button - mobile only */}
             <button
               onClick={() => setMobileMenuOpen((v) => !v)}
-              className="md:hidden p-1.5 rounded-md hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
+              className="xl:hidden p-1.5 rounded-md hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
               aria-label="메뉴"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -354,7 +354,7 @@ export function Header() {
 
       </div>
       {mobileMenuOpen && (
-        <div className="md:hidden overflow-y-auto bg-background border-t border-border" style={{ position: 'absolute', top: '100%', left: 0, right: 0, height: 'calc(100vh - 49px)', zIndex: 100 }}>
+        <div className="xl:hidden overflow-y-auto bg-background border-t border-border" style={{ position: 'absolute', top: '100%', left: 0, right: 0, height: 'calc(100vh - 49px)', zIndex: 100 }}>
           <div className="px-4 py-4 space-y-1">
             <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider px-3 pb-1">메뉴</p>
             {MAIN_TABS.map((tab) => (
