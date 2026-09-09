@@ -62,7 +62,7 @@ interface StatsData {
   devices: DeviceStat[];
   browsers: BrowserStat[];
   os: OSStat[];
-  regions: RegionStat[];
+  geo: RegionStat[];
   referrers: ReferrerStat[];
   heatmap: HeatmapCell[];
 }
@@ -250,7 +250,7 @@ export function AdminDashboard() {
   );
 
   // Regions
-  const topRegions = useMemo(() => (data?.regions ?? []).slice(0, 15), [data?.regions]);
+  const topRegions = useMemo(() => (data?.geo ?? []).slice(0, 15), [data?.geo]);
 
   // Referrers
   const topReferrers = useMemo(() => (data?.referrers ?? []).slice(0, 10), [data?.referrers]);

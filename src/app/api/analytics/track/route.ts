@@ -51,6 +51,11 @@ function truncate(value: string | undefined | null, maxLen: number): string {
 // ---------------------------------------------------------------------------
 
 export async function POST(request: NextRequest) {
+  // 로컬 개발 서버의 조회는 실서버 DB에 기록하지 않는다 (트래커의 차단과 이중 방어)
+  if (process.env.NODE_ENV === 'development') {
+    return new NextResponse(null, { status: 204 });
+  }
+
   try {
     // Extract IP
     const forwarded = request.headers.get('x-forwarded-for');
