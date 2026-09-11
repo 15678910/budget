@@ -70,6 +70,28 @@ export interface DisputeSource {
   url?: string;
 }
 
+/**
+ * 법안 원문에서 조문 단위로 확인한 사실. 주장(Position)과 달리 편집자가 원문을 읽고 적는다.
+ * 그래서 찬반 side가 없고, 대신 어느 조문인지(article)와 어느 문서인지(source)를 반드시 단다.
+ */
+export interface Finding {
+  heading: string;
+  /** 조문 표시. 예: "국가재정법 개정안 제70조 제3항 제7호" */
+  article: string;
+  body: string;
+  /** 바뀌지 않고 남는 것. 개정안이 무엇을 건드리지 않았는지도 함께 적어야 공정하다 */
+  remains?: string;
+  source: string;
+}
+
+/** 외부 논평·연구가 제시한 대안. 편집부 의견이 아니므로 출처를 반드시 단다 */
+export interface Proposals {
+  intro: string;
+  items: string[];
+  note?: string;
+  source: string;
+}
+
 export interface Dispute {
   slug: string;
   title: string;
@@ -86,6 +108,10 @@ export interface Dispute {
   calculator?: CalculatorKey;
   /** 계산기가 없는 분쟁의 ④ 대체 — 확인된 수치 대조표 */
   comparison?: { caption: string; rows: DisputeFigure[] };
+  /** 있으면 ③ 쟁점 뒤에 「조문으로 확인한 것」 절을 렌더링한다 */
+  findings?: Finding[];
+  /** 있으면 ④ 숫자 뒤에 「대안」 절을 렌더링한다 */
+  proposals?: Proposals;
   caveats: string[];
   sources: DisputeSource[];
   /** YYYY-MM-DD. 화면 상단에 표시해 독자가 신선도를 판단하게 한다 */

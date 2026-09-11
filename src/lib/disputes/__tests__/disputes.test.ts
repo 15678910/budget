@@ -50,6 +50,32 @@ describe('분쟁 데이터 무결성', () => {
     }
   });
 
+  it('조문 확인 항목마다 조문과 출처가 있다', () => {
+    for (const d of ALL_DISPUTES) {
+      for (const f of d.findings ?? []) {
+        expect(f.article.trim()).not.toBe('');
+        expect(f.source.trim()).not.toBe('');
+        expect(f.body.length).toBeGreaterThan(20);
+      }
+    }
+  });
+
+  it('대안이 있으면 항목과 출처가 비어 있지 않다', () => {
+    for (const d of ALL_DISPUTES) {
+      if (!d.proposals) continue;
+      expect(d.proposals.items.length).toBeGreaterThan(0);
+      expect(d.proposals.source.trim()).not.toBe('');
+    }
+  });
+
+  it('미래대응기금·교부금 분쟁에 조문 확인과 대안이 있다', () => {
+    for (const slug of ['future-fund', 'education-grant']) {
+      const d = getDispute(slug);
+      expect(d?.findings?.length ?? 0).toBeGreaterThan(0);
+      expect(d?.proposals).toBeDefined();
+    }
+  });
+
   it('getDispute가 없는 slug에 undefined를 낸다', () => {
     expect(getDispute('does-not-exist')).toBeUndefined();
   });

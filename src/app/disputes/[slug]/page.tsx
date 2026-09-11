@@ -7,6 +7,8 @@ import { DisputeTimeline } from '@/components/disputes/DisputeTimeline';
 import { DisputePositions } from '@/components/disputes/DisputePositions';
 import { DisputeFooter } from '@/components/disputes/DisputeFooter';
 import { DisputeComparison } from '@/components/disputes/DisputeComparison';
+import { DisputeFindings } from '@/components/disputes/DisputeFindings';
+import { DisputeProposals } from '@/components/disputes/DisputeProposals';
 import { CALCULATORS } from '@/components/disputes/calculators';
 
 export function generateStaticParams() {
@@ -57,6 +59,17 @@ export default async function DisputeDetailPage({
         </div>
       </section>
 
+      {dispute.findings && (
+        <section>
+          <h2 className="text-xl font-bold text-foreground">조문으로 확인한 것</h2>
+          <p className="mt-1 mb-4 text-base leading-relaxed text-muted-foreground">
+            주장이 아니라 법안 원문입니다. 개정안이 무엇을 바꾸고 무엇을 남겼는지 조문 단위로
+            적었습니다.
+          </p>
+          <DisputeFindings findings={dispute.findings} />
+        </section>
+      )}
+
       {Calculator && (
         <section>
           <h2 className="text-xl font-bold text-foreground">숫자로 보기</h2>
@@ -78,6 +91,15 @@ export default async function DisputeDetailPage({
             caption={dispute.comparison.caption}
             rows={dispute.comparison.rows}
           />
+        </section>
+      )}
+
+      {dispute.proposals && (
+        <section>
+          <h2 className="text-xl font-bold text-foreground">대안</h2>
+          <div className="mt-4">
+            <DisputeProposals proposals={dispute.proposals} />
+          </div>
         </section>
       )}
 
