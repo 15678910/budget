@@ -13,6 +13,8 @@ interface HubTool {
 
 interface HubGroup {
   title: string;
+  /** 있으면 그룹 제목이 목록 페이지로 가는 링크가 된다 (예: 예산분쟁 → /disputes) */
+  href?: string;
   tools: HubTool[];
 }
 
@@ -49,12 +51,22 @@ const HUB_GROUPS: HubGroup[] = [
       },
     ],
   },
+  {
+    // 예산분쟁 세 건. 라벨은 src/lib/disputes/*.ts 의 title 을 사이드바 폭에 맞게 줄인 것이다.
+    title: '예산분쟁',
+    href: '/disputes',
+    tools: [
+      { href: '/disputes/education-grant', label: '교육교부금 개편' },
+      { href: '/disputes/future-fund', label: '미래대응기금' },
+      { href: '/disputes/pension', label: '공적연금 적자 보전' },
+    ],
+  },
 ];
 
 function isActive(pathname: string, href: string): boolean {
-  if (href === '/sdg') {
-    // Keep SDG parent active on /sdg only; /sdg/ontology highlights its own sub link.
-    return pathname === '/sdg';
+  if (href === '/sdg' || href === '/disputes') {
+    // 목록·부모 항목은 정확히 그 경로일 때만 활성. 하위 경로는 자기 항목이 표시한다.
+    return pathname === href;
   }
   return pathname === href || pathname.startsWith(`${href}/`);
 }
@@ -66,9 +78,23 @@ function HubLinks() {
     <nav className="p-3">
       {HUB_GROUPS.map((group) => (
         <div key={group.title} className="mb-4 last:mb-0">
-          <h3 className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider px-2 mb-1.5">
-            {group.title}
-          </h3>
+          {group.href ? (
+            <Link
+              href={group.href}
+              className={cn(
+                'block text-[11px] font-semibold uppercase tracking-wider px-2 mb-1.5 rounded-md transition-colors',
+                isActive(pathname, group.href)
+                  ? 'text-foreground'
+                  : 'text-muted-foreground hover:text-foreground'
+              )}
+            >
+              {group.title} ›
+            </Link>
+          ) : (
+            <h3 className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider px-2 mb-1.5">
+              {group.title}
+            </h3>
+          )}
           <ul className="space-y-0.5">
             {group.tools.map((tool) => {
               const active = isActive(pathname, tool.href);
