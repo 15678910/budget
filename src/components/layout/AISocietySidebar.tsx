@@ -1,14 +1,18 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils/format';
+import { SidebarSectionNav } from './SidebarSectionNav';
 
 interface HubTool {
   href: string;
   label: string;
   /** Optional secondary deep link shown under the parent (e.g. SDG 관계도) */
   sub?: { href: string; label: string };
+  /** 활성 상태일 때 페이지 절 목록 토글을 보여줄지 여부 (예: 예산분쟁 상세) */
+  sections?: boolean;
 }
 
 interface HubGroup {
@@ -56,9 +60,9 @@ const HUB_GROUPS: HubGroup[] = [
     title: '예산분쟁',
     href: '/disputes',
     tools: [
-      { href: '/disputes/education-grant', label: '교육교부금 개편' },
-      { href: '/disputes/future-fund', label: '미래대응기금' },
-      { href: '/disputes/pension', label: '공적연금 적자 보전' },
+      { href: '/disputes/education-grant', label: '교육교부금 개편', sections: true },
+      { href: '/disputes/future-fund', label: '미래대응기금', sections: true },
+      { href: '/disputes/pension', label: '공적연금 적자 보전', sections: true },
     ],
   },
 ];
@@ -73,6 +77,7 @@ function isActive(pathname: string, href: string): boolean {
 
 function HubLinks() {
   const pathname = usePathname();
+  const [sectionsOpen, setSectionsOpen] = useState(true);
 
   return (
     <nav className="p-3">
@@ -99,19 +104,38 @@ function HubLinks() {
             {group.tools.map((tool) => {
               const active = isActive(pathname, tool.href);
               const subActive = tool.sub ? pathname === tool.sub.href : false;
+              const showToggle = tool.sections && active;
               return (
                 <li key={tool.href}>
-                  <Link
-                    href={tool.href}
-                    className={cn(
-                      'block px-2.5 py-1.5 text-sm rounded-md transition-colors',
-                      active
-                        ? 'text-foreground bg-muted/60 font-medium'
-                        : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                  <div className="flex items-center">
+                    <Link
+                      href={tool.href}
+                      className={cn(
+                        'block flex-1 px-2.5 py-1.5 text-sm rounded-md transition-colors',
+                        active
+                          ? 'text-foreground bg-muted/60 font-medium'
+                          : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                      )}
+                    >
+                      {tool.label}
+                    </Link>
+                    {showToggle && (
+                      <button
+                        type="button"
+                        aria-expanded={sectionsOpen}
+                        aria-label="절 목록 접기/펼치기"
+                        onClick={() => setSectionsOpen((v) => !v)}
+                        className="shrink-0 px-1.5 py-1.5 text-xs text-muted-foreground hover:text-foreground"
+                      >
+                        {sectionsOpen ? '▾' : '▸'}
+                      </button>
                     )}
-                  >
-                    {tool.label}
-                  </Link>
+                  </div>
+                  {showToggle && sectionsOpen && (
+                    <div className="mt-0.5">
+                      <SidebarSectionNav />
+                    </div>
+                  )}
                   {tool.sub && (
                     <Link
                       href={tool.sub.href}

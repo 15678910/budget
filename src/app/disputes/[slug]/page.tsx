@@ -45,14 +45,14 @@ export default async function DisputeDetailPage({
     <main className="mx-auto flex w-full max-w-4xl flex-col gap-12 px-4 py-10 md:px-6">
       <DisputeHeader dispute={dispute} />
 
-      <section>
+      <section id="progress" className="scroll-mt-20">
         <h2 className="text-xl font-bold text-foreground">진행</h2>
         <div className="mt-4">
           <DisputeTimeline events={timeline} />
         </div>
       </section>
 
-      <section>
+      <section id="positions" className="scroll-mt-20">
         <h2 className="text-xl font-bold text-foreground">쟁점</h2>
         <div className="mt-4">
           <DisputePositions positions={dispute.positions} />
@@ -60,7 +60,7 @@ export default async function DisputeDetailPage({
       </section>
 
       {dispute.findings && (
-        <section>
+        <section id="findings" className="scroll-mt-20">
           <h2 className="text-xl font-bold text-foreground">원문으로 확인한 것</h2>
           <p className="mt-1 mb-4 text-base leading-relaxed text-muted-foreground">
             주장이 아니라 법안 조문과 정부가 낸 자료의 원문입니다. 무엇을 바꾸고 무엇을
@@ -71,7 +71,7 @@ export default async function DisputeDetailPage({
       )}
 
       {calculators.length > 0 && (
-        <section>
+        <section id="numbers" className="scroll-mt-20">
           <h2 className="text-xl font-bold text-foreground">숫자로 보기</h2>
           <p className="mt-1 mb-4 text-base leading-relaxed text-muted-foreground">
             가정을 바꾸면 결과가 어떻게 움직이는지 직접 확인하세요. 판단은 독자가 합니다.
@@ -85,7 +85,7 @@ export default async function DisputeDetailPage({
       )}
 
       {calculators.length === 0 && dispute.comparison && (
-        <section>
+        <section id="numbers" className="scroll-mt-20">
           <h2 className="text-xl font-bold text-foreground">숫자로 보기</h2>
           <p className="mt-1 mb-4 text-base leading-relaxed text-muted-foreground">
             이 분쟁에는 계산기를 두지 않았습니다. 자동조정장치는 국내에 도입된 전례가 없어
@@ -99,7 +99,7 @@ export default async function DisputeDetailPage({
       )}
 
       {dispute.proposals && (
-        <section>
+        <section id="proposals" className="scroll-mt-20">
           <h2 className="text-xl font-bold text-foreground">대안</h2>
           <div className="mt-4">
             <DisputeProposals proposals={dispute.proposals} />

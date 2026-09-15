@@ -2,7 +2,7 @@ import type { Dispute } from '@/lib/disputes/types';
 
 export function DisputeFooter({ dispute }: { dispute: Dispute }) {
   return (
-    <footer className="border-t-2 border-border pt-6">
+    <footer id="caveats" className="scroll-mt-20 border-t-2 border-border pt-6">
       <h2 className="text-xl font-bold text-foreground">확인이 필요한 것</h2>
       <ul className="mt-3 list-disc space-y-2 pl-5">
         {dispute.caveats.map((c) => (
