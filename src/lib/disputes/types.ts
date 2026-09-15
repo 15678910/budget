@@ -10,7 +10,7 @@ import type { FigureKind } from '@/lib/datacenter/types';
  * 계산기 키는 components가 아니라 lib에 둔다.
  * components는 lib을 import하지만 lib은 components를 import하지 않는다.
  */
-export const CALCULATOR_KEYS = ['grant-formula', 'fund-scenario'] as const;
+export const CALCULATOR_KEYS = ['grant-formula', 'fund-scenario', 'program-review'] as const;
 export type CalculatorKey = (typeof CALCULATOR_KEYS)[number];
 
 export type DisputeStage =

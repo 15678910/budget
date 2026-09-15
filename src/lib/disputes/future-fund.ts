@@ -91,7 +91,7 @@ export const futureFund: Dispute = {
     },
   ],
 
-  calculators: ['fund-scenario'],
+  calculators: ['program-review', 'fund-scenario'],
 
   caveats: [
     '위탁 운용은 검토 단계가 아니라 법안에 근거가 들어가 있다. 법률안 제13조는 여유자금을 예치·신탁·유가증권 매매로 운용하되 "수익성 제고를 위하여 외부기관에 자산운용을 위탁할 수 있도록" 규정한다. 다만 어떤 기관에 얼마를 맡길지는 정해져 있지 않다.',
