@@ -112,6 +112,8 @@ export interface Dispute {
   findings?: Finding[];
   /** 있으면 ④ 숫자 뒤에 「대안」 절을 렌더링한다 */
   proposals?: Proposals;
+  /** 「확인이 필요한 것」 절 제목. 없으면 기본 제목. 예: '미래대응기금 법안에서 확인이 필요한 것' */
+  caveatTitle?: string;
   caveats: string[];
   sources: DisputeSource[];
   /** YYYY-MM-DD. 화면 상단에 표시해 독자가 신선도를 판단하게 한다 */
