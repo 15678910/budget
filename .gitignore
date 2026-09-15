@@ -69,3 +69,5 @@ public/*.pdf
 /lofin_meta.xlsx
 scripts/_regions.json
 data/
+# 원자료 폴더(data/)만 제외한다. 소스 안의 data 디렉터리는 추적한다.
+!/src/lib/programs/data/
