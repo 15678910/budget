@@ -104,8 +104,8 @@ export interface Dispute {
   figures: DisputeFigure[];
   timeline: TimelineEvent[];
   positions: Position[];
-  /** 없으면 ④ 절에 계산기를 렌더링하지 않는다 */
-  calculator?: CalculatorKey;
+  /** 없으면 ④ 절에 계산기를 렌더링하지 않는다. 여러 개면 순서대로 렌더링 */
+  calculators?: CalculatorKey[];
   /** 계산기가 없는 분쟁의 ④ 대체 — 확인된 수치 대조표 */
   comparison?: { caption: string; rows: DisputeFigure[] };
   /** 있으면 ③ 쟁점 뒤에 「원문으로 확인한 것」 절을 렌더링한다 */

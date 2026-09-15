@@ -39,7 +39,7 @@ export default async function DisputeDetailPage({
   if (!dispute) notFound();
 
   const timeline = await staticAdapter.fetchTimeline(slug);
-  const Calculator = dispute.calculator ? CALCULATORS[dispute.calculator] : undefined;
+  const calculators = (dispute.calculators ?? []).map((k) => ({ key: k, Component: CALCULATORS[k] }));
 
   return (
     <main className="mx-auto flex w-full max-w-4xl flex-col gap-12 px-4 py-10 md:px-6">
@@ -70,17 +70,21 @@ export default async function DisputeDetailPage({
         </section>
       )}
 
-      {Calculator && (
+      {calculators.length > 0 && (
         <section>
           <h2 className="text-xl font-bold text-foreground">숫자로 보기</h2>
           <p className="mt-1 mb-4 text-base leading-relaxed text-muted-foreground">
             가정을 바꾸면 결과가 어떻게 움직이는지 직접 확인하세요. 판단은 독자가 합니다.
           </p>
-          <Calculator />
+          <div className="flex flex-col gap-10">
+            {calculators.map(({ key, Component }) => (
+              <Component key={key} />
+            ))}
+          </div>
         </section>
       )}
 
-      {!Calculator && dispute.comparison && (
+      {calculators.length === 0 && dispute.comparison && (
         <section>
           <h2 className="text-xl font-bold text-foreground">숫자로 보기</h2>
           <p className="mt-1 mb-4 text-base leading-relaxed text-muted-foreground">

@@ -113,7 +113,7 @@ export const educationGrant: Dispute = {
     },
   ],
 
-  calculator: 'grant-formula',
+  calculators: ['grant-formula'],
 
   caveats: [
     '개정안은 아직 국회를 통과하지 않았다. 78조 8,718억원은 법 개정을 전제로 편성된 정부안이며 확정 금액이 아니다.',

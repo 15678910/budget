@@ -16,10 +16,16 @@ describe('분쟁 데이터 무결성', () => {
     }
   });
 
-  it('calculator 키가 레지스트리 목록에 존재한다', () => {
+  it('calculators 키가 레지스트리 목록에 존재하고 중복이 없다', () => {
     for (const d of ALL_DISPUTES) {
-      if (d.calculator) expect(CALCULATOR_KEYS).toContain(d.calculator);
+      for (const k of d.calculators ?? []) expect(CALCULATOR_KEYS).toContain(k);
+      expect(new Set(d.calculators ?? []).size).toBe((d.calculators ?? []).length);
     }
+  });
+
+  it('교부금·미래대응기금 분쟁에 계산기가 있다', () => {
+    expect(getDispute('education-grant')?.calculators).toEqual(['grant-formula']);
+    expect(getDispute('future-fund')?.calculators).toContain('fund-scenario');
   });
 
   it('updatedAt이 YYYY-MM-DD 형식이다', () => {
