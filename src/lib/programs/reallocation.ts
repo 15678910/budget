@@ -1,6 +1,7 @@
 // src/lib/programs/reallocation.ts
 import type { FundAccount } from './types';
 import type { RankedProgram } from './scoring';
+import { isUnscorable } from './scoring';
 
 /** 정부 추산 교부금 차액(기존 연동 대비) 약 21조원 — 기획예산처 2026~2030 국가재정운용계획 */
 export const GRANT_GAP_CAP_EOK = 210_000;
@@ -28,7 +29,8 @@ export interface ReallocationResult {
 }
 
 export function reallocate(ranked: RankedProgram[], input: ReallocationInput): ReallocationResult {
-  const scorable = ranked.filter((r) => !r.program.isRemainder);
+  // 근거 부족으로 점수가 없는 행은 삭감·증액 대상에서도 뺀다 — 문서가 없다는 이유로 잘려서는 안 된다
+  const scorable = ranked.filter((r) => !isUnscorable(r.program));
   const n = Math.max(0, Math.min(input.bottomN, Math.floor(scorable.length / 2)));
   const bottom = scorable.slice(scorable.length - n);
   const top = scorable.slice(0, n);

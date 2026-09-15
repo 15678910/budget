@@ -1,5 +1,5 @@
 // src/lib/programs/__tests__/reallocation.test.ts
-import { rankPrograms, ZERO_WEIGHTS } from '../scoring';
+import { rankPrograms, ZERO_WEIGHTS, isUnscorable } from '../scoring';
 import { reallocate, GRANT_GAP_CAP_EOK } from '../reallocation';
 import { ALL_PROGRAMS } from '../index';
 
@@ -27,9 +27,12 @@ describe('재배분', () => {
     }
   });
 
-  it('잔여 행은 삭감 대상이 아니다', () => {
+  it('잔여 행과 근거 부족 행은 삭감·증액 대상이 아니다', () => {
     const r = reallocate(ranked(), { bottomN: 10, cutRate: 1, split: { top: 0, grant: 0, debt: 0, reserve: 1 } });
     expect(r.cuts.some((c) => c.id.endsWith('-remainder'))).toBe(false);
+    const unscorable = new Set(ranked().filter((r) => isUnscorable(r.program)).map((r) => r.program.id));
+    expect(r.cuts.some((c) => unscorable.has(c.id))).toBe(false);
+    expect(r.adds.some((a) => unscorable.has(a.id))).toBe(false);
   });
 
   it('교부금 보전은 21조를 넘지 않고 초과분은 적립으로 간다', () => {
