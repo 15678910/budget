@@ -74,6 +74,12 @@ export const LENS_LABEL: Record<LensKey, { name: string; note: string }> = {
   },
 };
 
+/**
+ * spendType·nature를 뒷받침하는 문장이 문서에 없어 분류하지 못한 행의 표시.
+ * 이런 행은 점수를 내지 않는다(scoring.isUnscorable) — 점수 칸은 「—」다.
+ */
+export const UNCLASSIFIED_BADGE = '분류 근거 부족';
+
 /** 재배분 배분처 라벨. 키는 ReallocationInput.split과 같다 */
 export const SPLIT_LABEL: Record<'top' | 'grant' | 'debt' | 'reserve', string> = {
   top: '상위 사업 증액',

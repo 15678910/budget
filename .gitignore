@@ -69,5 +69,9 @@ public/*.pdf
 /lofin_meta.xlsx
 scripts/_regions.json
 data/
-# 원자료 폴더(data/)만 제외한다. 소스 안의 data 디렉터리는 추적한다.
+# 위 `data/` 패턴은 깊이에 상관없이 이름이 data인 모든 디렉터리를 무시한다
+# (원자료 폴더 /data/ 뿐 아니라 src/lib/data/, src/lib/programs/data/까지).
+# 그래서 소스 안의 data 디렉터리는 하나씩 개별로 되살린다. 여기에 없는 소스 data
+# 디렉터리를 새로 만들면 git이 조용히 무시하므로 이 목록에 같이 추가할 것.
+!/src/lib/data/
 !/src/lib/programs/data/

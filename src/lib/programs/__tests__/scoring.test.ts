@@ -1,5 +1,5 @@
 // src/lib/programs/__tests__/scoring.test.ts
-import { lensValues, rankPrograms, PRESETS, ZERO_WEIGHTS } from '../scoring';
+import { lensValues, rankPrograms, scoreProgram, PRESETS, ZERO_WEIGHTS } from '../scoring';
 import { CENTRAL_GOV } from '../gov';
 import type { Program, Weights } from '../types';
 
@@ -65,6 +65,24 @@ describe('순위', () => {
     const r = rankPrograms(rows, W({ capital: 3 }));
     expect(r.map((x) => x.program.id)).toEqual(['a', 'b', 'r']);
     expect(r[2].score).toBeUndefined();
+  });
+
+  it('분류 근거가 없는 행(spendType unknown)은 가중치를 줘도 점수가 없고 뒤로 간다', () => {
+    const withUnknown = [
+      mk({ id: 'a', spendType: 'equity', amount27Eok: 100 }),
+      // nature는 문서로 확인됐지만 지출 방식을 적은 문장이 없는 행
+      mk({ id: 'u', spendType: 'unknown', nature: 'expanded', amount26Eok: 7000, amount27Eok: 8000 }),
+    ];
+    expect(scoreProgram(withUnknown[1], W({ capital: 3, netNew: 3, execution: 3 }), { maxBeneficiaries: 1 }))
+      .toBeUndefined();
+    const r = rankPrograms(withUnknown, W({ capital: 3, netNew: 3, execution: 3 }));
+    expect(r.map((x) => x.program.id)).toEqual(['a', 'u']);
+    expect(r[1].score).toBeUndefined();
+  });
+
+  it('nature가 unknown인 행도 점수가 없다', () => {
+    const p = mk({ id: 'n', nature: 'unknown', spendType: 'grant' });
+    expect(scoreProgram(p, W({ capital: 3 }), { maxBeneficiaries: 1 })).toBeUndefined();
   });
 
   it('값이 없는 렌즈는 분모에서 빠진다', () => {

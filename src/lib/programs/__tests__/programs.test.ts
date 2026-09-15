@@ -53,17 +53,43 @@ describe('1단계 데이터 무결성', () => {
     }
   });
 
-  it('잔여가 아닌 행은 spendType·nature·route 근거 인용문과 출처가 있다', () => {
+  it('행 수는 38이고 id는 kebab-case다', () => {
+    expect(rows.length).toBe(38);
+    for (const r of rows) expect(r.id).toMatch(/^[a-z0-9]+(-[a-z0-9]+)*$/);
+  });
+
+  it('evidence의 field는 허용된 값만 쓴다', () => {
+    const allowed = ['spendType', 'nature', 'route', 'unit', 'beneficiaries', 'amount27Eok'];
+    for (const r of rows) {
+      for (const e of r.evidence) expect(allowed).toContain(e.field);
+    }
+  });
+
+  it('잔여가 아닌 행은 route 근거가 있고, 분류한 렌즈에는 인용문이, 분류하지 못한 렌즈에는 사유가 있다', () => {
     for (const r of rows.filter((r) => !r.isRemainder)) {
       expect(r.sources.length).toBeGreaterThan(0);
-      for (const f of ['spendType', 'nature', 'route'] as const) {
+
+      const quoted = (f: 'spendType' | 'nature' | 'route') => {
         const e = r.evidence.find((x) => x.field === f);
         if (!e) throw new Error(`${r.id}.${f} 근거 없음`);
-        expect(e!.quote.length).toBeGreaterThan(5);
-        expect(e!.source.length).toBeGreaterThan(0);
+        expect(e.quote.length).toBeGreaterThan(5);
+        expect(e.source.length).toBeGreaterThan(0);
+      };
+      const notQuoted = (f: 'spendType' | 'nature') => {
+        const e = r.evidence.find((x) => x.field === f);
+        if (e) throw new Error(`${r.id}.${f}가 unknown인데 근거 인용문이 남아 있다`);
+      };
+
+      quoted('route');
+      if (r.spendType === 'unknown') notQuoted('spendType');
+      else quoted('spendType');
+      if (r.nature === 'unknown') notQuoted('nature');
+      else quoted('nature');
+
+      if (r.spendType === 'unknown' || r.nature === 'unknown') {
+        expect(typeof r.classificationNote).toBe('string');
+        expect(r.classificationNote!.length).toBeGreaterThan(0);
       }
-      expect(r.spendType).not.toBe('unknown');
-      expect(r.nature).not.toBe('unknown');
     }
   });
 
@@ -78,6 +104,7 @@ describe('1단계 데이터 무결성', () => {
   it('신규(new)는 amount26Eok이 null이고, 확대·이관·전환은 숫자다', () => {
     for (const r of rows.filter((r) => !r.isRemainder)) {
       if (r.nature === 'new') expect(r.amount26Eok).toBeNull();
+      else if (r.nature === 'unknown') continue; // 분류 근거 부족 — ’26년 금액도 문서에 없다
       else expect(typeof r.amount26Eok).toBe('number');
     }
   });

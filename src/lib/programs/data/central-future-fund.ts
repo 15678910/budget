@@ -6,8 +6,20 @@
  *   청년정책 개요도가 다른 숫자를 주면 계정 표를 따르고 차이를 행 위 주석에 적는다
  *   (설계 §2: "홍보자료가 조 단위 한 자리만 준 항목은 그대로 둔다").
  * - spendType·nature·route는 원자료 문장을 그대로 인용한 evidence 없이 쓰지 않는다.
- *   인용문은 PDF 추출 텍스트의 줄바꿈만 공백으로 이어 붙였고 글자는 고치지 않았다.
+ *   인용문은 PDF 추출 텍스트의 줄바꿈만 이어 붙였고 글자는 고치지 않았다(단어 한가운데에서
+ *   줄이 바뀐 자리는 공백 없이 붙였다). `node scripts/verify-program-quotes.mjs`가 대조한다.
+ * - 뒷받침하는 문장이 없으면 분류하지 않는다. spendType 또는 nature가 'unknown'인 행에는
+ *   classificationNote로 어느 문장이 없는지 적고, 그 행은 점수를 내지 않는다
+ *   (scoring.isUnscorable). 「그럴듯한 추정」이 순위를 움직이지 못하게 하는 장치다.
  * - 계정 「기타」 잔여 행은 정부가 주요사업으로 공개하지 않은 나머지다. 분류 없음, 총액에는 포함.
+ *
+ * area(5대 중점투자 과제) 배정 근거 — 홍보자료 Ⅳ장 「중점투자 과제」 첫 그림(12쪽)과 각 장 제목.
+ * 교육·인재계정 행이 'youth'인 것은 「(교육) 첨단인재 양성, AI 역량 강화」가 Ⅳ장 3
+ * 「청년 성장 단계별 종합 지원」의 첫 항목이기 때문이다(홍보자료 25쪽 장 제목 바로 아래에
+ * 같은 줄이 다시 나온다).
+ * Ⅳ장 4 「K자형 양극화 대응, 모두의 성장」의 항목은 국토대전환·지방주도 성장, 소상공인·농어민·
+ * 취약노동자 민생안정, 일상을 지키는 적극복지, 사회연대경제 생태계 조성이며 교육은 없다.
+ * 그래서 지방계정 행만 'k-shape'다.
  */
 import type { Program, ProgramEvidence } from '../types';
 import { CENTRAL_GOV } from '../gov';
@@ -168,6 +180,12 @@ export const CENTRAL_FUTURE_FUND_PROGRAMS: readonly Program[] = [
           '연간 약 8만명 대상으로 총 4,500억원 공급, 보증재원 및 이차보전·이자면제 재원으로 총 1,027억원 소요',
         source: p100('미취업 청년 기회자금'),
       },
+      {
+        // 돈을 집행하는 주체가 청년이 아니라 기관이라는 것을 문서가 직접 적는다(grant 근거 보강).
+        field: 'spendType',
+        quote: '□(시행주체) 서민금융진흥원',
+        source: p100('미취업 청년 기회자금'),
+      },
       { field: 'nature', quote: ROUTE_LINE.youthAsset, source: SRC_PROMO },
       fund(ROUTE_LINE.youthAsset),
       {
@@ -267,10 +285,12 @@ export const CENTRAL_FUTURE_FUND_PROGRAMS: readonly Program[] = [
     ],
     sources: [SRC_PROMO, promo(29), p100('아이맞이 (출산)지원금 지급')],
   },
-  // 홍보자료 29쪽 본문은 "기존아동수당 대비 2~3배로 확대·개편"이라고 적어 확대로 읽을 수도 있다.
-  // 그러나 같은 쪽 표가 ’26년 아동수당 24,822억원을 그대로 ’27년 29,272억원으로 이어 적고, 이
-  // 금액이 미래대응기금 청년계정 3종 패키지 안에 들어가 있다. 새로 만든 돈이 아니라 기존 급여의
-  // 재원이 기금으로 옮겨 실린 것이므로 transferred(설계 §3)로 둔다.
+  // 예전에는 transferred(기존 급여의 재원 이관)로 두었다. 그러나 이관이라고 적은 문장은 없다 —
+  // 문서가 쓰는 말은 전부 「도입」·「확대·개편」·「통합·확대」이고, 그것이 nature의 근거다.
+  // ’26년 일반회계에서 나가던 아동수당 24,822억원이 ’27년에는 미래대응기금 청년계정 표 안에
+  // 들어와 있다는 사실은 홍보자료 7쪽 표와 29쪽 표를 겹쳐 읽어야 나오는 추론이지 문서의 진술이
+  // 아니다. 그래서 nature는 문서가 적은 대로 expanded로 두고, 기금이 급여를 떠안았다는 관찰은
+  // 사이트 본문(src/lib/disputes/future-fund.ts)에서 「표가 보여준다」는 형태로만 말한다.
   {
     id: 'youth-child-allowance',
     name: '아동기본수당',
@@ -280,7 +300,7 @@ export const CENTRAL_FUTURE_FUND_PROGRAMS: readonly Program[] = [
     account: 'youth',
     amount26Eok: 24822,
     amount27Eok: 29272,
-    nature: 'transferred',
+    nature: 'expanded',
     spendType: 'cash',
     route: 'fund',
     evidence: [
@@ -292,7 +312,8 @@ export const CENTRAL_FUTURE_FUND_PROGRAMS: readonly Program[] = [
       },
       {
         field: 'nature',
-        quote: '- 아동수당(아동기본수당 포함) 24,822 29,272 · 아동기본수당 ‘27.7월 시행',
+        quote:
+          '➌ (양육) 아동기본수당(0~12세)을 도입하여, 기존아동수당 대비 2~3배로 확대·개편*, 0~1세는 가정양육 시 月 30만원 추가 지급',
         source: promo(29),
       },
       {
@@ -301,9 +322,14 @@ export const CENTRAL_FUTURE_FUND_PROGRAMS: readonly Program[] = [
         source: promo(13),
       },
       fund(ROUTE_LINE.youthFamily),
+      {
+        field: 'amount27Eok',
+        quote: '- 아동수당(아동기본수당 포함) 24,822 29,272 · 아동기본수당 ‘27.7월 시행',
+        source: promo(29),
+      },
       { field: 'amount27Eok', quote: '아동기본수당 (’26) 24,822 →(’27) 29,272억원', source: SRC_YOUTH },
     ],
-    sources: [SRC_PROMO, promo(29), promo(13), SRC_YOUTH],
+    sources: [SRC_PROMO, promo(29), promo(13), promo(48), SRC_YOUTH],
   },
   // 바우처는 설계 §3에서 cash로 분류한다. 단가가 10만원/15만원(지방우대)으로 갈려 unit은 넣지 않고
   // 수혜 인원만 적었다.
@@ -338,23 +364,49 @@ export const CENTRAL_FUTURE_FUND_PROGRAMS: readonly Program[] = [
         quote: '* (기존) 19~20세 28만명, 생애 1회 → (개편) 19~34세 919만명, 매년 (10/15만원)',
         source: promo(30),
       },
-      { field: 'amount27Eok', quote: ROUTE_LINE.youthCulture, source: SRC_PROMO },
+      {
+        // 계정 줄(361억원→0.8조원)보다 억 단위까지 주는 개요도 줄이 7,925라는 숫자의 출처다.
+        field: 'amount27Eok',
+        quote: '청년문화예술패스 (’26) 361 →(’27) 7,925억원',
+        source: SRC_YOUTH,
+      },
     ],
     sources: [SRC_PROMO, promo(30), SRC_YOUTH],
   },
-  // 「중기부 창업사업화(1.0조원)」는 홍보자료 7쪽에 실려 있으나 이 사업의 ’26년 금액을 주는 문장이
-  // 어느 문서에도 없다. 계정 표는 신규 표기 없이 1.0조원만 적어 기존 사업으로 보이는데(같은 표에서
-  // 신규 사업에는 모두 「신규」가 붙는다), nature를 expanded로 두려면 ’26년 숫자가 있어야 한다.
-  // 숫자를 지어내지 않으려고 별도 행으로 세우지 않고 잔여에 포함했다. 출처가 확인되면 행으로 뺀다.
+  // 「중기부 창업사업화(1.0조원)」는 홍보자료 7쪽 계정 표에 이름과 금액이 그대로 실려 있다.
+  // 예전에는 ’26년 금액과 지출 방식을 아는 문장이 없다는 이유로 잔여에 묻어 두었는데, 그러면
+  // 정부가 공개한 1.0조원짜리 사업이 화면에서 사라진다. 이제는 「분류 근거 부족」 행으로 세운다 —
+  // 금액과 경로는 문서가 주고, 성격·지출 유형은 미분류라 점수를 내지 않는다.
+  {
+    id: 'youth-startup-commercialization',
+    name: '창업사업화',
+    gov: CENTRAL_GOV,
+    ministry: '중기부',
+    area: 'youth',
+    account: 'youth',
+    amount26Eok: null,
+    amount27Eok: 10000,
+    nature: 'unknown',
+    spendType: 'unknown',
+    route: 'fund',
+    classificationNote:
+      '홍보자료 7쪽 계정 줄이 「중기부창업사업화(1.0조원)」이라고 적을 뿐, 이 사업의 ’26년 금액도 돈이 어떤 방식으로 나가는지도 적은 문장이 어느 문서에도 없다. 같은 표에서 신규 사업에는 모두 「신규」가 붙는데 이 줄에는 없어 기존 사업으로 보이지만, ’26년 숫자가 없으므로 확대로 분류하지 않는다. 문서에서 「창업사업화」가 다시 나오는 곳은 홍보자료 21쪽의 「신규판로연계·후속사업화 지원 추가 등 창업사업화 뒷받침 강화」 한 줄인데, 그 문단이 금액을 붙인 사업은 모두의 창업(0.4조원)이어서 1.0조원의 근거가 되지 못한다.',
+    evidence: [
+      fund(ROUTE_LINE.youthJob),
+      { field: 'amount27Eok', quote: ROUTE_LINE.youthJob, source: SRC_PROMO },
+    ],
+    sources: [SRC_PROMO],
+  },
+  // 13.3조원 − 위 9개 행 합계(9조 1,672억원) = 4조 1,328억원.
   {
     id: 'youth-remainder',
-    name: '(기타) 청년계정 잔여 — 중기부 창업사업화 1.0조원 포함',
+    name: '(기타) 청년계정 잔여',
     gov: CENTRAL_GOV,
     ministry: '—',
     area: 'other',
     account: 'youth',
     amount26Eok: null,
-    amount27Eok: 51328,
+    amount27Eok: 41328,
     nature: 'unknown',
     spendType: 'unknown',
     route: 'fund',
@@ -759,7 +811,8 @@ export const CENTRAL_FUTURE_FUND_PROGRAMS: readonly Program[] = [
       fund(ROUTE_LINE.regionalRural),
       {
         field: 'amount27Eok',
-        quote: '2. ’27년 지원내용: 208억원',
+        // 이 줄만 원자료가 곧은 따옴표(U+0027)를 쓴다. 같은 문서의 다른 사업은 ’(U+2019)다.
+        quote: "2. '27년 지원내용: 208억원",
         source: p100('농업 피지컬AX 실증 프로젝트'),
       },
     ],
@@ -836,7 +889,11 @@ export const CENTRAL_FUTURE_FUND_PROGRAMS: readonly Program[] = [
   },
   // 설계 §8의 열린 질문. transferred(사무와 함께 재원 이관)를 검토했으나, 문서가 이관된다고 적는
   // 것은 「사무」이고 0.65조원 자체는 ’27~’30년에 새로 주는 인센티브 재원이다. ’26년에 같은 사무에
-  // 얼마를 썼는지는 어느 문서에도 없다. 숫자를 지어내지 않기 위해 new로 두고 근거를 남긴다.
+  // 얼마를 썼는지는 어느 문서에도 없다. 숫자를 지어내지 않기 위해 new로 두고, 형제 행과 같은
+  // 사업기간 문장을 근거로 단다.
+  // 지출 유형은 미분류다. 4.35조원에 대해서는 「…지방기금인 ｢신설통합 지방정부지원기금｣으로
+  // 출연」이라는 문장이 있지만 그 문장은 재정지원 4.35조원의 것이고, 0.65조원을 설명한 문장은
+  // 「특별행정기관 등 이관사무 연계 지원」 한 줄뿐이라 전달 방식을 말해주지 않는다.
   {
     id: 'regional-jeonnam-transfer',
     name: '전남·광주 통합지원금 (사무이관)',
@@ -847,20 +904,22 @@ export const CENTRAL_FUTURE_FUND_PROGRAMS: readonly Program[] = [
     amount26Eok: null,
     amount27Eok: 6500,
     nature: 'new',
-    spendType: 'grant',
+    spendType: 'unknown',
     route: 'fund',
+    classificationNote:
+      '0.65조원이 어떤 방식으로 전달되는지 적은 문장이 없다. 100대 신규사업 「행정통합 재정 인센티브 지원」에서 출연이라고 적은 것은 재정지원 4.35조원(지방기금 출연)이고, 사무이관분에 붙은 설명은 「특별행정기관 등 이관사무 연계 지원」뿐이다. 형제 행(일반 2.85조원)의 출연 문장을 이 행에 돌려쓰지 않고 미분류로 둔다.',
     evidence: [
       {
-        field: 'spendType',
-        quote: '□ (사무이관 0.65조원) 특별행정기관 등 이관사무 연계 지원',
-        source: p100('행정통합 재정 인센티브 지원'),
-      },
-      {
         field: 'nature',
-        quote: '□ (사업내용) 행정통합 재정 인센티브로, 일반 재원 및 사무이관 연계재원 총 5조원 지원',
+        quote: '□ (사업기간) ’27~’30년(4년간 최대 20조원)',
         source: p100('행정통합 재정 인센티브 지원'),
       },
       fund(ROUTE_LINE.regionalMerge),
+      {
+        field: 'amount27Eok',
+        quote: '□ (사무이관 0.65조원) 특별행정기관 등 이관사무 연계 지원',
+        source: p100('행정통합 재정 인센티브 지원'),
+      },
       {
         field: 'amount27Eok',
         quote: '사무이관 연계재원 행안부 미래대응기금 전남광주통합특별시 이관 사무 지원 0.65',
@@ -918,9 +977,12 @@ export const CENTRAL_FUTURE_FUND_PROGRAMS: readonly Program[] = [
   },
 
   // ───────── 교육·인재계정 사업지출 7.6조원 (여유자금 2.5조원 제외) ─────────
-  // 4대 과기원·AI중심대학·창업중심대학은 홍보자료 7쪽 계정 표 말고는 어느 문서에도 설명이 없다.
-  // 지원 방식(출연)을 적은 문장이 없어, 받는 쪽이 개인이 아니라 기관(과학기술원·대학)이라는
-  // 사실만으로 설계 §3의 "기관·지자체·기업에 보조·출연 = grant"를 적용했다. 근거가 얇은 행이다.
+  // 4대 과기원·이공계 장학금·창업중심대학·AI중심대학은 홍보자료 7쪽 계정 줄(사업명과 금액)
+  // 말고는 어느 문서에도 설명이 없다. 예전에는 "받는 쪽이 기관이니 출연", "장학금이니 현금"이라고
+  // 분류하고 그 계정 줄을 지출 유형 근거로 재활용했는데, 그 줄은 지출 방식을 한 글자도 적지 않는다.
+  // 근거 없는 분류가 점수를 움직이지 않도록 네 행 모두 spendType을 'unknown'으로 되돌리고
+  // classificationNote에 사유를 적는다(scoring.isUnscorable → 점수 없음).
+  // 성격(nature)은 같은 줄이 "(0.7→0.8조원)"·"(신규0.1조원)"처럼 스스로 보여주는 만큼만 남긴다.
   {
     id: 'edu-kaist4',
     name: '4대 과기원',
@@ -931,16 +993,16 @@ export const CENTRAL_FUTURE_FUND_PROGRAMS: readonly Program[] = [
     amount26Eok: 7000,
     amount27Eok: 8000,
     nature: 'expanded',
-    spendType: 'grant',
+    spendType: 'unknown',
     route: 'fund',
+    classificationNote:
+      '지출 방식(출연인지 보조인지 인건비인지)을 적은 문장이 홍보자료·100대 신규사업·청년정책 개요도 어디에도 없다. 홍보자료 7쪽 계정 줄은 사업명과 금액만 적으므로 지출 유형 근거가 되지 못해 미분류로 둔다. 성격(확대)은 같은 줄의 「4대 과기원(0.7→0.8조원)」 표기가 뒷받침한다.',
     evidence: [
-      { field: 'spendType', quote: ROUTE_LINE.eduTop, source: SRC_PROMO },
       { field: 'nature', quote: ROUTE_LINE.eduTop, source: SRC_PROMO },
       fund(ROUTE_LINE.eduTop),
     ],
     sources: [SRC_PROMO],
   },
-  // 장학금은 설계 §3에서 cash(개인에게 지급)로 분류한다. 인용문에 사업명이 그대로 들어 있다.
   {
     id: 'edu-stem-scholarship',
     name: '이공계 장학금',
@@ -951,10 +1013,11 @@ export const CENTRAL_FUTURE_FUND_PROGRAMS: readonly Program[] = [
     amount26Eok: 1000,
     amount27Eok: 2000,
     nature: 'expanded',
-    spendType: 'cash',
+    spendType: 'unknown',
     route: 'fund',
+    classificationNote:
+      '사업명에 「장학금」이 들어간다는 것만으로 개인 현금 지급으로 분류했었다. 누구에게 얼마를 어떤 방식으로 주는지 적은 문장이 어느 문서에도 없어 미분류로 둔다. 성격(확대)은 홍보자료 7쪽 계정 줄의 「이공계 장학금(0.1→0.2조원)」 표기가 뒷받침한다.',
     evidence: [
-      { field: 'spendType', quote: ROUTE_LINE.eduTop, source: SRC_PROMO },
       { field: 'nature', quote: ROUTE_LINE.eduTop, source: SRC_PROMO },
       fund(ROUTE_LINE.eduTop),
     ],
@@ -972,10 +1035,11 @@ export const CENTRAL_FUTURE_FUND_PROGRAMS: readonly Program[] = [
     amount26Eok: null,
     amount27Eok: 1000,
     nature: 'new',
-    spendType: 'grant',
+    spendType: 'unknown',
     route: 'fund',
+    classificationNote:
+      '지출 방식을 적은 문장이 어느 문서에도 없어 미분류로 둔다. 성격(신규)은 홍보자료 7쪽 계정 줄의 「창업중심대학(신규0.1조원)」 표기가 뒷받침한다 — 기금 몫 기준이며, 청년정책 개요도는 같은 이름의 사업을 (’26) 883 →(’27) 1,083억원으로 적는다.',
     evidence: [
-      { field: 'spendType', quote: ROUTE_LINE.eduTop, source: SRC_PROMO },
       { field: 'nature', quote: ROUTE_LINE.eduTop, source: SRC_PROMO },
       fund(ROUTE_LINE.eduTop),
       { field: 'amount27Eok', quote: '창업중심대학 (’26) 883 →(’27) 1,083억원', source: SRC_YOUTH },
@@ -992,10 +1056,11 @@ export const CENTRAL_FUTURE_FUND_PROGRAMS: readonly Program[] = [
     amount26Eok: 1000,
     amount27Eok: 2000,
     nature: 'expanded',
-    spendType: 'grant',
+    spendType: 'unknown',
     route: 'fund',
+    classificationNote:
+      '지출 방식을 적은 문장이 어느 문서에도 없어 미분류로 둔다. 성격(확대)은 홍보자료 7쪽 계정 줄의 「AI중심대학(0.1→0.2조원)」 표기가 뒷받침한다.',
     evidence: [
-      { field: 'spendType', quote: ROUTE_LINE.eduTop, source: SRC_PROMO },
       { field: 'nature', quote: ROUTE_LINE.eduTop, source: SRC_PROMO },
       fund(ROUTE_LINE.eduTop),
     ],
@@ -1015,6 +1080,13 @@ export const CENTRAL_FUTURE_FUND_PROGRAMS: readonly Program[] = [
     nature: 'new',
     spendType: 'grant',
     route: 'fund',
+    unit: {
+      price: '거점국립대 평균 500억원, 일반 지방국립대 평균 200억원',
+      count: '거점 9개교, 일반 12개교',
+      product: 6900,
+      matches: false,
+      note: '9×500 + 12×200 = 6,900억원으로 계정 표의 7,000억원과 100억원(1.43%) 어긋난다. 홍보자료 52쪽이 단가를 「등」으로 닫아 나머지 항목을 밝히지 않으므로, 차액이 무엇인지 설명한 문장은 없다.',
+    },
     evidence: [
       {
         field: 'spendType',
@@ -1025,12 +1097,18 @@ export const CENTRAL_FUTURE_FUND_PROGRAMS: readonly Program[] = [
       { field: 'nature', quote: ROUTE_LINE.eduHigher, source: SRC_PROMO },
       fund(ROUTE_LINE.eduHigher),
       {
-        field: 'amount27Eok',
+        field: 'unit',
         quote: '* 거점국립대 9개교 평균 500억원, 일반 지방국립대 12개교 평균 200억원 등',
-        source: promo(53),
+        source: promo(52),
+      },
+      {
+        field: 'amount27Eok',
+        quote:
+          'ㅇ 지방국립대 21개교가 중장기 발전계획에 따라 석학 유치·첨단연구 등에 투자하도록 신규미래인재성장자금 0.7조원 신설',
+        source: promo(52),
       },
     ],
-    sources: [SRC_PROMO, promo(33), promo(53)],
+    sources: [SRC_PROMO, promo(33), promo(52)],
   },
   {
     id: 'edu-teacher-ratio',

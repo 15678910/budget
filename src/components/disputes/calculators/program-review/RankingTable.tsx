@@ -3,7 +3,14 @@
 import { Fragment, useState } from 'react';
 import type { RankedProgram } from '@/lib/programs/scoring';
 import { LENS_KEYS } from '@/lib/programs/types';
-import { ACCOUNT_LABEL, LENS_LABEL, NATURE_LABEL, ROUTE_LABEL, SPEND_LABEL } from './labels';
+import {
+  ACCOUNT_LABEL,
+  LENS_LABEL,
+  NATURE_LABEL,
+  ROUTE_LABEL,
+  SPEND_LABEL,
+  UNCLASSIFIED_BADGE,
+} from './labels';
 
 const COLUMN_COUNT = 7;
 
@@ -46,6 +53,11 @@ export function RankingTable({ ranked }: { ranked: RankedProgram[] }) {
                         {isOpen ? '▲' : '▼'}
                       </span>
                     </button>
+                    {p.classificationNote && (
+                      <span className="ml-2 rounded-sm border border-border bg-muted px-1.5 py-0.5 align-middle text-sm whitespace-nowrap text-muted-foreground">
+                        {UNCLASSIFIED_BADGE}
+                      </span>
+                    )}
                     <span className="block text-sm text-muted-foreground">{p.ministry}</span>
                   </td>
                   <td className={`px-3 py-2 whitespace-nowrap ${muted}`}>
@@ -106,6 +118,14 @@ function ProgramDetail({ ranked }: { ranked: RankedProgram }) {
           </>
         )}
       </p>
+
+      {p.classificationNote && (
+        <p className="rounded-md border border-border bg-muted/40 px-3 py-2 text-base leading-relaxed text-muted-foreground">
+          <span className="font-bold text-foreground">{UNCLASSIFIED_BADGE}</span> —{' '}
+          {p.classificationNote} 이 행은 점수를 내지 않습니다 — 순위표에서는 점수가 있는 행
+          뒤에 금액순으로 놓입니다.
+        </p>
+      )}
 
       {lenses.length > 0 ? (
         <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">

@@ -49,6 +49,12 @@ export interface Program {
   route: ReviewRoute;
   unit?: ProgramUnit;
   beneficiaries?: { value: number; unit: string; source: string };
+  /**
+   * 「분류 근거 부족」 사유. spendType 또는 nature가 'unknown'인 잔여 아닌 행에는 반드시 있다.
+   * 어느 문장이 없어서 분류하지 못했는지를 적는다. 근거 없는 분류는 점수에 끼어들지 못한다
+   * (scoring.scoreProgram이 이런 행의 점수를 내지 않는다).
+   */
+  classificationNote?: string;
   evidence: ProgramEvidence[];
   sources: string[];
   /** 계정 「기타」 잔여 행. 점수 없음, 총액에는 포함 */

@@ -49,8 +49,17 @@ export function lensValues(p: Program, ctx: LensContext): Partial<Record<LensKey
   return v;
 }
 
+/**
+ * 문서 문장으로 뒷받침되지 않은 분류는 점수에 끼어들지 못한다.
+ * 잔여 행, 그리고 spendType·nature 중 하나라도 'unknown'인 행은 점수를 내지 않는다
+ * (그 행은 화면에서 「분류 근거 부족」으로 표시되고 점수 칸이 「—」가 된다).
+ */
+export function isUnscorable(p: Program): boolean {
+  return p.isRemainder === true || p.spendType === 'unknown' || p.nature === 'unknown';
+}
+
 export function scoreProgram(p: Program, w: Weights, ctx: LensContext): number | undefined {
-  if (p.isRemainder) return undefined;
+  if (isUnscorable(p)) return undefined;
   const v = lensValues(p, ctx);
   let num = 0;
   let den = 0;
