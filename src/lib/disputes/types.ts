@@ -76,7 +76,7 @@ export interface DisputeSource {
  */
 export interface Finding {
   heading: string;
-  /** 조문 표시. 예: "국가재정법 개정안 제70조 제3항 제7호" */
+  /** 근거 위치. 조문("국가재정법 개정안 제70조 제3항 제7호") 또는 정부 자료명 */
   article: string;
   body: string;
   /** 바뀌지 않고 남는 것. 개정안이 무엇을 건드리지 않았는지도 함께 적어야 공정하다 */
@@ -108,7 +108,7 @@ export interface Dispute {
   calculator?: CalculatorKey;
   /** 계산기가 없는 분쟁의 ④ 대체 — 확인된 수치 대조표 */
   comparison?: { caption: string; rows: DisputeFigure[] };
-  /** 있으면 ③ 쟁점 뒤에 「조문으로 확인한 것」 절을 렌더링한다 */
+  /** 있으면 ③ 쟁점 뒤에 「원문으로 확인한 것」 절을 렌더링한다 */
   findings?: Finding[];
   /** 있으면 ④ 숫자 뒤에 「대안」 절을 렌더링한다 */
   proposals?: Proposals;

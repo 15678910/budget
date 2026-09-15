@@ -61,10 +61,10 @@ export default async function DisputeDetailPage({
 
       {dispute.findings && (
         <section>
-          <h2 className="text-xl font-bold text-foreground">조문으로 확인한 것</h2>
+          <h2 className="text-xl font-bold text-foreground">원문으로 확인한 것</h2>
           <p className="mt-1 mb-4 text-base leading-relaxed text-muted-foreground">
-            주장이 아니라 법안 원문입니다. 개정안이 무엇을 바꾸고 무엇을 남겼는지 조문 단위로
-            적었습니다.
+            주장이 아니라 법안 조문과 정부가 낸 자료의 원문입니다. 무엇을 바꾸고 무엇을
+            남겼는지 항목마다 어느 문서의 어디인지 함께 적었습니다.
           </p>
           <DisputeFindings findings={dispute.findings} />
         </section>
