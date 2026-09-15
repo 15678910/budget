@@ -41,7 +41,8 @@ export function lensValues(p: Program, ctx: LensContext): Partial<Record<LensKey
   if (e !== undefined) v.execution = e;
   if (p.route === 'budget') v.route = 1;
   else if (p.route === 'fund' || p.route === 'special-account') v.route = 0;
-  if (p.beneficiaries && ctx.maxBeneficiaries > 1) {
+  if (p.beneficiaries) {
+    // maxBeneficiaries는 rankPrograms에서 1 이상으로 보정되므로 분모는 0이 아니다
     v.reach = Math.log(1 + p.beneficiaries.value) / Math.log(1 + ctx.maxBeneficiaries);
   }
   if (p.unit) v.check = p.unit.matches ? 1 : 0;

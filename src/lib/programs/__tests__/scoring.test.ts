@@ -40,6 +40,12 @@ describe('렌즈 값', () => {
     expect('check' in v).toBe(false);
     expect('reach' in v).toBe(false);
   });
+
+  it('수혜 범위: 인원이 있으면 최대 대비 log 정규화, 최대와 같으면 1', () => {
+    const p = mk({ beneficiaries: { value: 480000, unit: '명', source: 's' } });
+    expect(lensValues(p, { maxBeneficiaries: 480000 }).reach).toBeCloseTo(1, 9);
+    expect(lensValues(mk({ beneficiaries: { value: 1, unit: '명', source: 's' } }), { maxBeneficiaries: 1 }).reach).toBe(1);
+  });
 });
 
 describe('순위', () => {
