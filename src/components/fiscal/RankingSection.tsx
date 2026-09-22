@@ -1,7 +1,8 @@
 'use client';
 
 import { DataDownload } from '@/components/shared/DataDownload';
-import type { DistrictFiscalData, SortKey } from './types';
+import type { SortKey } from './types';
+import type { DistrictFiscalDataX } from '@/lib/data/fiscal-health-official';
 import { SORT_OPTIONS } from './types';
 import { Bar } from './primitives';
 import {
@@ -23,7 +24,7 @@ function RankingRow({
   total,
 }: {
   rank: number;
-  district: DistrictFiscalData;
+  district: DistrictFiscalDataX;
   total: number;
 }) {
   const perCapita = getDebtPerCapitaManWon(district.debt, district.population);
@@ -71,6 +72,9 @@ function RankingRow({
         <span className="text-sm font-mono tabular-nums text-gray-400">
           {formatDebt(district.debt)}
         </span>
+        {district.debtSource === 'estimated' && (
+          <span className="ml-1 text-[10px] text-gray-500">[추정]</span>
+        )}
       </div>
     </div>
   );
@@ -87,7 +91,7 @@ export function RankingSection({
 }: {
   sortKey: SortKey;
   setSortKey: (key: SortKey) => void;
-  sortedDistricts: DistrictFiscalData[];
+  sortedDistricts: DistrictFiscalDataX[];
 }) {
   return (
     <div>
