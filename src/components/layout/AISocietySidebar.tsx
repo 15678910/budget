@@ -1,16 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { cn } from '@/lib/utils/format';
 import { SidebarSectionNav } from './SidebarSectionNav';
+
+interface HubSubLink {
+  href: string;
+  label: string;
+}
 
 interface HubTool {
   href: string;
   label: string;
-  /** Optional secondary deep link shown under the parent (e.g. SDG 관계도) */
-  sub?: { href: string; label: string };
+  /** 부모 아래에 표시할 깊은 링크들 (예: SDG 관계도, 재정혁신 탭) */
+  subs?: HubSubLink[];
   /** 활성 상태일 때 페이지 절 목록 토글을 보여줄지 여부 (예: 예산분쟁 상세) */
   sections?: boolean;
 }
@@ -37,7 +42,11 @@ const HUB_GROUPS: HubGroup[] = [
     title: '분석/진단',
     tools: [
       { href: '/fiscal-doctor', label: 'AI정책진단' },
-      { href: '/fiscal-innovation', label: '재정혁신' },
+      {
+        href: '/fiscal-innovation',
+        label: '재정혁신',
+        subs: [{ href: '/fiscal-innovation?tab=cases', label: '사례 아카이브' }],
+      },
       { href: '/ai-efficiency', label: 'AI효율화' },
     ],
   },
@@ -51,7 +60,7 @@ const HUB_GROUPS: HubGroup[] = [
       {
         href: '/sdg',
         label: 'SDG 상황판',
-        sub: { href: '/sdg/ontology', label: '관계도' },
+        subs: [{ href: '/sdg/ontology', label: '관계도' }],
       },
     ],
   },
@@ -75,8 +84,16 @@ function isActive(pathname: string, href: string): boolean {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
+/** 하위 링크는 쿼리까지 비교한다 (예: /fiscal-innovation?tab=cases) */
+function isSubActive(current: string, href: string): boolean {
+  return current.startsWith(href);
+}
+
 function HubLinks() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const search = searchParams.toString();
+  const current = search ? `${pathname}?${search}` : pathname;
   const [sectionsOpen, setSectionsOpen] = useState(true);
 
   return (
@@ -103,7 +120,6 @@ function HubLinks() {
           <ul className="space-y-0.5">
             {group.tools.map((tool) => {
               const active = isActive(pathname, tool.href);
-              const subActive = tool.sub ? pathname === tool.sub.href : false;
               const showToggle = tool.sections && active;
               return (
                 <li key={tool.href}>
@@ -136,20 +152,21 @@ function HubLinks() {
                       <SidebarSectionNav />
                     </div>
                   )}
-                  {tool.sub && (
+                  {tool.subs?.map((sub) => (
                     <Link
-                      href={tool.sub.href}
+                      key={sub.href}
+                      href={sub.href}
                       className={cn(
                         'block ml-3 mt-0.5 px-2.5 py-1 text-xs rounded-md transition-colors',
-                        subActive
+                        isSubActive(current, sub.href)
                           ? 'text-foreground bg-muted/50 font-medium'
                           // 투명도를 주면 라이트 테마에서 대비가 3.2까지 떨어져 AA에 미달한다.
                           : 'text-muted-foreground hover:bg-muted hover:text-foreground'
                       )}
                     >
-                      ▸ {tool.sub.label}
+                      ▸ {sub.label}
                     </Link>
-                  )}
+                  ))}
                 </li>
               );
             })}
@@ -169,7 +186,10 @@ export function AISocietySidebar() {
           <span>🏛 AI기본사회 허브</span>
           <span className="text-muted-foreground text-xs">메뉴 ▾</span>
         </summary>
-        <HubLinks />
+        {/* useSearchParams는 Suspense 경계 안에서만 프리렌더된다 */}
+        <Suspense fallback={null}>
+          <HubLinks />
+        </Suspense>
       </details>
 
       {/* Desktop: fixed-width sidebar beside content */}
@@ -177,7 +197,9 @@ export function AISocietySidebar() {
         <div className="px-3 pt-3">
           <p className="text-xs font-bold text-foreground tracking-tight">🏛 AI기본사회 허브</p>
         </div>
-        <HubLinks />
+        <Suspense fallback={null}>
+          <HubLinks />
+        </Suspense>
       </aside>
     </>
   );
