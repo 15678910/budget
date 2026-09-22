@@ -88,10 +88,15 @@ export function formatRawWon(eokWon: number): string {
   return won.toLocaleString('ko-KR') + '원';
 }
 
-/** Per-second increase rate formatted */
+/**
+ * 초당 채무 변동액. 부호를 직접 붙인다(+1,234원/초 / −2,077원/초).
+ * 공식 결산 기준으로는 잔액이 줄어든 광역이 여럿이라 호출부에서 '+'를 붙이면 안 된다.
+ */
 export function formatPerSecond(yearlyEok: number): string {
   const perSec = (yearlyEok * 100_000_000) / SECONDS_PER_YEAR;
-  if (perSec >= 100_000_000) return `${(perSec / 100_000_000).toFixed(1)}억원/초`;
-  if (perSec >= 10_000) return `${Math.round(perSec / 10_000).toLocaleString('ko-KR')}만원/초`;
-  return `${Math.round(perSec).toLocaleString('ko-KR')}원/초`;
+  const sign = perSec < 0 ? '−' : '+';
+  const abs = Math.abs(perSec);
+  if (abs >= 100_000_000) return `${sign}${(abs / 100_000_000).toFixed(1)}억원/초`;
+  if (abs >= 10_000) return `${sign}${Math.round(abs / 10_000).toLocaleString('ko-KR')}만원/초`;
+  return `${sign}${Math.round(abs).toLocaleString('ko-KR')}원/초`;
 }

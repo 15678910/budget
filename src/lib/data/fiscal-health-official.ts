@@ -196,7 +196,8 @@ export function getMetroDebtHistoryOfficial(metroFullName: string): MetroDebtHis
     });
   });
 
-  return history.length > 0 ? history : getMetroDebtHistory(metroFullName);
+  // 연도가 1개뿐이면 추이 차트가 그려지지 않으므로(x축 분모 0 → NaN) 기존 추정 이력을 쓴다.
+  return history.length >= 2 ? history : getMetroDebtHistory(metroFullName);
 }
 
 /** 시군구 연도별 채무/비율. 공식 행이 있으면 공식, 없으면 기존 추정 이력 */
@@ -216,24 +217,74 @@ export function getDistrictDebtHistoryOfficial(d: DistrictFiscalData): DistrictD
     });
   });
 
-  return history.length > 0 ? history : generateDistrictDebtHistory(d);
+  // 공식 공시가 1개 연도뿐인 곳(예: 2023년 대구 편입 군위군)은 추이를 못 그린다.
+  // 이력이 2개 미만이면 기존 추정 이력으로 되돌린다.
+  return history.length >= 2 ? history : generateDistrictDebtHistory(d);
+}
+
+// ─── 광역 파생값 (원자료가 정적이라 모듈 단위로 메모이즈) ────
+// 실시간 시계가 requestAnimationFrame으로 초당 수십 번 다시 그리므로
+// 매 프레임 17개 광역 × 7개 연도를 재계산하지 않도록 캐시한다.
+const yearlyIncreaseCache = new Map<string, number | undefined>();
+const prevYearDebtCache = new Map<string, number | undefined>();
+const latestDebtRatioCache = new Map<string, number | undefined>();
+
+function memoized(
+  cache: Map<string, number | undefined>,
+  key: string,
+  compute: () => number | undefined,
+): number | undefined {
+  const cached = cache.get(key);
+  if (cached !== undefined || cache.has(key)) return cached;
+  const value = compute();
+  cache.set(key, value);
+  return value;
 }
 
 /** 최근 3개 연도(2022·2023·2024) 순증 평균(억원/년). 실시간 시계용. 공식값 없으면 undefined */
 export function getMetroYearlyIncreaseOfficial(metroFullName: string): number | undefined {
-  const entities = metroEntities(metroFullName);
-  if (entities.length === 0) return undefined;
+  return memoized(yearlyIncreaseCache, metroFullName, () => {
+    const entities = metroEntities(metroFullName);
+    if (entities.length === 0) return undefined;
 
-  const deltas: number[] = [];
-  for (let index = LATEST_INDEX; index > 0 && deltas.length < 3; index -= 1) {
-    const curr = sumAt(entities, 'debtEok', index);
-    const prev = sumAt(entities, 'debtEok', index - 1);
-    if (curr === null || prev === null) continue;
-    deltas.push(round(curr - prev, 1));
-  }
-  if (deltas.length === 0) return undefined;
+    const deltas: number[] = [];
+    for (let index = LATEST_INDEX; index > 0 && deltas.length < 3; index -= 1) {
+      const curr = sumAt(entities, 'debtEok', index);
+      const prev = sumAt(entities, 'debtEok', index - 1);
+      if (curr === null || prev === null) continue;
+      deltas.push(round(curr - prev, 1));
+    }
+    if (deltas.length === 0) return undefined;
 
-  return round(deltas.reduce((sum, d) => sum + d, 0) / deltas.length, 1);
+    return round(deltas.reduce((sum, d) => sum + d, 0) / deltas.length, 1);
+  });
+}
+
+/**
+ * 전년(2023) 말 공식 채무잔액(억원, 반올림). 전년比 비교용.
+ * `METRO_PREV_YEAR`(수정 금지 파일)의 채무는 옛 추정치 기준이라 공식 잔액과 섞어 쓰면 안 된다.
+ */
+export function getMetroPrevYearDebtOfficial(metroFullName: string): number | undefined {
+  return memoized(prevYearDebtCache, metroFullName, () => {
+    const debtEok = sumAt(metroEntities(metroFullName), 'debtEok', LATEST_INDEX - 1);
+    return debtEok === null ? undefined : Math.round(debtEok);
+  });
+}
+
+/**
+ * 최신(2024 결산) 예산대비채무비율(%). 결산 채무를 결산 최종예산액으로 나눈 공식 지표.
+ * 사이트의 2025 당초예산으로 나누면 분모가 어긋나므로 이 값을 써야 한다.
+ */
+export function getMetroLatestDebtRatioOfficial(metroFullName: string): number | undefined {
+  return memoized(latestDebtRatioCache, metroFullName, () => {
+    if (metroEntities(metroFullName).length === 0) return undefined;
+    const latest = getMetroDebtHistoryOfficial(metroFullName).at(-1);
+    // 최신 공식 연도 행이 아니거나(=추정 이력으로 폴백) 예산액이 없어 비율이 0이면 표시하지 않는다.
+    if (!latest || latest.year !== OFFICIAL_DEBT_YEARS[LATEST_INDEX] || latest.budget === 0) {
+      return undefined;
+    }
+    return latest.ratio;
+  });
 }
 
 /** 연도별 채무 순증(= 잔액 증감) 행. year ≥ 2019, 전년·당해 둘 다 있는 행만 */

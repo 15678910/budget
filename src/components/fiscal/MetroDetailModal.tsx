@@ -2,7 +2,10 @@
 
 import { useEffect } from 'react';
 import type { MetroFiscalData } from './types';
-import { getMetroYearlyIncreaseOfficial } from '@/lib/data/fiscal-health-official';
+import {
+  getMetroLatestDebtRatioOfficial,
+  getMetroYearlyIncreaseOfficial,
+} from '@/lib/data/fiscal-health-official';
 import { Bar } from './primitives';
 import {
   independenceColor,
@@ -40,7 +43,10 @@ export function MetroDetailModal({
   const yearlyIncrease = getMetroYearlyIncreaseOfficial(metro.name) ?? metro.debt * 0.06;
   const indDiff = metro.independence - nationalAvg.independence;
   const autDiff = metro.autonomy - nationalAvg.autonomy;
-  const debtBudgetRatio = ((currentDebt / metro.budget) * 100);
+  // 채무비율은 결산 채무 ÷ 결산 최종예산액(지방재정365 공식 지표)이다.
+  // 실시간 보간 채무를 사이트의 2025 당초예산으로 나누면 분자·분모 연도가 어긋난다.
+  const officialDebtRatio = getMetroLatestDebtRatioOfficial(metro.name);
+  const debtBudgetRatio = officialDebtRatio ?? (metro.debt / metro.budget) * 100;
 
   return (
     <div
@@ -110,7 +116,7 @@ export function MetroDetailModal({
           <div className="flex items-center gap-3 text-sm md:text-base text-gray-500">
             <span>≈ {formatDebt(currentDebt)}</span>
             <span>|</span>
-            <span>초당 +{formatPerSecond(yearlyIncrease)}</span>
+            <span>초당 {formatPerSecond(yearlyIncrease)}</span>
           </div>
         </div>
 
@@ -140,9 +146,11 @@ export function MetroDetailModal({
           </div>
 
           <div className="space-y-1">
-            <div className="text-sm md:text-base text-gray-500">채무/예산 비율</div>
+            <div className="text-sm md:text-base text-gray-500">
+              {officialDebtRatio !== undefined ? '예산대비채무비율(2024 결산)' : '채무/예산 비율(추정)'}
+            </div>
             <div className={`text-lg md:text-xl font-mono font-bold tabular-nums ${debtBudgetRatio > 20 ? 'text-red-400' : debtBudgetRatio > 10 ? 'text-amber-400' : 'text-emerald-400'}`}>
-              {debtBudgetRatio.toFixed(1)}%
+              {debtBudgetRatio.toFixed(officialDebtRatio !== undefined ? 2 : 1)}%
             </div>
           </div>
         </div>

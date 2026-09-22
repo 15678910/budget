@@ -2,7 +2,10 @@
 
 import { METRO_PREV_YEAR, getChangeRate } from '@/lib/data/fiscal-health-data';
 import type { MetroFiscalData, DistrictFiscalData } from './types';
-import type { DebtSourceTag } from '@/lib/data/fiscal-health-official';
+import {
+  getMetroPrevYearDebtOfficial,
+  type DebtSourceTag,
+} from '@/lib/data/fiscal-health-official';
 import { Bar } from './primitives';
 import {
   independenceColor,
@@ -18,11 +21,35 @@ import {
 } from './utils';
 
 // ============================================================
+// 전년比 칩 helpers
+// ============================================================
+
+/** 증감 화살표. 변화가 정확히 0이면 중립 대시 */
+function changeArrow(change: number): string {
+  if (change === 0) return '—';
+  return change > 0 ? '▲' : '▼';
+}
+
+/** 증감 칩 색. upIsGood=true면 상승이 좋은 지표(자립도), false면 하락이 좋은 지표(채무) */
+function changeChipClass(change: number, upIsGood: boolean): string {
+  if (change === 0) return 'bg-gray-900 text-gray-500';
+  const good = upIsGood ? change > 0 : change < 0;
+  return good ? 'bg-emerald-950 text-emerald-400' : 'bg-red-950 text-red-400';
+}
+
+// ============================================================
 // Metro Card (for grid view)
 // ============================================================
 
-export function MetroCard({ metro, onClick }: { metro: MetroFiscalData; onClick: () => void }) {
+export function MetroCard({
+  metro,
+  onClick,
+}: {
+  metro: MetroFiscalData & { debtSource?: DebtSourceTag };
+  onClick: () => void;
+}) {
   const perCapita = getDebtPerCapitaManWon(metro.debt, metro.population);
+  const isEstimated = metro.debtSource === 'estimated';
 
   return (
     <div className="border border-gray-800 p-3 md:p-4 min-w-0 space-y-2 cursor-pointer hover:border-gray-600 hover:bg-gray-900/50 transition-colors" onClick={onClick}>
@@ -55,7 +82,9 @@ export function MetroCard({ metro, onClick }: { metro: MetroFiscalData; onClick:
 
       {/* 지역채무 (실시간) */}
       <div className="pt-1 border-t border-gray-800">
-        <div className="text-sm text-gray-500 mb-1">지역채무 (실시간)</div>
+        <div className="text-sm text-gray-500 mb-1">
+          지역채무 (실시간){isEstimated && <span className="text-amber-500 ml-1">[추정]</span>}
+        </div>
         <div className={`text-sm md:text-base font-mono font-bold tabular-nums leading-tight ${debtColor(perCapita)}`}>
           {formatRawWon(getCurrentMetroDebt(metro.name, metro.debt))}
         </div>
@@ -93,18 +122,24 @@ export function MetroCard({ metro, onClick }: { metro: MetroFiscalData; onClick:
       {/* 전년 대비 증감률 (g0v 스타일) */}
       {(() => {
         const prev = METRO_PREV_YEAR[metro.name];
-        if (!prev) return null;
-        const indChange = getChangeRate(metro.independence, prev.independence);
-        const debtChange = getChangeRate(metro.debt, prev.debt);
+        // 채무는 공식 결산(2023) 잔액과 비교한다. METRO_PREV_YEAR의 채무는 옛 추정치라 쓰면 안 된다.
+        const prevDebt = getMetroPrevYearDebtOfficial(metro.name);
+        if (!prev && prevDebt === undefined) return null;
+        const indChange = prev ? getChangeRate(metro.independence, prev.independence) : null;
+        const debtChange = prevDebt === undefined ? null : getChangeRate(metro.debt, prevDebt);
         return (
           <div className="pt-1 border-t border-gray-800 flex items-center gap-2 flex-wrap">
             <span className="text-xs text-gray-600">전년比</span>
-            <span className={`text-xs font-mono px-1.5 py-0.5 rounded ${indChange >= 0 ? 'bg-emerald-950 text-emerald-400' : 'bg-red-950 text-red-400'}`}>
-              자립 {indChange >= 0 ? '▲' : '▼'}{Math.abs(indChange).toFixed(1)}%
-            </span>
-            <span className={`text-xs font-mono px-1.5 py-0.5 rounded ${debtChange <= 0 ? 'bg-emerald-950 text-emerald-400' : 'bg-red-950 text-red-400'}`}>
-              채무 {debtChange >= 0 ? '▲' : '▼'}{Math.abs(debtChange).toFixed(1)}%
-            </span>
+            {indChange !== null && (
+              <span className={`text-xs font-mono px-1.5 py-0.5 rounded ${changeChipClass(indChange, true)}`}>
+                자립 {changeArrow(indChange)}{Math.abs(indChange).toFixed(1)}%
+              </span>
+            )}
+            {debtChange !== null && (
+              <span className={`text-xs font-mono px-1.5 py-0.5 rounded ${changeChipClass(debtChange, false)}`}>
+                채무 {changeArrow(debtChange)}{Math.abs(debtChange).toFixed(1)}%
+              </span>
+            )}
           </div>
         );
       })()}

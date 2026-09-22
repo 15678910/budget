@@ -20,7 +20,25 @@ export function DistrictDebtRatioModal({
     return () => window.removeEventListener('keydown', handleKey);
   }, [onClose]);
 
-  if (history.length === 0) return null;
+  // 연도가 1개 이하면 x축 분모(length-1)가 0이 되어 좌표가 NaN이 된다. 차트 대신 안내만 띄운다.
+  if (history.length < 2) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4" onClick={onClose}>
+        <div className="bg-gray-950 border border-gray-700 rounded-lg max-w-md w-full p-5 md:p-7 space-y-3" onClick={(e) => e.stopPropagation()}>
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-xl md:text-2xl font-bold text-gray-200">{district.name}</h2>
+              <div className="text-sm text-gray-600 mt-0.5">{district.metro}</div>
+            </div>
+            <button onClick={onClose} className="text-gray-500 hover:text-gray-300 transition-colors text-2xl leading-none px-2" aria-label="닫기">&times;</button>
+          </div>
+          <div className="text-sm text-gray-500">
+            이력 자료 없음 — 공시된 연도가 2개 미만이라 채무비율 추이를 그릴 수 없습니다.
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const W = 600;
   const H = 280;

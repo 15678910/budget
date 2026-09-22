@@ -6,8 +6,12 @@ import {
   getAllDistrictFiscalDataOfficial,
   netIncreaseRows,
   getMetroYearlyIncreaseOfficial,
+  getMetroPrevYearDebtOfficial,
+  getMetroLatestDebtRatioOfficial,
   getDistrictDebtHistoryOfficial,
+  getMetroDebtHistoryOfficial,
 } from '../fiscal-health-official';
+import { getChangeRate, type DistrictFiscalData } from '../fiscal-health-data';
 
 describe('공식 채무 overlay', () => {
   it('이름 매핑', () => {
@@ -46,5 +50,51 @@ describe('공식 채무 overlay', () => {
     const d = getAllDistrictFiscalDataOfficial().find((r) => r.name === '전주시')!;
     const h = getDistrictDebtHistoryOfficial(d);
     expect(h.map((x) => x.year)).toEqual([2018, 2019, 2020, 2021, 2022, 2023, 2024]);
+  });
+
+  // 군위군은 2023년 대구 편입이라 공식 공시가 2024 한 해뿐이다.
+  // 1개짜리 이력을 그대로 넘기면 차트 x축 분모(length-1)가 0이 되어 NaN 좌표가 나온다.
+  it('공식 이력이 1개 연도뿐인 군위군은 1개짜리 이력을 반환하지 않는다', () => {
+    const fromSite = getAllDistrictFiscalDataOfficial().find(
+      (r) => r.metro === '대구광역시' && r.name === '군위군',
+    );
+    const gunwi: DistrictFiscalData = fromSite ?? {
+      metro: '대구광역시',
+      name: '군위군',
+      independence: 10,
+      autonomy: 48.5,
+      debt: 0,
+      population: 22000,
+      budget: 6227,
+    };
+    const h = getDistrictDebtHistoryOfficial(gunwi);
+    expect(h.length).not.toBe(1);
+    expect(h.length).toBeGreaterThanOrEqual(2);
+  });
+
+  it('광역 이력도 1개짜리를 반환하지 않는다', () => {
+    for (const metro of getMetroFiscalDataOfficial()) {
+      expect(getMetroDebtHistoryOfficial(metro.name).length).not.toBe(1);
+    }
+  });
+
+  it('전년比 채무는 2023 공식 결산 잔액 기준 (서울 114,425억, −0.92%)', () => {
+    expect(getMetroPrevYearDebtOfficial('서울특별시')).toBe(114425);
+    const seoul = getMetroFiscalDataOfficial().find((m) => m.name === '서울특별시')!;
+    expect(getChangeRate(seoul.debt, getMetroPrevYearDebtOfficial('서울특별시')!)).toBeCloseTo(-0.92, 2);
+    expect(getMetroPrevYearDebtOfficial('없는도')).toBeUndefined();
+  });
+
+  it('최신 채무비율은 2024 결산 기준 (서울 21.53%)', () => {
+    expect(getMetroLatestDebtRatioOfficial('서울특별시')).toBe(21.53);
+    expect(getMetroLatestDebtRatioOfficial('없는도')).toBeUndefined();
+  });
+
+  it('메모이즈해도 같은 값을 돌려준다', () => {
+    expect(getMetroYearlyIncreaseOfficial('서울특별시')).toBe(getMetroYearlyIncreaseOfficial('서울특별시'));
+    expect(getMetroLatestDebtRatioOfficial('경기도')).toBe(getMetroLatestDebtRatioOfficial('경기도'));
+    expect(getMetroPrevYearDebtOfficial('전남광주통합특별시')).toBe(
+      getMetroPrevYearDebtOfficial('전남광주통합특별시'),
+    );
   });
 });

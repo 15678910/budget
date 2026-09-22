@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { OFFICIAL_DEBT_SOURCE } from '@/lib/data/local-debt-official';
 
 const SOURCES = [
   {
@@ -41,9 +42,10 @@ const SOURCES = [
   },
   {
     name: '지역재정365',
-    description: '광역시도·시군구 지역재정 데이터, 자치단체별 채무잔액(결산) 2018~2024',
-    url: 'https://lofin.mois.go.kr',
-    date: '상시',
+    description:
+      '광역시도·시군구 지역재정 데이터, 자치단체별 채무잔액(결산) 2018~2024. 순증은 발행액이 아니라 잔액 증감(발행 − 상환)',
+    url: OFFICIAL_DEBT_SOURCE.url,
+    date: `2024 결산, ${OFFICIAL_DEBT_SOURCE.fetchedAt} 수집`,
   },
 ];
 

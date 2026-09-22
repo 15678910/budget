@@ -116,7 +116,7 @@ export function DistrictDetailModal({
           <div className="flex items-center gap-3 text-sm md:text-base text-gray-500">
             <span>≈ {formatDebt(currentDebt)}</span>
             <span>|</span>
-            <span>초당 +{formatPerSecond(yearlyIncrease)}</span>
+            <span>초당 {formatPerSecond(yearlyIncrease)}</span>
           </div>
         </div>
 

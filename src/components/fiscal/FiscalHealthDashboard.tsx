@@ -217,7 +217,7 @@ export function FiscalHealthDashboard() {
             <div className="text-xs md:text-sm text-gray-600 mt-1.5 space-x-3">
               <span>≈ {formatDebt(totalCurrentDebt)}</span>
               <span>|</span>
-              <span>초당 +{formatPerSecond(totalYearlyIncrease)}</span>
+              <span>초당 {formatPerSecond(totalYearlyIncrease)}</span>
             </div>
           </div>
         );
@@ -407,7 +407,7 @@ export function FiscalHealthDashboard() {
             * 재정자립도·자주도는 2025 당초예산 기준, 지역채무·인구·예산규모는 2024 기준이며 실제 결산액과 차이가 있을 수 있습니다.
           </p>
           <p className="text-gray-700">
-            * 실시간 카운터는 연간 채무 증가 추정치를 선형 보간하여 표시합니다. 실제 집행 시점과 차이가 있을 수 있습니다.
+            * 실시간 카운터는 최근 3개 연도 채무잔액 연평균 변동액(증가 또는 감소)을 선형 보간하여 표시합니다. 실제 집행 시점과 차이가 있을 수 있습니다.
           </p>
         </div>
       </div>
