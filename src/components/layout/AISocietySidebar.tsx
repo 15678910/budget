@@ -45,7 +45,10 @@ const HUB_GROUPS: HubGroup[] = [
       {
         href: '/fiscal-innovation',
         label: '재정혁신',
-        subs: [{ href: '/fiscal-innovation?tab=cases', label: '사례 아카이브' }],
+        subs: [
+          { href: '/fiscal-innovation?tab=watch', label: '조기경보' },
+          { href: '/fiscal-innovation?tab=cases', label: '사례 아카이브' },
+        ],
       },
       { href: '/ai-efficiency', label: 'AI효율화' },
     ],

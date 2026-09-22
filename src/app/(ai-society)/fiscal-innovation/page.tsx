@@ -8,9 +8,10 @@ import { PublicCreditSimulator } from '@/components/fiscal-innovation/PublicCred
 import { LocalCurrencySimulator } from '@/components/fiscal-innovation/LocalCurrencySimulator';
 import { TaxVsLendingComparator } from '@/components/fiscal-innovation/TaxVsLendingComparator';
 import { IntegratedScenarioSimulator } from '@/components/fiscal-innovation/IntegratedScenarioSimulator';
+import { EarlyWarningSection } from '@/components/fiscal-watch/EarlyWarningSection';
 import { CaseArchiveSection } from '@/components/fiscal-watch/CaseArchiveSection';
 
-type TabKey = 'interest' | 'credit' | 'currency' | 'taxCompare' | 'integrated' | 'cases';
+type TabKey = 'interest' | 'credit' | 'currency' | 'taxCompare' | 'integrated' | 'watch' | 'cases';
 
 const TABS: { key: TabKey; label: string; color: string }[] = [
   { key: 'interest', label: '이자부담', color: 'text-cyan-400' },
@@ -18,6 +19,7 @@ const TABS: { key: TabKey; label: string; color: string }[] = [
   { key: 'currency', label: '지역화폐', color: 'text-purple-400' },
   { key: 'taxCompare', label: '재산세비교', color: 'text-amber-400' },
   { key: 'integrated', label: '통합시나리오', color: 'text-rose-400' },
+  { key: 'watch', label: '조기경보', color: 'text-red-400' },
   { key: 'cases', label: '사례 아카이브', color: 'text-orange-400' },
 ];
 
@@ -86,6 +88,7 @@ function FiscalInnovationTabs() {
           {activeTab === 'currency' && <LocalCurrencySimulator />}
           {activeTab === 'taxCompare' && <TaxVsLendingComparator />}
           {activeTab === 'integrated' && <IntegratedScenarioSimulator />}
+          {activeTab === 'watch' && <EarlyWarningSection />}
           {activeTab === 'cases' && <CaseArchiveSection />}
         </div>
       </div>
