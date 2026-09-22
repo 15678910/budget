@@ -33,15 +33,15 @@ function SignalChip({ signal }: { signal: CrisisSignal }) {
 
   return (
     <div className={`border px-3 py-2 ${SIGNAL_CLASS[signal.level]}`}>
-      <div className="flex items-baseline justify-between gap-1">
-        <span className="truncate text-sm opacity-80">{label}</span>
-        <span className="shrink-0 font-mono text-base font-semibold tabular-nums">
-          {signal.value === null ? SIGNAL_LABEL['no-data'] : formatPct(signal.value)}
-        </span>
-      </div>
-      <div className="flex flex-wrap items-baseline justify-between gap-1">
-        <span className="text-sm font-semibold">{SIGNAL_LABEL[signal.level]}</span>
-        {note && <span className="break-keep text-sm opacity-70">{note}</span>}
+      <div className="flex flex-col gap-2">
+        <span className="text-sm text-gray-400 break-keep">{label}</span>
+        <div className="flex items-baseline justify-between gap-2">
+          <span className="font-mono text-base font-semibold tabular-nums">
+            {signal.value === null ? SIGNAL_LABEL['no-data'] : formatPct(signal.value)}
+          </span>
+          <span className="text-sm font-semibold">{SIGNAL_LABEL[signal.level]}</span>
+        </div>
+        {note && <span className="text-sm break-keep opacity-70">{note}</span>}
       </div>
     </div>
   );
@@ -91,7 +91,7 @@ export function EntityCard({ summary, onOpen }: EntityCardProps) {
     <article className="flex w-full flex-col gap-2 border border-gray-800 p-3 text-left transition-colors hover:border-gray-600">
       <div className="flex flex-wrap items-baseline justify-between gap-x-2">
         <h3 className="text-lg font-bold text-gray-200">{name}</h3>
-        <span className="text-xs text-gray-600">{summary.crisis[0]?.year}년 결산</span>
+        <span className="text-sm text-gray-600">{summary.crisis[0]?.year}년 결산</span>
       </div>
 
       <div className="grid grid-cols-1 gap-1 sm:grid-cols-2">
