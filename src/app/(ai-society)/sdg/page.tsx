@@ -7,7 +7,7 @@ import { CANON_16, mergeToCanon16 } from '@/lib/sdg/region-normalize';
 import { nationalByGoal, type IndicatorLabel } from '@/lib/sdg/national';
 import { nationalGoalAchievement } from '@/lib/sdg/achievement';
 import { nationalGoalTrend } from '@/lib/sdg/trend-build';
-import { getMetroFiscalData } from '@/lib/data/fiscal-health-data';
+import { getMetroFiscalDataOfficial } from '@/lib/data/fiscal-health-official';
 import { SDG_DOMAINS } from '@/lib/data/local-sdg-data';
 import { SIDO_FULL_TO_SHORT } from '@/lib/sdg/goals';
 import type { FiscalContext } from '@/components/sdg/SDGRegionProfile';
@@ -41,9 +41,10 @@ function loadGeo() {
   }
 }
 
-// getMetroFiscalData()는 이미 16광역으로 병합된 배열을 반환한다(광주+전남 = 단일 엔트리
+// getMetroFiscalDataOfficial()는 이미 16광역으로 병합된 배열을 반환한다(광주+전남 = 단일 엔트리
 // name '전남광주통합특별시'). 따라서 mergeToCanon16로 재병합하지 않고, 각 엔트리의
 // name을 CANON_16 키로 매핑만 한다. debtRatio는 필드가 없어 debt/budget으로 계산한다.
+// debt는 지방재정365 결산 공식값(overlay). 공식값 없으면 추정치로 폴백.
 const CANON_16_SET = new Set<string>(CANON_16);
 
 function nameToCanon16(name: string): string | null {
@@ -55,7 +56,7 @@ function nameToCanon16(name: string): string | null {
 }
 
 function buildFiscalByRegion(): Record<string, FiscalContext> {
-  const fiscal = getMetroFiscalData();
+  const fiscal = getMetroFiscalDataOfficial();
   const out: Record<string, FiscalContext> = {};
   for (const m of fiscal) {
     const key = nameToCanon16(m.name);

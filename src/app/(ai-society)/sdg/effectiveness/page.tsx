@@ -9,7 +9,7 @@ import {
   type FiscalInput,
   type OutcomeSummary,
 } from '@/lib/sdg/effectiveness';
-import { getMetroFiscalData } from '@/lib/data/fiscal-health-data';
+import { getMetroFiscalDataOfficial } from '@/lib/data/fiscal-health-official';
 import { SIDO_FULL_TO_SHORT } from '@/lib/sdg/goals';
 
 export const metadata: Metadata = {
@@ -18,8 +18,9 @@ export const metadata: Metadata = {
     '16개 광역의 1인당 예산 × 종합 SDG 달성도 효율 사분면과 output/outcome 패널. 예산-성과는 상관 맥락이며 정책 인과 귀속(반사실)은 불가합니다(OECD 6기준).',
 };
 
-// getMetroFiscalData()는 이미 16광역으로 병합된 배열(광주+전남 = '전남광주통합특별시').
+// getMetroFiscalDataOfficial()는 이미 16광역으로 병합된 배열(광주+전남 = '전남광주통합특별시').
 // name을 CANON_16 키로 매핑만 한다((ai-society)/sdg/page.tsx buildFiscalByRegion 패턴).
+// debt는 지방재정365 결산 공식값(overlay). 공식값 없으면 추정치로 폴백.
 const CANON_16_SET = new Set<string>(CANON_16);
 
 function nameToCanon16(name: string): string | null {
@@ -32,7 +33,7 @@ function nameToCanon16(name: string): string | null {
 
 function buildFiscalByRegion(): Record<string, FiscalInput> {
   const out: Record<string, FiscalInput> = {};
-  for (const m of getMetroFiscalData()) {
+  for (const m of getMetroFiscalDataOfficial()) {
     const key = nameToCanon16(m.name);
     if (!key) continue;
     out[key] = {

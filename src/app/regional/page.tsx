@@ -1,5 +1,6 @@
 import { loadRegionalByMetro, loadRegionalByDistrict, loadRegionalMetadata } from '@/lib/data/load-budget';
-import { getMetroFiscalData, getAllDistrictFiscalData, calculateFiscalHealthScore, calculateDistrictHealthScore } from '@/lib/data/fiscal-health-data';
+import { calculateFiscalHealthScore, calculateDistrictHealthScore } from '@/lib/data/fiscal-health-data';
+import { getMetroFiscalDataOfficial, getAllDistrictFiscalDataOfficial } from '@/lib/data/fiscal-health-official';
 import fs from 'fs';
 import path from 'path';
 import { KoreaMap } from '@/components/map/KoreaMap';
@@ -35,7 +36,7 @@ export default function RegionalMapPage() {
   }
 
   // Calculate fiscal health scores for all metro regions
-  const metroFiscalData = getMetroFiscalData();
+  const metroFiscalData = getMetroFiscalDataOfficial();
   const healthScores: Record<string, { score: number; grade: string }> = {};
   for (const metro of metroFiscalData) {
     const result = calculateFiscalHealthScore(metro);
@@ -43,7 +44,7 @@ export default function RegionalMapPage() {
   }
 
   // Also calculate health scores for all districts
-  const allDistrictData = getAllDistrictFiscalData();
+  const allDistrictData = getAllDistrictFiscalDataOfficial();
   for (const district of allDistrictData) {
     const result = calculateDistrictHealthScore(district);
     healthScores[district.name] = { score: result.total, grade: result.grade };

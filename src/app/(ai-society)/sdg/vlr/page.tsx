@@ -1,7 +1,7 @@
 import { VLRReport } from '@/components/sdg/VLRReport';
 import { assembleIndicatorValues } from '@/lib/sdg/board-data';
 import { CANON_16 } from '@/lib/sdg/region-normalize';
-import { getMetroFiscalData } from '@/lib/data/fiscal-health-data';
+import { getMetroFiscalDataOfficial } from '@/lib/data/fiscal-health-official';
 import { SIDO_FULL_TO_SHORT } from '@/lib/sdg/goals';
 import { getTargets } from '@/lib/sdg/ontology';
 import { buildVLR, type VLRFiscal, type VLRReport as VLRReportData, DEFAULT_NATIONAL_AVG } from '@/lib/sdg/vlr';
@@ -13,8 +13,9 @@ export const metadata: Metadata = {
     'UN-Habitat VLR(Voluntary Local Review) 6단계 구조로 광역 자치단체의 K-SDGs 목표 대비 달성도를 자기평가하고 인쇄(PDF)할 수 있는 리포트. 데이터 기반 자기진단이며 정책 인과를 주장하지 않습니다.',
 };
 
-// getMetroFiscalData()는 16광역 병합 배열(name '전남광주통합특별시' = 광주+전남).
+// getMetroFiscalDataOfficial()는 16광역 병합 배열(name '전남광주통합특별시' = 광주+전남).
 // 각 엔트리 name을 CANON_16 키로 매핑한다(sdg/page.tsx와 동일 패턴).
+// debt는 지방재정365 결산 공식값(overlay). 공식값 없으면 추정치로 폴백.
 const CANON_16_SET = new Set<string>(CANON_16);
 
 function nameToCanon16(name: string): string | null {
@@ -27,7 +28,7 @@ function nameToCanon16(name: string): string | null {
 
 function buildFiscalByRegion(): Record<string, VLRFiscal> {
   const out: Record<string, VLRFiscal> = {};
-  for (const m of getMetroFiscalData()) {
+  for (const m of getMetroFiscalDataOfficial()) {
     const key = nameToCanon16(m.name);
     if (!key) continue;
     const debtRatio = m.budget > 0 ? Math.round((m.debt / m.budget) * 1000) / 10 : 0;

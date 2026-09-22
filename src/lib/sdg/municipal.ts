@@ -6,12 +6,13 @@
 //
 // 데이터 소스:
 //   - 진학률: public/data/admission-sgg-2025.json ({year, list:[{sido(약칭), sgg, rate, grads}]})
-//   - 재정:   fiscal-health-data.getDistrictFiscalData(metroFullName) → {metro, name, ...}
+//   - 재정:   fiscal-health-official.getDistrictFiscalDataOfficial(metroFullName) → {metro, name, ...}
+//             (지방재정365 결산 공식 채무잔액 overlay. 공식값 없으면 추정치 + debtSource:'estimated')
 //
 // 키 매칭: CANON_16 약칭 ↔ 재정 full metro명, CANON_16 약칭 ↔ 진학률 sido 약칭(들).
 //   광주전남: 재정 metro = '전남광주통합특별시', 진학률 sido = '광주' + '전남'(병합).
 
-import { getDistrictFiscalData, type DistrictFiscalData } from '@/lib/data/fiscal-health-data';
+import { getDistrictFiscalDataOfficial, type DistrictFiscalDataX } from '@/lib/data/fiscal-health-official';
 import admissionRaw from '../../../public/data/admission-sgg-2025.json';
 
 interface AdmissionEntry { sido: string; sgg: string; rate: number; grads: number }
@@ -62,7 +63,7 @@ export function listMunicipalities(canonMetro: string): string[] {
   const set = new Set<string>();
   const fiscalMetro = CANON_TO_FISCAL_METRO[canonMetro];
   if (fiscalMetro) {
-    for (const d of getDistrictFiscalData(fiscalMetro)) set.add(d.name);
+    for (const d of getDistrictFiscalDataOfficial(fiscalMetro)) set.add(d.name);
   }
   const sidos = CANON_TO_ADMISSION_SIDO[canonMetro] ?? [];
   for (const e of admission.list) {
@@ -82,7 +83,7 @@ export function getMunicipalSDG(canonMetro: string, sgg: string): MunicipalSDG {
   const fiscalMetro = CANON_TO_FISCAL_METRO[canonMetro];
   let fiscal: MunicipalFiscal | null = null;
   if (fiscalMetro) {
-    const d = getDistrictFiscalData(fiscalMetro).find((x: DistrictFiscalData) => x.name === sgg);
+    const d = getDistrictFiscalDataOfficial(fiscalMetro).find((x: DistrictFiscalDataX) => x.name === sgg);
     if (d) {
       const debtRatio = d.budget > 0 ? Math.round((d.debt / d.budget) * 1000) / 10 : 0;
       fiscal = {

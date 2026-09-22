@@ -5,11 +5,13 @@
 
 import {
   getMetroFiscalData,
-  getDistrictFiscalData as getFiscalDistricts,
-  generateDistrictDebtHistory,
   type MetroFiscalData,
   type DistrictFiscalData,
 } from './fiscal-health-data';
+import {
+  getDistrictFiscalDataOfficial as getFiscalDistricts,
+  getDistrictDebtHistoryOfficial,
+} from './fiscal-health-official';
 
 // ── 타입 정의 ──────────────────────────────────────────────
 
@@ -625,7 +627,7 @@ export function getDistrictFinanceData(
   const dist = districts.find(d => d.name === districtName);
   if (!dist) return [];
 
-  const debtHistory = generateDistrictDebtHistory(dist);
+  const debtHistory = getDistrictDebtHistoryOfficial(dist);
   const debtRatio = dist.budget > 0 ? (dist.debt / dist.budget) * 100 : 0;
   // 1인당 지역세 추정: 예산 × 지역세비중(~20%) / 인구 / 만원
   const taxPerCapita = dist.population > 0
