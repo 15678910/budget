@@ -115,7 +115,8 @@ export function crisisSignals(entityKey: string, year: IndicatorYear): CrisisSig
 
 /**
  * 같은 그룹 안의 백분위를 계산한다.
- * percentile = round(자기 값보다 "큰" 값의 개수 ÷ groupSize × 100) → "상위 N%".
+ * percentile = round((자기 값보다 "큰" 값의 개수 + 1) ÷ groupSize × 100) → "상위 N% 이내".
+ * 값이 가장 큰 자치단체가 1등이므로 N은 1 이상 100 이하가 되고, "상위 0%"는 나오지 않는다.
  * 동일한 값은 같은 순위(최소 순위)를 공유하고, null은 계산에서 빠지며 groupSize에도 들어가지 않는다.
  */
 export function rankWithinGroup(values: readonly (number | null)[]): (number | null)[] {
@@ -126,7 +127,7 @@ export function rankWithinGroup(values: readonly (number | null)[]): (number | n
   return values.map((value) => {
     if (value === null || !Number.isFinite(value)) return null;
     const greater = present.reduce((count, other) => (other > value ? count + 1 : count), 0);
-    return Math.round((greater / groupSize) * 100);
+    return Math.round(((greater + 1) / groupSize) * 100);
   });
 }
 

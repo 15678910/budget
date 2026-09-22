@@ -60,8 +60,26 @@ export const SIDO_CODE: Record<string, string> = {
   전북: '45', 전남: '46', 경북: '47', 경남: '48', 제주: '50',
 };
 
+/**
+ * 특별자치도 전환으로 코드가 둘인 시도.
+ * 강원특별자치도(2023-06)·전북특별자치도(2024-01) 이후 행정표준코드가 51·52로 새로 부여됐지만
+ * 옛 코드(42·45)를 그대로 쓰는 자료도 많다. 사례 데이터가 어느 쪽을 쓰든 같은 시도로 묶는다.
+ */
+const SIDO_CODE_ALIASES: Record<string, readonly string[]> = {
+  강원: ['42', '51'],
+  전북: ['45', '52'],
+};
+
+/** 시도 약칭의 대표(현행 사이트 표기) 코드 */
 export function sidoCodeOf(region: string): string | undefined {
   return SIDO_CODE[region];
+}
+
+/** 사례를 시도로 거를 때 쓰는 코드 집합. 코드가 하나뿐이면 원소 1개 */
+export function sidoCodeSetOf(region: string): ReadonlySet<string> {
+  const canonical = SIDO_CODE[region];
+  if (!canonical) return new Set<string>();
+  return new Set(SIDO_CODE_ALIASES[region] ?? [canonical]);
 }
 
 /** 카드·표에 쓰는 자치단체 이름. 광역은 시도 약칭, 기초는 '시도 자치단체명' */
@@ -105,13 +123,22 @@ export function headroomToCaution(indicator: LegalIndicator, value: number | nul
   return Math.round(gap * 100) / 100;
 }
 
-/** 카드에 붙이는 여유 폭 문구. 기준 안이면 초과 사실만 적는다 */
+/**
+ * 카드에 붙이는 여유 폭 문구. 기준에 닿았으면 그 사실만 적는다.
+ * 여유 폭 0은 아직 기준 밖이므로(조문이 "초과"·"미만"이다) 남은 폭 0.00%p로 적는다.
+ * 통합재정수지가 흑자면 적자비율 기준의 대상이 아니므로 여유 폭 대신 그 사실을 적는다.
+ */
 export function headroomText(indicator: LegalIndicator, value: number | null): string | null {
   const gap = headroomToCaution(indicator, value);
   if (gap === null) return null;
+  if (indicator === 'fiscalBalance' && value !== null && value > 0) {
+    return '흑자 — 적자비율 기준 대상 아님';
+  }
   const threshold = LEGAL_THRESHOLDS[indicator];
   const bound = threshold.direction === 'above' ? threshold.caution[0] : threshold.caution[1];
-  if (gap <= 0) return `주의 기준 ${bound}% 초과`;
+  if (gap < 0) {
+    return threshold.direction === 'above' ? `주의 기준 ${bound}% 초과` : `주의 기준 ${bound}% 미만`;
+  }
   return `주의 기준 ${bound}%까지 ${gap.toFixed(2)}%p`;
 }
 
@@ -125,7 +152,7 @@ export function minHeadroom(summary: EntitySummary): number | null {
 
 /**
  * 백분위 미니바의 10단계 폭 클래스. Tailwind가 소스에서 찾을 수 있도록 문자열을 그대로 적는다.
- * 「상위 N%」가 작을수록(= 동종단체 안에서 값이 클수록) 막대가 길다.
+ * 「상위 N% 이내」의 N이 작을수록(= 동종단체 안에서 값이 클수록) 막대가 길다.
  */
 export const BAR_WIDTH_CLASS: readonly string[] = [
   'w-0', 'w-[10%]', 'w-[20%]', 'w-[30%]', 'w-[40%]', 'w-[50%]',
@@ -143,7 +170,7 @@ export const FOOTNOTE_DESIGNATION =
   '기준 충족은 지정이 아니다 — 지정은 지방재정관리위원회 심의를 거친 행정안전부장관의 재량이다(시행령 제65조의3 "지정할 수 있다").';
 
 export const FOOTNOTE_PERCENTILE =
-  '백분위는 순위이지 평가가 아니다. 「상위 N%」는 같은 유형(광역/시/군/자치구) 안에서 값이 큰 순서를 뜻할 뿐, 지출의 옳고 그름을 뜻하지 않는다.';
+  '백분위는 순위이지 평가가 아니다. 「상위 N% 이내」는 같은 유형(광역/시/군/자치구) 안에서 값이 큰 순서를 뜻할 뿐, 지출의 옳고 그름을 뜻하지 않는다. 막대가 길수록 동종단체 중 값이 큰 쪽(상위 N%의 N이 작은 쪽)입니다.';
 
 export const FOOTNOTE_PEER_AVG =
   '동종단체 평균은 지방재정365 응답에 없어 유형(광역/시/군/자치구)별로 직접 계산한 값이다(같은 해·같은 유형에서 값이 있는 자치단체의 산술평균).';

@@ -2,12 +2,33 @@ import type { CaseSource, WatchCase } from '../case-types';
 
 /** 근거: docs/research/2026-09-23-waste-cases-verification.md 「사례 1 — 대전 전기 굴절버스 3대」 */
 
-const JODAL: CaseSource = {
-  title: '대전 전기 굴절버스 계약 시점·계약방법 보도',
+/**
+ * 조달경제신문 같은 기사(2026-09-16)의 세 대목.
+ * 인용 두 문장은 원문에서 이어지지 않으므로 「…」로 잇지 않고 따로 싣는다
+ * (근거 문서의 인용도 두 개의 따옴표로 나뉘어 있다).
+ */
+const JODAL_CONTRACT_DATE: CaseSource = {
+  title: '대전 전기 굴절버스 계약 시점 보도',
   publisher: '조달경제신문',
   date: '2026-09-16',
   url: 'https://www.jodaleconomy.com/news/articleView.html?idxno=3180',
-  quote: '계약은 2025년 7월10일 체결 … 계약방법도 ‘일반경쟁’에서 ‘수의계약’으로 바뀌었다',
+  quote: '계약은 2025년 7월10일 체결',
+};
+
+const JODAL_CONTRACT_METHOD: CaseSource = {
+  title: '대전 전기 굴절버스 계약방법 변경 보도',
+  publisher: '조달경제신문',
+  date: '2026-09-16',
+  url: 'https://www.jodaleconomy.com/news/articleView.html?idxno=3180',
+  quote: '계약방법도 ‘일반경쟁’에서 ‘수의계약’으로 바뀌었다',
+};
+
+/** 같은 기사의 총사업비 대목. 근거 문서에 직접 인용이 없어 따옴표를 붙이지 않는다 */
+const JODAL_TOTAL_COST: CaseSource = {
+  title: '기반시설 포함 총사업비 185억원 보도',
+  publisher: '조달경제신문',
+  date: '2026-09-16',
+  url: 'https://www.jodaleconomy.com/news/articleView.html?idxno=3180',
 };
 
 const ASIATODAY: CaseSource = {
@@ -66,8 +87,9 @@ export const DAEJEON_ARTICULATED_BUS: WatchCase = {
   summary:
     '대전시는 2025년 7월 10일 전기 굴절버스 3대의 차량구매계약을 수의계약으로 체결했다. 당초 납품기한은 2025년 말이었고 기한은 세 차례 연장됐다. 2026년 7월 31일 최종기한에도 정식 인도가 완료된 차량은 없었다.',
   timeline: [
-    { date: '2025-07-10', label: '차량구매계약 체결(계약방법 일반경쟁 → 수의계약)', source: JODAL },
-    { date: '2025-12-31', label: '당초 납품기한 — 문서 표기는 “2025년 말”(연말 기한)', source: ASIATODAY },
+    { date: '2025-07-10', label: '차량구매계약 체결(계약방법 일반경쟁 → 수의계약)', source: JODAL_CONTRACT_METHOD },
+    // 원자료 표기가 "2025년 말"이라 일(day)을 지어내지 않고 월 단위로 둔다
+    { date: '2025-12', label: '당초 납품기한 — 문서 표기는 “2025년 말”(연말 기한)', source: ASIATODAY },
     { date: '2026-07-31', label: '세 차례 연장된 최종기한 — 정식 인도 완료 차량 0대', source: JBNEWS },
   ],
   claims: [
@@ -76,7 +98,7 @@ export const DAEJEON_ARTICULATED_BUS: WatchCase = {
       verdict: 'partial',
       finding:
         '계약은 2025년 7월 10일 체결됐고 계약방법은 일반경쟁에서 수의계약으로 바뀌었다. 당초 납품기한은 2025년 말로 약 5.5개월이며, “7개월”의 근거 문서는 확인되지 않았다.',
-      sources: [JODAL, ASIATODAY],
+      sources: [JODAL_CONTRACT_DATE, JODAL_CONTRACT_METHOD, ASIATODAY],
     },
     {
       statement: '납품 전에 대금의 80%(약 72억원)를 선지급했다.',
@@ -109,14 +131,14 @@ export const DAEJEON_ARTICULATED_BUS: WatchCase = {
       verdict: 'confirmed',
       finding:
         '차량구매계약은 1차 27억 7,200만원 + 2차 64억 6,800만원 = 94억원(시비, 지방채)이고, 기반시설을 포함한 총사업비는 185억원이다.',
-      sources: [OHMYNEWS, JODAL],
+      sources: [OHMYNEWS, JODAL_TOTAL_COST],
     },
     {
       statement: '선거를 의식한 일정이었다.',
       verdict: 'unverified',
       finding:
         '계약 2025-07-10, 당초 납품기한 2025년 말(선거 전), 최종 연장 기한 2026-07-31(선거 후)은 사실이다. 의도를 보여주는 1차 문서는 확인되지 않았다.',
-      sources: [JODAL, ASIATODAY],
+      sources: [JODAL_CONTRACT_DATE, ASIATODAY],
     },
   ],
   procedures: [

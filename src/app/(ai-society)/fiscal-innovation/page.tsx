@@ -29,6 +29,61 @@ function isTabKey(value: string | null): value is TabKey {
   return TABS.some((tab) => tab.key === value);
 }
 
+const AI_SIDEBAR_SECTIONS = [
+  { id: 'title', label: '개요' },
+  { id: 'tabs', label: '탭 선택' },
+  { id: 'content', label: '탭 내용' },
+];
+
+function TitleBlock() {
+  return (
+    <div id="title" className="border border-gray-800 px-4 py-3">
+      <h1 className="text-base md:text-lg font-bold tracking-[0.2em] uppercase text-gray-200">
+        재정혁신 시뮬레이터
+      </h1>
+      <p className="text-sm text-gray-500 mt-1">재정 혁신 정책 시뮬레이션과 지방재정 감시 자료</p>
+    </div>
+  );
+}
+
+/** 탭 줄. `onSelect`가 없으면(프리렌더 fallback) 버튼을 눌러도 아무 일이 없도록 비활성으로 둔다 */
+function TabBar({ activeTab, onSelect }: { activeTab: TabKey; onSelect?: (key: TabKey) => void }) {
+  return (
+    <div id="tabs" className="flex items-center gap-1 overflow-x-auto border border-gray-800 p-1.5">
+      {TABS.map((tab) => (
+        <button
+          key={tab.key}
+          type="button"
+          disabled={!onSelect}
+          onClick={onSelect ? () => onSelect(tab.key) : undefined}
+          className={`px-4 py-2 text-sm font-medium rounded transition-colors whitespace-nowrap ${
+            activeTab === tab.key
+              ? `${tab.color} bg-gray-800/60 font-semibold`
+              : 'text-gray-500 hover:text-gray-300 hover:bg-gray-800/30'
+          }`}
+        >
+          {tab.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function PageShell({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex min-h-screen">
+      <AISidebar title="재정혁신" sections={AI_SIDEBAR_SECTIONS} />
+      <main className="flex-1 min-w-0">
+        <div className="w-full max-w-7xl mx-auto">
+          <div className="bg-gray-950 text-gray-300 w-full min-h-screen p-2 md:p-4 space-y-1">
+            {children}
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}
+
 function FiscalInnovationTabs() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -47,61 +102,42 @@ function FiscalInnovationTabs() {
   };
 
   return (
-    <div className="flex min-h-screen">
-      <AISidebar title="재정혁신" sections={[
-        { id: 'title', label: '개요' },
-        { id: 'tabs', label: '탭 선택' },
-        { id: 'content', label: '탭 내용' },
-      ]} />
-      <main className="flex-1 min-w-0">
-      <div className="w-full max-w-7xl mx-auto">
-      <div className="bg-gray-950 text-gray-300 w-full min-h-screen p-2 md:p-4 space-y-1">
-        {/* Title */}
-        <div id="title" className="border border-gray-800 px-4 py-3">
-          <h1 className="text-base md:text-lg font-bold tracking-[0.2em] uppercase text-gray-200">
-            재정혁신 시뮬레이터
-          </h1>
-          <p className="text-sm text-gray-500 mt-1">재정 혁신 정책 시뮬레이션과 지방재정 감시 자료</p>
-        </div>
+    <PageShell>
+      <TitleBlock />
+      <TabBar activeTab={activeTab} onSelect={selectTab} />
 
-        {/* Tab bar */}
-        <div id="tabs" className="flex items-center gap-1 overflow-x-auto border border-gray-800 p-1.5">
-          {TABS.map((tab) => (
-            <button
-              key={tab.key}
-              onClick={() => selectTab(tab.key)}
-              className={`px-4 py-2 text-sm font-medium rounded transition-colors whitespace-nowrap ${
-                activeTab === tab.key
-                  ? `${tab.color} bg-gray-800/60 font-semibold`
-                  : 'text-gray-500 hover:text-gray-300 hover:bg-gray-800/30'
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
+      {/* Content */}
+      <div id="content">
+        {activeTab === 'interest' && <InterestBurdenSimulator />}
+        {activeTab === 'credit' && <PublicCreditSimulator />}
+        {activeTab === 'currency' && <LocalCurrencySimulator />}
+        {activeTab === 'taxCompare' && <TaxVsLendingComparator />}
+        {activeTab === 'integrated' && <IntegratedScenarioSimulator />}
+        {activeTab === 'watch' && <EarlyWarningSection />}
+        {activeTab === 'cases' && <CaseArchiveSection />}
+      </div>
+    </PageShell>
+  );
+}
 
-        {/* Content */}
-        <div id="content">
-          {activeTab === 'interest' && <InterestBurdenSimulator />}
-          {activeTab === 'credit' && <PublicCreditSimulator />}
-          {activeTab === 'currency' && <LocalCurrencySimulator />}
-          {activeTab === 'taxCompare' && <TaxVsLendingComparator />}
-          {activeTab === 'integrated' && <IntegratedScenarioSimulator />}
-          {activeTab === 'watch' && <EarlyWarningSection />}
-          {activeTab === 'cases' && <CaseArchiveSection />}
-        </div>
-      </div>
-      </div>
-      </main>
-    </div>
+/**
+ * 프리렌더용 뼈대. `useSearchParams` 때문에 탭 본문은 정적 HTML에 들어가지 못하지만,
+ * 제목과 탭 줄까지 빈 화면으로 두면 검색엔진과 자바스크립트 없는 환경에서 이 페이지가 사라진다.
+ */
+function FiscalInnovationFallback() {
+  return (
+    <PageShell>
+      <TitleBlock />
+      <TabBar activeTab={DEFAULT_TAB} />
+      <div id="content" />
+    </PageShell>
   );
 }
 
 export default function FiscalInnovationPage() {
   // useSearchParams는 Suspense 경계 안에서만 프리렌더된다
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<FiscalInnovationFallback />}>
       <FiscalInnovationTabs />
     </Suspense>
   );

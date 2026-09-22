@@ -95,16 +95,21 @@ describe('evaluateLegal — 합성 값 판정', () => {
 });
 
 describe('rankWithinGroup — 동종단체 백분위', () => {
-  it('동일값은 같은 순위를 갖는다: [5,5,3] → [0,0,67]', () => {
-    expect(rankWithinGroup([5, 5, 3])).toEqual([0, 0, 67]);
+  it('동일값은 같은 순위를 갖는다: [5,5,3] → [33,33,100]', () => {
+    expect(rankWithinGroup([5, 5, 3])).toEqual([33, 33, 100]);
   });
 
   it('null은 제외하고 groupSize에도 넣지 않는다', () => {
-    expect(rankWithinGroup([5, null, 5, 3])).toEqual([0, null, 0, 67]);
+    expect(rankWithinGroup([5, null, 5, 3])).toEqual([33, null, 33, 100]);
   });
 
-  it('값이 하나뿐이면 상위 0%다', () => {
-    expect(rankWithinGroup([7])).toEqual([0]);
+  it('가장 큰 값도 상위 0%가 아니다 (1등은 1/groupSize)', () => {
+    expect(rankWithinGroup([9, 8, 7, 6])).toEqual([25, 50, 75, 100]);
+    expect(rankWithinGroup(Array.from({ length: 100 }, (_, i) => 100 - i))[0]).toBe(1);
+  });
+
+  it('값이 하나뿐이면 그룹 전체가 자기 자신이므로 상위 100%다', () => {
+    expect(rankWithinGroup([7])).toEqual([100]);
   });
 
   it('값이 없으면 전부 null이다', () => {
@@ -157,13 +162,13 @@ describe('percentiles — 동종단체 백분위', () => {
     expect(jongno?.map((p) => p.indicator)).toEqual(WASTE_INDICATORS);
   });
 
-  it('서울종로구 행사축제경비 백분위는 0~100이고 groupSize는 자치구 69개다', () => {
+  it('서울종로구 행사축제경비 백분위는 1~100이고 groupSize는 자치구 69개다', () => {
     const festival = map.get('서울종로구')?.find((p) => p.indicator === 'festival');
     expect(festival).toBeDefined();
     expect(festival?.typeCd).toBe('33');
     expect(festival?.groupSize).toBe(69);
     expect(festival?.percentile).not.toBeNull();
-    expect(festival?.percentile).toBeGreaterThanOrEqual(0);
+    expect(festival?.percentile).toBeGreaterThanOrEqual(1);
     expect(festival?.percentile).toBeLessThanOrEqual(100);
   });
 

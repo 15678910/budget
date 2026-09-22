@@ -71,18 +71,18 @@ export const LEGAL_THRESHOLDS: Record<LegalIndicator, { caution: [number, number
 
 // signals.ts
 export function crisisSignals(entityKey: string, year: IndicatorYear): CrisisSignal[];   // 6개 항목 모두 반환, 자료 없는 4개는 no-data
-export function percentiles(year: IndicatorYear): Map<string, PercentileRank[]>;          // typeCd 그룹 안에서 값 내림차순 백분위(상위 x%). 동일값은 같은 순위(최소 순위). null은 제외·groupSize에 미포함
+export function percentiles(year: IndicatorYear): Map<string, PercentileRank[]>;          // typeCd 그룹 안에서 값 내림차순 백분위(상위 x% 이내, 1~100). 동일값은 같은 순위(최소 순위). null은 제외·groupSize에 미포함
 export function entitySummaries(year: IndicatorYear): EntitySummary[];                     // 243개. debtDelta3y = getMetroYearlyIncreaseOfficial 류가 아니라 local-debt-official에서 year-3→year 순증(억), 없으면 null
 export function nationalCounts(year: IndicatorYear): { cautionOrWorse: Record<LegalIndicator, number>; deficitCount: number };
 ```
 - 채무비율은 `local-debt-official.ts`(debt/budget×100, 결산)에서, 통합재정수지비율은 `local-indicators-official.ts` `fiscalBalance`에서. 두 모듈 모두 key = lafNm으로 조인.
-- 백분위 정의: `percentile = (해당 값보다 큰 값의 개수 / groupSize) × 100`을 소수 없이 반올림 → "상위 N%". 값이 클수록 상위. 그룹은 `typeCd`(22/31/32/33).
+- 백분위 정의: `percentile = ((해당 값보다 큰 값의 개수 + 1) / groupSize) × 100`을 소수 없이 반올림 → "상위 N% 이내". 값이 가장 큰 자치단체가 1등이므로 N은 1 이상 100 이하이고 "상위 0%"는 나오지 않는다. 값이 클수록 상위. 그룹은 `typeCd`(22/31/32/33).
 
 - [x] Step 1 테스트: 
   - `LEGAL_THRESHOLDS.debtRatio` = caution (25,40], critical 40; `fiscalBalance` 절대값 기준
   - 합성 엔티티로 `crisisSignals`: 채무비율 26 → caution, 41 → critical, 10 → normal; 통합재정수지 −31 → critical, −26 → caution, +5 → normal; 자료 없는 4개 → no-data
-  - 실데이터: 2024 서울본청 debtRatio 21.53 → normal; `nationalCounts(2024).cautionOrWorse.debtRatio`가 0 이상의 정수; `percentiles(2024)` 서울종로구의 festival percentile이 0~100, groupSize = typeCd '33' 개수(69)
-  - 동일값 처리: 값 [5,5,3] → 백분위 [0,0,67]
+  - 실데이터: 2024 서울본청 debtRatio 21.53 → normal; `nationalCounts(2024).cautionOrWorse.debtRatio`가 0 이상의 정수; `percentiles(2024)` 서울종로구의 festival percentile이 1~100, groupSize = typeCd '33' 개수(69)
+  - 동일값 처리: 값 [5,5,3] → 백분위 [33,33,100]
 - [x] Step 2 실패 확인 → Step 3 구현 → Step 4 `npx jest src/lib/watch`·tsc·eslint → Step 5 커밋 `feat(watch): 법정 재정위기 기준 신호와 동종단체 백분위 계산`
 
 ---

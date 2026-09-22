@@ -23,7 +23,7 @@ import {
 } from '@/lib/watch/signal-types';
 import { WATCH_CASES } from '@/lib/watch/cases';
 import { debtHistoryOf } from './debt-history';
-import { entityLabel, formatEok, formatPct, sidoCodeOf } from './warning-labels';
+import { entityLabel, formatEok, formatPct, sidoCodeSetOf } from './warning-labels';
 
 function TableHead() {
   return (
@@ -61,11 +61,11 @@ export function EntityDetail({ summary, onBack }: EntityDetailProps) {
   }, [summary.key]);
 
   const debtHistory = useMemo(() => debtHistoryOf(summary), [summary]);
-  const sidoCode = sidoCodeOf(summary.region);
-  const cases = useMemo(
-    () => (sidoCode ? WATCH_CASES.filter((c) => c.gov.code === sidoCode) : []),
-    [sidoCode],
-  );
+  // 강원·전북처럼 코드가 둘인 시도가 있어 집합으로 맞춘다
+  const cases = useMemo(() => {
+    const codes = sidoCodeSetOf(summary.region);
+    return codes.size === 0 ? [] : WATCH_CASES.filter((c) => codes.has(c.gov.code));
+  }, [summary.region]);
 
   return (
     <div className="space-y-1">
@@ -119,7 +119,7 @@ export function EntityDetail({ summary, onBack }: EntityDetailProps) {
                       </div>
                       <div className="font-mono text-[10px] text-gray-600">
                         평균 {formatPct(rank?.peerAvg ?? null)}
-                        {percentile === null ? '' : ` · 상위 ${percentile}%`}
+                        {percentile === null ? '' : ` · 상위 ${percentile}% 이내`}
                       </div>
                     </td>
                   );
@@ -177,7 +177,7 @@ export function EntityDetail({ summary, onBack }: EntityDetailProps) {
             {cases.map((watchCase) => (
               <li key={watchCase.slug}>
                 <Link
-                  href="/fiscal-innovation?tab=cases"
+                  href={`/fiscal-innovation?tab=cases&case=${watchCase.slug}`}
                   className="text-xs text-orange-300 underline-offset-2 hover:underline"
                 >
                   {watchCase.gov.name} · {watchCase.title}

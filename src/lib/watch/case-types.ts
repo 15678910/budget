@@ -19,7 +19,15 @@ export interface CaseClaim {
   finding: string;
   sources: CaseSource[];
 }
-export interface CaseEvent { date: string; label: string; source?: CaseSource } // 타임라인. 선거일은 자동 삽입
+/**
+ * 타임라인 한 줄. 선거일은 화면에서 자동 삽입한다.
+ *
+ * `date`는 'YYYY-MM-DD' 또는 'YYYY-MM'이다. 원자료가 "2025년 말", "2024년 7월"처럼
+ * 월까지만 적었으면 일을 지어내지 않고 'YYYY-MM'으로 둔다.
+ * 'YYYY-MM' 사건은 선거일과의 일수 간격을 계산하지 않고(daysBetween이 null),
+ * 정렬에서만 그 달의 1일로 취급한다.
+ */
+export interface CaseEvent { date: string; label: string; source?: CaseSource }
 export interface CaseProcedure {
   key: 'investment-review' | 'feasibility-study' | 'council-approval' | 'disclosure';
   //  투자심사(지방재정법 제37조) / 타당성조사(500억 이상) / 의회 의결(공유재산·계약) / 정보공개

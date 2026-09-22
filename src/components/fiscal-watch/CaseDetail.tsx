@@ -1,6 +1,6 @@
 import { SectionHeader } from '@/components/fiscal/primitives';
 import type { CaseEvent, CaseSource, WatchCase } from '@/lib/watch/case-types';
-import { ELECTION_DAY, daysBetween } from '@/lib/watch/cases';
+import { ELECTION_DAY, daysBetween, sortKeyOf } from '@/lib/watch/cases';
 import { ClaimTable, SourceLink } from './ClaimTable';
 import {
   PROCEDURE_BASIS,
@@ -20,7 +20,10 @@ interface TimelineRow {
   election: boolean;
 }
 
-/** 사건 목록에 선거일을 날짜 순서대로 끼워 넣는다. 같은 날짜면 선거일을 뒤에 둔다 */
+/**
+ * 사건 목록에 선거일을 날짜 순서대로 끼워 넣는다. 같은 날짜면 선거일을 뒤에 둔다.
+ * 'YYYY-MM' 사건은 정렬에서만 그 달의 1일로 본다(표시는 원래대로 월까지만).
+ */
 function buildTimeline(events: readonly CaseEvent[]): TimelineRow[] {
   const rows: TimelineRow[] = events.map((event) => ({
     date: event.date,
@@ -30,30 +33,38 @@ function buildTimeline(events: readonly CaseEvent[]): TimelineRow[] {
   }));
   rows.push({ date: ELECTION_DAY, label: '제9회 전국동시지방선거', election: true });
   return rows.sort((a, b) => {
-    if (a.date !== b.date) return a.date < b.date ? -1 : 1;
+    const keyA = sortKeyOf(a.date);
+    const keyB = sortKeyOf(b.date);
+    if (keyA !== keyB) return keyA < keyB ? -1 : 1;
     return Number(a.election) - Number(b.election);
   });
 }
 
-/** 선거일과의 간격. 사실(일수)만 적는다 */
+/** 선거일과의 간격. 사실(일수)만 적는다. 월 단위 자료는 일수를 지어내지 않는다 */
 function gapLabel(date: string): string {
   const days = daysBetween(date, ELECTION_DAY);
+  if (days === null) return '월 단위 자료';
   if (days === 0) return '선거 당일';
   return days > 0 ? `선거 ${days}일 전` : `선거 ${-days}일 후`;
 }
 
-/** 주장·타임라인·절차에 붙은 출처를 URL 기준으로 중복 제거 */
+/** 출처를 가리키는 키. 같은 기사라도 인용 문장이 다르면 서로 다른 출처로 남긴다 */
+function sourceKey(source: CaseSource): string {
+  return JSON.stringify([source.url, source.quote ?? '']);
+}
+
+/** 주장·타임라인·절차에 붙은 출처를 URL + 인용문 기준으로 중복 제거 */
 function collectSources(watchCase: WatchCase): CaseSource[] {
-  const byUrl = new Map<string, CaseSource>();
+  const byKey = new Map<string, CaseSource>();
   const push = (source?: CaseSource) => {
     if (!source) return;
-    const existing = byUrl.get(source.url);
-    if (!existing || (!existing.quote && source.quote)) byUrl.set(source.url, source);
+    const key = sourceKey(source);
+    if (!byKey.has(key)) byKey.set(key, source);
   };
   watchCase.claims.forEach((claim) => claim.sources.forEach(push));
   watchCase.timeline.forEach((event) => push(event.source));
   watchCase.procedures.forEach((procedure) => push(procedure.source));
-  return [...byUrl.values()];
+  return [...byKey.values()];
 }
 
 function Timeline({ rows }: { rows: TimelineRow[] }) {
@@ -171,7 +182,7 @@ export function CaseDetail({ watchCase }: { watchCase: WatchCase }) {
       <SectionHeader title="출처" color="text-orange-400" />
       <ul className="space-y-1.5 border border-gray-800 px-4 py-3 text-sm">
         {sources.map((source) => (
-          <li key={source.url} className="leading-snug">
+          <li key={sourceKey(source)} className="leading-snug">
             <SourceLink source={source} />
           </li>
         ))}

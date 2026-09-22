@@ -87,16 +87,40 @@ function isActive(pathname: string, href: string): boolean {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-/** 하위 링크는 쿼리까지 비교한다 (예: /fiscal-innovation?tab=cases) */
-function isSubActive(current: string, href: string): boolean {
-  return current.startsWith(href);
+/**
+ * 하위 링크는 경로가 정확히 같고 링크에 적힌 쿼리(예: `tab=cases`)가 모두 일치할 때만 활성이다.
+ * startsWith로 비교하면 `/sdg`가 `/sdg/ontology`를, `?tab=case`가 `?tab=cases`를 잡아먹는다.
+ */
+function isSubActive(pathname: string, search: string, href: string): boolean {
+  const [hrefPath, hrefQuery] = href.split('?');
+  if (pathname !== hrefPath) return false;
+  if (!hrefQuery) return true;
+  const want = new URLSearchParams(hrefQuery);
+  const got = new URLSearchParams(search);
+  for (const [key, value] of want) {
+    if (got.get(key) !== value) return false;
+  }
+  return true;
+}
+
+/**
+ * 하위 링크의 활성 표시. `useSearchParams`를 쓰는 유일한 조각이라
+ * 이 조각만 Suspense 경계에 넣으면 나머지 메뉴는 정적 HTML에 그대로 남는다.
+ * 부모 링크는 `has-[[data-sub-active]]`로 배경을 바꾸고, 보조기기에는 aria-current로 알린다.
+ */
+function SubLinkActive({ href }: { href: string }) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  if (!isSubActive(pathname, searchParams.toString(), href)) return null;
+  return (
+    <span data-sub-active aria-current="page" className="sr-only">
+      현재 위치
+    </span>
+  );
 }
 
 function HubLinks() {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const search = searchParams.toString();
-  const current = search ? `${pathname}?${search}` : pathname;
   const [sectionsOpen, setSectionsOpen] = useState(true);
 
   return (
@@ -161,13 +185,15 @@ function HubLinks() {
                       href={sub.href}
                       className={cn(
                         'block ml-3 mt-0.5 px-2.5 py-1 text-xs rounded-md transition-colors',
-                        isSubActive(current, sub.href)
-                          ? 'text-foreground bg-muted/50 font-medium'
-                          // 투명도를 주면 라이트 테마에서 대비가 3.2까지 떨어져 AA에 미달한다.
-                          : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                        // 투명도를 주면 라이트 테마에서 대비가 3.2까지 떨어져 AA에 미달한다.
+                        'text-muted-foreground hover:bg-muted hover:text-foreground',
+                        'has-[[data-sub-active]]:text-foreground has-[[data-sub-active]]:bg-muted/50 has-[[data-sub-active]]:font-medium'
                       )}
                     >
                       ▸ {sub.label}
+                      <Suspense fallback={null}>
+                        <SubLinkActive href={sub.href} />
+                      </Suspense>
                     </Link>
                   ))}
                 </li>
@@ -189,10 +215,8 @@ export function AISocietySidebar() {
           <span>🏛 AI기본사회 허브</span>
           <span className="text-muted-foreground text-xs">메뉴 ▾</span>
         </summary>
-        {/* useSearchParams는 Suspense 경계 안에서만 프리렌더된다 */}
-        <Suspense fallback={null}>
-          <HubLinks />
-        </Suspense>
+        {/* HubLinks는 usePathname만 쓰므로 정적 HTML에 그대로 들어간다 */}
+        <HubLinks />
       </details>
 
       {/* Desktop: fixed-width sidebar beside content */}
@@ -200,9 +224,7 @@ export function AISocietySidebar() {
         <div className="px-3 pt-3">
           <p className="text-xs font-bold text-foreground tracking-tight">🏛 AI기본사회 허브</p>
         </div>
-        <Suspense fallback={null}>
-          <HubLinks />
-        </Suspense>
+        <HubLinks />
       </aside>
     </>
   );

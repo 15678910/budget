@@ -50,7 +50,7 @@ function SignalChip({ signal }: { signal: CrisisSignal }) {
 function WasteBar({ rank }: { rank: PercentileRank }) {
   const label = WASTE_INDICATOR_LABEL[rank.indicator];
   const hasValue = rank.percentile !== null;
-  const text = hasValue ? `상위 ${rank.percentile}%` : '자료 없음';
+  const text = hasValue ? `상위 ${rank.percentile}% 이내` : '자료 없음';
 
   return (
     <div className="flex items-center gap-2">
@@ -60,7 +60,8 @@ function WasteBar({ rank }: { rank: PercentileRank }) {
         aria-label={`${label} 동종단체 백분위`}
         aria-valuemin={0}
         aria-valuemax={100}
-        aria-valuenow={rank.percentile ?? 0}
+        // 값이 없으면 aria-valuenow를 0으로 두지 않고 아예 붙이지 않는다 (0은 "1등"으로 읽힌다)
+        aria-valuenow={rank.percentile ?? undefined}
         aria-valuetext={text}
         className="h-1.5 min-w-0 flex-1 bg-gray-800"
       >
@@ -82,14 +83,14 @@ export interface EntityCardProps {
 }
 
 export function EntityCard({ summary, onOpen }: EntityCardProps) {
+  const name = entityLabel(summary);
+
+  // 카드 전체를 button으로 감싸면 role="meter"가 버튼 안에 들어가 보조기기에서 사라진다.
+  // 카드는 article로 두고, 상세로 가는 조작은 아래의 작은 button 하나가 맡는다.
   return (
-    <button
-      type="button"
-      onClick={() => onOpen(summary.key)}
-      className="flex w-full flex-col gap-2 border border-gray-800 p-3 text-left transition-colors hover:border-gray-600 hover:bg-gray-900/60 focus:border-gray-500 focus:outline-none"
-    >
+    <article className="flex w-full flex-col gap-2 border border-gray-800 p-3 text-left transition-colors hover:border-gray-600">
       <div className="flex flex-wrap items-baseline justify-between gap-x-2">
-        <span className="text-sm font-semibold text-gray-200">{entityLabel(summary)}</span>
+        <h3 className="text-sm font-semibold text-gray-200">{name}</h3>
         <span className="text-[11px] text-gray-600">{summary.crisis[0]?.year}년 결산</span>
       </div>
 
@@ -113,6 +114,15 @@ export function EntityCard({ summary, onOpen }: EntityCardProps) {
           {formatEok(summary.debtDelta3y, true)}
         </span>
       </div>
-    </button>
+
+      <button
+        type="button"
+        onClick={() => onOpen(summary.key)}
+        aria-label={`${name} 상세 보기`}
+        className="w-full border border-gray-800 py-1.5 text-xs text-gray-400 transition-colors hover:border-gray-600 hover:text-gray-200 focus:border-gray-500 focus:outline-none"
+      >
+        상세 보기
+      </button>
+    </article>
   );
 }

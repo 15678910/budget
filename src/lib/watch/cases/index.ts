@@ -28,7 +28,32 @@ export function getWatchCase(slug: string): WatchCase | undefined {
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
-/** 달력 일수 b − a. 'YYYY-MM-DD'를 UTC로 읽어 시간대 영향을 받지 않는다 */
-export function daysBetween(a: string, b: string): number {
+const FULL_DATE = /^\d{4}-\d{2}-\d{2}$/;
+const MONTH_DATE = /^\d{4}-\d{2}$/;
+
+/** 'YYYY-MM-DD'면 true. 'YYYY-MM'(월 단위 자료)이면 false */
+export function hasDayPrecision(date: string): boolean {
+  return FULL_DATE.test(date);
+}
+
+/** 타임라인에 쓸 수 있는 날짜인지 — 'YYYY-MM-DD' 또는 'YYYY-MM' */
+export function isCaseDate(date: string): boolean {
+  return FULL_DATE.test(date) || MONTH_DATE.test(date);
+}
+
+/**
+ * 정렬용 키. 'YYYY-MM'은 그 달의 1일로 본다(순서에만 쓰고 간격 계산에는 쓰지 않는다).
+ * 같은 달의 'YYYY-MM'과 'YYYY-MM-01'은 문자열 비교로도 앞뒤가 갈리지 않도록 자리수를 맞춘다.
+ */
+export function sortKeyOf(date: string): string {
+  return MONTH_DATE.test(date) ? `${date}-01` : date;
+}
+
+/**
+ * 달력 일수 b − a. 'YYYY-MM-DD'를 UTC로 읽어 시간대 영향을 받지 않는다.
+ * 어느 한쪽이라도 일(day)이 없는 'YYYY-MM'이면 일수를 지어내지 않고 null을 돌려준다.
+ */
+export function daysBetween(a: string, b: string): number | null {
+  if (!hasDayPrecision(a) || !hasDayPrecision(b)) return null;
   return Math.round((Date.parse(`${b}T00:00:00Z`) - Date.parse(`${a}T00:00:00Z`)) / MS_PER_DAY);
 }

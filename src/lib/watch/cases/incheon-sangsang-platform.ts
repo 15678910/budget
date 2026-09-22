@@ -26,7 +26,8 @@ export const INCHEON_SANGSANG_PLATFORM: WatchCase = {
   summary:
     '인천 상상플랫폼은 총사업비 1,003억원(국비 126억, 시비 877억)으로 조성돼 2024년 7월 개관했다. 2025년 2월 LG헬로비전과 월미하이랜드가 잇따라 계약 해지 의사를 밝혔고 LG헬로비전은 2025년 7월 27일 철수했다. 인천관광공사는 최장 20년 조건으로 신규 파트너를 재공모하고 있다.',
   timeline: [
-    { date: '2024-07-01', label: '개관(2024년 7월)', source: KYEONGIN },
+    // 보도는 "2024년 7월 개관"까지만 적어 일(day)을 지어내지 않고 월 단위로 둔다
+    { date: '2024-07', label: '개관(2024년 7월)', source: KYEONGIN },
     { date: '2025-02-17', label: 'LG헬로비전 계약 해지 의사 표명', source: KYEONGIN },
     { date: '2025-02-24', label: '월미하이랜드 계약 해지 통보', source: KYEONGIN },
     { date: '2025-07-27', label: 'LG헬로비전 철수', source: KYEONGIN },

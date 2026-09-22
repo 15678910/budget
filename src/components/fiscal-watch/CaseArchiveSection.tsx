@@ -1,6 +1,7 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { Suspense, useEffect, useMemo, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { SectionHeader } from '@/components/fiscal/primitives';
 import type { StructuralTag, Verdict, WatchCase } from '@/lib/watch/case-types';
 import { WATCH_CASES, getWatchCase } from '@/lib/watch/cases';
@@ -9,6 +10,7 @@ import { CaseDetail } from './CaseDetail';
 import {
   ARCHIVE_NOTICE,
   TAG_LABEL,
+  TAG_NOTE,
   TAG_ORDER,
   VERDICT_LABEL,
   VERDICT_ORDER,
@@ -75,10 +77,31 @@ function Legend() {
   );
 }
 
-export function CaseArchiveSection() {
+function CaseArchive() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  // `/fiscal-innovation?tab=cases&case=<slug>` 로 들어오면 그 사례를 펼친 채로 시작한다
+  const caseParam = searchParams.get('case');
+  const linkedSlug = caseParam && getWatchCase(caseParam) ? caseParam : null;
+
   const [govFilter, setGovFilter] = useState<string>('all');
   const [tagFilter, setTagFilter] = useState<string>('all');
-  const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
+  const [selectedSlug, setSelectedSlug] = useState<string | null>(linkedSlug);
+
+  // 다른 화면(자치단체 상세)에서 링크로 들어와 쿼리가 바뀌면 선택도 따라간다
+  useEffect(() => {
+    setSelectedSlug(linkedSlug);
+  }, [linkedSlug]);
+
+  /** 목록으로 돌아갈 때 `case` 쿼리를 지워 새로고침해도 목록이 나오게 한다 */
+  const backToList = () => {
+    setSelectedSlug(null);
+    if (!caseParam) return;
+    const next = new URLSearchParams(searchParams.toString());
+    next.delete('case');
+    if (!next.has('tab')) next.set('tab', 'cases');
+    router.replace(`?${next.toString()}`, { scroll: false });
+  };
 
   const govNames = useMemo(
     () => [...new Set(WATCH_CASES.map((watchCase) => watchCase.gov.name))].sort((a, b) => a.localeCompare(b, 'ko')),
@@ -114,7 +137,7 @@ export function CaseArchiveSection() {
           <div className="border border-gray-800 px-4 py-2">
             <button
               type="button"
-              onClick={() => setSelectedSlug(null)}
+              onClick={backToList}
               className="text-sm text-gray-400 transition-colors hover:text-gray-200"
             >
               ← 목록으로
@@ -160,6 +183,11 @@ export function CaseArchiveSection() {
             </span>
           </div>
 
+          {/* 구조 태그의 뜻은 카드마다 되풀이하지 않고 필터 밑에 한 번만 적는다 */}
+          <p className="border border-gray-800 px-4 py-2 text-xs leading-relaxed text-gray-600">
+            {TAG_NOTE}
+          </p>
+
           <SectionHeader title="지목된 사업" color="text-orange-400" />
           {filtered.length === 0 ? (
             <p className="border border-gray-800 px-4 py-6 text-center text-sm text-gray-500">
@@ -175,5 +203,14 @@ export function CaseArchiveSection() {
         </>
       )}
     </div>
+  );
+}
+
+/** useSearchParams를 쓰므로 이 절 자체를 Suspense 경계 안에 둔다 */
+export function CaseArchiveSection() {
+  return (
+    <Suspense fallback={null}>
+      <CaseArchive />
+    </Suspense>
   );
 }

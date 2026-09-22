@@ -21,6 +21,9 @@ import { entityLabel, formatEok, minHeadroom } from './warning-labels';
 /** 기초는 한 시도에 최대 31곳이지만 기본은 30장만 그린다 */
 const BASIC_PAGE_SIZE = 30;
 
+/** 공식 채무 공시의 첫 해. year-3이 이보다 앞서면 3년 순증을 계산할 수 없다 */
+const DEBT_HISTORY_FIRST_YEAR = 2018;
+
 function fiscalBalanceOf(summary: EntitySummary): number | null {
   return summary.crisis.find((signal) => signal.indicator === 'fiscalBalance')?.value ?? null;
 }
@@ -56,6 +59,7 @@ export function EarlyWarningSection() {
 
   const summaries = useMemo(() => entitySummaries(year), [year]);
   const counts = useMemo(() => nationalCounts(year), [year]);
+  const hasDelta3y = year - 3 >= DEBT_HISTORY_FIRST_YEAR;
 
   const topDebt = useMemo(
     () =>
@@ -129,21 +133,32 @@ export function EarlyWarningSection() {
         />
         <Cell
           label="3년 채무 순증 상위 5"
-          value={topDebt.length > 0 ? entityLabel(topDebt[0]) : '—'}
-          color="text-red-300"
-          sub={topDebt.slice(1).map(entityLabel).join(' · ') || '자료 없음'}
+          value={!hasDelta3y ? '자료 없음' : topDebt.length > 0 ? entityLabel(topDebt[0]) : '—'}
+          color={hasDelta3y ? 'text-red-300' : 'text-gray-500'}
+          sub={
+            hasDelta3y
+              ? topDebt.slice(1).map(entityLabel).join(' · ') || '자료 없음'
+              : `채무 이력은 ${DEBT_HISTORY_FIRST_YEAR}년부터`
+          }
         />
       </div>
 
       <div className="flex flex-wrap gap-x-4 gap-y-1 border border-gray-800 px-4 py-2 text-[11px] text-gray-500">
-        {topDebt.map((summary) => (
-          <span key={summary.key}>
-            {entityLabel(summary)}{' '}
-            <span className="font-mono tabular-nums text-red-300">
-              {formatEok(summary.debtDelta3y, true)}
+        {hasDelta3y ? (
+          topDebt.map((summary) => (
+            <span key={summary.key}>
+              {entityLabel(summary)}{' '}
+              <span className="font-mono tabular-nums text-red-300">
+                {formatEok(summary.debtDelta3y, true)}
+              </span>
             </span>
+          ))
+        ) : (
+          <span>
+            3년 채무 순증 — 자료 없음 · 채무 이력은 {DEBT_HISTORY_FIRST_YEAR}년부터라 {year}년의
+            3년 순증은 계산하지 않는다.
           </span>
-        ))}
+        )}
       </div>
 
       <div className="grid grid-cols-1 gap-1 md:grid-cols-2 xl:grid-cols-3">

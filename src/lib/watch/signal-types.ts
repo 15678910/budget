@@ -52,7 +52,10 @@ export interface PercentileRank {
    * (같은 typeCd·같은 연도의 null 아닌 값들의 산술평균, 소수 2자리).
    */
   peerAvg: number | null;
-  /** 상위 N% — (자기 값보다 큰 값의 개수 / groupSize) × 100 을 반올림. 값이 없으면 null */
+  /**
+   * 상위 N% 이내 — ((자기 값보다 큰 값의 개수 + 1) / groupSize) × 100 을 반올림.
+   * 값이 가장 큰 자치단체가 1등이므로 N은 1 이상 100 이하다. 값이 없으면 null.
+   */
   percentile: number | null;
   /** 백분위 모집단 크기. null 값은 제외한다 */
   groupSize: number;
