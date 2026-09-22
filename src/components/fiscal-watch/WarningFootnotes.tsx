@@ -32,7 +32,7 @@ const UNAVAILABLE = LEGAL_INDICATORS.filter(
 
 export function WarningFootnotes() {
   return (
-    <div className="space-y-2 border border-gray-800 p-4 text-[11px] leading-relaxed text-gray-500">
+    <div className="space-y-2 border border-gray-800 p-4 text-sm leading-relaxed text-gray-500">
       <p>
         출처 · {INDICATOR_SOURCE.title} (수집일 {INDICATOR_SOURCE.fetchedAt}) —{' '}
         <a

@@ -143,7 +143,7 @@ export function EarlyWarningSection() {
         />
       </div>
 
-      <div className="flex flex-wrap gap-x-4 gap-y-1 border border-gray-800 px-4 py-2 text-[11px] text-gray-500">
+      <div className="flex flex-wrap gap-x-4 gap-y-1 border border-gray-800 px-4 py-2 text-sm text-gray-500">
         {hasDelta3y ? (
           topDebt.map((summary) => (
             <span key={summary.key}>
@@ -171,7 +171,7 @@ export function EarlyWarningSection() {
         <button
           type="button"
           onClick={() => setShowAll(true)}
-          className="w-full border border-gray-800 py-2 text-xs text-gray-400 transition-colors hover:border-gray-600 hover:text-gray-200"
+          className="w-full border border-gray-800 py-2 text-sm text-gray-400 transition-colors hover:border-gray-600 hover:text-gray-200"
         >
           전체 보기 (+{hidden}곳)
         </button>

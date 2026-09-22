@@ -4,7 +4,7 @@ import { VERDICT_CLASS, VERDICT_LABEL } from './labels';
 export function VerdictBadge({ verdict }: { verdict: Verdict }) {
   return (
     <span
-      className={`inline-block whitespace-nowrap border px-2 py-0.5 text-xs font-semibold ${VERDICT_CLASS[verdict]}`}
+      className={`inline-block whitespace-nowrap border px-2 py-0.5 text-sm font-semibold ${VERDICT_CLASS[verdict]}`}
     >
       {VERDICT_LABEL[verdict]}
     </span>
@@ -24,7 +24,7 @@ export function SourceLink({ source }: { source: CaseSource }) {
       </a>
       <span className="text-gray-500"> {source.title}</span>
       {source.quote && (
-        <span className="mt-0.5 block text-xs leading-snug text-gray-600">「{source.quote}」</span>
+        <span className="mt-0.5 block text-sm leading-snug text-gray-600">「{source.quote}」</span>
       )}
     </>
   );

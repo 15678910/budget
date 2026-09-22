@@ -32,16 +32,16 @@ function SignalChip({ signal }: { signal: CrisisSignal }) {
   const note = computable ? headroomText(signal.indicator, signal.value) : null;
 
   return (
-    <div className={`border px-2 py-1 ${SIGNAL_CLASS[signal.level]}`}>
+    <div className={`border px-3 py-2 ${SIGNAL_CLASS[signal.level]}`}>
       <div className="flex items-baseline justify-between gap-1">
-        <span className="truncate text-[11px] opacity-80">{label}</span>
-        <span className="shrink-0 font-mono text-[11px] tabular-nums">
+        <span className="truncate text-sm opacity-80">{label}</span>
+        <span className="shrink-0 font-mono text-base font-semibold tabular-nums">
           {signal.value === null ? SIGNAL_LABEL['no-data'] : formatPct(signal.value)}
         </span>
       </div>
-      <div className="flex items-baseline justify-between gap-1">
-        <span className="text-[11px] font-semibold">{SIGNAL_LABEL[signal.level]}</span>
-        {note && <span className="truncate text-[10px] opacity-70">{note}</span>}
+      <div className="flex flex-wrap items-baseline justify-between gap-1">
+        <span className="text-sm font-semibold">{SIGNAL_LABEL[signal.level]}</span>
+        {note && <span className="break-keep text-sm opacity-70">{note}</span>}
       </div>
     </div>
   );
@@ -54,7 +54,7 @@ function WasteBar({ rank }: { rank: PercentileRank }) {
 
   return (
     <div className="flex items-center gap-2">
-      <span className="w-24 shrink-0 truncate text-[11px] text-gray-500">{label}</span>
+      <span className="w-28 shrink-0 truncate text-sm text-gray-500">{label}</span>
       <div
         role="meter"
         aria-label={`${label} 동종단체 백분위`}
@@ -63,14 +63,14 @@ function WasteBar({ rank }: { rank: PercentileRank }) {
         // 값이 없으면 aria-valuenow를 0으로 두지 않고 아예 붙이지 않는다 (0은 "1등"으로 읽힌다)
         aria-valuenow={rank.percentile ?? undefined}
         aria-valuetext={text}
-        className="h-1.5 min-w-0 flex-1 bg-gray-800"
+        className="h-2.5 min-w-0 flex-1 bg-gray-800"
       >
-        <div className={`h-1.5 bg-sky-500/70 ${barWidthClass(rank.percentile)}`} />
+        <div className={`h-2.5 bg-sky-500/70 ${barWidthClass(rank.percentile)}`} />
       </div>
-      <span className="w-20 shrink-0 text-right font-mono text-[11px] tabular-nums text-gray-400">
+      <span className="w-24 shrink-0 text-right font-mono text-sm font-medium tabular-nums text-gray-400">
         {text}
       </span>
-      <span className="w-14 shrink-0 text-right font-mono text-[11px] tabular-nums text-gray-600">
+      <span className="w-16 shrink-0 text-right font-mono text-sm tabular-nums text-gray-600">
         {formatPct(rank.value)}
       </span>
     </div>
@@ -90,11 +90,11 @@ export function EntityCard({ summary, onOpen }: EntityCardProps) {
   return (
     <article className="flex w-full flex-col gap-2 border border-gray-800 p-3 text-left transition-colors hover:border-gray-600">
       <div className="flex flex-wrap items-baseline justify-between gap-x-2">
-        <h3 className="text-sm font-semibold text-gray-200">{name}</h3>
-        <span className="text-[11px] text-gray-600">{summary.crisis[0]?.year}년 결산</span>
+        <h3 className="text-lg font-bold text-gray-200">{name}</h3>
+        <span className="text-xs text-gray-600">{summary.crisis[0]?.year}년 결산</span>
       </div>
 
-      <div className="grid grid-cols-2 gap-1">
+      <div className="grid grid-cols-1 gap-1 sm:grid-cols-2">
         {summary.crisis.map((signal) => (
           <SignalChip key={signal.indicator} signal={signal} />
         ))}
@@ -109,8 +109,8 @@ export function EntityCard({ summary, onOpen }: EntityCardProps) {
       )}
 
       <div className="flex items-baseline justify-between border-t border-gray-800 pt-2">
-        <span className="text-[11px] text-gray-500">최근 3년 채무 순증</span>
-        <span className={`font-mono text-sm tabular-nums ${deltaClass(summary.debtDelta3y)}`}>
+        <span className="text-sm text-gray-500">최근 3년 채무 순증</span>
+        <span className={`font-mono text-base font-semibold tabular-nums ${deltaClass(summary.debtDelta3y)}`}>
           {formatEok(summary.debtDelta3y, true)}
         </span>
       </div>
@@ -119,7 +119,7 @@ export function EntityCard({ summary, onOpen }: EntityCardProps) {
         type="button"
         onClick={() => onOpen(summary.key)}
         aria-label={`${name} 상세 보기`}
-        className="w-full border border-gray-800 py-1.5 text-xs text-gray-400 transition-colors hover:border-gray-600 hover:text-gray-200 focus:border-gray-500 focus:outline-none"
+        className="w-full border border-gray-800 py-1.5 text-sm text-gray-400 transition-colors hover:border-gray-600 hover:text-gray-200 focus:border-gray-500 focus:outline-none"
       >
         상세 보기
       </button>

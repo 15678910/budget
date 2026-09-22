@@ -18,7 +18,7 @@ import {
 } from './labels';
 
 const SELECT_CLASS =
-  'border border-gray-700 bg-gray-900 px-2 py-1 text-sm text-gray-300 focus:border-gray-500 focus:outline-none';
+  'border border-gray-700 bg-gray-900 px-3 py-2 text-sm text-gray-300 focus:border-gray-500 focus:outline-none';
 
 function countByVerdict(watchCase: WatchCase): { verdict: Verdict; count: number }[] {
   return VERDICT_ORDER.map((verdict) => ({
@@ -36,7 +36,7 @@ function CaseCard({ watchCase, onSelect }: { watchCase: WatchCase; onSelect: (sl
       className="flex w-full flex-col gap-2 border border-gray-800 p-3 text-left transition-colors hover:border-gray-600 hover:bg-gray-900/60"
     >
       <div className="flex flex-wrap items-baseline gap-x-2">
-        <span className="text-xs text-gray-500">{watchCase.gov.name}</span>
+        <span className="text-sm text-gray-500">{watchCase.gov.name}</span>
         <span className="text-sm font-semibold text-gray-200">{watchCase.title}</span>
       </div>
       <div className="font-mono text-sm text-orange-300 tabular-nums">{formatEok(watchCase.amountEok)}</div>
@@ -45,7 +45,7 @@ function CaseCard({ watchCase, onSelect }: { watchCase: WatchCase; onSelect: (sl
           {watchCase.tags.map((tag) => (
             <span
               key={tag}
-              className="border border-orange-500/40 bg-orange-500/10 px-1.5 py-0.5 text-[11px] text-orange-300"
+              className="border border-orange-500/40 bg-orange-500/10 px-2 py-1 text-sm text-orange-300"
             >
               {TAG_LABEL[tag]}
             </span>
@@ -54,13 +54,13 @@ function CaseCard({ watchCase, onSelect }: { watchCase: WatchCase; onSelect: (sl
       )}
       <div className="flex flex-wrap gap-1">
         {counts.map(({ verdict, count }) => (
-          <span key={verdict} className="text-[11px] text-gray-500">
+          <span key={verdict} className="text-sm text-gray-500">
             {VERDICT_LABEL[verdict]} {count}
           </span>
         ))}
       </div>
-      <p className="text-xs leading-relaxed text-gray-500">{watchCase.status}</p>
-      <p className="text-[11px] text-gray-600">검증일 {watchCase.verifiedAt}</p>
+      <p className="text-sm leading-relaxed text-gray-500">{watchCase.status}</p>
+      <p className="text-xs text-gray-600">검증일 {watchCase.verifiedAt}</p>
     </button>
   );
 }
@@ -68,11 +68,11 @@ function CaseCard({ watchCase, onSelect }: { watchCase: WatchCase; onSelect: (sl
 function Legend() {
   return (
     <div className="flex flex-wrap items-center gap-2 border border-gray-800 px-4 py-2">
-      <span className="text-xs text-gray-500">판정 표기</span>
+      <span className="text-sm text-gray-500">판정 표기</span>
       {VERDICT_ORDER.map((verdict) => (
         <VerdictBadge key={verdict} verdict={verdict} />
       ))}
-      <span className="text-xs text-gray-600">확인 / 부분확인 / 반박 / 미확인</span>
+      <span className="text-sm text-gray-600">확인 / 부분확인 / 반박 / 미확인</span>
     </div>
   );
 }
@@ -178,13 +178,13 @@ function CaseArchive() {
                 ))}
               </select>
             </label>
-            <span className="font-mono text-xs text-gray-600 tabular-nums">
+            <span className="font-mono text-sm text-gray-600 tabular-nums">
               {filtered.length} / {WATCH_CASES.length}건
             </span>
           </div>
 
           {/* 구조 태그의 뜻은 카드마다 되풀이하지 않고 필터 밑에 한 번만 적는다 */}
-          <p className="border border-gray-800 px-4 py-2 text-xs leading-relaxed text-gray-600">
+          <p className="border border-gray-800 px-4 py-2 text-sm leading-relaxed text-gray-600">
             {TAG_NOTE}
           </p>
 

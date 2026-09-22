@@ -71,15 +71,15 @@ export function EntityDetail({ summary, onBack }: EntityDetailProps) {
     <div className="space-y-1">
       <div className="flex flex-wrap items-center justify-between gap-2 border border-gray-800 px-4 py-2">
         <div className="flex items-baseline gap-2">
-          <span className="text-base font-bold text-gray-200">{entityLabel(summary)}</span>
-          <span className="text-xs text-gray-500">
+          <span className="text-lg font-bold text-gray-200">{entityLabel(summary)}</span>
+          <span className="text-sm text-gray-500">
             {summary.level === 'metro' ? '광역' : '기초'} · 유형 {summary.typeCd}
           </span>
         </div>
         <button
           type="button"
           onClick={onBack}
-          className="border border-gray-700 px-3 py-1 text-xs text-gray-400 transition-colors hover:border-gray-500 hover:text-gray-200"
+          className="border border-gray-700 px-3 py-1 text-sm text-gray-400 transition-colors hover:border-gray-500 hover:text-gray-200"
         >
           ← 목록으로
         </button>
@@ -87,7 +87,7 @@ export function EntityDetail({ summary, onBack }: EntityDetailProps) {
 
       <SectionHeader title="지표 이력 (결산, 2019~2024)" color="text-sky-400" />
       <div className="overflow-x-auto border border-gray-800">
-        <table className="w-full min-w-[640px] text-xs">
+        <table className="w-full min-w-[640px] text-sm">
           <TableHead />
           <tbody>
             <tr className="border-b border-gray-900">
@@ -117,7 +117,7 @@ export function EntityDetail({ summary, onBack }: EntityDetailProps) {
                       <div className="font-mono text-gray-300">
                         {formatPct(entity?.values[indicator][index] ?? null)}
                       </div>
-                      <div className="font-mono text-[10px] text-gray-600">
+                      <div className="font-mono text-sm text-gray-600">
                         평균 {formatPct(rank?.peerAvg ?? null)}
                         {percentile === null ? '' : ` · 상위 ${percentile}% 이내`}
                       </div>
@@ -133,9 +133,9 @@ export function EntityDetail({ summary, onBack }: EntityDetailProps) {
       <SectionHeader title="예산대비 채무비율 이력 (결산)" color="text-amber-400" />
       <div className="overflow-x-auto border border-gray-800">
         {debtHistory.length === 0 ? (
-          <p className="px-2 py-3 text-xs text-gray-500">공식 채무 공시 자료 없음</p>
+          <p className="px-2 py-3 text-sm text-gray-500">공식 채무 공시 자료 없음</p>
         ) : (
-          <table className="w-full min-w-[480px] text-xs">
+          <table className="w-full min-w-[480px] text-sm">
             <thead>
               <tr className="border-b border-gray-800 text-gray-500">
                 <th className="px-2 py-1 text-left font-normal">연도</th>
@@ -171,18 +171,18 @@ export function EntityDetail({ summary, onBack }: EntityDetailProps) {
       <SectionHeader title="같은 시도의 사례 아카이브" color="text-orange-400" />
       <div className="border border-gray-800 p-3">
         {cases.length === 0 ? (
-          <p className="text-xs text-gray-500">이 시도에 등록된 사례 없음</p>
+          <p className="text-sm text-gray-500">이 시도에 등록된 사례 없음</p>
         ) : (
           <ul className="space-y-1">
             {cases.map((watchCase) => (
               <li key={watchCase.slug}>
                 <Link
                   href={`/fiscal-innovation?tab=cases&case=${watchCase.slug}`}
-                  className="text-xs text-orange-300 underline-offset-2 hover:underline"
+                  className="text-sm text-orange-300 underline-offset-2 hover:underline"
                 >
                   {watchCase.gov.name} · {watchCase.title}
                 </Link>
-                <span className="ml-2 text-[11px] text-gray-600">{watchCase.status}</span>
+                <span className="ml-2 text-sm text-gray-600">{watchCase.status}</span>
               </li>
             ))}
           </ul>

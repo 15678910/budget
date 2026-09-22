@@ -13,7 +13,7 @@ export const SORTS: { key: SortKey; label: string }[] = [
 ];
 
 const CONTROL_CLASS =
-  'border border-gray-700 bg-gray-900 px-2 py-1 text-sm text-gray-300 focus:border-gray-500 focus:outline-none';
+  'border border-gray-700 bg-gray-900 px-3 py-2 text-sm text-gray-300 focus:border-gray-500 focus:outline-none';
 
 export interface WarningControlsProps {
   year: IndicatorYear;
@@ -38,7 +38,7 @@ export function WarningControls({
 }: WarningControlsProps) {
   return (
     <div className="flex flex-wrap items-center gap-2 border border-gray-800 p-3">
-      <label className="flex items-center gap-1 text-xs text-gray-500">
+      <label className="flex items-center gap-1 text-sm text-gray-500">
         연도
         <select
           className={CONTROL_CLASS}
@@ -59,7 +59,7 @@ export function WarningControls({
             key={key}
             type="button"
             onClick={() => onLevel(key)}
-            className={`border px-3 py-1 text-xs transition-colors ${
+            className={`border px-3 py-2 text-sm transition-colors ${
               level === key
                 ? 'border-gray-600 bg-gray-800/60 text-gray-200'
                 : 'border-gray-800 text-gray-500 hover:text-gray-300'
@@ -71,7 +71,7 @@ export function WarningControls({
       </div>
 
       {level === 'basic' && (
-        <label className="flex items-center gap-1 text-xs text-gray-500">
+        <label className="flex items-center gap-1 text-sm text-gray-500">
           시도
           <select className={CONTROL_CLASS} value={region} onChange={(e) => onRegion(e.target.value)}>
             {REGIONS.map((option) => (
@@ -83,7 +83,7 @@ export function WarningControls({
         </label>
       )}
 
-      <label className="flex items-center gap-1 text-xs text-gray-500">
+      <label className="flex items-center gap-1 text-sm text-gray-500">
         정렬
         <select
           className={CONTROL_CLASS}

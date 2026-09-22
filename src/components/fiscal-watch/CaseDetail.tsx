@@ -77,9 +77,9 @@ function Timeline({ rows }: { rows: TimelineRow[] }) {
             row.election ? 'bg-orange-500/5' : ''
           }`}
         >
-          <span className="w-24 shrink-0 font-mono text-xs text-gray-500 tabular-nums">{row.date}</span>
+          <span className="w-24 shrink-0 font-mono text-sm text-gray-500 tabular-nums">{row.date}</span>
           <span
-            className={`w-24 shrink-0 font-mono text-xs tabular-nums ${
+            className={`w-24 shrink-0 font-mono text-sm tabular-nums ${
               row.election ? 'text-orange-300' : 'text-gray-600'
             }`}
           >
@@ -88,7 +88,7 @@ function Timeline({ rows }: { rows: TimelineRow[] }) {
           <span className={`min-w-0 text-sm leading-relaxed ${row.election ? 'text-orange-200' : 'text-gray-300'}`}>
             {row.label}
             {row.source && (
-              <span className="ml-2 text-xs">
+              <span className="ml-2 text-sm">
                 <SourceLink source={row.source} />
               </span>
             )}
@@ -109,16 +109,16 @@ function Procedures({ watchCase }: { watchCase: WatchCase }) {
         return (
           <li key={key} className="flex flex-col gap-1 px-3 py-2 md:flex-row md:items-baseline md:gap-3">
             <span className="w-28 shrink-0 text-sm text-gray-300">{PROCEDURE_LABEL[key]}</span>
-            <span className="w-40 shrink-0 text-xs text-gray-600">{PROCEDURE_BASIS[key]}</span>
+            <span className="w-40 shrink-0 text-sm text-gray-600">{PROCEDURE_BASIS[key]}</span>
             <span
-              className={`w-fit shrink-0 border px-2 py-0.5 text-xs font-semibold ${PROCEDURE_STATUS_CLASS[status]}`}
+              className={`w-fit shrink-0 border px-2 py-0.5 text-sm font-semibold ${PROCEDURE_STATUS_CLASS[status]}`}
             >
               {PROCEDURE_STATUS_LABEL[status]}
             </span>
             <span className="min-w-0 text-sm leading-relaxed text-gray-400">
               {note}
               {procedure?.source && (
-                <span className="ml-2 text-xs">
+                <span className="ml-2 text-sm">
                   <SourceLink source={procedure.source} />
                 </span>
               )}
@@ -142,8 +142,8 @@ export function CaseDetail({ watchCase }: { watchCase: WatchCase }) {
           <h3 className="text-base font-bold text-gray-200 md:text-lg">{watchCase.title}</h3>
           <span className="font-mono text-sm text-orange-300 tabular-nums">{formatEok(watchCase.amountEok)}</span>
         </div>
-        <p className="mt-1 text-xs leading-relaxed text-gray-500">{watchCase.amountNote}</p>
-        <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-gray-500">
+        <p className="mt-1 text-sm leading-relaxed text-gray-500">{watchCase.amountNote}</p>
+        <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-sm text-gray-500">
           <span>상태 — {watchCase.status}</span>
           <span>검증일 — {watchCase.verifiedAt}</span>
         </div>
@@ -167,7 +167,7 @@ export function CaseDetail({ watchCase }: { watchCase: WatchCase }) {
             {watchCase.tags.map((tag) => (
               <span
                 key={tag}
-                className="border border-orange-500/40 bg-orange-500/10 px-2 py-0.5 text-xs text-orange-300"
+                className="border border-orange-500/40 bg-orange-500/10 px-2 py-0.5 text-sm text-orange-300"
               >
                 {TAG_LABEL[tag]}
               </span>
@@ -176,7 +176,7 @@ export function CaseDetail({ watchCase }: { watchCase: WatchCase }) {
         ) : (
           <p className="text-sm text-gray-500">붙은 태그 없음</p>
         )}
-        <p className="mt-2 text-xs leading-relaxed text-gray-600">{TAG_NOTE}</p>
+        <p className="mt-2 text-sm leading-relaxed text-gray-600">{TAG_NOTE}</p>
       </div>
 
       <SectionHeader title="출처" color="text-orange-400" />
