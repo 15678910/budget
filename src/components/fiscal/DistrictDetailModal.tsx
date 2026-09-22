@@ -40,6 +40,7 @@ export function DistrictDetailModal({
   const perCapita = getDebtPerCapitaManWon(currentDebt, district.population);
   const yearlyIncrease = district.debt * 0.06;
   const isEstimated = district.debtSource === 'estimated';
+  const isZeroDebt = district.debt === 0 && !isEstimated;
   const indDiff = district.independence - nationalAvg.independence;
   const autDiff = district.autonomy - nationalAvg.autonomy;
 
@@ -107,17 +108,28 @@ export function DistrictDetailModal({
 
         {/* 지역채무 실시간 */}
         <div className="space-y-1">
-          <div className="text-base md:text-base text-gray-400">
-            지역채무 (실시간){isEstimated && <span className="text-amber-500 ml-1">[추정]</span>}
-          </div>
-          <div className={`text-lg md:text-xl font-mono font-bold tabular-nums ${debtColor(perCapita)}`}>
-            {formatRawWon(currentDebt)}
-          </div>
-          <div className="flex items-center gap-3 text-sm md:text-base text-gray-500">
-            <span>≈ {formatDebt(currentDebt)}</span>
-            <span>|</span>
-            <span>초당 {formatPerSecond(yearlyIncrease)}</span>
-          </div>
+          {isZeroDebt ? (
+            <>
+              <div className="text-base md:text-base text-gray-400">지역채무</div>
+              <div className="text-lg md:text-xl font-mono font-bold tabular-nums text-gray-400">
+                채무 없음 (2024 결산)
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="text-base md:text-base text-gray-400">
+                지역채무 (실시간){isEstimated && <span className="text-amber-500 ml-1">[추정]</span>}
+              </div>
+              <div className={`text-lg md:text-xl font-mono font-bold tabular-nums ${debtColor(perCapita)}`}>
+                {formatRawWon(currentDebt)}
+              </div>
+              <div className="flex items-center gap-3 text-sm md:text-base text-gray-500">
+                <span>≈ {formatDebt(currentDebt)}</span>
+                <span>|</span>
+                <span>초당 {formatPerSecond(yearlyIncrease)}</span>
+              </div>
+            </>
+          )}
         </div>
 
         <div className="border-t border-gray-800" />

@@ -5,6 +5,7 @@ import type { MetroFiscalData } from './types';
 import {
   getMetroLatestDebtRatioOfficial,
   getMetroYearlyIncreaseOfficial,
+  type DebtSourceTag,
 } from '@/lib/data/fiscal-health-official';
 import { Bar } from './primitives';
 import {
@@ -26,7 +27,7 @@ export function MetroDetailModal({
   nationalAvg,
   onClose,
 }: {
-  metro: MetroFiscalData;
+  metro: MetroFiscalData & { debtSource?: DebtSourceTag };
   nationalAvg: { independence: number; autonomy: number; totalDebt: number };
   onClose: () => void;
 }) {
@@ -41,6 +42,7 @@ export function MetroDetailModal({
   const currentDebt = getCurrentMetroDebt(metro.name, metro.debt);
   const perCapita = getDebtPerCapitaManWon(currentDebt, metro.population);
   const yearlyIncrease = getMetroYearlyIncreaseOfficial(metro.name) ?? metro.debt * 0.06;
+  const isZeroDebt = metro.debt === 0 && metro.debtSource !== 'estimated';
   const indDiff = metro.independence - nationalAvg.independence;
   const autDiff = metro.autonomy - nationalAvg.autonomy;
   // 채무비율은 결산 채무 ÷ 결산 최종예산액(지방재정365 공식 지표)이다.
@@ -109,15 +111,26 @@ export function MetroDetailModal({
 
         {/* 지역채무 실시간 */}
         <div className="space-y-1">
-          <div className="text-base md:text-base text-gray-400">지역채무 (실시간)</div>
-          <div className={`text-lg md:text-xl font-mono font-bold tabular-nums ${debtColor(perCapita)}`}>
-            {formatRawWon(currentDebt)}
-          </div>
-          <div className="flex items-center gap-3 text-sm md:text-base text-gray-500">
-            <span>≈ {formatDebt(currentDebt)}</span>
-            <span>|</span>
-            <span>초당 {formatPerSecond(yearlyIncrease)}</span>
-          </div>
+          {isZeroDebt ? (
+            <>
+              <div className="text-base md:text-base text-gray-400">지역채무</div>
+              <div className="text-lg md:text-xl font-mono font-bold tabular-nums text-gray-400">
+                채무 없음 (2024 결산)
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="text-base md:text-base text-gray-400">지역채무 (실시간)</div>
+              <div className={`text-lg md:text-xl font-mono font-bold tabular-nums ${debtColor(perCapita)}`}>
+                {formatRawWon(currentDebt)}
+              </div>
+              <div className="flex items-center gap-3 text-sm md:text-base text-gray-500">
+                <span>≈ {formatDebt(currentDebt)}</span>
+                <span>|</span>
+                <span>초당 {formatPerSecond(yearlyIncrease)}</span>
+              </div>
+            </>
+          )}
         </div>
 
         <div className="border-t border-gray-800" />

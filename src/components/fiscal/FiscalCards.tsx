@@ -50,6 +50,7 @@ export function MetroCard({
 }) {
   const perCapita = getDebtPerCapitaManWon(metro.debt, metro.population);
   const isEstimated = metro.debtSource === 'estimated';
+  const isZeroDebt = metro.debt === 0 && !isEstimated;
 
   return (
     <div className="border border-gray-800 p-3 md:p-4 min-w-0 space-y-2 cursor-pointer hover:border-gray-600 hover:bg-gray-900/50 transition-colors" onClick={onClick}>
@@ -80,26 +81,40 @@ export function MetroCard({
         <Bar value={metro.autonomy} max={100} colorClass={autonomyBarColor(metro.autonomy)} height="h-3" />
       </div>
 
-      {/* 지역채무 (실시간) */}
-      <div className="pt-1 border-t border-gray-800">
-        <div className="text-sm text-gray-500 mb-1">
-          지역채무 (실시간){isEstimated && <span className="text-amber-500 ml-1">[추정]</span>}
+      {isZeroDebt ? (
+        <div className="pt-1 border-t border-gray-800">
+          <div className="text-sm text-gray-500 mb-1">지역채무</div>
+          <div className="text-sm md:text-base font-mono font-bold tabular-nums leading-tight text-gray-400">
+            채무 없음
+          </div>
+          <div className="text-xs text-gray-600">
+            2024 결산 기준 지방채·차입금 잔액 0
+          </div>
         </div>
-        <div className={`text-sm md:text-base font-mono font-bold tabular-nums leading-tight ${debtColor(perCapita)}`}>
-          {formatRawWon(getCurrentMetroDebt(metro.name, metro.debt))}
-        </div>
-        <div className="text-xs text-gray-600">
-          ≈ {formatDebt(getCurrentMetroDebt(metro.name, metro.debt))}
-        </div>
-      </div>
+      ) : (
+        <>
+          {/* 지역채무 (실시간) */}
+          <div className="pt-1 border-t border-gray-800">
+            <div className="text-sm text-gray-500 mb-1">
+              지역채무 (실시간){isEstimated && <span className="text-amber-500 ml-1">[추정]</span>}
+            </div>
+            <div className={`text-sm md:text-base font-mono font-bold tabular-nums leading-tight ${debtColor(perCapita)}`}>
+              {formatRawWon(getCurrentMetroDebt(metro.name, metro.debt))}
+            </div>
+            <div className="text-xs text-gray-600">
+              ≈ {formatDebt(getCurrentMetroDebt(metro.name, metro.debt))}
+            </div>
+          </div>
 
-      {/* 1인당 채무 */}
-      <div className="flex items-center justify-between">
-        <span className="text-sm text-gray-500">1인당 채무</span>
-        <span className={`text-base md:text-base font-mono font-bold tabular-nums ${debtColor(perCapita)}`}>
-          {formatDebtPerCapita(getCurrentMetroDebt(metro.name, metro.debt), metro.population)}
-        </span>
-      </div>
+          {/* 1인당 채무 */}
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-gray-500">1인당 채무</span>
+            <span className={`text-base md:text-base font-mono font-bold tabular-nums ${debtColor(perCapita)}`}>
+              {formatDebtPerCapita(getCurrentMetroDebt(metro.name, metro.debt), metro.population)}
+            </span>
+          </div>
+        </>
+      )}
 
       {/* Mini comparison bar (자립도 vs 자주도) */}
       <div className="pt-1 border-t border-gray-800">
@@ -161,6 +176,7 @@ export function DistrictCard({
   const currentDebt = getCurrentDistrictDebt(district.debt);
   const perCapita = getDebtPerCapitaManWon(currentDebt, district.population);
   const isEstimated = district.debtSource === 'estimated';
+  const isZeroDebt = district.debt === 0 && !isEstimated;
 
   return (
     <div className="border border-gray-800 p-3 md:p-4 min-w-0 space-y-2 cursor-pointer hover:border-gray-600 hover:bg-gray-900/50 transition-colors" onClick={onClick}>
@@ -192,26 +208,40 @@ export function DistrictCard({
         <Bar value={district.autonomy} max={100} colorClass={autonomyBarColor(district.autonomy)} height="h-3" />
       </div>
 
-      {/* 지역채무 (실시간) */}
-      <div className="pt-1 border-t border-gray-800">
-        <div className="text-sm text-gray-500 mb-1">
-          지역채무 (실시간){isEstimated && <span className="text-amber-500 ml-1">[추정]</span>}
+      {isZeroDebt ? (
+        <div className="pt-1 border-t border-gray-800">
+          <div className="text-sm text-gray-500 mb-1">지역채무</div>
+          <div className="text-sm md:text-base font-mono font-bold tabular-nums leading-tight text-gray-400">
+            채무 없음
+          </div>
+          <div className="text-xs text-gray-600">
+            2024 결산 기준 지방채·차입금 잔액 0
+          </div>
         </div>
-        <div className={`text-sm md:text-base font-mono font-bold tabular-nums leading-tight ${debtColor(perCapita)}`}>
-          {formatRawWon(currentDebt)}
-        </div>
-        <div className="text-xs text-gray-600">
-          ≈ {formatDebt(currentDebt)}
-        </div>
-      </div>
+      ) : (
+        <>
+          {/* 지역채무 (실시간) */}
+          <div className="pt-1 border-t border-gray-800">
+            <div className="text-sm text-gray-500 mb-1">
+              지역채무 (실시간){isEstimated && <span className="text-amber-500 ml-1">[추정]</span>}
+            </div>
+            <div className={`text-sm md:text-base font-mono font-bold tabular-nums leading-tight ${debtColor(perCapita)}`}>
+              {formatRawWon(currentDebt)}
+            </div>
+            <div className="text-xs text-gray-600">
+              ≈ {formatDebt(currentDebt)}
+            </div>
+          </div>
 
-      {/* 1인당 채무 */}
-      <div className="flex items-center justify-between">
-        <span className="text-sm text-gray-500">1인당 채무</span>
-        <span className={`text-base md:text-base font-mono font-bold tabular-nums ${debtColor(perCapita)}`}>
-          {formatDebtPerCapita(currentDebt, district.population)}
-        </span>
-      </div>
+          {/* 1인당 채무 */}
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-gray-500">1인당 채무</span>
+            <span className={`text-base md:text-base font-mono font-bold tabular-nums ${debtColor(perCapita)}`}>
+              {formatDebtPerCapita(currentDebt, district.population)}
+            </span>
+          </div>
+        </>
+      )}
     </div>
   );
 }
