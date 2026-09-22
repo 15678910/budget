@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import type { DistrictFiscalData, DistrictDebtHistoryEntry } from './types';
+import type { DebtSourceTag } from '@/lib/data/fiscal-health-official';
 import { getDebtPerCapitaManWon } from './utils';
 
 export function DistrictDebtRatioModal({
@@ -9,7 +10,7 @@ export function DistrictDebtRatioModal({
   history,
   onClose,
 }: {
-  district: DistrictFiscalData;
+  district: DistrictFiscalData & { debtSource?: DebtSourceTag };
   history: DistrictDebtHistoryEntry[];
   onClose: () => void;
 }) {
@@ -47,6 +48,7 @@ export function DistrictDebtRatioModal({
   const first = history[0];
   const change = latest.ratio - first.ratio;
   const perCapita = getDebtPerCapitaManWon(district.debt, district.population);
+  const isEstimated = district.debtSource === 'estimated';
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4" onClick={onClose}>
@@ -59,12 +61,16 @@ export function DistrictDebtRatioModal({
           <button onClick={onClose} className="text-gray-500 hover:text-gray-300 transition-colors text-2xl leading-none px-2" aria-label="닫기">&times;</button>
         </div>
 
-        <div className="bg-amber-950/30 border border-amber-900/50 rounded px-3 py-2 text-xs text-amber-400/80">
-          이 추이는 {district.metro} 광역의 실제 채무비율 변동 패턴을 기반으로 추정한 값입니다.
-          시군구별 예산 데이터가 공개되어 있지 않아 실제 결산값과 차이가 있을 수 있습니다.
-        </div>
+        {isEstimated && (
+          <div className="bg-amber-950/30 border border-amber-900/50 rounded px-3 py-2 text-xs text-amber-400/80">
+            이 추이는 {district.metro} 광역의 실제 채무비율 변동 패턴을 기반으로 추정한 값입니다.
+            시군구별 예산 데이터가 공개되어 있지 않아 실제 결산값과 차이가 있을 수 있습니다.
+          </div>
+        )}
 
-        <div className="text-base text-gray-400">채무비율 추이 추정 ({first.year}~{latest.year})</div>
+        <div className="text-base text-gray-400">
+          채무비율 추이{isEstimated ? ' 추정' : ' (지방재정365 결산)'} ({first.year}~{latest.year})
+        </div>
 
         <div className="w-full overflow-x-auto">
           <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ maxHeight: '300px' }}>
@@ -94,7 +100,7 @@ export function DistrictDebtRatioModal({
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 border-t border-gray-800 pt-3">
           <div className="space-y-0.5">
-            <div className="text-sm text-gray-500">{latest.year} 채무비율 (추정)</div>
+            <div className="text-sm text-gray-500">{latest.year} 채무비율{isEstimated ? ' (추정)' : ''}</div>
             <div className={`text-lg font-mono font-bold ${latest.ratio > 15 ? 'text-red-400' : latest.ratio > 10 ? 'text-amber-400' : 'text-emerald-400'}`}>{latest.ratio.toFixed(1)}%</div>
           </div>
           <div className="space-y-0.5">
@@ -108,11 +114,13 @@ export function DistrictDebtRatioModal({
         </div>
 
         <div className="border-t border-gray-800 pt-3">
-          <div className="text-sm text-gray-500 mb-2">연도별 채무 추이 (추정)</div>
+          <div className="text-sm text-gray-500 mb-2">
+            연도별 채무 추이{isEstimated ? ' (추정)' : ' (지방재정365 결산)'}
+          </div>
           <div className="grid grid-cols-3 gap-1 text-sm text-gray-500 mb-1 px-1">
             <span>연도</span>
-            <span className="text-right">채무 추정(억원)</span>
-            <span className="text-right">비율 추정</span>
+            <span className="text-right">채무{isEstimated ? ' 추정' : ''}(억원)</span>
+            <span className="text-right">비율{isEstimated ? ' 추정' : ''}</span>
           </div>
           {history.map((h) => (
             <div key={h.year} className="grid grid-cols-3 gap-1 text-sm px-1 py-0.5 border-t border-gray-800/50">

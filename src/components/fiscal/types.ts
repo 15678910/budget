@@ -23,7 +23,7 @@ export type {
 // Types
 // ============================================================
 
-export type ViewMode = 'fiscalStatus' | 'ranking' | 'debtRatio' | 'healthScore' | 'compare' | 'peerBench';
+export type ViewMode = 'fiscalStatus' | 'ranking' | 'debtRatio' | 'debtIncrease' | 'healthScore' | 'compare' | 'peerBench';
 
 export type SortKey = 'independence' | 'autonomy' | 'debtPerCapita';
 
@@ -37,7 +37,7 @@ export const GLOSSARY: Record<string, string> = {
   '재정자주도':
     '((자체수입 + 자주재원) / 자치단체 예산규모) x 100. 자주재원은 지역교부세, 재정보전금 등. 자립도보다 넓은 재원 자율성 지표.',
   '지역채무':
-    '지역자치단체가 발행한 지역채와 차입금 등의 합계. 지역개발, 인프라 투자 등의 재원으로 사용.',
+    '지역자치단체가 발행한 지역채와 차입금 등의 합계. 지역개발, 인프라 투자 등의 재원으로 사용. 출처: 지방재정365 결산(통합회계 채무잔액).',
   '1인당 지역채무':
     '지역채무 / 주민등록인구. 지역 주민 1인이 부담하는 지역정부 부채 규모.',
 };
@@ -48,30 +48,11 @@ export const GLOSSARY: Record<string, string> = {
 export const DEBT_BASE_DATE = new Date('2025-01-01T00:00:00+09:00');
 export const SECONDS_PER_YEAR = 365.25 * 24 * 60 * 60;
 
-// 광역별 연간 채무 증가 추정 (억원/년, 약 5~7% 성장률 기반)
-export const METRO_YEARLY_DEBT_INCREASE: Record<string, number> = {
-  '서울특별시': 577,
-  '부산광역시': 2211,
-  '대구광역시': 1110,
-  '인천광역시': 1540,
-  '대전광역시': 672,
-  '울산광역시': 425,
-  '세종특별자치시': 364,
-  '경기도': 3491,
-  '강원특별자치도': 912,
-  '충청북도': 744,
-  '충청남도': 876,
-  '전북특별자치도': 708,
-  '전남광주통합특별시': 1560, // 광주 768 + 전남 792
-  '경상북도': 1068,
-  '경상남도': 1290,
-  '제주특별자치도': 450,
-};
-
 export const MODE_TABS: { key: ViewMode; label: string }[] = [
   { key: 'fiscalStatus', label: '재정현황' },
   { key: 'ranking', label: '시군구 순위' },
   { key: 'debtRatio', label: '채무비율 추이' },
+  { key: 'debtIncrease', label: '채무 순증' },
   { key: 'healthScore', label: '건전성 점수' },
   { key: 'compare', label: '시군구 비교' },
   { key: 'peerBench', label: '규모별 비교' },

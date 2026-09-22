@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import type { MetroFiscalData } from './types';
-import { METRO_YEARLY_DEBT_INCREASE } from './types';
+import { getMetroYearlyIncreaseOfficial } from '@/lib/data/fiscal-health-official';
 import { Bar } from './primitives';
 import {
   independenceColor,
@@ -37,7 +37,7 @@ export function MetroDetailModal({
 
   const currentDebt = getCurrentMetroDebt(metro.name, metro.debt);
   const perCapita = getDebtPerCapitaManWon(currentDebt, metro.population);
-  const yearlyIncrease = METRO_YEARLY_DEBT_INCREASE[metro.name] ?? metro.debt * 0.06;
+  const yearlyIncrease = getMetroYearlyIncreaseOfficial(metro.name) ?? metro.debt * 0.06;
   const indDiff = metro.independence - nationalAvg.independence;
   const autDiff = metro.autonomy - nationalAvg.autonomy;
   const debtBudgetRatio = ((currentDebt / metro.budget) * 100);

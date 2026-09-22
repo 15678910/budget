@@ -41,7 +41,7 @@ const SOURCES = [
   },
   {
     name: '지역재정365',
-    description: '광역시도·시군구 지역재정 데이터',
+    description: '광역시도·시군구 지역재정 데이터, 자치단체별 채무잔액(결산) 2018~2024',
     url: 'https://lofin.mois.go.kr',
     date: '상시',
   },

@@ -1,9 +1,10 @@
 'use client';
 
 import {
-  getMetroDebtHistory,
-  generateDistrictDebtHistory,
-} from '@/lib/data/fiscal-health-data';
+  getMetroDebtHistoryOfficial,
+  getDistrictDebtHistoryOfficial,
+} from '@/lib/data/fiscal-health-official';
+import type { DebtSourceTag } from '@/lib/data/fiscal-health-official';
 import type { MetroFiscalData, DistrictFiscalData } from './types';
 import {
   independenceColor,
@@ -20,7 +21,7 @@ export function InlineDebtRatioChart({
   globalMetro: string;
   globalDistrict: string;
   metroData: MetroFiscalData[];
-  allDistricts: DistrictFiscalData[];
+  allDistricts: (DistrictFiscalData & { debtSource?: DebtSourceTag })[];
 }) {
   const metro = metroData.find(m => m.name === globalMetro);
   if (!metro) return null;
@@ -29,15 +30,20 @@ export function InlineDebtRatioChart({
     ? allDistricts.find(d => d.metro === globalMetro && d.name === globalDistrict)
     : null;
 
+  const districtIsEstimated = selectedDistrict?.debtSource === 'estimated';
   const chartLabel = selectedDistrict ? `${globalMetro} ${selectedDistrict.name}` : globalMetro;
-  const chartSubLabel = selectedDistrict ? '예산 대비 채무비율 추이 (광역 패턴 기반 추정)' : '예산 대비 채무비율 추이';
+  const chartSubLabel = selectedDistrict
+    ? districtIsEstimated
+      ? '예산 대비 채무비율 추이 (광역 패턴 기반 추정)'
+      : '예산 대비 채무비율 추이 (지방재정365 결산)'
+    : '예산 대비 채무비율 추이';
 
   type ChartEntry = { year: number; ratio: number };
   let history: ChartEntry[];
   if (selectedDistrict) {
-    history = generateDistrictDebtHistory(selectedDistrict).map(h => ({ year: h.year, ratio: h.ratio }));
+    history = getDistrictDebtHistoryOfficial(selectedDistrict).map(h => ({ year: h.year, ratio: h.ratio }));
   } else {
-    history = getMetroDebtHistory(globalMetro).map(h => ({ year: h.year, ratio: h.ratio }));
+    history = getMetroDebtHistoryOfficial(globalMetro).map(h => ({ year: h.year, ratio: h.ratio }));
   }
   if (history.length === 0) return null;
 
@@ -71,7 +77,7 @@ export function InlineDebtRatioChart({
           <span className={`text-sm ${change > 0 ? 'text-red-400' : 'text-emerald-400'}`}>{change > 0 ? '▲' : '▼'} {Math.abs(change).toFixed(1)}%p ({first.year}→{latest.year})</span>
         </div>
       </div>
-      {selectedDistrict && (
+      {selectedDistrict && districtIsEstimated && (
         <div className="text-xs text-gray-600">※ 광역시도 실제 채무비율 변동 패턴을 시군구에 적용한 추정치입니다</div>
       )}
       <div className="w-full overflow-x-auto">

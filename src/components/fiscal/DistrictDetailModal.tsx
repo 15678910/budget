@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { getDistrictRevenueExpenditure } from '@/lib/data/fiscal-health-data';
 import type { DistrictFiscalData } from './types';
+import type { DebtSourceTag } from '@/lib/data/fiscal-health-official';
 import { Bar } from './primitives';
 import {
   independenceColor,
@@ -23,7 +24,7 @@ export function DistrictDetailModal({
   nationalAvg,
   onClose,
 }: {
-  district: DistrictFiscalData;
+  district: DistrictFiscalData & { debtSource?: DebtSourceTag };
   nationalAvg: { independence: number; autonomy: number; totalDebt: number };
   onClose: () => void;
 }) {
@@ -38,6 +39,7 @@ export function DistrictDetailModal({
   const currentDebt = getCurrentDistrictDebt(district.debt);
   const perCapita = getDebtPerCapitaManWon(currentDebt, district.population);
   const yearlyIncrease = district.debt * 0.06;
+  const isEstimated = district.debtSource === 'estimated';
   const indDiff = district.independence - nationalAvg.independence;
   const autDiff = district.autonomy - nationalAvg.autonomy;
 
@@ -105,7 +107,9 @@ export function DistrictDetailModal({
 
         {/* 지역채무 실시간 */}
         <div className="space-y-1">
-          <div className="text-base md:text-base text-gray-400">지역채무 (실시간)</div>
+          <div className="text-base md:text-base text-gray-400">
+            지역채무 (실시간){isEstimated && <span className="text-amber-500 ml-1">[추정]</span>}
+          </div>
           <div className={`text-lg md:text-xl font-mono font-bold tabular-nums ${debtColor(perCapita)}`}>
             {formatRawWon(currentDebt)}
           </div>

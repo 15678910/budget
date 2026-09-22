@@ -1,4 +1,5 @@
-import { DEBT_BASE_DATE, SECONDS_PER_YEAR, METRO_YEARLY_DEBT_INCREASE } from './types';
+import { DEBT_BASE_DATE, SECONDS_PER_YEAR } from './types';
+import { getMetroYearlyIncreaseOfficial } from '@/lib/data/fiscal-health-official';
 
 // ============================================================
 // Color helpers
@@ -71,7 +72,7 @@ export function getElapsedFraction(): number {
 
 /** Get current ticking debt for a metro (in 억원) */
 export function getCurrentMetroDebt(name: string, baseDebt: number): number {
-  const yearlyIncrease = METRO_YEARLY_DEBT_INCREASE[name] ?? baseDebt * 0.06;
+  const yearlyIncrease = getMetroYearlyIncreaseOfficial(name) ?? baseDebt * 0.06;
   return baseDebt + getElapsedFraction() * yearlyIncrease;
 }
 

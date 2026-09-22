@@ -2,19 +2,22 @@
 
 import { useState, useMemo, useEffect, useRef } from 'react';
 import {
-  getMetroFiscalData,
-  getAllDistrictFiscalData,
-  getDistrictFiscalData,
   getNationalAverage,
   getMetroNames,
   getNationalDebtHistory,
-  getMetroDebtHistory,
-  generateDistrictDebtHistory,
 } from '@/lib/data/fiscal-health-data';
+import {
+  getMetroFiscalDataOfficial,
+  getAllDistrictFiscalDataOfficial,
+  getDistrictFiscalDataOfficial,
+  getMetroDebtHistoryOfficial,
+  getDistrictDebtHistoryOfficial,
+  getMetroYearlyIncreaseOfficial,
+} from '@/lib/data/fiscal-health-official';
 import { DataSources } from '@/components/shared/DataSources';
 
 import type { ViewMode, SortKey, MetroFiscalData, DistrictFiscalData } from './types';
-import { MODE_TABS, SELECT_CLASS, METRO_YEARLY_DEBT_INCREASE } from './types';
+import { MODE_TABS, SELECT_CLASS } from './types';
 import {
   independenceColor,
   formatDebt,
@@ -86,8 +89,8 @@ export function FiscalHealthDashboard() {
   const [globalDistrict, setGlobalDistrict] = useState<string>('전체');
 
   // Data
-  const metroData = useMemo(() => getMetroFiscalData(), []);
-  const allDistricts = useMemo(() => getAllDistrictFiscalData(), []);
+  const metroData = useMemo(() => getMetroFiscalDataOfficial(), []);
+  const allDistricts = useMemo(() => getAllDistrictFiscalDataOfficial(), []);
   const nationalAvg = useMemo(() => getNationalAverage(), []);
   const metroNameList = useMemo(() => getMetroNames(), []);
   const nationalDebtHistory = useMemo(() => getNationalDebtHistory(), []);
@@ -112,8 +115,8 @@ export function FiscalHealthDashboard() {
     return [...list].sort((a, b) => a.name.localeCompare(b.name, 'ko'));
   }, [allDistricts, districtMetroFilter]);
 
-  const districtsA = useMemo(() => getDistrictFiscalData(metroA), [metroA]);
-  const districtsB = useMemo(() => getDistrictFiscalData(metroB), [metroB]);
+  const districtsA = useMemo(() => getDistrictFiscalDataOfficial(metroA), [metroA]);
+  const districtsB = useMemo(() => getDistrictFiscalDataOfficial(metroB), [metroB]);
 
   const selectedA = useMemo(() => {
     const found = districtsA.find((d) => d.name === districtA);
@@ -195,7 +198,7 @@ export function FiscalHealthDashboard() {
           0,
         );
         const totalYearlyIncrease = metroData.reduce(
-          (sum, m) => sum + (METRO_YEARLY_DEBT_INCREASE[m.name] ?? m.debt * 0.06),
+          (sum, m) => sum + (getMetroYearlyIncreaseOfficial(m.name) ?? m.debt * 0.06),
           0,
         );
         return (
@@ -428,7 +431,7 @@ export function FiscalHealthDashboard() {
       {debtRatioMetro && (
         <MetroDebtRatioModal
           name={debtRatioMetro}
-          history={getMetroDebtHistory(debtRatioMetro)}
+          history={getMetroDebtHistoryOfficial(debtRatioMetro)}
           onClose={() => setDebtRatioMetro(null)}
         />
       )}
@@ -436,7 +439,7 @@ export function FiscalHealthDashboard() {
       {debtRatioDistrict && (
         <DistrictDebtRatioModal
           district={debtRatioDistrict}
-          history={generateDistrictDebtHistory(debtRatioDistrict)}
+          history={getDistrictDebtHistoryOfficial(debtRatioDistrict)}
           onClose={() => setDebtRatioDistrict(null)}
         />
       )}

@@ -2,6 +2,7 @@
 
 import { METRO_PREV_YEAR, getChangeRate } from '@/lib/data/fiscal-health-data';
 import type { MetroFiscalData, DistrictFiscalData } from './types';
+import type { DebtSourceTag } from '@/lib/data/fiscal-health-official';
 import { Bar } from './primitives';
 import {
   independenceColor,
@@ -115,9 +116,16 @@ export function MetroCard({ metro, onClick }: { metro: MetroFiscalData; onClick:
 // District Card (for grid view)
 // ============================================================
 
-export function DistrictCard({ district, onClick }: { district: DistrictFiscalData; onClick: () => void }) {
+export function DistrictCard({
+  district,
+  onClick,
+}: {
+  district: DistrictFiscalData & { debtSource?: DebtSourceTag };
+  onClick: () => void;
+}) {
   const currentDebt = getCurrentDistrictDebt(district.debt);
   const perCapita = getDebtPerCapitaManWon(currentDebt, district.population);
+  const isEstimated = district.debtSource === 'estimated';
 
   return (
     <div className="border border-gray-800 p-3 md:p-4 min-w-0 space-y-2 cursor-pointer hover:border-gray-600 hover:bg-gray-900/50 transition-colors" onClick={onClick}>
@@ -151,7 +159,9 @@ export function DistrictCard({ district, onClick }: { district: DistrictFiscalDa
 
       {/* 지역채무 (실시간) */}
       <div className="pt-1 border-t border-gray-800">
-        <div className="text-sm text-gray-500 mb-1">지역채무 (실시간)</div>
+        <div className="text-sm text-gray-500 mb-1">
+          지역채무 (실시간){isEstimated && <span className="text-amber-500 ml-1">[추정]</span>}
+        </div>
         <div className={`text-sm md:text-base font-mono font-bold tabular-nums leading-tight ${debtColor(perCapita)}`}>
           {formatRawWon(currentDebt)}
         </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { getDistrictFiscalData } from '@/lib/data/fiscal-health-data';
+import { getDistrictFiscalDataOfficial } from '@/lib/data/fiscal-health-official';
 import type { DistrictFiscalData } from './types';
 import { SELECT_CLASS } from './types';
 import { SectionHeader, Cell, Bar } from './primitives';
@@ -131,7 +131,7 @@ export function CompareSection({
             value={metroA}
             onChange={(e) => {
               setMetroA(e.target.value);
-              const dists = getDistrictFiscalData(e.target.value);
+              const dists = getDistrictFiscalDataOfficial(e.target.value);
               if (dists.length > 0) setDistrictA(dists[0].name);
             }}
             className={SELECT_CLASS}
@@ -162,7 +162,7 @@ export function CompareSection({
             value={metroB}
             onChange={(e) => {
               setMetroB(e.target.value);
-              const dists = getDistrictFiscalData(e.target.value);
+              const dists = getDistrictFiscalDataOfficial(e.target.value);
               if (dists.length > 0) setDistrictB(dists[0].name);
             }}
             className={SELECT_CLASS}
