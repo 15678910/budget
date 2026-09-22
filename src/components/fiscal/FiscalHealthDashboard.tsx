@@ -39,6 +39,7 @@ import { CompareSection } from './CompareSection';
 import { DebtRatioSection } from './DebtRatioSection';
 import { HealthScoreSection } from './HealthScoreSection';
 import { PeerBenchSection } from './PeerBenchSection';
+import { DebtIncreaseSection } from './DebtIncreaseSection';
 
 // ============================================================
 // Main Component
@@ -386,6 +387,8 @@ export function FiscalHealthDashboard() {
       )}
 
       {mode === 'peerBench' && <PeerBenchSection />}
+
+      {mode === 'debtIncrease' && <DebtIncreaseSection />}
 
       {/* ====== FOOTER ====== */}
       <div className="border border-gray-800 px-3 py-2">
