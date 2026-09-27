@@ -657,7 +657,7 @@
             {
               "id": "dist-func::31::010::교통및물류",
               "name": "교통및물류",
-              "value": 356166,
+              "value": 351166,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -699,7 +699,7 @@
             {
               "id": "dist-func::31::010::국토및지역개발",
               "name": "국토및지역개발",
-              "value": 133905,
+              "value": 133610,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -811,7 +811,7 @@
             {
               "id": "dist-func::31::001::사회복지",
               "name": "사회복지",
-              "value": 1803994,
+              "value": 1803333,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -839,7 +839,7 @@
             {
               "id": "dist-func::31::001::기타",
               "name": "기타",
-              "value": 421922,
+              "value": 421691,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -853,7 +853,7 @@
             {
               "id": "dist-func::31::001::환경",
               "name": "환경",
-              "value": 306290,
+              "value": 305517,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -867,7 +867,7 @@
             {
               "id": "dist-func::31::001::일반공공행정",
               "name": "일반공공행정",
-              "value": 245577,
+              "value": 245352,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -895,7 +895,7 @@
             {
               "id": "dist-func::31::001::국토및지역개발",
               "name": "국토및지역개발",
-              "value": 205725,
+              "value": 204263,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -909,7 +909,7 @@
             {
               "id": "dist-func::31::001::보건",
               "name": "보건",
-              "value": 85991,
+              "value": 85591,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -923,7 +923,7 @@
             {
               "id": "dist-func::31::001::산업중소기업및에너지",
               "name": "산업중소기업및에너지",
-              "value": 83344,
+              "value": 82889,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -951,7 +951,7 @@
             {
               "id": "dist-func::31::001::공공질서및안전",
               "name": "공공질서및안전",
-              "value": 30496,
+              "value": 29496,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -3577,202 +3577,6 @@
           }
         },
         {
-          "id": "district::31::006",
-          "name": "광명시",
-          "children": [
-            {
-              "id": "dist-func::31::006::사회복지",
-              "name": "사회복지",
-              "value": 521823,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경기도",
-                  "광명시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::31::006::국토및지역개발",
-              "name": "국토및지역개발",
-              "value": 210185,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경기도",
-                  "광명시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::31::006::교통및물류",
-              "name": "교통및물류",
-              "value": 177849,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경기도",
-                  "광명시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::31::006::기타",
-              "name": "기타",
-              "value": 150301,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경기도",
-                  "광명시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::31::006::일반공공행정",
-              "name": "일반공공행정",
-              "value": 113675,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경기도",
-                  "광명시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::31::006::환경",
-              "name": "환경",
-              "value": 108807,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경기도",
-                  "광명시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::31::006::문화및관광",
-              "name": "문화및관광",
-              "value": 64169,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경기도",
-                  "광명시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::31::006::산업중소기업및에너지",
-              "name": "산업중소기업및에너지",
-              "value": 42527,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경기도",
-                  "광명시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::31::006::보건",
-              "name": "보건",
-              "value": 30106,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경기도",
-                  "광명시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::31::006::교육",
-              "name": "교육",
-              "value": 28503,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경기도",
-                  "광명시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::31::006::공공질서및안전",
-              "name": "공공질서및안전",
-              "value": 7532,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경기도",
-                  "광명시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::31::006::예비비기타",
-              "name": "예비비기타",
-              "value": 2945,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경기도",
-                  "광명시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::31::006::농림해양수산",
-              "name": "농림해양수산",
-              "value": 2822,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경기도",
-                  "광명시"
-                ],
-                "accountType": "일반회계"
-              }
-            }
-          ],
-          "meta": {
-            "level": "sector",
-            "code": "006",
-            "parentPath": [
-              "지방재정 총계",
-              "경기도"
-            ]
-          }
-        },
-        {
           "id": "district::31::027",
           "name": "포천시",
           "children": [
@@ -3962,6 +3766,202 @@
           "meta": {
             "level": "sector",
             "code": "027",
+            "parentPath": [
+              "지방재정 총계",
+              "경기도"
+            ]
+          }
+        },
+        {
+          "id": "district::31::006",
+          "name": "광명시",
+          "children": [
+            {
+              "id": "dist-func::31::006::사회복지",
+              "name": "사회복지",
+              "value": 521823,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경기도",
+                  "광명시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::31::006::국토및지역개발",
+              "name": "국토및지역개발",
+              "value": 208956,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경기도",
+                  "광명시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::31::006::기타",
+              "name": "기타",
+              "value": 150301,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경기도",
+                  "광명시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::31::006::교통및물류",
+              "name": "교통및물류",
+              "value": 126538,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경기도",
+                  "광명시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::31::006::일반공공행정",
+              "name": "일반공공행정",
+              "value": 112061,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경기도",
+                  "광명시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::31::006::환경",
+              "name": "환경",
+              "value": 102112,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경기도",
+                  "광명시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::31::006::문화및관광",
+              "name": "문화및관광",
+              "value": 64169,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경기도",
+                  "광명시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::31::006::산업중소기업및에너지",
+              "name": "산업중소기업및에너지",
+              "value": 42527,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경기도",
+                  "광명시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::31::006::보건",
+              "name": "보건",
+              "value": 30106,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경기도",
+                  "광명시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::31::006::교육",
+              "name": "교육",
+              "value": 28503,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경기도",
+                  "광명시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::31::006::공공질서및안전",
+              "name": "공공질서및안전",
+              "value": 7532,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경기도",
+                  "광명시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::31::006::예비비기타",
+              "name": "예비비기타",
+              "value": 2945,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경기도",
+                  "광명시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::31::006::농림해양수산",
+              "name": "농림해양수산",
+              "value": 2822,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경기도",
+                  "광명시"
+                ],
+                "accountType": "일반회계"
+              }
+            }
+          ],
+          "meta": {
+            "level": "sector",
+            "code": "006",
             "parentPath": [
               "지방재정 총계",
               "경기도"
@@ -4199,7 +4199,7 @@
             {
               "id": "dist-func::31::028::농림해양수산",
               "name": "농림해양수산",
-              "value": 120286,
+              "value": 120206,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -4815,7 +4815,7 @@
             {
               "id": "dist-func::31::031::일반공공행정",
               "name": "일반공공행정",
-              "value": 85779,
+              "value": 81588,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -6936,202 +6936,6 @@
           }
         },
         {
-          "id": "district::11::024",
-          "name": "송파구",
-          "children": [
-            {
-              "id": "dist-func::11::024::사회복지",
-              "name": "사회복지",
-              "value": 789033,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "송파구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::024::일반공공행정",
-              "name": "일반공공행정",
-              "value": 241714,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "송파구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::024::기타",
-              "name": "기타",
-              "value": 218039,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "송파구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::024::교통및물류",
-              "name": "교통및물류",
-              "value": 73601,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "송파구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::024::환경",
-              "name": "환경",
-              "value": 68680,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "송파구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::024::문화및관광",
-              "name": "문화및관광",
-              "value": 47283,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "송파구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::024::보건",
-              "name": "보건",
-              "value": 46390,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "송파구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::024::국토및지역개발",
-              "name": "국토및지역개발",
-              "value": 39246,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "송파구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::024::교육",
-              "name": "교육",
-              "value": 33487,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "송파구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::024::공공질서및안전",
-              "name": "공공질서및안전",
-              "value": 18643,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "송파구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::024::산업중소기업및에너지",
-              "name": "산업중소기업및에너지",
-              "value": 16838,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "송파구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::024::예비비기타",
-              "name": "예비비기타",
-              "value": 5150,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "송파구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::024::농림해양수산",
-              "name": "농림해양수산",
-              "value": 1674,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "송파구"
-                ],
-                "accountType": "일반회계"
-              }
-            }
-          ],
-          "meta": {
-            "level": "sector",
-            "code": "024",
-            "parentPath": [
-              "지방재정 총계",
-              "서울특별시"
-            ]
-          }
-        },
-        {
           "id": "district::11::011",
           "name": "노원구",
           "children": [
@@ -7510,6 +7314,202 @@
           }
         },
         {
+          "id": "district::11::024",
+          "name": "송파구",
+          "children": [
+            {
+              "id": "dist-func::11::024::사회복지",
+              "name": "사회복지",
+              "value": 788740,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "송파구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::024::기타",
+              "name": "기타",
+              "value": 218039,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "송파구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::024::일반공공행정",
+              "name": "일반공공행정",
+              "value": 186611,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "송파구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::024::환경",
+              "name": "환경",
+              "value": 68675,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "송파구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::024::문화및관광",
+              "name": "문화및관광",
+              "value": 47283,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "송파구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::024::보건",
+              "name": "보건",
+              "value": 46390,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "송파구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::024::국토및지역개발",
+              "name": "국토및지역개발",
+              "value": 38886,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "송파구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::024::교통및물류",
+              "name": "교통및물류",
+              "value": 38739,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "송파구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::024::교육",
+              "name": "교육",
+              "value": 33487,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "송파구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::024::산업중소기업및에너지",
+              "name": "산업중소기업및에너지",
+              "value": 16838,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "송파구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::024::공공질서및안전",
+              "name": "공공질서및안전",
+              "value": 15848,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "송파구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::024::예비비기타",
+              "name": "예비비기타",
+              "value": 5150,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "송파구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::024::농림해양수산",
+              "name": "농림해양수산",
+              "value": 1674,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "송파구"
+                ],
+                "accountType": "일반회계"
+              }
+            }
+          ],
+          "meta": {
+            "level": "sector",
+            "code": "024",
+            "parentPath": [
+              "지방재정 총계",
+              "서울특별시"
+            ]
+          }
+        },
+        {
           "id": "district::11::008",
           "name": "성북구",
           "children": [
@@ -7706,202 +7706,6 @@
           }
         },
         {
-          "id": "district::11::017",
-          "name": "구로구",
-          "children": [
-            {
-              "id": "dist-func::11::017::사회복지",
-              "name": "사회복지",
-              "value": 696041,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "구로구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::017::일반공공행정",
-              "name": "일반공공행정",
-              "value": 253241,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "구로구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::017::기타",
-              "name": "기타",
-              "value": 171907,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "구로구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::017::국토및지역개발",
-              "name": "국토및지역개발",
-              "value": 84338,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "구로구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::017::환경",
-              "name": "환경",
-              "value": 66044,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "구로구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::017::교통및물류",
-              "name": "교통및물류",
-              "value": 45694,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "구로구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::017::문화및관광",
-              "name": "문화및관광",
-              "value": 42332,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "구로구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::017::보건",
-              "name": "보건",
-              "value": 37094,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "구로구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::017::교육",
-              "name": "교육",
-              "value": 16211,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "구로구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::017::산업중소기업및에너지",
-              "name": "산업중소기업및에너지",
-              "value": 16176,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "구로구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::017::공공질서및안전",
-              "name": "공공질서및안전",
-              "value": 9502,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "구로구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::017::예비비기타",
-              "name": "예비비기타",
-              "value": 4252,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "구로구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::017::농림해양수산",
-              "name": "농림해양수산",
-              "value": 1669,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "구로구"
-                ],
-                "accountType": "일반회계"
-              }
-            }
-          ],
-          "meta": {
-            "level": "sector",
-            "code": "017",
-            "parentPath": [
-              "지방재정 총계",
-              "서울특별시"
-            ]
-          }
-        },
-        {
           "id": "district::11::025",
           "name": "강동구",
           "children": [
@@ -7936,7 +7740,7 @@
             {
               "id": "dist-func::11::025::일반공공행정",
               "name": "일반공공행정",
-              "value": 144046,
+              "value": 132272,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -8504,6 +8308,202 @@
           }
         },
         {
+          "id": "district::11::017",
+          "name": "구로구",
+          "children": [
+            {
+              "id": "dist-func::11::017::사회복지",
+              "name": "사회복지",
+              "value": 696041,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "구로구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::017::일반공공행정",
+              "name": "일반공공행정",
+              "value": 179091,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "구로구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::017::기타",
+              "name": "기타",
+              "value": 171907,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "구로구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::017::국토및지역개발",
+              "name": "국토및지역개발",
+              "value": 84338,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "구로구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::017::환경",
+              "name": "환경",
+              "value": 66044,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "구로구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::017::교통및물류",
+              "name": "교통및물류",
+              "value": 45694,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "구로구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::017::문화및관광",
+              "name": "문화및관광",
+              "value": 42332,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "구로구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::017::보건",
+              "name": "보건",
+              "value": 37094,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "구로구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::017::교육",
+              "name": "교육",
+              "value": 16211,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "구로구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::017::산업중소기업및에너지",
+              "name": "산업중소기업및에너지",
+              "value": 16176,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "구로구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::017::공공질서및안전",
+              "name": "공공질서및안전",
+              "value": 9502,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "구로구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::017::예비비기타",
+              "name": "예비비기타",
+              "value": 4252,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "구로구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::017::농림해양수산",
+              "name": "농림해양수산",
+              "value": 1669,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "구로구"
+                ],
+                "accountType": "일반회계"
+              }
+            }
+          ],
+          "meta": {
+            "level": "sector",
+            "code": "017",
+            "parentPath": [
+              "지방재정 총계",
+              "서울특별시"
+            ]
+          }
+        },
+        {
           "id": "district::11::007",
           "name": "중랑구",
           "children": [
@@ -8650,7 +8650,7 @@
             {
               "id": "dist-func::11::007::공공질서및안전",
               "name": "공공질서및안전",
-              "value": 8875,
+              "value": 7768,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -9112,7 +9112,7 @@
             {
               "id": "dist-func::11::010::일반공공행정",
               "name": "일반공공행정",
-              "value": 213989,
+              "value": 191162,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -9281,188 +9281,6 @@
           "meta": {
             "level": "sector",
             "code": "010",
-            "parentPath": [
-              "지방재정 총계",
-              "서울특별시"
-            ]
-          }
-        },
-        {
-          "id": "district::11::015",
-          "name": "양천구",
-          "children": [
-            {
-              "id": "dist-func::11::015::사회복지",
-              "name": "사회복지",
-              "value": 662512,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "양천구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::015::기타",
-              "name": "기타",
-              "value": 165922,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "양천구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::015::일반공공행정",
-              "name": "일반공공행정",
-              "value": 82776,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "양천구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::015::국토및지역개발",
-              "name": "국토및지역개발",
-              "value": 47483,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "양천구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::015::환경",
-              "name": "환경",
-              "value": 44952,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "양천구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::015::교통및물류",
-              "name": "교통및물류",
-              "value": 38382,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "양천구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::015::문화및관광",
-              "name": "문화및관광",
-              "value": 34884,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "양천구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::015::교육",
-              "name": "교육",
-              "value": 34284,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "양천구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::015::보건",
-              "name": "보건",
-              "value": 32357,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "양천구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::015::산업중소기업및에너지",
-              "name": "산업중소기업및에너지",
-              "value": 17621,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "양천구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::015::공공질서및안전",
-              "name": "공공질서및안전",
-              "value": 12724,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "양천구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::11::015::예비비기타",
-              "name": "예비비기타",
-              "value": 5530,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "서울특별시",
-                  "양천구"
-                ],
-                "accountType": "일반회계"
-              }
-            }
-          ],
-          "meta": {
-            "level": "sector",
-            "code": "015",
             "parentPath": [
               "지방재정 총계",
               "서울특별시"
@@ -9645,6 +9463,188 @@
           "meta": {
             "level": "sector",
             "code": "006",
+            "parentPath": [
+              "지방재정 총계",
+              "서울특별시"
+            ]
+          }
+        },
+        {
+          "id": "district::11::015",
+          "name": "양천구",
+          "children": [
+            {
+              "id": "dist-func::11::015::사회복지",
+              "name": "사회복지",
+              "value": 657520,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "양천구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::015::기타",
+              "name": "기타",
+              "value": 165922,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "양천구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::015::일반공공행정",
+              "name": "일반공공행정",
+              "value": 63229,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "양천구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::015::국토및지역개발",
+              "name": "국토및지역개발",
+              "value": 45862,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "양천구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::015::환경",
+              "name": "환경",
+              "value": 42235,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "양천구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::015::교통및물류",
+              "name": "교통및물류",
+              "value": 36938,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "양천구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::015::보건",
+              "name": "보건",
+              "value": 31922,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "양천구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::015::교육",
+              "name": "교육",
+              "value": 30083,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "양천구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::015::문화및관광",
+              "name": "문화및관광",
+              "value": 26498,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "양천구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::015::산업중소기업및에너지",
+              "name": "산업중소기업및에너지",
+              "value": 15322,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "양천구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::015::공공질서및안전",
+              "name": "공공질서및안전",
+              "value": 9956,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "양천구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::11::015::예비비기타",
+              "name": "예비비기타",
+              "value": 5530,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "서울특별시",
+                  "양천구"
+                ],
+                "accountType": "일반회계"
+              }
+            }
+          ],
+          "meta": {
+            "level": "sector",
+            "code": "015",
             "parentPath": [
               "지방재정 총계",
               "서울특별시"
@@ -9882,7 +9882,7 @@
             {
               "id": "dist-func::11::014::일반공공행정",
               "name": "일반공공행정",
-              "value": 109297,
+              "value": 102782,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -9950,9 +9950,9 @@
               }
             },
             {
-              "id": "dist-func::11::014::국토및지역개발",
-              "name": "국토및지역개발",
-              "value": 22239,
+              "id": "dist-func::11::014::산업중소기업및에너지",
+              "name": "산업중소기업및에너지",
+              "value": 21124,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -9964,9 +9964,9 @@
               }
             },
             {
-              "id": "dist-func::11::014::산업중소기업및에너지",
-              "name": "산업중소기업및에너지",
-              "value": 21124,
+              "id": "dist-func::11::014::국토및지역개발",
+              "name": "국토및지역개발",
+              "value": 20514,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -10062,9 +10062,9 @@
               }
             },
             {
-              "id": "dist-func::11::005::일반공공행정",
-              "name": "일반공공행정",
-              "value": 189627,
+              "id": "dist-func::11::005::기타",
+              "name": "기타",
+              "value": 176676,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -10076,9 +10076,9 @@
               }
             },
             {
-              "id": "dist-func::11::005::기타",
-              "name": "기타",
-              "value": 176676,
+              "id": "dist-func::11::005::일반공공행정",
+              "name": "일반공공행정",
+              "value": 174627,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -11044,7 +11044,7 @@
             {
               "id": "dist-func::11::003::일반공공행정",
               "name": "일반공공행정",
-              "value": 91824,
+              "value": 90894,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -12457,7 +12457,7 @@
             {
               "id": "dist-func::37::003::국토및지역개발",
               "name": "국토및지역개발",
-              "value": 144010,
+              "value": 143956,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -12625,7 +12625,7 @@
             {
               "id": "dist-func::37::010::사회복지",
               "name": "사회복지",
-              "value": 590033,
+              "value": 585451,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -12863,7 +12863,7 @@
             {
               "id": "dist-func::37::008::환경",
               "name": "환경",
-              "value": 189669,
+              "value": 185972,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -13283,21 +13283,7 @@
             {
               "id": "dist-func::37::006::교통및물류",
               "name": "교통및물류",
-              "value": 94002,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상북도",
-                  "영주시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::37::006::환경",
-              "name": "환경",
-              "value": 77179,
+              "value": 87248,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -13326,6 +13312,20 @@
               "id": "dist-func::37::006::산업중소기업및에너지",
               "name": "산업중소기업및에너지",
               "value": 59048,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상북도",
+                  "영주시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::37::006::환경",
+              "name": "환경",
+              "value": 56514,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -13437,7 +13437,7 @@
             {
               "id": "dist-func::37::009::국토및지역개발",
               "name": "국토및지역개발",
-              "value": 192705,
+              "value": 192588,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -13452,20 +13452,6 @@
               "id": "dist-func::37::009::기타",
               "name": "기타",
               "value": 107071,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상북도",
-                  "문경시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::37::009::환경",
-              "name": "환경",
-              "value": 105379,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -13507,7 +13493,21 @@
             {
               "id": "dist-func::37::009::일반공공행정",
               "name": "일반공공행정",
-              "value": 80085,
+              "value": 73207,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상북도",
+                  "문경시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::37::009::환경",
+              "name": "환경",
+              "value": 70779,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -13592,202 +13592,6 @@
           "meta": {
             "level": "sector",
             "code": "009",
-            "parentPath": [
-              "지방재정 총계",
-              "경상북도"
-            ]
-          }
-        },
-        {
-          "id": "district::37::011",
-          "name": "의성군",
-          "children": [
-            {
-              "id": "dist-func::37::011::농림해양수산",
-              "name": "농림해양수산",
-              "value": 288451,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상북도",
-                  "의성군"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::37::011::사회복지",
-              "name": "사회복지",
-              "value": 193652,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상북도",
-                  "의성군"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::37::011::산업중소기업및에너지",
-              "name": "산업중소기업및에너지",
-              "value": 105153,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상북도",
-                  "의성군"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::37::011::기타",
-              "name": "기타",
-              "value": 98890,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상북도",
-                  "의성군"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::37::011::일반공공행정",
-              "name": "일반공공행정",
-              "value": 96544,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상북도",
-                  "의성군"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::37::011::국토및지역개발",
-              "name": "국토및지역개발",
-              "value": 87898,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상북도",
-                  "의성군"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::37::011::문화및관광",
-              "name": "문화및관광",
-              "value": 84192,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상북도",
-                  "의성군"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::37::011::환경",
-              "name": "환경",
-              "value": 71039,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상북도",
-                  "의성군"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::37::011::교통및물류",
-              "name": "교통및물류",
-              "value": 47818,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상북도",
-                  "의성군"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::37::011::공공질서및안전",
-              "name": "공공질서및안전",
-              "value": 30285,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상북도",
-                  "의성군"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::37::011::보건",
-              "name": "보건",
-              "value": 18109,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상북도",
-                  "의성군"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::37::011::예비비기타",
-              "name": "예비비기타",
-              "value": 15823,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상북도",
-                  "의성군"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::37::011::교육",
-              "name": "교육",
-              "value": 5323,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상북도",
-                  "의성군"
-                ],
-                "accountType": "일반회계"
-              }
-            }
-          ],
-          "meta": {
-            "level": "sector",
-            "code": "011",
             "parentPath": [
               "지방재정 총계",
               "경상북도"
@@ -13984,6 +13788,202 @@
           "meta": {
             "level": "sector",
             "code": "021",
+            "parentPath": [
+              "지방재정 총계",
+              "경상북도"
+            ]
+          }
+        },
+        {
+          "id": "district::37::011",
+          "name": "의성군",
+          "children": [
+            {
+              "id": "dist-func::37::011::농림해양수산",
+              "name": "농림해양수산",
+              "value": 288451,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상북도",
+                  "의성군"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::37::011::사회복지",
+              "name": "사회복지",
+              "value": 193652,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상북도",
+                  "의성군"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::37::011::산업중소기업및에너지",
+              "name": "산업중소기업및에너지",
+              "value": 105153,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상북도",
+                  "의성군"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::37::011::기타",
+              "name": "기타",
+              "value": 98890,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상북도",
+                  "의성군"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::37::011::국토및지역개발",
+              "name": "국토및지역개발",
+              "value": 87898,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상북도",
+                  "의성군"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::37::011::문화및관광",
+              "name": "문화및관광",
+              "value": 84192,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상북도",
+                  "의성군"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::37::011::환경",
+              "name": "환경",
+              "value": 71039,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상북도",
+                  "의성군"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::37::011::일반공공행정",
+              "name": "일반공공행정",
+              "value": 66865,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상북도",
+                  "의성군"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::37::011::교통및물류",
+              "name": "교통및물류",
+              "value": 47818,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상북도",
+                  "의성군"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::37::011::공공질서및안전",
+              "name": "공공질서및안전",
+              "value": 30285,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상북도",
+                  "의성군"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::37::011::보건",
+              "name": "보건",
+              "value": 18109,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상북도",
+                  "의성군"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::37::011::예비비기타",
+              "name": "예비비기타",
+              "value": 15823,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상북도",
+                  "의성군"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::37::011::교육",
+              "name": "교육",
+              "value": 5323,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상북도",
+                  "의성군"
+                ],
+                "accountType": "일반회계"
+              }
+            }
+          ],
+          "meta": {
+            "level": "sector",
+            "code": "011",
             "parentPath": [
               "지방재정 총계",
               "경상북도"
@@ -14795,7 +14795,7 @@
             {
               "id": "dist-func::37::012::사회복지",
               "name": "사회복지",
-              "value": 114484,
+              "value": 113854,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -14971,202 +14971,6 @@
           }
         },
         {
-          "id": "district::37::017",
-          "name": "성주군",
-          "children": [
-            {
-              "id": "dist-func::37::017::국토및지역개발",
-              "name": "국토및지역개발",
-              "value": 148905,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상북도",
-                  "성주군"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::37::017::사회복지",
-              "name": "사회복지",
-              "value": 139513,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상북도",
-                  "성주군"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::37::017::환경",
-              "name": "환경",
-              "value": 130767,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상북도",
-                  "성주군"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::37::017::농림해양수산",
-              "name": "농림해양수산",
-              "value": 114700,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상북도",
-                  "성주군"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::37::017::기타",
-              "name": "기타",
-              "value": 74129,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상북도",
-                  "성주군"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::37::017::문화및관광",
-              "name": "문화및관광",
-              "value": 51275,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상북도",
-                  "성주군"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::37::017::공공질서및안전",
-              "name": "공공질서및안전",
-              "value": 44253,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상북도",
-                  "성주군"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::37::017::일반공공행정",
-              "name": "일반공공행정",
-              "value": 37354,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상북도",
-                  "성주군"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::37::017::교통및물류",
-              "name": "교통및물류",
-              "value": 28071,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상북도",
-                  "성주군"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::37::017::산업중소기업및에너지",
-              "name": "산업중소기업및에너지",
-              "value": 18486,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상북도",
-                  "성주군"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::37::017::보건",
-              "name": "보건",
-              "value": 4280,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상북도",
-                  "성주군"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::37::017::교육",
-              "name": "교육",
-              "value": 2062,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상북도",
-                  "성주군"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::37::017::예비비기타",
-              "name": "예비비기타",
-              "value": 1843,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상북도",
-                  "성주군"
-                ],
-                "accountType": "일반회계"
-              }
-            }
-          ],
-          "meta": {
-            "level": "sector",
-            "code": "017",
-            "parentPath": [
-              "지방재정 총계",
-              "경상북도"
-            ]
-          }
-        },
-        {
           "id": "district::37::019",
           "name": "예천군",
           "children": [
@@ -15201,7 +15005,7 @@
             {
               "id": "dist-func::37::019::기타",
               "name": "기타",
-              "value": 79195,
+              "value": 77278,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -15356,6 +15160,202 @@
           "meta": {
             "level": "sector",
             "code": "019",
+            "parentPath": [
+              "지방재정 총계",
+              "경상북도"
+            ]
+          }
+        },
+        {
+          "id": "district::37::017",
+          "name": "성주군",
+          "children": [
+            {
+              "id": "dist-func::37::017::국토및지역개발",
+              "name": "국토및지역개발",
+              "value": 148905,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상북도",
+                  "성주군"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::37::017::사회복지",
+              "name": "사회복지",
+              "value": 138829,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상북도",
+                  "성주군"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::37::017::환경",
+              "name": "환경",
+              "value": 118116,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상북도",
+                  "성주군"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::37::017::농림해양수산",
+              "name": "농림해양수산",
+              "value": 114700,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상북도",
+                  "성주군"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::37::017::기타",
+              "name": "기타",
+              "value": 74071,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상북도",
+                  "성주군"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::37::017::문화및관광",
+              "name": "문화및관광",
+              "value": 51275,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상북도",
+                  "성주군"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::37::017::공공질서및안전",
+              "name": "공공질서및안전",
+              "value": 44253,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상북도",
+                  "성주군"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::37::017::교통및물류",
+              "name": "교통및물류",
+              "value": 28071,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상북도",
+                  "성주군"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::37::017::일반공공행정",
+              "name": "일반공공행정",
+              "value": 26270,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상북도",
+                  "성주군"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::37::017::산업중소기업및에너지",
+              "name": "산업중소기업및에너지",
+              "value": 18486,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상북도",
+                  "성주군"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::37::017::보건",
+              "name": "보건",
+              "value": 4280,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상북도",
+                  "성주군"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::37::017::교육",
+              "name": "교육",
+              "value": 2062,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상북도",
+                  "성주군"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::37::017::예비비기타",
+              "name": "예비비기타",
+              "value": 1843,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상북도",
+                  "성주군"
+                ],
+                "accountType": "일반회계"
+              }
+            }
+          ],
+          "meta": {
+            "level": "sector",
+            "code": "017",
             "parentPath": [
               "지방재정 총계",
               "경상북도"
@@ -15775,7 +15775,7 @@
             {
               "id": "dist-func::37::023::사회복지",
               "name": "사회복지",
-              "value": 82952,
+              "value": 82612,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -15887,7 +15887,7 @@
             {
               "id": "dist-func::37::023::국토및지역개발",
               "name": "국토및지역개발",
-              "value": 16669,
+              "value": 16368,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -16055,7 +16055,7 @@
             {
               "id": "dist-func::37::022::일반공공행정",
               "name": "일반공공행정",
-              "value": 23258,
+              "value": 19258,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -16180,7 +16180,7 @@
             {
               "id": "dist-func::38::000::일반공공행정",
               "name": "일반공공행정",
-              "value": 1828803,
+              "value": 1773803,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -16376,7 +16376,7 @@
             {
               "id": "dist-func::38::001::사회복지",
               "name": "사회복지",
-              "value": 1804814,
+              "value": 1802636,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -16446,7 +16446,7 @@
             {
               "id": "dist-func::38::001::환경",
               "name": "환경",
-              "value": 279601,
+              "value": 265826,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -16472,20 +16472,6 @@
               }
             },
             {
-              "id": "dist-func::38::001::국토및지역개발",
-              "name": "국토및지역개발",
-              "value": 200898,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상남도",
-                  "창원시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
               "id": "dist-func::38::001::산업중소기업및에너지",
               "name": "산업중소기업및에너지",
               "value": 196405,
@@ -16500,9 +16486,23 @@
               }
             },
             {
+              "id": "dist-func::38::001::국토및지역개발",
+              "name": "국토및지역개발",
+              "value": 186115,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상남도",
+                  "창원시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
               "id": "dist-func::38::001::공공질서및안전",
               "name": "공공질서및안전",
-              "value": 98930,
+              "value": 97600,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -16516,7 +16516,7 @@
             {
               "id": "dist-func::38::001::보건",
               "name": "보건",
-              "value": 69592,
+              "value": 69520,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -16762,202 +16762,6 @@
           }
         },
         {
-          "id": "district::38::002",
-          "name": "진주시",
-          "children": [
-            {
-              "id": "dist-func::38::002::사회복지",
-              "name": "사회복지",
-              "value": 745698,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상남도",
-                  "진주시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::38::002::국토및지역개발",
-              "name": "국토및지역개발",
-              "value": 270392,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상남도",
-                  "진주시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::38::002::농림해양수산",
-              "name": "농림해양수산",
-              "value": 208819,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상남도",
-                  "진주시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::38::002::기타",
-              "name": "기타",
-              "value": 200984,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상남도",
-                  "진주시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::38::002::교통및물류",
-              "name": "교통및물류",
-              "value": 195129,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상남도",
-                  "진주시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::38::002::문화및관광",
-              "name": "문화및관광",
-              "value": 171922,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상남도",
-                  "진주시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::38::002::환경",
-              "name": "환경",
-              "value": 122451,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상남도",
-                  "진주시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::38::002::일반공공행정",
-              "name": "일반공공행정",
-              "value": 109489,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상남도",
-                  "진주시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::38::002::산업중소기업및에너지",
-              "name": "산업중소기업및에너지",
-              "value": 107342,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상남도",
-                  "진주시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::38::002::교육",
-              "name": "교육",
-              "value": 102089,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상남도",
-                  "진주시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::38::002::보건",
-              "name": "보건",
-              "value": 46749,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상남도",
-                  "진주시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::38::002::공공질서및안전",
-              "name": "공공질서및안전",
-              "value": 29257,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상남도",
-                  "진주시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::38::002::예비비기타",
-              "name": "예비비기타",
-              "value": 14789,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상남도",
-                  "진주시"
-                ],
-                "accountType": "일반회계"
-              }
-            }
-          ],
-          "meta": {
-            "level": "sector",
-            "code": "002",
-            "parentPath": [
-              "지방재정 총계",
-              "경상남도"
-            ]
-          }
-        },
-        {
           "id": "district::38::008",
           "name": "양산시",
           "children": [
@@ -17168,6 +16972,202 @@
           }
         },
         {
+          "id": "district::38::002",
+          "name": "진주시",
+          "children": [
+            {
+              "id": "dist-func::38::002::사회복지",
+              "name": "사회복지",
+              "value": 739944,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상남도",
+                  "진주시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::38::002::국토및지역개발",
+              "name": "국토및지역개발",
+              "value": 270392,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상남도",
+                  "진주시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::38::002::농림해양수산",
+              "name": "농림해양수산",
+              "value": 208819,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상남도",
+                  "진주시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::38::002::기타",
+              "name": "기타",
+              "value": 200984,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상남도",
+                  "진주시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::38::002::교통및물류",
+              "name": "교통및물류",
+              "value": 177352,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상남도",
+                  "진주시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::38::002::문화및관광",
+              "name": "문화및관광",
+              "value": 171430,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상남도",
+                  "진주시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::38::002::환경",
+              "name": "환경",
+              "value": 109575,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상남도",
+                  "진주시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::38::002::일반공공행정",
+              "name": "일반공공행정",
+              "value": 109489,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상남도",
+                  "진주시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::38::002::산업중소기업및에너지",
+              "name": "산업중소기업및에너지",
+              "value": 107012,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상남도",
+                  "진주시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::38::002::교육",
+              "name": "교육",
+              "value": 91515,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상남도",
+                  "진주시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::38::002::보건",
+              "name": "보건",
+              "value": 46749,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상남도",
+                  "진주시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::38::002::공공질서및안전",
+              "name": "공공질서및안전",
+              "value": 29257,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상남도",
+                  "진주시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::38::002::예비비기타",
+              "name": "예비비기타",
+              "value": 14789,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상남도",
+                  "진주시"
+                ],
+                "accountType": "일반회계"
+              }
+            }
+          ],
+          "meta": {
+            "level": "sector",
+            "code": "002",
+            "parentPath": [
+              "지방재정 총계",
+              "경상남도"
+            ]
+          }
+        },
+        {
           "id": "district::38::007",
           "name": "거제시",
           "children": [
@@ -17357,202 +17357,6 @@
           "meta": {
             "level": "sector",
             "code": "007",
-            "parentPath": [
-              "지방재정 총계",
-              "경상남도"
-            ]
-          }
-        },
-        {
-          "id": "district::38::006",
-          "name": "밀양시",
-          "children": [
-            {
-              "id": "dist-func::38::006::사회복지",
-              "name": "사회복지",
-              "value": 309379,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상남도",
-                  "밀양시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::38::006::농림해양수산",
-              "name": "농림해양수산",
-              "value": 209299,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상남도",
-                  "밀양시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::38::006::국토및지역개발",
-              "name": "국토및지역개발",
-              "value": 157506,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상남도",
-                  "밀양시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::38::006::일반공공행정",
-              "name": "일반공공행정",
-              "value": 134692,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상남도",
-                  "밀양시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::38::006::교통및물류",
-              "name": "교통및물류",
-              "value": 129898,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상남도",
-                  "밀양시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::38::006::문화및관광",
-              "name": "문화및관광",
-              "value": 117790,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상남도",
-                  "밀양시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::38::006::기타",
-              "name": "기타",
-              "value": 113179,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상남도",
-                  "밀양시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::38::006::공공질서및안전",
-              "name": "공공질서및안전",
-              "value": 80675,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상남도",
-                  "밀양시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::38::006::산업중소기업및에너지",
-              "name": "산업중소기업및에너지",
-              "value": 69002,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상남도",
-                  "밀양시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::38::006::환경",
-              "name": "환경",
-              "value": 41500,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상남도",
-                  "밀양시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::38::006::보건",
-              "name": "보건",
-              "value": 16543,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상남도",
-                  "밀양시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::38::006::교육",
-              "name": "교육",
-              "value": 16071,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상남도",
-                  "밀양시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::38::006::예비비기타",
-              "name": "예비비기타",
-              "value": 7313,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "경상남도",
-                  "밀양시"
-                ],
-                "accountType": "일반회계"
-              }
-            }
-          ],
-          "meta": {
-            "level": "sector",
-            "code": "006",
             "parentPath": [
               "지방재정 총계",
               "경상남도"
@@ -17945,6 +17749,202 @@
           "meta": {
             "level": "sector",
             "code": "018",
+            "parentPath": [
+              "지방재정 총계",
+              "경상남도"
+            ]
+          }
+        },
+        {
+          "id": "district::38::006",
+          "name": "밀양시",
+          "children": [
+            {
+              "id": "dist-func::38::006::사회복지",
+              "name": "사회복지",
+              "value": 309100,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상남도",
+                  "밀양시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::38::006::농림해양수산",
+              "name": "농림해양수산",
+              "value": 205009,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상남도",
+                  "밀양시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::38::006::국토및지역개발",
+              "name": "국토및지역개발",
+              "value": 147468,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상남도",
+                  "밀양시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::38::006::교통및물류",
+              "name": "교통및물류",
+              "value": 129898,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상남도",
+                  "밀양시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::38::006::문화및관광",
+              "name": "문화및관광",
+              "value": 117790,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상남도",
+                  "밀양시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::38::006::기타",
+              "name": "기타",
+              "value": 113179,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상남도",
+                  "밀양시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::38::006::공공질서및안전",
+              "name": "공공질서및안전",
+              "value": 78534,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상남도",
+                  "밀양시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::38::006::산업중소기업및에너지",
+              "name": "산업중소기업및에너지",
+              "value": 69002,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상남도",
+                  "밀양시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::38::006::일반공공행정",
+              "name": "일반공공행정",
+              "value": 64801,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상남도",
+                  "밀양시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::38::006::환경",
+              "name": "환경",
+              "value": 41500,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상남도",
+                  "밀양시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::38::006::보건",
+              "name": "보건",
+              "value": 16480,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상남도",
+                  "밀양시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::38::006::교육",
+              "name": "교육",
+              "value": 16071,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상남도",
+                  "밀양시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::38::006::예비비기타",
+              "name": "예비비기타",
+              "value": 7313,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "경상남도",
+                  "밀양시"
+                ],
+                "accountType": "일반회계"
+              }
+            }
+          ],
+          "meta": {
+            "level": "sector",
+            "code": "006",
             "parentPath": [
               "지방재정 총계",
               "경상남도"
@@ -19973,21 +19973,7 @@
             {
               "id": "dist-func::36::000::일반공공행정",
               "name": "일반공공행정",
-              "value": 1444382,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "전라남도",
-                  "본청"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::36::000::공공질서및안전",
-              "name": "공공질서및안전",
-              "value": 949612,
+              "value": 1421100,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -20015,7 +20001,7 @@
             {
               "id": "dist-func::36::000::산업중소기업및에너지",
               "name": "산업중소기업및에너지",
-              "value": 805706,
+              "value": 779707,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -20043,7 +20029,21 @@
             {
               "id": "dist-func::36::000::국토및지역개발",
               "name": "국토및지역개발",
-              "value": 544331,
+              "value": 543331,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "전라남도",
+                  "본청"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::36::000::공공질서및안전",
+              "name": "공공질서및안전",
+              "value": 532268,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -20351,7 +20351,7 @@
             {
               "id": "dist-func::36::003::사회복지",
               "name": "사회복지",
-              "value": 572293,
+              "value": 568228,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -20365,7 +20365,7 @@
             {
               "id": "dist-func::36::003::일반공공행정",
               "name": "일반공공행정",
-              "value": 334715,
+              "value": 219264,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -20421,7 +20421,7 @@
             {
               "id": "dist-func::36::003::교통및물류",
               "name": "교통및물류",
-              "value": 99884,
+              "value": 98884,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -20449,7 +20449,7 @@
             {
               "id": "dist-func::36::003::환경",
               "name": "환경",
-              "value": 69038,
+              "value": 65547,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -20463,7 +20463,7 @@
             {
               "id": "dist-func::36::003::산업중소기업및에너지",
               "name": "산업중소기업및에너지",
-              "value": 65261,
+              "value": 59634,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -20491,7 +20491,7 @@
             {
               "id": "dist-func::36::003::보건",
               "name": "보건",
-              "value": 17807,
+              "value": 17757,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -20519,7 +20519,7 @@
             {
               "id": "dist-func::36::003::공공질서및안전",
               "name": "공공질서및안전",
-              "value": 13714,
+              "value": 11896,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -21373,7 +21373,7 @@
             {
               "id": "dist-func::36::022::기타",
               "name": "기타",
-              "value": 106378,
+              "value": 105078,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -21541,7 +21541,7 @@
             {
               "id": "dist-func::36::005::기타",
               "name": "기타",
-              "value": 126477,
+              "value": 126328,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -21639,7 +21639,7 @@
             {
               "id": "dist-func::36::005::일반공공행정",
               "name": "일반공공행정",
-              "value": 62511,
+              "value": 62076,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -22157,7 +22157,7 @@
             {
               "id": "dist-func::36::015::기타",
               "name": "기타",
-              "value": 107652,
+              "value": 106499,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -23291,7 +23291,7 @@
             {
               "id": "dist-func::36::013::농림해양수산",
               "name": "농림해양수산",
-              "value": 209271,
+              "value": 204104,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -23305,7 +23305,7 @@
             {
               "id": "dist-func::36::013::사회복지",
               "name": "사회복지",
-              "value": 130848,
+              "value": 128348,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -23319,7 +23319,7 @@
             {
               "id": "dist-func::36::013::문화및관광",
               "name": "문화및관광",
-              "value": 87223,
+              "value": 86123,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -23361,7 +23361,7 @@
             {
               "id": "dist-func::36::013::일반공공행정",
               "name": "일반공공행정",
-              "value": 72020,
+              "value": 63320,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -24409,9 +24409,9 @@
               }
             },
             {
-              "id": "dist-func::36::008::교육",
-              "name": "교육",
-              "value": 13896,
+              "id": "dist-func::36::008::산업중소기업및에너지",
+              "name": "산업중소기업및에너지",
+              "value": 13294,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -24423,9 +24423,9 @@
               }
             },
             {
-              "id": "dist-func::36::008::산업중소기업및에너지",
-              "name": "산업중소기업및에너지",
-              "value": 13294,
+              "id": "dist-func::36::008::교육",
+              "name": "교육",
+              "value": 11896,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -24536,7 +24536,7 @@
             {
               "id": "dist-func::34::000::공공질서및안전",
               "name": "공공질서및안전",
-              "value": 1036102,
+              "value": 1034828,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -25138,7 +25138,7 @@
             {
               "id": "dist-func::34::008::일반공공행정",
               "name": "일반공공행정",
-              "value": 280571,
+              "value": 239071,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -25698,7 +25698,7 @@
             {
               "id": "dist-func::34::003::사회복지",
               "name": "사회복지",
-              "value": 281861,
+              "value": 279924,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -26608,7 +26608,7 @@
             {
               "id": "dist-func::34::014::국토및지역개발",
               "name": "국토및지역개발",
-              "value": 42454,
+              "value": 42400,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -26790,7 +26790,7 @@
             {
               "id": "dist-func::34::011::일반공공행정",
               "name": "일반공공행정",
-              "value": 31937,
+              "value": 31861,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -27110,20 +27110,6 @@
               }
             },
             {
-              "id": "dist-func::34::009::일반공공행정",
-              "name": "일반공공행정",
-              "value": 91603,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "충청남도",
-                  "금산군"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
               "id": "dist-func::34::009::기타",
               "name": "기타",
               "value": 77083,
@@ -27155,6 +27141,20 @@
               "id": "dist-func::34::009::문화및관광",
               "name": "문화및관광",
               "value": 37678,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "충청남도",
+                  "금산군"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::34::009::일반공공행정",
+              "name": "일반공공행정",
+              "value": 36524,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -27392,7 +27392,7 @@
             {
               "id": "dist-func::34::012::보건",
               "name": "보건",
-              "value": 14758,
+              "value": 14691,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -27811,7 +27811,7 @@
             {
               "id": "dist-func::21::000::환경",
               "name": "환경",
-              "value": 281098,
+              "value": 281062,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -31730,7 +31730,7 @@
             {
               "id": "dist-func::35::002::환경",
               "name": "환경",
-              "value": 103739,
+              "value": 102455,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -31828,7 +31828,7 @@
             {
               "id": "dist-func::35::004::사회복지",
               "name": "사회복지",
-              "value": 363373,
+              "value": 357282,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -31856,7 +31856,7 @@
             {
               "id": "dist-func::35::004::일반공공행정",
               "name": "일반공공행정",
-              "value": 279369,
+              "value": 265260,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -31870,7 +31870,7 @@
             {
               "id": "dist-func::35::004::기타",
               "name": "기타",
-              "value": 162290,
+              "value": 161290,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -31884,7 +31884,7 @@
             {
               "id": "dist-func::35::004::국토및지역개발",
               "name": "국토및지역개발",
-              "value": 105535,
+              "value": 105347,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -31912,7 +31912,7 @@
             {
               "id": "dist-func::35::004::산업중소기업및에너지",
               "name": "산업중소기업및에너지",
-              "value": 94867,
+              "value": 64064,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -31926,7 +31926,7 @@
             {
               "id": "dist-func::35::004::교통및물류",
               "name": "교통및물류",
-              "value": 64056,
+              "value": 63800,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -31940,7 +31940,7 @@
             {
               "id": "dist-func::35::004::환경",
               "name": "환경",
-              "value": 55672,
+              "value": 53612,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -31968,7 +31968,7 @@
             {
               "id": "dist-func::35::004::보건",
               "name": "보건",
-              "value": 27992,
+              "value": 27762,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -32738,7 +32738,7 @@
             {
               "id": "dist-func::35::013::공공질서및안전",
               "name": "공공질서및안전",
-              "value": 43419,
+              "value": 43043,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -33480,7 +33480,7 @@
             {
               "id": "dist-func::35::012::기타",
               "name": "기타",
-              "value": 79886,
+              "value": 79666,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -33828,9 +33828,9 @@
               }
             },
             {
-              "id": "dist-func::35::010::환경",
-              "name": "환경",
-              "value": 96642,
+              "id": "dist-func::35::010::사회복지",
+              "name": "사회복지",
+              "value": 90656,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -33842,9 +33842,9 @@
               }
             },
             {
-              "id": "dist-func::35::010::사회복지",
-              "name": "사회복지",
-              "value": 90668,
+              "id": "dist-func::35::010::환경",
+              "name": "환경",
+              "value": 80814,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -36777,202 +36777,6 @@
           }
         },
         {
-          "id": "district::32::005",
-          "name": "태백시",
-          "children": [
-            {
-              "id": "dist-func::32::005::사회복지",
-              "name": "사회복지",
-              "value": 144141,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "강원특별자치도",
-                  "태백시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::32::005::산업중소기업및에너지",
-              "name": "산업중소기업및에너지",
-              "value": 99741,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "강원특별자치도",
-                  "태백시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::32::005::일반공공행정",
-              "name": "일반공공행정",
-              "value": 88216,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "강원특별자치도",
-                  "태백시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::32::005::환경",
-              "name": "환경",
-              "value": 83496,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "강원특별자치도",
-                  "태백시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::32::005::기타",
-              "name": "기타",
-              "value": 79963,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "강원특별자치도",
-                  "태백시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::32::005::문화및관광",
-              "name": "문화및관광",
-              "value": 72148,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "강원특별자치도",
-                  "태백시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::32::005::국토및지역개발",
-              "name": "국토및지역개발",
-              "value": 60672,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "강원특별자치도",
-                  "태백시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::32::005::농림해양수산",
-              "name": "농림해양수산",
-              "value": 38080,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "강원특별자치도",
-                  "태백시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::32::005::교통및물류",
-              "name": "교통및물류",
-              "value": 35774,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "강원특별자치도",
-                  "태백시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::32::005::교육",
-              "name": "교육",
-              "value": 19721,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "강원특별자치도",
-                  "태백시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::32::005::보건",
-              "name": "보건",
-              "value": 13162,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "강원특별자치도",
-                  "태백시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::32::005::공공질서및안전",
-              "name": "공공질서및안전",
-              "value": 8920,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "강원특별자치도",
-                  "태백시"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
-              "id": "dist-func::32::005::예비비기타",
-              "name": "예비비기타",
-              "value": 2114,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "강원특별자치도",
-                  "태백시"
-                ],
-                "accountType": "일반회계"
-              }
-            }
-          ],
-          "meta": {
-            "level": "sector",
-            "code": "005",
-            "parentPath": [
-              "지방재정 총계",
-              "강원특별자치도"
-            ]
-          }
-        },
-        {
           "id": "district::32::006",
           "name": "속초시",
           "children": [
@@ -37162,6 +36966,202 @@
           "meta": {
             "level": "sector",
             "code": "006",
+            "parentPath": [
+              "지방재정 총계",
+              "강원특별자치도"
+            ]
+          }
+        },
+        {
+          "id": "district::32::005",
+          "name": "태백시",
+          "children": [
+            {
+              "id": "dist-func::32::005::사회복지",
+              "name": "사회복지",
+              "value": 144141,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "강원특별자치도",
+                  "태백시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::32::005::산업중소기업및에너지",
+              "name": "산업중소기업및에너지",
+              "value": 99741,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "강원특별자치도",
+                  "태백시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::32::005::환경",
+              "name": "환경",
+              "value": 83496,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "강원특별자치도",
+                  "태백시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::32::005::기타",
+              "name": "기타",
+              "value": 79963,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "강원특별자치도",
+                  "태백시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::32::005::문화및관광",
+              "name": "문화및관광",
+              "value": 72148,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "강원특별자치도",
+                  "태백시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::32::005::국토및지역개발",
+              "name": "국토및지역개발",
+              "value": 60672,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "강원특별자치도",
+                  "태백시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::32::005::농림해양수산",
+              "name": "농림해양수산",
+              "value": 38080,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "강원특별자치도",
+                  "태백시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::32::005::교통및물류",
+              "name": "교통및물류",
+              "value": 35774,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "강원특별자치도",
+                  "태백시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::32::005::일반공공행정",
+              "name": "일반공공행정",
+              "value": 31268,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "강원특별자치도",
+                  "태백시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::32::005::교육",
+              "name": "교육",
+              "value": 19721,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "강원특별자치도",
+                  "태백시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::32::005::보건",
+              "name": "보건",
+              "value": 13162,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "강원특별자치도",
+                  "태백시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::32::005::공공질서및안전",
+              "name": "공공질서및안전",
+              "value": 8920,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "강원특별자치도",
+                  "태백시"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::32::005::예비비기타",
+              "name": "예비비기타",
+              "value": 2114,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "강원특별자치도",
+                  "태백시"
+                ],
+                "accountType": "일반회계"
+              }
+            }
+          ],
+          "meta": {
+            "level": "sector",
+            "code": "005",
             "parentPath": [
               "지방재정 총계",
               "강원특별자치도"
@@ -37385,7 +37385,7 @@
             {
               "id": "dist-func::32::017::사회복지",
               "name": "사회복지",
-              "value": 100365,
+              "value": 99969,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -38462,7 +38462,7 @@
             {
               "id": "dist-func::23::006::교통및물류",
               "name": "교통및물류",
-              "value": 23632,
+              "value": 23540,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -39358,7 +39358,7 @@
             {
               "id": "dist-func::23::010::기타",
               "name": "기타",
-              "value": 125136,
+              "value": 116856,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -40155,7 +40155,7 @@
             {
               "id": "dist-func::33::000::사회복지",
               "name": "사회복지",
-              "value": 3094670,
+              "value": 3088723,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -40169,7 +40169,7 @@
             {
               "id": "dist-func::33::000::일반공공행정",
               "name": "일반공공행정",
-              "value": 1204167,
+              "value": 1201391,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -40183,7 +40183,7 @@
             {
               "id": "dist-func::33::000::농림해양수산",
               "name": "농림해양수산",
-              "value": 820954,
+              "value": 820352,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -40841,7 +40841,7 @@
             {
               "id": "dist-func::33::003::환경",
               "name": "환경",
-              "value": 92110,
+              "value": 92022,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -41765,7 +41765,7 @@
             {
               "id": "dist-func::33::004::국토및지역개발",
               "name": "국토및지역개발",
-              "value": 83432,
+              "value": 83404,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -41835,7 +41835,7 @@
             {
               "id": "dist-func::33::004::공공질서및안전",
               "name": "공공질서및안전",
-              "value": 21619,
+              "value": 21279,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -42744,7 +42744,7 @@
             {
               "id": "dist-func::22::008::기타",
               "name": "기타",
-              "value": 447352,
+              "value": 267352,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -42968,7 +42968,7 @@
             {
               "id": "dist-func::22::007::일반공공행정",
               "name": "일반공공행정",
-              "value": 60220,
+              "value": 55578,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -44535,7 +44535,7 @@
             {
               "id": "dist-func::24::004::기타",
               "name": "기타",
-              "value": 171880,
+              "value": 169249,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -45528,7 +45528,7 @@
             {
               "id": "dist-func::25::000::일반공공행정",
               "name": "일반공공행정",
-              "value": 1143755,
+              "value": 1083755,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -45960,20 +45960,6 @@
               }
             },
             {
-              "id": "dist-func::25::004::일반공공행정",
-              "name": "일반공공행정",
-              "value": 42179,
-              "meta": {
-                "level": "detailProject",
-                "parentPath": [
-                  "지방재정 총계",
-                  "대전광역시",
-                  "유성구"
-                ],
-                "accountType": "일반회계"
-              }
-            },
-            {
               "id": "dist-func::25::004::교통및물류",
               "name": "교통및물류",
               "value": 39741,
@@ -45991,6 +45977,20 @@
               "id": "dist-func::25::004::환경",
               "name": "환경",
               "value": 35676,
+              "meta": {
+                "level": "detailProject",
+                "parentPath": [
+                  "지방재정 총계",
+                  "대전광역시",
+                  "유성구"
+                ],
+                "accountType": "일반회계"
+              }
+            },
+            {
+              "id": "dist-func::25::004::일반공공행정",
+              "name": "일반공공행정",
+              "value": 34874,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -46200,7 +46200,7 @@
             {
               "id": "dist-func::25::001::환경",
               "name": "환경",
-              "value": 32525,
+              "value": 32361,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -47025,7 +47025,7 @@
             {
               "id": "dist-func::26::005::환경",
               "name": "환경",
-              "value": 96558,
+              "value": 96538,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -47795,7 +47795,7 @@
             {
               "id": "dist-func::26::003::일반공공행정",
               "name": "일반공공행정",
-              "value": 19674,
+              "value": 19624,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -48199,7 +48199,7 @@
             {
               "id": "dist-func::29::000::교통및물류",
               "name": "교통및물류",
-              "value": 169497,
+              "value": 168858,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -48241,7 +48241,7 @@
             {
               "id": "dist-func::29::000::산업중소기업및에너지",
               "name": "산업중소기업및에너지",
-              "value": 120838,
+              "value": 112912,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [
@@ -48297,7 +48297,7 @@
             {
               "id": "dist-func::29::000::환경",
               "name": "환경",
-              "value": 87594,
+              "value": 83980,
               "meta": {
                 "level": "detailProject",
                 "parentPath": [

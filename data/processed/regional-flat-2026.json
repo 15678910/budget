@@ -964,8 +964,8 @@
     "districtName": "용산구",
     "functionName": "일반공공행정",
     "accountType": "기금",
-    "amount": 38919,
-    "executed": 27181
+    "amount": 37989,
+    "executed": 26518
   },
   {
     "fiscalYear": 2026,
@@ -1503,8 +1503,8 @@
     "districtName": "광진구",
     "functionName": "일반공공행정",
     "accountType": "기금",
-    "amount": 96807,
-    "executed": 18838
+    "amount": 81807,
+    "executed": 3838
   },
   {
     "fiscalYear": 2026,
@@ -2053,8 +2053,8 @@
     "districtName": "중랑구",
     "functionName": "공공질서및안전",
     "accountType": "일반회계",
-    "amount": 6178,
-    "executed": 3262
+    "amount": 5071,
+    "executed": 2709
   },
   {
     "fiscalYear": 2026,
@@ -2922,8 +2922,8 @@
     "districtName": "도봉구",
     "functionName": "일반공공행정",
     "accountType": "기금",
-    "amount": 90713,
-    "executed": 5169
+    "amount": 67886,
+    "executed": 4
   },
   {
     "fiscalYear": 2026,
@@ -4066,8 +4066,8 @@
     "districtName": "마포구",
     "functionName": "일반공공행정",
     "accountType": "일반회계",
-    "amount": 32994,
-    "executed": 19697
+    "amount": 32727,
+    "executed": 19430
   },
   {
     "fiscalYear": 2026,
@@ -4077,8 +4077,8 @@
     "districtName": "마포구",
     "functionName": "일반공공행정",
     "accountType": "기금",
-    "amount": 76303,
-    "executed": 6164
+    "amount": 70055,
+    "executed": 4
   },
   {
     "fiscalYear": 2026,
@@ -4308,8 +4308,8 @@
     "districtName": "마포구",
     "functionName": "국토및지역개발",
     "accountType": "일반회계",
-    "amount": 18720,
-    "executed": 11851
+    "amount": 16995,
+    "executed": 10126
   },
   {
     "fiscalYear": 2026,
@@ -4385,7 +4385,7 @@
     "districtName": "양천구",
     "functionName": "일반공공행정",
     "accountType": "기금",
-    "amount": 32657,
+    "amount": 13110,
     "executed": 1734
   },
   {
@@ -4407,7 +4407,7 @@
     "districtName": "양천구",
     "functionName": "공공질서및안전",
     "accountType": "기금",
-    "amount": 4459,
+    "amount": 1691,
     "executed": 554
   },
   {
@@ -4429,7 +4429,7 @@
     "districtName": "양천구",
     "functionName": "교육",
     "accountType": "기금",
-    "amount": 4344,
+    "amount": 143,
     "executed": 1
   },
   {
@@ -4451,7 +4451,7 @@
     "districtName": "양천구",
     "functionName": "문화및관광",
     "accountType": "기금",
-    "amount": 8669,
+    "amount": 283,
     "executed": 230
   },
   {
@@ -4484,7 +4484,7 @@
     "districtName": "양천구",
     "functionName": "환경",
     "accountType": "기금",
-    "amount": 2772,
+    "amount": 55,
     "executed": 24
   },
   {
@@ -4506,7 +4506,7 @@
     "districtName": "양천구",
     "functionName": "사회복지",
     "accountType": "기금",
-    "amount": 6595,
+    "amount": 1603,
     "executed": 924
   },
   {
@@ -4528,7 +4528,7 @@
     "districtName": "양천구",
     "functionName": "보건",
     "accountType": "기금",
-    "amount": 718,
+    "amount": 283,
     "executed": 17
   },
   {
@@ -4550,7 +4550,7 @@
     "districtName": "양천구",
     "functionName": "산업중소기업및에너지",
     "accountType": "기금",
-    "amount": 6400,
+    "amount": 4101,
     "executed": 2037
   },
   {
@@ -4583,7 +4583,7 @@
     "districtName": "양천구",
     "functionName": "교통및물류",
     "accountType": "기금",
-    "amount": 3329,
+    "amount": 1885,
     "executed": 844
   },
   {
@@ -4616,7 +4616,7 @@
     "districtName": "양천구",
     "functionName": "국토및지역개발",
     "accountType": "기금",
-    "amount": 2127,
+    "amount": 506,
     "executed": 224
   },
   {
@@ -4957,7 +4957,7 @@
     "districtName": "구로구",
     "functionName": "일반공공행정",
     "accountType": "기금",
-    "amount": 160979,
+    "amount": 86829,
     "executed": 233
   },
   {
@@ -6915,19 +6915,8 @@
     "districtName": "송파구",
     "functionName": "일반공공행정",
     "accountType": "일반회계",
-    "amount": 148169,
-    "executed": 73484
-  },
-  {
-    "fiscalYear": 2026,
-    "regionCode": "11",
-    "regionName": "서울특별시",
-    "districtCode": "024",
-    "districtName": "송파구",
-    "functionName": "일반공공행정",
-    "accountType": "특별회계",
-    "amount": 1147,
-    "executed": 0
+    "amount": 94213,
+    "executed": 63404
   },
   {
     "fiscalYear": 2026,
@@ -6948,8 +6937,8 @@
     "districtName": "송파구",
     "functionName": "공공질서및안전",
     "accountType": "일반회계",
-    "amount": 8868,
-    "executed": 5707
+    "amount": 6073,
+    "executed": 2912
   },
   {
     "fiscalYear": 2026,
@@ -7024,17 +7013,6 @@
     "districtCode": "024",
     "districtName": "송파구",
     "functionName": "환경",
-    "accountType": "특별회계",
-    "amount": 5,
-    "executed": 0
-  },
-  {
-    "fiscalYear": 2026,
-    "regionCode": "11",
-    "regionName": "서울특별시",
-    "districtCode": "024",
-    "districtName": "송파구",
-    "functionName": "환경",
     "accountType": "기금",
     "amount": 3511,
     "executed": 143
@@ -7047,8 +7025,8 @@
     "districtName": "송파구",
     "functionName": "사회복지",
     "accountType": "일반회계",
-    "amount": 784314,
-    "executed": 582271
+    "amount": 784021,
+    "executed": 581978
   },
   {
     "fiscalYear": 2026,
@@ -7135,8 +7113,8 @@
     "districtName": "송파구",
     "functionName": "교통및물류",
     "accountType": "특별회계",
-    "amount": 49416,
-    "executed": 10007
+    "amount": 14554,
+    "executed": 9708
   },
   {
     "fiscalYear": 2026,
@@ -7157,7 +7135,7 @@
     "districtName": "송파구",
     "functionName": "국토및지역개발",
     "accountType": "일반회계",
-    "amount": 36143,
+    "amount": 35783,
     "executed": 20115
   },
   {
@@ -7245,8 +7223,8 @@
     "districtName": "강동구",
     "functionName": "일반공공행정",
     "accountType": "기금",
-    "amount": 41167,
-    "executed": 16464
+    "amount": 29393,
+    "executed": 4689
   },
   {
     "fiscalYear": 2026,
@@ -7663,7 +7641,7 @@
     "districtName": "본청",
     "functionName": "환경",
     "accountType": "일반회계",
-    "amount": 271900,
+    "amount": 271864,
     "executed": 188704
   },
   {
@@ -13680,8 +13658,8 @@
     "districtName": "달서구",
     "functionName": "일반공공행정",
     "accountType": "일반회계",
-    "amount": 57990,
-    "executed": 31839
+    "amount": 55348,
+    "executed": 29839
   },
   {
     "fiscalYear": 2026,
@@ -13702,8 +13680,8 @@
     "districtName": "달서구",
     "functionName": "일반공공행정",
     "accountType": "기금",
-    "amount": 2154,
-    "executed": 2000
+    "amount": 154,
+    "executed": 0
   },
   {
     "fiscalYear": 2026,
@@ -14153,8 +14131,8 @@
     "districtName": "달성군",
     "functionName": "기타",
     "accountType": "기금",
-    "amount": 304124,
-    "executed": 162194
+    "amount": 124124,
+    "executed": 2194
   },
   {
     "fiscalYear": 2026,
@@ -15495,7 +15473,7 @@
     "districtName": "부평구",
     "functionName": "교통및물류",
     "accountType": "특별회계",
-    "amount": 9124,
+    "amount": 9032,
     "executed": 5753
   },
   {
@@ -16276,8 +16254,8 @@
     "districtName": "옹진군",
     "functionName": "기타",
     "accountType": "특별회계",
-    "amount": 8480,
-    "executed": 4755
+    "amount": 200,
+    "executed": 0
   },
   {
     "fiscalYear": 2026,
@@ -18740,8 +18718,8 @@
     "districtName": "북구",
     "functionName": "기타",
     "accountType": "일반회계",
-    "amount": 158008,
-    "executed": 115027
+    "amount": 157583,
+    "executed": 114602
   },
   {
     "fiscalYear": 2026,
@@ -18751,7 +18729,7 @@
     "districtName": "북구",
     "functionName": "기타",
     "accountType": "특별회계",
-    "amount": 2249,
+    "amount": 43,
     "executed": 0
   },
   {
@@ -19059,7 +19037,7 @@
     "districtName": "본청",
     "functionName": "일반공공행정",
     "accountType": "기금",
-    "amount": 533022,
+    "amount": 473022,
     "executed": 179288
   },
   {
@@ -19455,8 +19433,8 @@
     "districtName": "동구",
     "functionName": "환경",
     "accountType": "특별회계",
-    "amount": 3498,
-    "executed": 1861
+    "amount": 3334,
+    "executed": 1697
   },
   {
     "fiscalYear": 2026,
@@ -20170,8 +20148,8 @@
     "districtName": "유성구",
     "functionName": "일반공공행정",
     "accountType": "기금",
-    "amount": 7503,
-    "executed": 7395
+    "amount": 198,
+    "executed": 147
   },
   {
     "fiscalYear": 2026,
@@ -21600,7 +21578,7 @@
     "districtName": "동구",
     "functionName": "일반공공행정",
     "accountType": "기금",
-    "amount": 3765,
+    "amount": 3715,
     "executed": 193
   },
   {
@@ -22183,8 +22161,8 @@
     "districtName": "울주군",
     "functionName": "환경",
     "accountType": "일반회계",
-    "amount": 95824,
-    "executed": 41966
+    "amount": 95804,
+    "executed": 41946
   },
   {
     "fiscalYear": 2026,
@@ -22458,7 +22436,7 @@
     "districtName": "본청",
     "functionName": "환경",
     "accountType": "특별회계",
-    "amount": 17575,
+    "amount": 13961,
     "executed": 5356
   },
   {
@@ -22590,8 +22568,8 @@
     "districtName": "본청",
     "functionName": "산업중소기업및에너지",
     "accountType": "기금",
-    "amount": 13452,
-    "executed": 7170
+    "amount": 5526,
+    "executed": 1270
   },
   {
     "fiscalYear": 2026,
@@ -22612,7 +22590,7 @@
     "districtName": "본청",
     "functionName": "교통및물류",
     "accountType": "특별회계",
-    "amount": 17438,
+    "amount": 16799,
     "executed": 5184
   },
   {
@@ -23096,7 +23074,7 @@
     "districtName": "수원시",
     "functionName": "일반공공행정",
     "accountType": "기금",
-    "amount": 544,
+    "amount": 319,
     "executed": 143
   },
   {
@@ -23118,8 +23096,8 @@
     "districtName": "수원시",
     "functionName": "공공질서및안전",
     "accountType": "기금",
-    "amount": 19106,
-    "executed": 7368
+    "amount": 18106,
+    "executed": 6368
   },
   {
     "fiscalYear": 2026,
@@ -23173,7 +23151,7 @@
     "districtName": "수원시",
     "functionName": "환경",
     "accountType": "기금",
-    "amount": 2285,
+    "amount": 1512,
     "executed": 893
   },
   {
@@ -23195,7 +23173,7 @@
     "districtName": "수원시",
     "functionName": "사회복지",
     "accountType": "기금",
-    "amount": 13798,
+    "amount": 13137,
     "executed": 11979
   },
   {
@@ -23217,7 +23195,7 @@
     "districtName": "수원시",
     "functionName": "보건",
     "accountType": "기금",
-    "amount": 746,
+    "amount": 346,
     "executed": 209
   },
   {
@@ -23261,7 +23239,7 @@
     "districtName": "수원시",
     "functionName": "산업중소기업및에너지",
     "accountType": "기금",
-    "amount": 3949,
+    "amount": 3494,
     "executed": 1253
   },
   {
@@ -23316,7 +23294,7 @@
     "districtName": "수원시",
     "functionName": "국토및지역개발",
     "accountType": "기금",
-    "amount": 24165,
+    "amount": 22703,
     "executed": 10516
   },
   {
@@ -23340,17 +23318,6 @@
     "accountType": "일반회계",
     "amount": 421691,
     "executed": 306762
-  },
-  {
-    "fiscalYear": 2026,
-    "regionCode": "31",
-    "regionName": "경기도",
-    "districtCode": "001",
-    "districtName": "수원시",
-    "functionName": "기타",
-    "accountType": "기금",
-    "amount": 231,
-    "executed": 0
   },
   {
     "fiscalYear": 2026,
@@ -24515,8 +24482,8 @@
     "districtName": "광명시",
     "functionName": "일반공공행정",
     "accountType": "일반회계",
-    "amount": 113382,
-    "executed": 87508
+    "amount": 111768,
+    "executed": 86972
   },
   {
     "fiscalYear": 2026,
@@ -24592,8 +24559,8 @@
     "districtName": "광명시",
     "functionName": "환경",
     "accountType": "일반회계",
-    "amount": 74099,
-    "executed": 52027
+    "amount": 69781,
+    "executed": 48753
   },
   {
     "fiscalYear": 2026,
@@ -24603,7 +24570,7 @@
     "districtName": "광명시",
     "functionName": "환경",
     "accountType": "특별회계",
-    "amount": 33585,
+    "amount": 31208,
     "executed": 17391
   },
   {
@@ -24702,8 +24669,8 @@
     "districtName": "광명시",
     "functionName": "교통및물류",
     "accountType": "일반회계",
-    "amount": 89125,
-    "executed": 45817
+    "amount": 38724,
+    "executed": 10265
   },
   {
     "fiscalYear": 2026,
@@ -24713,7 +24680,7 @@
     "districtName": "광명시",
     "functionName": "교통및물류",
     "accountType": "특별회계",
-    "amount": 88724,
+    "amount": 87814,
     "executed": 54970
   },
   {
@@ -24735,7 +24702,7 @@
     "districtName": "광명시",
     "functionName": "국토및지역개발",
     "accountType": "특별회계",
-    "amount": 113549,
+    "amount": 112505,
     "executed": 61783
   },
   {
@@ -24746,7 +24713,7 @@
     "districtName": "광명시",
     "functionName": "국토및지역개발",
     "accountType": "기금",
-    "amount": 213,
+    "amount": 28,
     "executed": 23
   },
   {
@@ -25868,8 +25835,8 @@
     "districtName": "고양시",
     "functionName": "교통및물류",
     "accountType": "일반회계",
-    "amount": 126147,
-    "executed": 73012
+    "amount": 121147,
+    "executed": 68012
   },
   {
     "fiscalYear": 2026,
@@ -25912,8 +25879,8 @@
     "districtName": "고양시",
     "functionName": "국토및지역개발",
     "accountType": "기금",
-    "amount": 1077,
-    "executed": 379
+    "amount": 782,
+    "executed": 84
   },
   {
     "fiscalYear": 2026,
@@ -30972,8 +30939,8 @@
     "districtName": "여주시",
     "functionName": "농림해양수산",
     "accountType": "일반회계",
-    "amount": 117551,
-    "executed": 63537
+    "amount": 117471,
+    "executed": 63460
   },
   {
     "fiscalYear": 2026,
@@ -31698,7 +31665,7 @@
     "districtName": "양평군",
     "functionName": "일반공공행정",
     "accountType": "기금",
-    "amount": 15887,
+    "amount": 11696,
     "executed": 8000
   },
   {
@@ -33392,7 +33359,7 @@
     "districtName": "태백시",
     "functionName": "일반공공행정",
     "accountType": "일반회계",
-    "amount": 39996,
+    "amount": 30796,
     "executed": 23454
   },
   {
@@ -33403,8 +33370,8 @@
     "districtName": "태백시",
     "functionName": "일반공공행정",
     "accountType": "기금",
-    "amount": 48220,
-    "executed": 26588
+    "amount": 472,
+    "executed": 421
   },
   {
     "fiscalYear": 2026,
@@ -36769,8 +36736,8 @@
     "districtName": "고성군",
     "functionName": "사회복지",
     "accountType": "일반회계",
-    "amount": 97377,
-    "executed": 67842
+    "amount": 96981,
+    "executed": 67533
   },
   {
     "fiscalYear": 2026,
@@ -37143,8 +37110,8 @@
     "districtName": "본청",
     "functionName": "일반공공행정",
     "accountType": "일반회계",
-    "amount": 779248,
-    "executed": 378671
+    "amount": 776472,
+    "executed": 375895
   },
   {
     "fiscalYear": 2026,
@@ -37275,7 +37242,7 @@
     "districtName": "본청",
     "functionName": "사회복지",
     "accountType": "특별회계",
-    "amount": 13718,
+    "amount": 12332,
     "executed": 12317
   },
   {
@@ -37286,7 +37253,7 @@
     "districtName": "본청",
     "functionName": "사회복지",
     "accountType": "기금",
-    "amount": 380592,
+    "amount": 376031,
     "executed": 327281
   },
   {
@@ -37319,8 +37286,8 @@
     "districtName": "본청",
     "functionName": "농림해양수산",
     "accountType": "일반회계",
-    "amount": 804999,
-    "executed": 478021
+    "amount": 804397,
+    "executed": 477731
   },
   {
     "fiscalYear": 2026,
@@ -38133,8 +38100,8 @@
     "districtName": "제천시",
     "functionName": "환경",
     "accountType": "일반회계",
-    "amount": 83126,
-    "executed": 44524
+    "amount": 83038,
+    "executed": 44443
   },
   {
     "fiscalYear": 2026,
@@ -38364,8 +38331,8 @@
     "districtName": "보은군",
     "functionName": "공공질서및안전",
     "accountType": "일반회계",
-    "amount": 19334,
-    "executed": 11212
+    "amount": 18994,
+    "executed": 10872
   },
   {
     "fiscalYear": 2026,
@@ -38573,8 +38540,8 @@
     "districtName": "보은군",
     "functionName": "국토및지역개발",
     "accountType": "일반회계",
-    "amount": 74234,
-    "executed": 34898
+    "amount": 74206,
+    "executed": 34878
   },
   {
     "fiscalYear": 2026,
@@ -40586,8 +40553,8 @@
     "districtName": "본청",
     "functionName": "공공질서및안전",
     "accountType": "일반회계",
-    "amount": 800866,
-    "executed": 694394
+    "amount": 799592,
+    "executed": 693128
   },
   {
     "fiscalYear": 2026,
@@ -41642,8 +41609,8 @@
     "districtName": "보령시",
     "functionName": "사회복지",
     "accountType": "일반회계",
-    "amount": 278572,
-    "executed": 210563
+    "amount": 276635,
+    "executed": 208795
   },
   {
     "fiscalYear": 2026,
@@ -42973,7 +42940,7 @@
     "districtName": "당진시",
     "functionName": "일반공공행정",
     "accountType": "일반회계",
-    "amount": 120682,
+    "amount": 79182,
     "executed": 50224
   },
   {
@@ -43281,8 +43248,8 @@
     "districtName": "금산군",
     "functionName": "일반공공행정",
     "accountType": "기금",
-    "amount": 55823,
-    "executed": 1486
+    "amount": 744,
+    "executed": 386
   },
   {
     "fiscalYear": 2026,
@@ -43798,7 +43765,7 @@
     "districtName": "서천군",
     "functionName": "일반공공행정",
     "accountType": "기금",
-    "amount": 2469,
+    "amount": 2393,
     "executed": 991
   },
   {
@@ -44205,7 +44172,7 @@
     "districtName": "청양군",
     "functionName": "보건",
     "accountType": "기금",
-    "amount": 79,
+    "amount": 12,
     "executed": 2
   },
   {
@@ -44854,7 +44821,7 @@
     "districtName": "예산군",
     "functionName": "국토및지역개발",
     "accountType": "특별회계",
-    "amount": 372,
+    "amount": 318,
     "executed": 299
   },
   {
@@ -45888,7 +45855,7 @@
     "districtName": "군산시",
     "functionName": "환경",
     "accountType": "일반회계",
-    "amount": 100253,
+    "amount": 99938,
     "executed": 70027
   },
   {
@@ -45899,8 +45866,8 @@
     "districtName": "군산시",
     "functionName": "환경",
     "accountType": "특별회계",
-    "amount": 1609,
-    "executed": 76
+    "amount": 640,
+    "executed": 23
   },
   {
     "fiscalYear": 2026,
@@ -46361,8 +46328,8 @@
     "districtName": "정읍시",
     "functionName": "일반공공행정",
     "accountType": "기금",
-    "amount": 226904,
-    "executed": 11568
+    "amount": 212795,
+    "executed": 544
   },
   {
     "fiscalYear": 2026,
@@ -46416,8 +46383,8 @@
     "districtName": "정읍시",
     "functionName": "환경",
     "accountType": "일반회계",
-    "amount": 54281,
-    "executed": 35853
+    "amount": 52221,
+    "executed": 33813
   },
   {
     "fiscalYear": 2026,
@@ -46449,8 +46416,8 @@
     "districtName": "정읍시",
     "functionName": "사회복지",
     "accountType": "일반회계",
-    "amount": 352485,
-    "executed": 258408
+    "amount": 349529,
+    "executed": 255930
   },
   {
     "fiscalYear": 2026,
@@ -46460,8 +46427,8 @@
     "districtName": "정읍시",
     "functionName": "사회복지",
     "accountType": "기금",
-    "amount": 10888,
-    "executed": 7906
+    "amount": 7753,
+    "executed": 4771
   },
   {
     "fiscalYear": 2026,
@@ -46482,8 +46449,8 @@
     "districtName": "정읍시",
     "functionName": "보건",
     "accountType": "기금",
-    "amount": 240,
-    "executed": 236
+    "amount": 10,
+    "executed": 6
   },
   {
     "fiscalYear": 2026,
@@ -46515,19 +46482,8 @@
     "districtName": "정읍시",
     "functionName": "산업중소기업및에너지",
     "accountType": "일반회계",
-    "amount": 73800,
-    "executed": 46999
-  },
-  {
-    "fiscalYear": 2026,
-    "regionCode": "35",
-    "regionName": "전북특별자치도",
-    "districtCode": "004",
-    "districtName": "정읍시",
-    "functionName": "산업중소기업및에너지",
-    "accountType": "특별회계",
-    "amount": 2300,
-    "executed": 1000
+    "amount": 51897,
+    "executed": 37738
   },
   {
     "fiscalYear": 2026,
@@ -46537,7 +46493,7 @@
     "districtName": "정읍시",
     "functionName": "산업중소기업및에너지",
     "accountType": "기금",
-    "amount": 18767,
+    "amount": 12167,
     "executed": 7068
   },
   {
@@ -46548,7 +46504,7 @@
     "districtName": "정읍시",
     "functionName": "교통및물류",
     "accountType": "일반회계",
-    "amount": 64056,
+    "amount": 63800,
     "executed": 37870
   },
   {
@@ -46559,8 +46515,8 @@
     "districtName": "정읍시",
     "functionName": "국토및지역개발",
     "accountType": "일반회계",
-    "amount": 76861,
-    "executed": 43969
+    "amount": 76673,
+    "executed": 43781
   },
   {
     "fiscalYear": 2026,
@@ -46614,8 +46570,8 @@
     "districtName": "정읍시",
     "functionName": "기타",
     "accountType": "일반회계",
-    "amount": 162290,
-    "executed": 110579
+    "amount": 161290,
+    "executed": 109579
   },
   {
     "fiscalYear": 2026,
@@ -48011,8 +47967,8 @@
     "districtName": "장수군",
     "functionName": "환경",
     "accountType": "일반회계",
-    "amount": 28701,
-    "executed": 16024
+    "amount": 12873,
+    "executed": 7334
   },
   {
     "fiscalYear": 2026,
@@ -48044,7 +48000,7 @@
     "districtName": "장수군",
     "functionName": "사회복지",
     "accountType": "기금",
-    "amount": 1301,
+    "amount": 1289,
     "executed": 379
   },
   {
@@ -48671,8 +48627,8 @@
     "districtName": "순창군",
     "functionName": "기타",
     "accountType": "일반회계",
-    "amount": 79886,
-    "executed": 58697
+    "amount": 79666,
+    "executed": 58477
   },
   {
     "fiscalYear": 2026,
@@ -48704,8 +48660,8 @@
     "districtName": "고창군",
     "functionName": "공공질서및안전",
     "accountType": "일반회계",
-    "amount": 40940,
-    "executed": 16201
+    "amount": 40564,
+    "executed": 15825
   },
   {
     "fiscalYear": 2026,
@@ -49221,8 +49177,8 @@
     "districtName": "본청",
     "functionName": "일반공공행정",
     "accountType": "일반회계",
-    "amount": 974970,
-    "executed": 681970
+    "amount": 974140,
+    "executed": 681639
   },
   {
     "fiscalYear": 2026,
@@ -49232,8 +49188,8 @@
     "districtName": "본청",
     "functionName": "일반공공행정",
     "accountType": "기금",
-    "amount": 469412,
-    "executed": 303434
+    "amount": 446960,
+    "executed": 301992
   },
   {
     "fiscalYear": 2026,
@@ -49243,8 +49199,8 @@
     "districtName": "본청",
     "functionName": "공공질서및안전",
     "accountType": "일반회계",
-    "amount": 828406,
-    "executed": 504056
+    "amount": 411062,
+    "executed": 262056
   },
   {
     "fiscalYear": 2026,
@@ -49452,8 +49408,8 @@
     "districtName": "본청",
     "functionName": "산업중소기업및에너지",
     "accountType": "기금",
-    "amount": 118999,
-    "executed": 66406
+    "amount": 93000,
+    "executed": 55247
   },
   {
     "fiscalYear": 2026,
@@ -49485,8 +49441,8 @@
     "districtName": "본청",
     "functionName": "국토및지역개발",
     "accountType": "일반회계",
-    "amount": 490753,
-    "executed": 348524
+    "amount": 489753,
+    "executed": 347524
   },
   {
     "fiscalYear": 2026,
@@ -50156,8 +50112,8 @@
     "districtName": "순천시",
     "functionName": "일반공공행정",
     "accountType": "기금",
-    "amount": 176915,
-    "executed": 92849
+    "amount": 61464,
+    "executed": 34949
   },
   {
     "fiscalYear": 2026,
@@ -50167,8 +50123,8 @@
     "districtName": "순천시",
     "functionName": "공공질서및안전",
     "accountType": "일반회계",
-    "amount": 11834,
-    "executed": 8259
+    "amount": 10016,
+    "executed": 6441
   },
   {
     "fiscalYear": 2026,
@@ -50211,8 +50167,8 @@
     "districtName": "순천시",
     "functionName": "환경",
     "accountType": "일반회계",
-    "amount": 62134,
-    "executed": 44938
+    "amount": 59609,
+    "executed": 42445
   },
   {
     "fiscalYear": 2026,
@@ -50222,8 +50178,8 @@
     "districtName": "순천시",
     "functionName": "환경",
     "accountType": "특별회계",
-    "amount": 5916,
-    "executed": 5616
+    "amount": 4950,
+    "executed": 4671
   },
   {
     "fiscalYear": 2026,
@@ -50244,8 +50200,8 @@
     "districtName": "순천시",
     "functionName": "사회복지",
     "accountType": "일반회계",
-    "amount": 567896,
-    "executed": 425944
+    "amount": 563831,
+    "executed": 422249
   },
   {
     "fiscalYear": 2026,
@@ -50266,8 +50222,8 @@
     "districtName": "순천시",
     "functionName": "보건",
     "accountType": "일반회계",
-    "amount": 17739,
-    "executed": 11583
+    "amount": 17689,
+    "executed": 11533
   },
   {
     "fiscalYear": 2026,
@@ -50299,8 +50255,8 @@
     "districtName": "순천시",
     "functionName": "산업중소기업및에너지",
     "accountType": "일반회계",
-    "amount": 52566,
-    "executed": 26296
+    "amount": 46939,
+    "executed": 20668
   },
   {
     "fiscalYear": 2026,
@@ -50321,8 +50277,8 @@
     "districtName": "순천시",
     "functionName": "교통및물류",
     "accountType": "일반회계",
-    "amount": 94678,
-    "executed": 64659
+    "amount": 93678,
+    "executed": 63659
   },
   {
     "fiscalYear": 2026,
@@ -50717,8 +50673,8 @@
     "districtName": "광양시",
     "functionName": "일반공공행정",
     "accountType": "일반회계",
-    "amount": 62441,
-    "executed": 42398
+    "amount": 62006,
+    "executed": 41971
   },
   {
     "fiscalYear": 2026,
@@ -50970,8 +50926,8 @@
     "districtName": "광양시",
     "functionName": "기타",
     "accountType": "일반회계",
-    "amount": 126477,
-    "executed": 94337
+    "amount": 126328,
+    "executed": 94189
   },
   {
     "fiscalYear": 2026,
@@ -51619,8 +51575,8 @@
     "districtName": "구례군",
     "functionName": "교육",
     "accountType": "기금",
-    "amount": 10753,
-    "executed": 3856
+    "amount": 8753,
+    "executed": 1856
   },
   {
     "fiscalYear": 2026,
@@ -52950,7 +52906,7 @@
     "districtName": "강진군",
     "functionName": "일반공공행정",
     "accountType": "기금",
-    "amount": 28159,
+    "amount": 19459,
     "executed": 483
   },
   {
@@ -53005,7 +52961,7 @@
     "districtName": "강진군",
     "functionName": "문화및관광",
     "accountType": "기금",
-    "amount": 1400,
+    "amount": 300,
     "executed": 95
   },
   {
@@ -53060,7 +53016,7 @@
     "districtName": "강진군",
     "functionName": "사회복지",
     "accountType": "기금",
-    "amount": 4661,
+    "amount": 2161,
     "executed": 715
   },
   {
@@ -53106,17 +53062,6 @@
     "accountType": "특별회계",
     "amount": 2825,
     "executed": 109
-  },
-  {
-    "fiscalYear": 2026,
-    "regionCode": "36",
-    "regionName": "전라남도",
-    "districtCode": "013",
-    "districtName": "강진군",
-    "functionName": "농림해양수산",
-    "accountType": "기금",
-    "amount": 5167,
-    "executed": 0
   },
   {
     "fiscalYear": 2026,
@@ -53720,7 +53665,7 @@
     "districtName": "영암군",
     "functionName": "기타",
     "accountType": "일반회계",
-    "amount": 101511,
+    "amount": 101491,
     "executed": 72590
   },
   {
@@ -53742,7 +53687,7 @@
     "districtName": "영암군",
     "functionName": "기타",
     "accountType": "기금",
-    "amount": 6039,
+    "amount": 4906,
     "executed": 4906
   },
   {
@@ -55595,17 +55540,6 @@
   },
   {
     "fiscalYear": 2026,
-    "regionCode": "36",
-    "regionName": "전라남도",
-    "districtCode": "022",
-    "districtName": "신안군",
-    "functionName": "기타",
-    "accountType": "기금",
-    "amount": 1300,
-    "executed": 0
-  },
-  {
-    "fiscalYear": 2026,
     "regionCode": "37",
     "regionName": "경상북도",
     "districtCode": "000",
@@ -56811,8 +56745,8 @@
     "districtName": "김천시",
     "functionName": "국토및지역개발",
     "accountType": "일반회계",
-    "amount": 62122,
-    "executed": 29048
+    "amount": 62068,
+    "executed": 28994
   },
   {
     "fiscalYear": 2026,
@@ -57570,8 +57504,8 @@
     "districtName": "영주시",
     "functionName": "환경",
     "accountType": "일반회계",
-    "amount": 69213,
-    "executed": 39073
+    "amount": 50626,
+    "executed": 20486
   },
   {
     "fiscalYear": 2026,
@@ -57581,8 +57515,8 @@
     "districtName": "영주시",
     "functionName": "환경",
     "accountType": "특별회계",
-    "amount": 7442,
-    "executed": 4130
+    "amount": 5364,
+    "executed": 2298
   },
   {
     "fiscalYear": 2026,
@@ -57680,8 +57614,8 @@
     "districtName": "영주시",
     "functionName": "교통및물류",
     "accountType": "일반회계",
-    "amount": 83009,
-    "executed": 44807
+    "amount": 76255,
+    "executed": 38053
   },
   {
     "fiscalYear": 2026,
@@ -58131,8 +58065,8 @@
     "districtName": "상주시",
     "functionName": "환경",
     "accountType": "특별회계",
-    "amount": 3804,
-    "executed": 3584
+    "amount": 107,
+    "executed": 72
   },
   {
     "fiscalYear": 2026,
@@ -58318,8 +58252,8 @@
     "districtName": "문경시",
     "functionName": "일반공공행정",
     "accountType": "일반회계",
-    "amount": 56874,
-    "executed": 39082
+    "amount": 56859,
+    "executed": 39067
   },
   {
     "fiscalYear": 2026,
@@ -58329,8 +58263,8 @@
     "districtName": "문경시",
     "functionName": "일반공공행정",
     "accountType": "기금",
-    "amount": 23211,
-    "executed": 14235
+    "amount": 16348,
+    "executed": 11000
   },
   {
     "fiscalYear": 2026,
@@ -58384,8 +58318,8 @@
     "districtName": "문경시",
     "functionName": "환경",
     "accountType": "일반회계",
-    "amount": 94824,
-    "executed": 60721
+    "amount": 60224,
+    "executed": 27421
   },
   {
     "fiscalYear": 2026,
@@ -58527,8 +58461,8 @@
     "districtName": "문경시",
     "functionName": "국토및지역개발",
     "accountType": "특별회계",
-    "amount": 17288,
-    "executed": 4903
+    "amount": 17171,
+    "executed": 4786
   },
   {
     "fiscalYear": 2026,
@@ -58670,8 +58604,8 @@
     "districtName": "경산시",
     "functionName": "사회복지",
     "accountType": "일반회계",
-    "amount": 583449,
-    "executed": 439066
+    "amount": 578867,
+    "executed": 434484
   },
   {
     "fiscalYear": 2026,
@@ -58868,7 +58802,7 @@
     "districtName": "의성군",
     "functionName": "일반공공행정",
     "accountType": "기금",
-    "amount": 31296,
+    "amount": 1617,
     "executed": 680
   },
   {
@@ -59253,7 +59187,7 @@
     "districtName": "청송군",
     "functionName": "사회복지",
     "accountType": "기금",
-    "amount": 1593,
+    "amount": 963,
     "executed": 556
   },
   {
@@ -60474,8 +60408,8 @@
     "districtName": "성주군",
     "functionName": "일반공공행정",
     "accountType": "일반회계",
-    "amount": 32823,
-    "executed": 24902
+    "amount": 21739,
+    "executed": 13818
   },
   {
     "fiscalYear": 2026,
@@ -60540,8 +60474,8 @@
     "districtName": "성주군",
     "functionName": "환경",
     "accountType": "일반회계",
-    "amount": 69647,
-    "executed": 47647
+    "amount": 56996,
+    "executed": 35236
   },
   {
     "fiscalYear": 2026,
@@ -60573,8 +60507,8 @@
     "districtName": "성주군",
     "functionName": "사회복지",
     "accountType": "일반회계",
-    "amount": 138556,
-    "executed": 103413
+    "amount": 137872,
+    "executed": 102734
   },
   {
     "fiscalYear": 2026,
@@ -60705,8 +60639,8 @@
     "districtName": "성주군",
     "functionName": "기타",
     "accountType": "일반회계",
-    "amount": 74076,
-    "executed": 54663
+    "amount": 74018,
+    "executed": 54646
   },
   {
     "fiscalYear": 2026,
@@ -61224,17 +61158,6 @@
     "accountType": "특별회계",
     "amount": 126,
     "executed": 101
-  },
-  {
-    "fiscalYear": 2026,
-    "regionCode": "37",
-    "regionName": "경상북도",
-    "districtCode": "019",
-    "districtName": "예천군",
-    "functionName": "기타",
-    "accountType": "기금",
-    "amount": 1917,
-    "executed": 421
   },
   {
     "fiscalYear": 2026,
@@ -61772,8 +61695,8 @@
     "districtName": "울릉군",
     "functionName": "일반공공행정",
     "accountType": "일반회계",
-    "amount": 23258,
-    "executed": 15661
+    "amount": 19258,
+    "executed": 11661
   },
   {
     "fiscalYear": 2026,
@@ -62102,7 +62025,7 @@
     "districtName": "군위군",
     "functionName": "사회복지",
     "accountType": "일반회계",
-    "amount": 82346,
+    "amount": 82006,
     "executed": 57800
   },
   {
@@ -62201,8 +62124,8 @@
     "districtName": "군위군",
     "functionName": "국토및지역개발",
     "accountType": "일반회계",
-    "amount": 15647,
-    "executed": 5283
+    "amount": 15346,
+    "executed": 4985
   },
   {
     "fiscalYear": 2026,
@@ -62267,8 +62190,8 @@
     "districtName": "본청",
     "functionName": "일반공공행정",
     "accountType": "기금",
-    "amount": 415637,
-    "executed": 141473
+    "amount": 360637,
+    "executed": 86473
   },
   {
     "fiscalYear": 2026,
@@ -62608,7 +62531,7 @@
     "districtName": "창원시",
     "functionName": "공공질서및안전",
     "accountType": "특별회계",
-    "amount": 38384,
+    "amount": 37054,
     "executed": 22570
   },
   {
@@ -62685,7 +62608,7 @@
     "districtName": "창원시",
     "functionName": "환경",
     "accountType": "기금",
-    "amount": 14572,
+    "amount": 797,
     "executed": 596
   },
   {
@@ -62707,7 +62630,7 @@
     "districtName": "창원시",
     "functionName": "사회복지",
     "accountType": "기금",
-    "amount": 21908,
+    "amount": 19730,
     "executed": 17992
   },
   {
@@ -62729,8 +62652,8 @@
     "districtName": "창원시",
     "functionName": "보건",
     "accountType": "기금",
-    "amount": 513,
-    "executed": 150
+    "amount": 441,
+    "executed": 145
   },
   {
     "fiscalYear": 2026,
@@ -62839,8 +62762,8 @@
     "districtName": "창원시",
     "functionName": "국토및지역개발",
     "accountType": "기금",
-    "amount": 17443,
-    "executed": 8069
+    "amount": 2660,
+    "executed": 1669
   },
   {
     "fiscalYear": 2026,
@@ -62927,8 +62850,8 @@
     "districtName": "진주시",
     "functionName": "교육",
     "accountType": "일반회계",
-    "amount": 31083,
-    "executed": 22267
+    "amount": 20509,
+    "executed": 11836
   },
   {
     "fiscalYear": 2026,
@@ -62960,8 +62883,8 @@
     "districtName": "진주시",
     "functionName": "문화및관광",
     "accountType": "일반회계",
-    "amount": 171198,
-    "executed": 71251
+    "amount": 170706,
+    "executed": 70870
   },
   {
     "fiscalYear": 2026,
@@ -62982,8 +62905,8 @@
     "districtName": "진주시",
     "functionName": "환경",
     "accountType": "일반회계",
-    "amount": 106122,
-    "executed": 54312
+    "amount": 99007,
+    "executed": 52312
   },
   {
     "fiscalYear": 2026,
@@ -62993,8 +62916,8 @@
     "districtName": "진주시",
     "functionName": "환경",
     "accountType": "특별회계",
-    "amount": 15762,
-    "executed": 11154
+    "amount": 10001,
+    "executed": 6179
   },
   {
     "fiscalYear": 2026,
@@ -63015,8 +62938,8 @@
     "districtName": "진주시",
     "functionName": "사회복지",
     "accountType": "일반회계",
-    "amount": 736728,
-    "executed": 562151
+    "amount": 730974,
+    "executed": 556689
   },
   {
     "fiscalYear": 2026,
@@ -63081,7 +63004,7 @@
     "districtName": "진주시",
     "functionName": "산업중소기업및에너지",
     "accountType": "일반회계",
-    "amount": 82010,
+    "amount": 81680,
     "executed": 55057
   },
   {
@@ -63114,8 +63037,8 @@
     "districtName": "진주시",
     "functionName": "교통및물류",
     "accountType": "일반회계",
-    "amount": 147518,
-    "executed": 84217
+    "amount": 129741,
+    "executed": 75795
   },
   {
     "fiscalYear": 2026,
@@ -64005,8 +63928,8 @@
     "districtName": "밀양시",
     "functionName": "일반공공행정",
     "accountType": "기금",
-    "amount": 70360,
-    "executed": 28970
+    "amount": 469,
+    "executed": 291
   },
   {
     "fiscalYear": 2026,
@@ -64027,7 +63950,7 @@
     "districtName": "밀양시",
     "functionName": "공공질서및안전",
     "accountType": "기금",
-    "amount": 6635,
+    "amount": 4494,
     "executed": 1176
   },
   {
@@ -64082,8 +64005,8 @@
     "districtName": "밀양시",
     "functionName": "사회복지",
     "accountType": "일반회계",
-    "amount": 306117,
-    "executed": 219046
+    "amount": 306017,
+    "executed": 218946
   },
   {
     "fiscalYear": 2026,
@@ -64093,7 +64016,7 @@
     "districtName": "밀양시",
     "functionName": "사회복지",
     "accountType": "기금",
-    "amount": 3262,
+    "amount": 3083,
     "executed": 2517
   },
   {
@@ -64115,7 +64038,7 @@
     "districtName": "밀양시",
     "functionName": "보건",
     "accountType": "기금",
-    "amount": 93,
+    "amount": 30,
     "executed": 9
   },
   {
@@ -64137,7 +64060,7 @@
     "districtName": "밀양시",
     "functionName": "농림해양수산",
     "accountType": "기금",
-    "amount": 9290,
+    "amount": 5000,
     "executed": 3207
   },
   {
@@ -64192,8 +64115,8 @@
     "districtName": "밀양시",
     "functionName": "국토및지역개발",
     "accountType": "일반회계",
-    "amount": 144557,
-    "executed": 68444
+    "amount": 140557,
+    "executed": 67444
   },
   {
     "fiscalYear": 2026,
@@ -64203,7 +64126,7 @@
     "districtName": "밀양시",
     "functionName": "국토및지역개발",
     "accountType": "특별회계",
-    "amount": 6850,
+    "amount": 6110,
     "executed": 1014
   },
   {
@@ -64214,7 +64137,7 @@
     "districtName": "밀양시",
     "functionName": "국토및지역개발",
     "accountType": "기금",
-    "amount": 6099,
+    "amount": 801,
     "executed": 46
   },
   {

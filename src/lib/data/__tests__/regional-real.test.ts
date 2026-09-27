@@ -28,6 +28,7 @@ interface RegionalMeta {
   source: string;
   asOf: Record<string, string>;
   excludedTransfersEok: Record<string, number>;
+  note: string;
 }
 
 describe('지역 예산 실제 데이터(지방재정365 QWGJK)', () => {
@@ -40,6 +41,10 @@ describe('지역 예산 실제 데이터(지방재정365 QWGJK)', () => {
       expect(meta.asOf[String(y)]).toMatch(new RegExp(`^${y}\\d{4}$`));
       expect(meta.excludedTransfersEok[String(y)]).toBeGreaterThan(0);
     }
+  });
+
+  it('제외 규칙: 사업명에 내부거래·보전지출이 포함된 행을 뺀다고 메타에 명시', () => {
+    expect(meta.note).toContain('포함된 행 제외');
   });
 
   it('난수 표본 데이터 생성기가 없다', () => {

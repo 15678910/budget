@@ -4,7 +4,7 @@
 #
 # 집계 규칙
 #   - 금액: 예산현액(bdg_cash_amt) → amount, 지출액(ep_amt) → executed. 원 단위 합산 후 백만원 반올림.
-#   - 제외: 세부사업명(dbiz_nm)이 「내부거래지출」·「보전지출」로 시작하는 행(회계 간 이동).
+#   - 제외: 세부사업명(dbiz_nm)에 「내부거래」 또는 「보전지출」이 포함된 행(회계 간 이동).
 #   - 광역(시·도) = 본청 행(laf_cd == wa_laf_cd, 또는 자치단체명이 「본청」으로 끝남)만 districtCode '000'.
 #     시·군·구는 각자 따로. 본청+시·군·구 합산은 이전재원을 두 번 세므로 화면은 본청만 쓴다.
 #   - 분야: fld_nm → 기존 14개 이름(산업ㆍ중소기업및에너지 → 산업중소기업및에너지, 예비비 → 예비비기타,
@@ -94,7 +94,11 @@ FUNCTIONS = [
     '예비비기타', '기타',
 ]
 ACCOUNTS = ['일반회계', '특별회계', '기금']
-TRANSFER_PREFIXES = ('내부거래지출', '보전지출')
+TRANSFER_KEYWORDS = ('내부거래', '보전지출')
+
+
+def is_transfer(dbiz_nm: str) -> bool:
+    return any(kw in dbiz_nm for kw in TRANSFER_KEYWORDS)
 
 
 def map_function(fld_nm: str) -> str:
@@ -136,7 +140,6 @@ def process_year(year: int, region_names: dict[str, str], districts: dict[str, d
     district_names: dict[tuple[str, str], str] = {}
     excluded_won = 0
     excluded_rows = 0
-    residual_won = 0  # 이름 중간에 내부거래/보전지출이 들어간(제외 규칙 밖) 행
     exe_ymds: set[str] = set()
     seen_entities: set[tuple[str, str]] = set()
     relocated: set[str] = set()
@@ -149,12 +152,10 @@ def process_year(year: int, region_names: dict[str, str], districts: dict[str, d
             amt = int(row['bdg_cash_amt'] or 0)
             ep = int(row['ep_amt'] or 0)
             dbiz_nm = row['dbiz_nm'].strip()
-            if dbiz_nm.startswith(TRANSFER_PREFIXES):
+            if is_transfer(dbiz_nm):
                 excluded_won += amt
                 excluded_rows += 1
                 continue
-            if '내부거래' in dbiz_nm or '보전지출' in dbiz_nm:
-                residual_won += amt
 
             wa_cd, wa_nm = row['wa_laf_cd'], row['wa_laf_hg_nm']
             laf_cd, laf_nm = row['laf_cd'], row['laf_hg_nm']
@@ -234,7 +235,6 @@ def process_year(year: int, region_names: dict[str, str], districts: dict[str, d
         'asOf': max(exe_ymds),
         'excludedWon': excluded_won,
         'excludedRows': excluded_rows,
-        'residualWon': residual_won,
         'missing': missing,
         'relocated': sorted(relocated),
         'added': added_present,
@@ -263,8 +263,7 @@ def main() -> None:
         excluded[str(year)] = round(res['excludedWon'] / 1e8)
         n_dist = len({(r['regionCode'], r['districtCode']) for r in res['rows'] if r['districtCode'] != '000'})
         print(f'[{year}] 기준일 {res["asOf"]}, {len(res["rows"])}행, 시군구 {n_dist}곳, '
-              f'제외 {res["excludedRows"]}행 {excluded[str(year)]:,}억원, '
-              f'제외 규칙 밖 내부거래·보전지출 유사명 {round(res["residualWon"] / 1e8):,}억원 → {out}')
+              f'제외 {res["excludedRows"]}행 {excluded[str(year)]:,}억원 → {out}')
         if res['missing']:
             print(f'  원자료 없는 기존 시군구: {", ".join(res["missing"])}')
         if res['relocated']:
@@ -284,8 +283,8 @@ def main() -> None:
         'metroBasis': '본청만(소속 시·군·구 제외)',
         'note': (
             '지방재정365 세부사업별 세출(QWGJK) 예산현액(bdg_cash_amt) 집계, 단위 백만원. '
-            'executed는 지출액(ep_amt). 세부사업명이 「내부거래지출」·「보전지출」로 시작하는 회계 간 '
-            '내부거래·보전지출은 제외(excludedTransfersEok = 연도별 전국 제외액, 억원). '
+            'executed는 지출액(ep_amt). 사업명에 「내부거래」 또는 「보전지출」이 포함된 행 제외'
+            '(회계 간 이동, excludedTransfersEok = 연도별 전국 제외액, 억원). '
             '광역(시·도) 금액은 본청만이며 소속 시·군·구는 따로 집계한다. '
             'totalsByYear는 본청과 시·군·구 행의 단순 합계로 시·도→시·군·구 이전재원이 중복돼 '
             '전국 순계가 아니다(화면에서 쓰지 않음).'
