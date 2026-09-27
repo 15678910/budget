@@ -7,6 +7,7 @@ import { formatKoreanWon, formatPercent, cn } from "@/lib/utils/format";
 import { getNodeColor } from "@/lib/utils/colors";
 import { ShareButton } from "@/components/shared/ShareButton";
 import { DataSources } from "@/components/shared/DataSources";
+import { SampleDataNotice } from "@/components/shared/SampleDataNotice";
 
 type SortKey = "amount" | "change" | "name";
 type CompareViewMode = 'domain' | 'metro' | 'district' | 'education';
@@ -175,6 +176,14 @@ export function ComparePage({
           ))}
         </div>
       </div>
+
+      {/* Sample data notice (domain/education views only — metro/district are real data) */}
+      {(compareView === 'domain' || compareView === 'education') && (
+        <SampleDataNotice
+          kind={compareView === 'education' ? 'education' : 'central'}
+          className="mb-4"
+        />
+      )}
 
       {/* 본청 basis note for metro totals */}
       {compareView === 'metro' && (

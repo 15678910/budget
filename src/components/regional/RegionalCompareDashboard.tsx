@@ -17,6 +17,7 @@ import { getRegionColor } from '@/lib/utils/regional-colors';
 import { getEducationColor } from '@/lib/utils/education-colors';
 import { formatKoreanWon } from '@/lib/utils/format';
 import { DataSources } from '@/components/shared/DataSources';
+import { SampleDataNotice } from '@/components/shared/SampleDataNotice';
 
 /* ---------- Types ---------- */
 
@@ -481,6 +482,14 @@ export function RegionalCompareDashboard({
           </button>
         ))}
       </div>
+
+      {/* Sample data notice (education mode only — metro/district are real data) */}
+      {mode === 'education' && (
+        <div className="px-4 py-2 border-b border-gray-800">
+          {/* This widget is always dark (bg-gray-950) regardless of site theme, so force amber-200 text */}
+          <SampleDataNotice kind="education" className="text-amber-200" />
+        </div>
+      )}
 
       {/* Source note (metro/district: lofin365 QWGJK) */}
       {mode !== 'education' && (

@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import { Breadcrumb } from './layout/Breadcrumb';
 import { UnitConverter } from './shared/UnitConverter';
 import { DataSources } from './shared/DataSources';
+import { SampleDataNotice } from './shared/SampleDataNotice';
 import { useTreemapNavigation } from '@/hooks/useTreemapNavigation';
 
 const BudgetTreemap = dynamic(
@@ -271,8 +272,15 @@ export function BudgetExplorer({
   // Unit conversion text for total
   const totalUnitText = selectedUnit ? formatUnitConversion(totalValue, selectedUnit) : '';
 
+  const sampleNoticeKind = viewMode === 'education' ? 'education' : viewMode === 'domain' || viewMode === 'ministry' ? 'central' : null;
+
   return (
     <div>
+      {/* Sample data notice (central/education views only — metro/district are real data) */}
+      {sampleNoticeKind && (
+        <SampleDataNotice kind={sampleNoticeKind} className="mb-4" />
+      )}
+
       {/* Controls bar */}
       <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
         <div className="flex flex-wrap items-center gap-2">

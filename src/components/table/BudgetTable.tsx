@@ -4,6 +4,7 @@ import { useState, useMemo, useCallback } from 'react';
 import type { BudgetRawItem } from '@/types/budget';
 import { formatKoreanWon, cn } from '@/lib/utils/format';
 import { ExportButton } from './ExportButton';
+import { SampleDataNotice } from '@/components/shared/SampleDataNotice';
 
 interface BudgetTableProps {
   items: BudgetRawItem[];
@@ -130,6 +131,8 @@ export function BudgetTable({ items }: BudgetTableProps) {
           <ExportButton items={filtered} />
         </div>
       </div>
+
+      <SampleDataNotice kind="central" className="mb-4" />
 
       <div className="flex gap-4 mb-4 text-base text-muted-foreground">
         <span>전체 <span className="font-semibold text-foreground">{sorted.length}</span> 분야</span>

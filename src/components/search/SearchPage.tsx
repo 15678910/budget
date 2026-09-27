@@ -5,6 +5,7 @@ import type { BudgetRawItem, DatasetMetadata } from '@/types/budget';
 import { createSearchIndex, searchBudget } from '@/lib/data/search-index';
 import { formatKoreanWon, cn } from '@/lib/utils/format';
 import { DEFAULT_YEAR } from '@/lib/constants';
+import { SampleDataNotice } from '@/components/shared/SampleDataNotice';
 
 interface SearchPageProps {
   dataByYear: Record<number, BudgetRawItem[]>;
@@ -48,6 +49,8 @@ export function SearchPage({ dataByYear, metadata }: SearchPageProps) {
   return (
     <div className="max-w-3xl mx-auto py-8 px-4">
       <h1 className="text-2xl font-bold mb-6">예산 검색</h1>
+
+      <SampleDataNotice kind="central" className="mb-4" />
 
       <div className="flex items-center gap-3 mb-4">
         <select
