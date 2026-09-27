@@ -13,6 +13,14 @@ const ARROW_META: Record<
   decreasing: { glyph: '↓', color: TRAFFIC_COLORS.red, label: '악화(목표서 멀어짐)' },
 };
 
+/** 목록형 UI에서 쓰는 짧은 추세 단어(범례·SDGGoalList에서 공유). */
+export const TREND_SHORT_LABEL: Record<TrendArrowKind, string> = {
+  on_track: '궤도 안',
+  improving: '개선 중',
+  stagnating: '정체',
+  decreasing: '악화',
+};
+
 /**
  * 추세 화살표 아이콘. arrow → 글리프 + 신호등 색 + 한국어 title.
  * 데이터(arrow) 없으면 미표시(null). 옵션으로 목표갭(gap)을 작게 병기.
@@ -23,11 +31,14 @@ export function TrendArrow({
   arrow,
   gap,
   size = 'md',
+  showLabel = false,
 }: {
   arrow: TrendArrowKind | null | undefined;
-  /** 목표갭(0~100). 제공 시 화살표 옆에 "갭 N" 작게 표기. */
+  /** 목표갭(0~100). 제공 시 title(툴팁)에 "목표갭 N"으로 표기(showLabel이면 시각적 표기는 생략). */
   gap?: number | null;
   size?: 'sm' | 'md';
+  /** true면 갭 숫자 대신 짧은 추세 단어(궤도 안/개선 중/정체/악화)를 표기(목록형 UI용). */
+  showLabel?: boolean;
 }) {
   if (!arrow) return null;
   const meta = ARROW_META[arrow];
@@ -44,10 +55,18 @@ export function TrendArrow({
       title={title}
     >
       <span aria-hidden>{meta.glyph}</span>
-      {gap != null && (
-        <span className={`font-normal text-gray-500 ${sm ? 'text-[11px]' : 'text-[12px]'}`}>
-          갭{gap}
+      {showLabel ? (
+        <span
+          className={`font-sans font-normal text-gray-300 ${sm ? 'text-[11px]' : 'text-[12px]'}`}
+        >
+          {TREND_SHORT_LABEL[arrow]}
         </span>
+      ) : (
+        gap != null && (
+          <span className={`font-normal text-gray-500 ${sm ? 'text-[11px]' : 'text-[12px]'}`}>
+            갭{gap}
+          </span>
+        )
       )}
     </span>
   );

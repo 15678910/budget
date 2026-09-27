@@ -19,7 +19,7 @@ export function SDGMunicipalProfile({
       </h3>
 
       {!hasAny && (
-        <div className="rounded-md border border-gray-800 bg-gray-900/40 p-4 text-center text-sm text-gray-500">
+        <div className="rounded-md border border-gray-800 bg-gray-900/40 p-4 text-center text-sm text-gray-400">
           이 시군구의 실측 데이터(진학률·재정)가 없습니다.
         </div>
       )}
@@ -31,21 +31,21 @@ export function SDGMunicipalProfile({
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={`/sdg/sdg-4-pic.svg?v=12`} alt={goal4.name} className="w-9 h-9 rounded" />
             <div>
-              <div className="text-[12px] text-gray-400">SDG 4 · 대학 진학률 (실측)</div>
+              <div className="text-xs text-gray-400">SDG 4 · 대학 진학률 (실측)</div>
               <div className="font-mono text-lg text-gray-100">
                 {data.admissionRate.toFixed(1)}
-                <span className="ml-0.5 text-xs text-gray-500">%</span>
+                <span className="ml-0.5 text-xs text-gray-400">%</span>
               </div>
             </div>
           </div>
-          <p className="mt-1 text-[12px] text-gray-600">출처: 한국교육개발원 교육기본통계 2025</p>
+          <p className="mt-1 text-xs text-gray-400">출처: 한국교육개발원 교육기본통계 2025</p>
         </div>
       )}
 
       {/* 재정 맥락 (목표 아님) */}
       {data.fiscal && (
         <div>
-          <div className="mb-1 text-[12px] font-semibold text-gray-400">💰 재정 맥락 (목표 아님)</div>
+          <div className="mb-1 text-xs font-semibold text-gray-400">💰 재정 맥락 (목표 아님)</div>
           <div className="grid grid-cols-2 gap-2 text-sm">
             <div className="bg-gray-800/50 rounded p-2">
               <span className="text-gray-400">재정자립도</span>
@@ -67,25 +67,25 @@ export function SDGMunicipalProfile({
         </div>
       )}
 
-      {/* 나머지 목표 — 데이터 준비중 */}
+      {/* 나머지 목표 — 데이터 준비중(픽토그램 대신 번호+이름 칩으로 표시해 가독성 확보) */}
       <div>
-        <div className="mb-1 text-[12px] font-semibold text-gray-400">나머지 목표</div>
-        <div className="grid grid-cols-4 sm:grid-cols-6 gap-1.5">
-          {SDG_GOALS.filter((g) => !data.availableGoals.includes(g.num)).map((g) => (
-            <div
-              key={g.num}
-              title={`SDG ${g.num} ${g.name}: 데이터 준비중`}
-              className="flex flex-col items-center rounded border border-gray-800 bg-gray-900/40 p-1 opacity-50"
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={`/sdg/sdg-${g.num}-pic.svg?v=12`} alt={g.name} className="w-7 h-7 rounded" />
-              <span className="mt-0.5 text-[11px] text-gray-600">준비중</span>
-            </div>
+        <div className="mb-1.5 text-xs font-semibold text-gray-400">나머지 목표 (데이터 준비 중)</div>
+        <div className="flex flex-wrap items-center gap-x-1.5 gap-y-1.5 text-xs text-gray-400">
+          {SDG_GOALS.filter((g) => !data.availableGoals.includes(g.num)).map((g, i) => (
+            <span key={g.num} className="flex items-center gap-1.5">
+              {i > 0 && <span aria-hidden>·</span>}
+              <span
+                title={`SDG ${g.num} ${g.name}: 데이터 준비중`}
+                className="rounded border border-gray-800 bg-gray-900/40 px-1.5 py-0.5"
+              >
+                {g.num} {g.short}
+              </span>
+            </span>
           ))}
         </div>
       </div>
 
-      <p className="text-[12px] text-gray-600 border-t border-gray-800 pt-2">{data.note}</p>
+      <p className="text-xs text-gray-400 border-t border-gray-800 pt-2">{data.note}</p>
     </div>
   );
 }

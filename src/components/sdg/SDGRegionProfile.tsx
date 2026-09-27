@@ -5,6 +5,7 @@ import type { IndicatorDirection } from '@/lib/data/local-sdg-data';
 import { regionGoalAchievement } from '@/lib/sdg/achievement';
 import { regionGoalTrend } from '@/lib/sdg/trend-build';
 import { trafficColor } from '@/lib/sdg/scoring';
+import { TRAFFIC_BG_CLASS } from '@/lib/sdg/goal-style';
 import { TrafficBadge } from './TrafficBadge';
 import { TrendArrow } from './TrendArrow';
 import { SDGScenarioSimulator } from './SDGScenarioSimulator';
@@ -95,7 +96,7 @@ export function SDGRegionProfile({
       )}
 
       {/* 17목표 미니 게이지 */}
-      <div className="grid grid-cols-2 gap-1.5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
         {SDG_GOALS.map((g) => {
           const v = row[g.num];
           const rk = v != null ? goalRank(matrix, region, g.num) : null;
@@ -113,11 +114,11 @@ export function SDGRegionProfile({
               key={g.num}
               onClick={() => onSelectGoal(g.num)}
               title={targetNote || undefined}
-              className="flex items-center gap-2 text-left hover:bg-gray-800/40 rounded px-1 py-0.5"
+              className="flex items-start gap-2 text-left hover:bg-gray-800/40 rounded px-1.5 py-1"
             >
-              <span className="w-5 text-[12px] font-mono text-gray-500">{g.num}</span>
-              <span className="w-14 text-[12px] text-gray-300 truncate">{g.name}</span>
-              <span className="flex-1 h-2 rounded bg-gray-800 overflow-hidden">
+              <span className="w-6 shrink-0 text-xs font-mono text-gray-400">{g.num}</span>
+              <span className="w-24 shrink-0 break-keep text-xs text-gray-200">{g.name}</span>
+              <span className="flex-1 mt-0.5 h-2 rounded bg-gray-800 overflow-hidden">
                 {a ? (
                   <span
                     className="block h-full"
@@ -133,20 +134,20 @@ export function SDGRegionProfile({
                 )}
               </span>
               {tr && (
-                <span className="w-9 text-right">
+                <span className="w-9 shrink-0 text-right">
                   <TrendArrow arrow={tr.arrow} gap={a ? 100 - a.score : null} size="sm" />
                 </span>
               )}
               {a ? (
-                <span className="w-7 text-right">
+                <span className="w-7 shrink-0 text-right">
                   <TrafficBadge score={a.score} light={a.light} size="sm" />
                 </span>
               ) : (
-                <span className="w-7 text-right text-[12px] font-mono text-gray-400">
+                <span className="w-7 shrink-0 text-right text-xs font-mono text-gray-400">
                   {v ?? '–'}
                 </span>
               )}
-              <span className="w-12 text-right text-[12px] font-mono text-gray-500">
+              <span className="w-12 shrink-0 text-right text-xs font-mono text-gray-400">
                 {rk ? `${rk.rank}/${rk.total}위` : ''}
               </span>
             </button>
@@ -193,20 +194,26 @@ export function SDGRegionProfile({
         />
       )}
 
-      <div className="text-[12px] text-gray-600 border-t border-gray-800 pt-2 space-y-1">
+      <div className="text-xs text-gray-400 border-t border-gray-800 pt-2 space-y-1">
         <p>
-          <span style={{ color: '#16a34a' }}>●</span> 게이지·배지 ={' '}
-          <strong className="text-gray-500">목표값 기준 달성도(0~100)</strong> · SDSN SDG Index 방법론 적응.
-          목표값(green)은 유형(공식·규범·벤치마크)·출처를 명시하며, 게이지 위에 마우스를 올리면 표시됩니다.
+          <span
+            aria-hidden
+            className={`inline-block h-2.5 w-2.5 rounded-full ${TRAFFIC_BG_CLASS.green}`}
+          />{' '}
+          게이지·배지 = <strong className="text-gray-200">목표값 기준 달성도(0~100)</strong> · SDSN
+          SDG Index 방법론 적응. 목표값(green)은 유형(공식·규범·벤치마크)·출처를 명시하며, 게이지
+          위에 마우스를 올리면 표시됩니다.
         </p>
         <p>
-          순위(N/M위) = 16광역 분포 대비 <strong className="text-gray-500">상대 정규화 순위</strong>로,
-          위 달성도와 의미가 <strong className="text-gray-500">구분</strong>됩니다(상대 ≠ 목표 달성). 데이터 미보유 목표는 회색.
+          순위(N/M위) = 16광역 분포 대비 <strong className="text-gray-200">상대 정규화 순위</strong>
+          로, 위 달성도와 의미가 <strong className="text-gray-200">구분</strong>됩니다(상대 ≠ 목표
+          달성). 데이터 미보유 목표는 회색.
         </p>
         <p>
-          <span className="text-gray-500">↗→↘↓</span> 추세 ={' '}
-          <strong className="text-gray-500">2점(2018→최신) 개략</strong> · 중간연도 미반영 · 목표 2030 ·
-          SDSN CR(AGRa/AGRr). 속도 신호일 뿐 인과 주장이 아니며, &apos;갭N&apos;은 100−달성도(남은 거리)입니다.
+          <span className="text-gray-300">↗→↘↓</span> 추세 ={' '}
+          <strong className="text-gray-200">2점(2018→최신) 개략</strong> · 중간연도 미반영 · 목표
+          2030 · SDSN CR(AGRa/AGRr). 속도 신호일 뿐 인과 주장이 아니며, &apos;갭N&apos;은 100−달성도
+          (남은 거리)입니다.
         </p>
       </div>
     </div>
