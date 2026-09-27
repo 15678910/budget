@@ -11,7 +11,7 @@
     "data:parse": "tsx scripts/csv-to-json.ts 2023 && tsx scripts/csv-to-json.ts 2024 && tsx scripts/csv-to-json.ts 2025 && tsx scripts/csv-to-json.ts 2026",
     "data:build": "tsx scripts/build-hierarchy.ts 2023 && tsx scripts/build-hierarchy.ts 2024 && tsx scripts/build-hierarchy.ts 2025 && tsx scripts/build-hierarchy.ts 2026",
     "data:all": "npm run data:generate && npm run data:parse && npm run data:build",
-    "regional:generate": "tsx scripts/generate-regional-data.ts",
+    "regional:generate": "python scripts/build-regional-from-lofin.py",
     "regional:build": "tsx scripts/build-regional-hierarchy.ts 2023 && tsx scripts/build-regional-hierarchy.ts 2024 && tsx scripts/build-regional-hierarchy.ts 2025 && tsx scripts/build-regional-hierarchy.ts 2026",
     "regional:all": "npm run regional:generate && npm run regional:build",
     "education:generate": "tsx scripts/generate-education-data.ts",

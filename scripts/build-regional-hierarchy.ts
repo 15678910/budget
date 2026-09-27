@@ -3,6 +3,11 @@
  *
  * Reads flat regional JSON and outputs two hierarchical JSON files plus metadata.
  *
+ * Flat input comes from scripts/build-regional-from-lofin.py (지방재정365 QWGJK 집계).
+ * - Metro tree  (광역시도 > 기능분야): 본청 행(districtCode '000')만 합산한다. 본청과 시·군·구를
+ *   합치면 시·도 → 시·군·구 이전재원(조정교부금·시도비 보조)이 두 번 세어진다.
+ * - District tree (광역시도 > 시군구(본청 포함) > 기능분야): 모든 행.
+ *
  * Usage:
  *   tsx scripts/build-regional-hierarchy.ts 2024
  *
@@ -25,8 +30,11 @@ interface RegionalBudgetItem {
   districtName: string;
   functionName: string;
   accountType: string;
-  amount: number;
+  amount: number;     // 예산현액, 백만원
+  executed?: number;  // 지출액, 백만원 (트리에는 쓰지 않음)
 }
+
+const HQ_DISTRICT_CODE = '000'; // 본청
 
 // ---------------------------------------------------------------------------
 // CLI argument
@@ -93,13 +101,15 @@ function finalizeTree(root: BudgetTreeNode): BudgetTreeNode {
 
 // ---------------------------------------------------------------------------
 // Metro-view hierarchy builder
-// Root > 광역시도 > 기능분야 (leaf)
+// Root > 광역시도 > 기능분야 (leaf) — 본청 행만 (소속 시·군·구 제외)
 // ---------------------------------------------------------------------------
 
 function buildMetroTree(items: RegionalBudgetItem[]): BudgetTreeNode {
   const metroMap: NodeMap = new Map();
 
   for (const item of items) {
+    if (item.districtCode !== HQ_DISTRICT_CODE) continue;
+
     const { regionCode, regionName, functionName, accountType, amount } = item;
 
     // Level 1: 광역시도

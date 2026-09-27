@@ -9,7 +9,7 @@
         {
           "id": "metro-func::11::사회복지",
           "name": "사회복지",
-          "value": 12668966,
+          "value": 19308866,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -22,20 +22,7 @@
         {
           "id": "metro-func::11::일반공공행정",
           "name": "일반공공행정",
-          "value": 5406320,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "서울특별시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::11::교육",
-          "name": "교육",
-          "value": 3742508,
+          "value": 13495945,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -48,7 +35,7 @@
         {
           "id": "metro-func::11::교통및물류",
           "name": "교통및물류",
-          "value": 3729328,
+          "value": 6061424,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -59,9 +46,9 @@
           }
         },
         {
-          "id": "metro-func::11::환경",
-          "name": "환경",
-          "value": 3366614,
+          "id": "metro-func::11::교육",
+          "name": "교육",
+          "value": 4455545,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -74,98 +61,7 @@
         {
           "id": "metro-func::11::국토및지역개발",
           "name": "국토및지역개발",
-          "value": 3340275,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "서울특별시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::11::문화및관광",
-          "name": "문화및관광",
-          "value": 2286323,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "서울특별시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::11::보건",
-          "name": "보건",
-          "value": 2283116,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "서울특별시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::11::농림해양수산",
-          "name": "농림해양수산",
-          "value": 2128118,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "서울특별시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::11::산업중소기업및에너지",
-          "name": "산업중소기업및에너지",
-          "value": 1796129,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "서울특별시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::11::공공질서및안전",
-          "name": "공공질서및안전",
-          "value": 1693609,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "서울특별시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::11::예비비기타",
-          "name": "예비비기타",
-          "value": 989911,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "서울특별시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::11::과학기술",
-          "name": "과학기술",
-          "value": 857429,
+          "value": 3314244,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -178,7 +74,111 @@
         {
           "id": "metro-func::11::기타",
           "name": "기타",
-          "value": 431344,
+          "value": 3085101,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "서울특별시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::11::공공질서및안전",
+          "name": "공공질서및안전",
+          "value": 2155279,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "서울특별시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::11::산업중소기업및에너지",
+          "name": "산업중소기업및에너지",
+          "value": 1229193,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "서울특별시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::11::문화및관광",
+          "name": "문화및관광",
+          "value": 1169925,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "서울특별시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::11::환경",
+          "name": "환경",
+          "value": 1115295,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "서울특별시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::11::보건",
+          "name": "보건",
+          "value": 798203,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "서울특별시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::11::농림해양수산",
+          "name": "농림해양수산",
+          "value": 58183,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "서울특별시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::11::예비비기타",
+          "name": "예비비기타",
+          "value": 17787,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "서울특별시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::11::과학기술",
+          "name": "과학기술",
+          "value": 7561,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -204,7 +204,7 @@
         {
           "id": "metro-func::31::사회복지",
           "name": "사회복지",
-          "value": 11389086,
+          "value": 21562498,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -217,7 +217,7 @@
         {
           "id": "metro-func::31::일반공공행정",
           "name": "일반공공행정",
-          "value": 5009932,
+          "value": 9925985,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -230,98 +230,7 @@
         {
           "id": "metro-func::31::교육",
           "name": "교육",
-          "value": 3338326,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "경기도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::31::교통및물류",
-          "name": "교통및물류",
-          "value": 2962930,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "경기도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::31::환경",
-          "name": "환경",
-          "value": 2881162,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "경기도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::31::국토및지역개발",
-          "name": "국토및지역개발",
-          "value": 2812371,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "경기도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::31::농림해양수산",
-          "name": "농림해양수산",
-          "value": 2126550,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "경기도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::31::보건",
-          "name": "보건",
-          "value": 1981349,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "경기도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::31::문화및관광",
-          "name": "문화및관광",
-          "value": 1910212,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "경기도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::31::산업중소기업및에너지",
-          "name": "산업중소기업및에너지",
-          "value": 1585009,
+          "value": 3078051,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -334,7 +243,7 @@
         {
           "id": "metro-func::31::공공질서및안전",
           "name": "공공질서및안전",
-          "value": 1509046,
+          "value": 2875292,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -345,9 +254,9 @@
           }
         },
         {
-          "id": "metro-func::31::과학기술",
-          "name": "과학기술",
-          "value": 863090,
+          "id": "metro-func::31::교통및물류",
+          "name": "교통및물류",
+          "value": 2829756,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -358,9 +267,9 @@
           }
         },
         {
-          "id": "metro-func::31::예비비기타",
-          "name": "예비비기타",
-          "value": 758791,
+          "id": "metro-func::31::산업중소기업및에너지",
+          "name": "산업중소기업및에너지",
+          "value": 1833189,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -373,7 +282,98 @@
         {
           "id": "metro-func::31::기타",
           "name": "기타",
-          "value": 392142,
+          "value": 1694598,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "경기도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::31::농림해양수산",
+          "name": "농림해양수산",
+          "value": 1309474,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "경기도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::31::환경",
+          "name": "환경",
+          "value": 1184932,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "경기도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::31::보건",
+          "name": "보건",
+          "value": 766437,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "경기도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::31::문화및관광",
+          "name": "문화및관광",
+          "value": 750945,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "경기도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::31::국토및지역개발",
+          "name": "국토및지역개발",
+          "value": 694168,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "경기도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::31::과학기술",
+          "name": "과학기술",
+          "value": 164962,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "경기도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::31::예비비기타",
+          "name": "예비비기타",
+          "value": 23165,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -399,20 +399,7 @@
         {
           "id": "metro-func::21::사회복지",
           "name": "사회복지",
-          "value": 4580013,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "부산광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::21::일반공공행정",
-          "name": "일반공공행정",
-          "value": 1807392,
+          "value": 7521923,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -425,85 +412,7 @@
         {
           "id": "metro-func::21::교통및물류",
           "name": "교통및물류",
-          "value": 1214361,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "부산광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::21::교육",
-          "name": "교육",
-          "value": 1210836,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "부산광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::21::국토및지역개발",
-          "name": "국토및지역개발",
-          "value": 999813,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "부산광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::21::환경",
-          "name": "환경",
-          "value": 993567,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "부산광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::21::문화및관광",
-          "name": "문화및관광",
-          "value": 767809,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "부산광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::21::농림해양수산",
-          "name": "농림해양수산",
-          "value": 761667,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "부산광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::21::보건",
-          "name": "보건",
-          "value": 714686,
+          "value": 2297012,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -516,7 +425,7 @@
         {
           "id": "metro-func::21::산업중소기업및에너지",
           "name": "산업중소기업및에너지",
-          "value": 626005,
+          "value": 1676492,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -527,9 +436,9 @@
           }
         },
         {
-          "id": "metro-func::21::공공질서및안전",
-          "name": "공공질서및안전",
-          "value": 600564,
+          "id": "metro-func::21::일반공공행정",
+          "name": "일반공공행정",
+          "value": 1524068,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -540,22 +449,9 @@
           }
         },
         {
-          "id": "metro-func::21::과학기술",
-          "name": "과학기술",
-          "value": 326977,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "부산광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::21::예비비기타",
-          "name": "예비비기타",
-          "value": 324131,
+          "id": "metro-func::21::교육",
+          "name": "교육",
+          "value": 1025716,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -568,7 +464,111 @@
         {
           "id": "metro-func::21::기타",
           "name": "기타",
-          "value": 152184,
+          "value": 917562,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "부산광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::21::문화및관광",
+          "name": "문화및관광",
+          "value": 752834,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "부산광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::21::공공질서및안전",
+          "name": "공공질서및안전",
+          "value": 744297,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "부산광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::21::국토및지역개발",
+          "name": "국토및지역개발",
+          "value": 607832,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "부산광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::21::환경",
+          "name": "환경",
+          "value": 339903,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "부산광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::21::농림해양수산",
+          "name": "농림해양수산",
+          "value": 287914,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "부산광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::21::보건",
+          "name": "보건",
+          "value": 245034,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "부산광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::21::예비비기타",
+          "name": "예비비기타",
+          "value": 87274,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "부산광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::21::과학기술",
+          "name": "과학기술",
+          "value": 6565,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -588,208 +588,13 @@
       }
     },
     {
-      "id": "metro::23",
-      "name": "인천광역시",
-      "children": [
-        {
-          "id": "metro-func::23::사회복지",
-          "name": "사회복지",
-          "value": 3719740,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "인천광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::23::일반공공행정",
-          "name": "일반공공행정",
-          "value": 1762222,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "인천광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::23::교통및물류",
-          "name": "교통및물류",
-          "value": 1096081,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "인천광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::23::교육",
-          "name": "교육",
-          "value": 964048,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "인천광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::23::국토및지역개발",
-          "name": "국토및지역개발",
-          "value": 963357,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "인천광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::23::환경",
-          "name": "환경",
-          "value": 914405,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "인천광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::23::문화및관광",
-          "name": "문화및관광",
-          "value": 722977,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "인천광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::23::보건",
-          "name": "보건",
-          "value": 707977,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "인천광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::23::농림해양수산",
-          "name": "농림해양수산",
-          "value": 626497,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "인천광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::23::공공질서및안전",
-          "name": "공공질서및안전",
-          "value": 590874,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "인천광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::23::산업중소기업및에너지",
-          "name": "산업중소기업및에너지",
-          "value": 519893,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "인천광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::23::과학기술",
-          "name": "과학기술",
-          "value": 291748,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "인천광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::23::예비비기타",
-          "name": "예비비기타",
-          "value": 289553,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "인천광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::23::기타",
-          "name": "기타",
-          "value": 142628,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "인천광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        }
-      ],
-      "meta": {
-        "level": "domain",
-        "code": "23",
-        "parentPath": [
-          "지방재정 총계"
-        ]
-      }
-    },
-    {
       "id": "metro::37",
       "name": "경상북도",
       "children": [
         {
           "id": "metro-func::37::사회복지",
           "name": "사회복지",
-          "value": 3787799,
+          "value": 5082119,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -802,85 +607,7 @@
         {
           "id": "metro-func::37::일반공공행정",
           "name": "일반공공행정",
-          "value": 1508183,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "경상북도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::37::교육",
-          "name": "교육",
-          "value": 1065215,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "경상북도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::37::교통및물류",
-          "name": "교통및물류",
-          "value": 1005654,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "경상북도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::37::환경",
-          "name": "환경",
-          "value": 982780,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "경상북도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::37::국토및지역개발",
-          "name": "국토및지역개발",
-          "value": 878167,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "경상북도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::37::문화및관광",
-          "name": "문화및관광",
-          "value": 699387,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "경상북도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::37::보건",
-          "name": "보건",
-          "value": 699045,
+          "value": 2653038,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -893,7 +620,7 @@
         {
           "id": "metro-func::37::농림해양수산",
           "name": "농림해양수산",
-          "value": 643248,
+          "value": 2139280,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -906,7 +633,7 @@
         {
           "id": "metro-func::37::공공질서및안전",
           "name": "공공질서및안전",
-          "value": 546821,
+          "value": 1932228,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -917,9 +644,9 @@
           }
         },
         {
-          "id": "metro-func::37::산업중소기업및에너지",
-          "name": "산업중소기업및에너지",
-          "value": 515046,
+          "id": "metro-func::37::환경",
+          "name": "환경",
+          "value": 1151395,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -930,22 +657,9 @@
           }
         },
         {
-          "id": "metro-func::37::예비비기타",
-          "name": "예비비기타",
-          "value": 263898,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "경상북도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::37::과학기술",
-          "name": "과학기술",
-          "value": 262632,
+          "id": "metro-func::37::국토및지역개발",
+          "name": "국토및지역개발",
+          "value": 1062885,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -958,7 +672,98 @@
         {
           "id": "metro-func::37::기타",
           "name": "기타",
-          "value": 142122,
+          "value": 846371,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "경상북도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::37::산업중소기업및에너지",
+          "name": "산업중소기업및에너지",
+          "value": 828793,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "경상북도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::37::교통및물류",
+          "name": "교통및물류",
+          "value": 677806,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "경상북도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::37::교육",
+          "name": "교육",
+          "value": 672406,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "경상북도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::37::문화및관광",
+          "name": "문화및관광",
+          "value": 561835,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "경상북도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::37::보건",
+          "name": "보건",
+          "value": 276082,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "경상북도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::37::과학기술",
+          "name": "과학기술",
+          "value": 56478,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "경상북도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::37::예비비기타",
+          "name": "예비비기타",
+          "value": 3290,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -984,7 +789,7 @@
         {
           "id": "metro-func::38::사회복지",
           "name": "사회복지",
-          "value": 3841883,
+          "value": 5679643,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -997,59 +802,7 @@
         {
           "id": "metro-func::38::일반공공행정",
           "name": "일반공공행정",
-          "value": 1529791,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "경상남도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::38::교육",
-          "name": "교육",
-          "value": 952079,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "경상남도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::38::교통및물류",
-          "name": "교통및물류",
-          "value": 926637,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "경상남도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::38::환경",
-          "name": "환경",
-          "value": 915146,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "경상남도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::38::국토및지역개발",
-          "name": "국토및지역개발",
-          "value": 816520,
+          "value": 1745596,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -1062,46 +815,7 @@
         {
           "id": "metro-func::38::농림해양수산",
           "name": "농림해양수산",
-          "value": 690148,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "경상남도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::38::문화및관광",
-          "name": "문화및관광",
-          "value": 619253,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "경상남도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::38::보건",
-          "name": "보건",
-          "value": 575201,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "경상남도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::38::공공질서및안전",
-          "name": "공공질서및안전",
-          "value": 514698,
+          "value": 1504966,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -1114,7 +828,7 @@
         {
           "id": "metro-func::38::산업중소기업및에너지",
           "name": "산업중소기업및에너지",
-          "value": 472275,
+          "value": 1432226,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -1125,9 +839,9 @@
           }
         },
         {
-          "id": "metro-func::38::과학기술",
-          "name": "과학기술",
-          "value": 254374,
+          "id": "metro-func::38::공공질서및안전",
+          "name": "공공질서및안전",
+          "value": 1125666,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -1138,9 +852,9 @@
           }
         },
         {
-          "id": "metro-func::38::예비비기타",
-          "name": "예비비기타",
-          "value": 237655,
+          "id": "metro-func::38::환경",
+          "name": "환경",
+          "value": 837320,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -1153,7 +867,98 @@
         {
           "id": "metro-func::38::기타",
           "name": "기타",
-          "value": 134336,
+          "value": 737928,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "경상남도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::38::교육",
+          "name": "교육",
+          "value": 713582,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "경상남도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::38::교통및물류",
+          "name": "교통및물류",
+          "value": 618444,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "경상남도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::38::국토및지역개발",
+          "name": "국토및지역개발",
+          "value": 565882,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "경상남도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::38::문화및관광",
+          "name": "문화및관광",
+          "value": 429076,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "경상남도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::38::보건",
+          "name": "보건",
+          "value": 290129,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "경상남도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::38::예비비기타",
+          "name": "예비비기타",
+          "value": 11476,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "경상남도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::38::과학기술",
+          "name": "과학기술",
+          "value": 9565,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -1173,91 +978,403 @@
       }
     },
     {
+      "id": "metro::23",
+      "name": "인천광역시",
+      "children": [
+        {
+          "id": "metro-func::23::사회복지",
+          "name": "사회복지",
+          "value": 6041237,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "인천광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::23::일반공공행정",
+          "name": "일반공공행정",
+          "value": 2512601,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "인천광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::23::교통및물류",
+          "name": "교통및물류",
+          "value": 2108131,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "인천광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::23::교육",
+          "name": "교육",
+          "value": 917681,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "인천광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::23::공공질서및안전",
+          "name": "공공질서및안전",
+          "value": 873276,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "인천광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::23::기타",
+          "name": "기타",
+          "value": 759634,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "인천광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::23::산업중소기업및에너지",
+          "name": "산업중소기업및에너지",
+          "value": 552202,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "인천광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::23::문화및관광",
+          "name": "문화및관광",
+          "value": 549499,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "인천광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::23::국토및지역개발",
+          "name": "국토및지역개발",
+          "value": 549064,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "인천광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::23::환경",
+          "name": "환경",
+          "value": 385955,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "인천광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::23::보건",
+          "name": "보건",
+          "value": 236269,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "인천광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::23::농림해양수산",
+          "name": "농림해양수산",
+          "value": 167550,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "인천광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::23::과학기술",
+          "name": "과학기술",
+          "value": 42624,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "인천광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::23::예비비기타",
+          "name": "예비비기타",
+          "value": 4547,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "인천광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        }
+      ],
+      "meta": {
+        "level": "domain",
+        "code": "23",
+        "parentPath": [
+          "지방재정 총계"
+        ]
+      }
+    },
+    {
+      "id": "metro::34",
+      "name": "충청남도",
+      "children": [
+        {
+          "id": "metro-func::34::사회복지",
+          "name": "사회복지",
+          "value": 3967172,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "충청남도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::34::농림해양수산",
+          "name": "농림해양수산",
+          "value": 1610378,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "충청남도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::34::일반공공행정",
+          "name": "일반공공행정",
+          "value": 1593555,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "충청남도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::34::공공질서및안전",
+          "name": "공공질서및안전",
+          "value": 1135841,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "충청남도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::34::산업중소기업및에너지",
+          "name": "산업중소기업및에너지",
+          "value": 1134769,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "충청남도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::34::환경",
+          "name": "환경",
+          "value": 759982,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "충청남도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::34::기타",
+          "name": "기타",
+          "value": 677123,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "충청남도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::34::교육",
+          "name": "교육",
+          "value": 625291,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "충청남도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::34::문화및관광",
+          "name": "문화및관광",
+          "value": 606168,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "충청남도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::34::국토및지역개발",
+          "name": "국토및지역개발",
+          "value": 548299,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "충청남도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::34::교통및물류",
+          "name": "교통및물류",
+          "value": 438737,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "충청남도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::34::보건",
+          "name": "보건",
+          "value": 256685,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "충청남도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::34::과학기술",
+          "name": "과학기술",
+          "value": 36130,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "충청남도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::34::예비비기타",
+          "name": "예비비기타",
+          "value": 28642,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "충청남도"
+            ],
+            "accountType": "일반회계"
+          }
+        }
+      ],
+      "meta": {
+        "level": "domain",
+        "code": "34",
+        "parentPath": [
+          "지방재정 총계"
+        ]
+      }
+    },
+    {
       "id": "metro::36",
       "name": "전라남도",
       "children": [
         {
           "id": "metro-func::36::사회복지",
           "name": "사회복지",
-          "value": 3402941,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "전라남도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::36::일반공공행정",
-          "name": "일반공공행정",
-          "value": 1362825,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "전라남도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::36::교육",
-          "name": "교육",
-          "value": 921661,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "전라남도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::36::교통및물류",
-          "name": "교통및물류",
-          "value": 850408,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "전라남도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::36::환경",
-          "name": "환경",
-          "value": 786693,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "전라남도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::36::국토및지역개발",
-          "name": "국토및지역개발",
-          "value": 786590,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "전라남도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::36::보건",
-          "name": "보건",
-          "value": 569307,
+          "value": 3817368,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -1270,7 +1387,7 @@
         {
           "id": "metro-func::36::농림해양수산",
           "name": "농림해양수산",
-          "value": 568960,
+          "value": 2225412,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -1281,22 +1398,9 @@
           }
         },
         {
-          "id": "metro-func::36::문화및관광",
-          "name": "문화및관광",
-          "value": 536710,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "전라남도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::36::공공질서및안전",
-          "name": "공공질서및안전",
-          "value": 435635,
+          "id": "metro-func::36::일반공공행정",
+          "name": "일반공공행정",
+          "value": 1527033,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -1309,7 +1413,7 @@
         {
           "id": "metro-func::36::산업중소기업및에너지",
           "name": "산업중소기업및에너지",
-          "value": 424349,
+          "value": 1046028,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -1320,9 +1424,9 @@
           }
         },
         {
-          "id": "metro-func::36::과학기술",
-          "name": "과학기술",
-          "value": 237741,
+          "id": "metro-func::36::환경",
+          "name": "환경",
+          "value": 989255,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -1333,9 +1437,9 @@
           }
         },
         {
-          "id": "metro-func::36::예비비기타",
-          "name": "예비비기타",
-          "value": 233419,
+          "id": "metro-func::36::공공질서및안전",
+          "name": "공공질서및안전",
+          "value": 889372,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -1348,7 +1452,98 @@
         {
           "id": "metro-func::36::기타",
           "name": "기타",
-          "value": 114760,
+          "value": 725665,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "전라남도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::36::국토및지역개발",
+          "name": "국토및지역개발",
+          "value": 497144,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "전라남도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::36::문화및관광",
+          "name": "문화및관광",
+          "value": 485219,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "전라남도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::36::교통및물류",
+          "name": "교통및물류",
+          "value": 417444,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "전라남도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::36::교육",
+          "name": "교육",
+          "value": 362212,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "전라남도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::36::보건",
+          "name": "보건",
+          "value": 197451,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "전라남도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::36::예비비기타",
+          "name": "예비비기타",
+          "value": 17986,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "전라남도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::36::과학기술",
+          "name": "과학기술",
+          "value": 8893,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -1374,7 +1569,7 @@
         {
           "id": "metro-func::22::사회복지",
           "name": "사회복지",
-          "value": 3292321,
+          "value": 4971223,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -1387,20 +1582,7 @@
         {
           "id": "metro-func::22::일반공공행정",
           "name": "일반공공행정",
-          "value": 1212277,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "대구광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::22::교육",
-          "name": "교육",
-          "value": 885546,
+          "value": 2577281,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -1413,124 +1595,7 @@
         {
           "id": "metro-func::22::교통및물류",
           "name": "교통및물류",
-          "value": 815006,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "대구광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::22::국토및지역개발",
-          "name": "국토및지역개발",
-          "value": 733820,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "대구광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::22::환경",
-          "name": "환경",
-          "value": 695939,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "대구광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::22::농림해양수산",
-          "name": "농림해양수산",
-          "value": 554769,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "대구광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::22::문화및관광",
-          "name": "문화및관광",
-          "value": 535509,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "대구광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::22::보건",
-          "name": "보건",
-          "value": 516454,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "대구광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::22::산업중소기업및에너지",
-          "name": "산업중소기업및에너지",
-          "value": 426245,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "대구광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::22::공공질서및안전",
-          "name": "공공질서및안전",
-          "value": 420505,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "대구광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::22::예비비기타",
-          "name": "예비비기타",
-          "value": 215372,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "대구광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::22::과학기술",
-          "name": "과학기술",
-          "value": 206204,
+          "value": 1452398,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -1543,7 +1608,137 @@
         {
           "id": "metro-func::22::기타",
           "name": "기타",
-          "value": 98035,
+          "value": 675567,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "대구광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::22::교육",
+          "name": "교육",
+          "value": 650820,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "대구광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::22::산업중소기업및에너지",
+          "name": "산업중소기업및에너지",
+          "value": 530680,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "대구광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::22::공공질서및안전",
+          "name": "공공질서및안전",
+          "value": 418315,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "대구광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::22::보건",
+          "name": "보건",
+          "value": 389336,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "대구광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::22::환경",
+          "name": "환경",
+          "value": 366997,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "대구광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::22::문화및관광",
+          "name": "문화및관광",
+          "value": 325760,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "대구광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::22::국토및지역개발",
+          "name": "국토및지역개발",
+          "value": 263616,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "대구광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::22::농림해양수산",
+          "name": "농림해양수산",
+          "value": 122503,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "대구광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::22::과학기술",
+          "name": "과학기술",
+          "value": 15717,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "대구광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::22::예비비기타",
+          "name": "예비비기타",
+          "value": 10238,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -1563,481 +1758,13 @@
       }
     },
     {
-      "id": "metro::34",
-      "name": "충청남도",
-      "children": [
-        {
-          "id": "metro-func::34::사회복지",
-          "name": "사회복지",
-          "value": 2899154,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "충청남도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::34::일반공공행정",
-          "name": "일반공공행정",
-          "value": 1164738,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "충청남도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::34::교통및물류",
-          "name": "교통및물류",
-          "value": 774082,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "충청남도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::34::교육",
-          "name": "교육",
-          "value": 773969,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "충청남도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::34::환경",
-          "name": "환경",
-          "value": 699859,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "충청남도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::34::국토및지역개발",
-          "name": "국토및지역개발",
-          "value": 616863,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "충청남도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::34::문화및관광",
-          "name": "문화및관광",
-          "value": 484063,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "충청남도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::34::보건",
-          "name": "보건",
-          "value": 478485,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "충청남도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::34::농림해양수산",
-          "name": "농림해양수산",
-          "value": 464757,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "충청남도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::34::산업중소기업및에너지",
-          "name": "산업중소기업및에너지",
-          "value": 381739,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "충청남도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::34::공공질서및안전",
-          "name": "공공질서및안전",
-          "value": 356007,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "충청남도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::34::과학기술",
-          "name": "과학기술",
-          "value": 191783,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "충청남도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::34::예비비기타",
-          "name": "예비비기타",
-          "value": 190295,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "충청남도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::34::기타",
-          "name": "기타",
-          "value": 92211,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "충청남도"
-            ],
-            "accountType": "일반회계"
-          }
-        }
-      ],
-      "meta": {
-        "level": "domain",
-        "code": "34",
-        "parentPath": [
-          "지방재정 총계"
-        ]
-      }
-    },
-    {
-      "id": "metro::32",
-      "name": "강원특별자치도",
-      "children": [
-        {
-          "id": "metro-func::32::사회복지",
-          "name": "사회복지",
-          "value": 2782690,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "강원특별자치도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::32::일반공공행정",
-          "name": "일반공공행정",
-          "value": 1046179,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "강원특별자치도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::32::교육",
-          "name": "교육",
-          "value": 721390,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "강원특별자치도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::32::교통및물류",
-          "name": "교통및물류",
-          "value": 681849,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "강원특별자치도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::32::국토및지역개발",
-          "name": "국토및지역개발",
-          "value": 624755,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "강원특별자치도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::32::환경",
-          "name": "환경",
-          "value": 595997,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "강원특별자치도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::32::문화및관광",
-          "name": "문화및관광",
-          "value": 438206,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "강원특별자치도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::32::보건",
-          "name": "보건",
-          "value": 411237,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "강원특별자치도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::32::농림해양수산",
-          "name": "농림해양수산",
-          "value": 402331,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "강원특별자치도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::32::공공질서및안전",
-          "name": "공공질서및안전",
-          "value": 345278,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "강원특별자치도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::32::산업중소기업및에너지",
-          "name": "산업중소기업및에너지",
-          "value": 343742,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "강원특별자치도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::32::예비비기타",
-          "name": "예비비기타",
-          "value": 186118,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "강원특별자치도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::32::과학기술",
-          "name": "과학기술",
-          "value": 178962,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "강원특별자치도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::32::기타",
-          "name": "기타",
-          "value": 81267,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "강원특별자치도"
-            ],
-            "accountType": "일반회계"
-          }
-        }
-      ],
-      "meta": {
-        "level": "domain",
-        "code": "32",
-        "parentPath": [
-          "지방재정 총계"
-        ]
-      }
-    },
-    {
       "id": "metro::35",
       "name": "전북특별자치도",
       "children": [
         {
           "id": "metro-func::35::사회복지",
           "name": "사회복지",
-          "value": 2482928,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "전북특별자치도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::35::일반공공행정",
-          "name": "일반공공행정",
-          "value": 1080605,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "전북특별자치도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::35::교육",
-          "name": "교육",
-          "value": 675090,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "전북특별자치도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::35::교통및물류",
-          "name": "교통및물류",
-          "value": 638022,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "전북특별자치도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::35::환경",
-          "name": "환경",
-          "value": 568603,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "전북특별자치도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::35::국토및지역개발",
-          "name": "국토및지역개발",
-          "value": 546117,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "전북특별자치도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::35::문화및관광",
-          "name": "문화및관광",
-          "value": 421880,
+          "value": 4020938,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -2050,7 +1777,7 @@
         {
           "id": "metro-func::35::농림해양수산",
           "name": "농림해양수산",
-          "value": 406169,
+          "value": 1539613,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -2061,22 +1788,9 @@
           }
         },
         {
-          "id": "metro-func::35::보건",
-          "name": "보건",
-          "value": 397331,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "전북특별자치도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::35::공공질서및안전",
-          "name": "공공질서및안전",
-          "value": 350821,
+          "id": "metro-func::35::일반공공행정",
+          "name": "일반공공행정",
+          "value": 1203855,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -2089,7 +1803,7 @@
         {
           "id": "metro-func::35::산업중소기업및에너지",
           "name": "산업중소기업및에너지",
-          "value": 323404,
+          "value": 1181982,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -2100,9 +1814,9 @@
           }
         },
         {
-          "id": "metro-func::35::과학기술",
-          "name": "과학기술",
-          "value": 171234,
+          "id": "metro-func::35::공공질서및안전",
+          "name": "공공질서및안전",
+          "value": 691966,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -2113,9 +1827,9 @@
           }
         },
         {
-          "id": "metro-func::35::예비비기타",
-          "name": "예비비기타",
-          "value": 169326,
+          "id": "metro-func::35::환경",
+          "name": "환경",
+          "value": 665396,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -2128,7 +1842,98 @@
         {
           "id": "metro-func::35::기타",
           "name": "기타",
-          "value": 88474,
+          "value": 612513,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "전북특별자치도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::35::문화및관광",
+          "name": "문화및관광",
+          "value": 476604,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "전북특별자치도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::35::국토및지역개발",
+          "name": "국토및지역개발",
+          "value": 399470,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "전북특별자치도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::35::교육",
+          "name": "교육",
+          "value": 371602,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "전북특별자치도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::35::교통및물류",
+          "name": "교통및물류",
+          "value": 253826,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "전북특별자치도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::35::보건",
+          "name": "보건",
+          "value": 204835,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "전북특별자치도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::35::예비비기타",
+          "name": "예비비기타",
+          "value": 22938,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "전북특별자치도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::35::과학기술",
+          "name": "과학기술",
+          "value": 14290,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -2148,187 +1953,187 @@
       }
     },
     {
-      "id": "metro::39",
-      "name": "제주특별자치도",
+      "id": "metro::32",
+      "name": "강원특별자치도",
       "children": [
         {
-          "id": "metro-func::39::사회복지",
+          "id": "metro-func::32::사회복지",
           "name": "사회복지",
-          "value": 2144923,
+          "value": 3091651,
           "meta": {
             "level": "detailProject",
             "parentPath": [
               "지방재정 총계",
-              "제주특별자치도"
+              "강원특별자치도"
             ],
             "accountType": "일반회계"
           }
         },
         {
-          "id": "metro-func::39::일반공공행정",
+          "id": "metro-func::32::일반공공행정",
           "name": "일반공공행정",
-          "value": 946118,
+          "value": 1276927,
           "meta": {
             "level": "detailProject",
             "parentPath": [
               "지방재정 총계",
-              "제주특별자치도"
+              "강원특별자치도"
             ],
             "accountType": "일반회계"
           }
         },
         {
-          "id": "metro-func::39::교육",
-          "name": "교육",
-          "value": 672289,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "제주특별자치도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::39::교통및물류",
-          "name": "교통및물류",
-          "value": 635203,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "제주특별자치도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::39::환경",
-          "name": "환경",
-          "value": 537025,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "제주특별자치도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::39::국토및지역개발",
-          "name": "국토및지역개발",
-          "value": 474324,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "제주특별자치도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::39::문화및관광",
-          "name": "문화및관광",
-          "value": 397571,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "제주특별자치도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::39::보건",
-          "name": "보건",
-          "value": 384058,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "제주특별자치도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::39::농림해양수산",
+          "id": "metro-func::32::농림해양수산",
           "name": "농림해양수산",
-          "value": 343855,
+          "value": 1038927,
           "meta": {
             "level": "detailProject",
             "parentPath": [
               "지방재정 총계",
-              "제주특별자치도"
+              "강원특별자치도"
             ],
             "accountType": "일반회계"
           }
         },
         {
-          "id": "metro-func::39::산업중소기업및에너지",
+          "id": "metro-func::32::산업중소기업및에너지",
           "name": "산업중소기업및에너지",
-          "value": 297010,
+          "value": 842483,
           "meta": {
             "level": "detailProject",
             "parentPath": [
               "지방재정 총계",
-              "제주특별자치도"
+              "강원특별자치도"
             ],
             "accountType": "일반회계"
           }
         },
         {
-          "id": "metro-func::39::공공질서및안전",
+          "id": "metro-func::32::공공질서및안전",
           "name": "공공질서및안전",
-          "value": 283209,
+          "value": 785650,
           "meta": {
             "level": "detailProject",
             "parentPath": [
               "지방재정 총계",
-              "제주특별자치도"
+              "강원특별자치도"
             ],
             "accountType": "일반회계"
           }
         },
         {
-          "id": "metro-func::39::과학기술",
-          "name": "과학기술",
-          "value": 156173,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "제주특별자치도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::39::예비비기타",
-          "name": "예비비기타",
-          "value": 142161,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "제주특별자치도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::39::기타",
+          "id": "metro-func::32::기타",
           "name": "기타",
-          "value": 74080,
+          "value": 723681,
           "meta": {
             "level": "detailProject",
             "parentPath": [
               "지방재정 총계",
-              "제주특별자치도"
+              "강원특별자치도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::32::국토및지역개발",
+          "name": "국토및지역개발",
+          "value": 719029,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "강원특별자치도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::32::환경",
+          "name": "환경",
+          "value": 494620,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "강원특별자치도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::32::교육",
+          "name": "교육",
+          "value": 481691,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "강원특별자치도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::32::문화및관광",
+          "name": "문화및관광",
+          "value": 398454,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "강원특별자치도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::32::교통및물류",
+          "name": "교통및물류",
+          "value": 336427,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "강원특별자치도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::32::보건",
+          "name": "보건",
+          "value": 197107,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "강원특별자치도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::32::예비비기타",
+          "name": "예비비기타",
+          "value": 10090,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "강원특별자치도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::32::과학기술",
+          "name": "과학기술",
+          "value": 6966,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "강원특별자치도"
             ],
             "accountType": "일반회계"
           }
@@ -2336,202 +2141,7 @@
       ],
       "meta": {
         "level": "domain",
-        "code": "39",
-        "parentPath": [
-          "지방재정 총계"
-        ]
-      }
-    },
-    {
-      "id": "metro::24",
-      "name": "광주광역시",
-      "children": [
-        {
-          "id": "metro-func::24::사회복지",
-          "name": "사회복지",
-          "value": 2274654,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "광주광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::24::일반공공행정",
-          "name": "일반공공행정",
-          "value": 796534,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "광주광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::24::교통및물류",
-          "name": "교통및물류",
-          "value": 579056,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "광주광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::24::교육",
-          "name": "교육",
-          "value": 561316,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "광주광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::24::국토및지역개발",
-          "name": "국토및지역개발",
-          "value": 481596,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "광주광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::24::환경",
-          "name": "환경",
-          "value": 458068,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "광주광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::24::농림해양수산",
-          "name": "농림해양수산",
-          "value": 338770,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "광주광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::24::문화및관광",
-          "name": "문화및관광",
-          "value": 337713,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "광주광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::24::보건",
-          "name": "보건",
-          "value": 327989,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "광주광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::24::산업중소기업및에너지",
-          "name": "산업중소기업및에너지",
-          "value": 301584,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "광주광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::24::공공질서및안전",
-          "name": "공공질서및안전",
-          "value": 273073,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "광주광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::24::과학기술",
-          "name": "과학기술",
-          "value": 143880,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "광주광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::24::예비비기타",
-          "name": "예비비기타",
-          "value": 133906,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "광주광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::24::기타",
-          "name": "기타",
-          "value": 63862,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "광주광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        }
-      ],
-      "meta": {
-        "level": "domain",
-        "code": "24",
+        "code": "32",
         "parentPath": [
           "지방재정 총계"
         ]
@@ -2544,7 +2154,7 @@
         {
           "id": "metro-func::33::사회복지",
           "name": "사회복지",
-          "value": 1928390,
+          "value": 2876653,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -2557,98 +2167,7 @@
         {
           "id": "metro-func::33::일반공공행정",
           "name": "일반공공행정",
-          "value": 877954,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "충청북도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::33::교육",
-          "name": "교육",
-          "value": 530375,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "충청북도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::33::국토및지역개발",
-          "name": "국토및지역개발",
-          "value": 506425,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "충청북도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::33::교통및물류",
-          "name": "교통및물류",
-          "value": 494523,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "충청북도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::33::환경",
-          "name": "환경",
-          "value": 459653,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "충청북도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::33::문화및관광",
-          "name": "문화및관광",
-          "value": 362664,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "충청북도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::33::농림해양수산",
-          "name": "농림해양수산",
-          "value": 359418,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "충청북도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::33::보건",
-          "name": "보건",
-          "value": 337655,
+          "value": 1294315,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -2661,7 +2180,7 @@
         {
           "id": "metro-func::33::공공질서및안전",
           "name": "공공질서및안전",
-          "value": 302533,
+          "value": 776943,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -2674,7 +2193,7 @@
         {
           "id": "metro-func::33::산업중소기업및에너지",
           "name": "산업중소기업및에너지",
-          "value": 269142,
+          "value": 775175,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -2685,22 +2204,9 @@
           }
         },
         {
-          "id": "metro-func::33::예비비기타",
-          "name": "예비비기타",
-          "value": 134671,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "충청북도"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::33::과학기술",
-          "name": "과학기술",
-          "value": 132522,
+          "id": "metro-func::33::농림해양수산",
+          "name": "농림해양수산",
+          "value": 774138,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -2713,7 +2219,98 @@
         {
           "id": "metro-func::33::기타",
           "name": "기타",
-          "value": 64077,
+          "value": 517917,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "충청북도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::33::환경",
+          "name": "환경",
+          "value": 484492,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "충청북도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::33::교육",
+          "name": "교육",
+          "value": 447229,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "충청북도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::33::교통및물류",
+          "name": "교통및물류",
+          "value": 292944,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "충청북도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::33::문화및관광",
+          "name": "문화및관광",
+          "value": 291524,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "충청북도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::33::국토및지역개발",
+          "name": "국토및지역개발",
+          "value": 256869,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "충청북도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::33::보건",
+          "name": "보건",
+          "value": 167614,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "충청북도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::33::예비비기타",
+          "name": "예비비기타",
+          "value": 24747,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -2733,13 +2330,208 @@
       }
     },
     {
+      "id": "metro::24",
+      "name": "광주광역시",
+      "children": [
+        {
+          "id": "metro-func::24::사회복지",
+          "name": "사회복지",
+          "value": 3220609,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "광주광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::24::교통및물류",
+          "name": "교통및물류",
+          "value": 1283718,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "광주광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::24::일반공공행정",
+          "name": "일반공공행정",
+          "value": 1222979,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "광주광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::24::산업중소기업및에너지",
+          "name": "산업중소기업및에너지",
+          "value": 826290,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "광주광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::24::교육",
+          "name": "교육",
+          "value": 529157,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "광주광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::24::기타",
+          "name": "기타",
+          "value": 457725,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "광주광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::24::문화및관광",
+          "name": "문화및관광",
+          "value": 346862,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "광주광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::24::국토및지역개발",
+          "name": "국토및지역개발",
+          "value": 262009,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "광주광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::24::공공질서및안전",
+          "name": "공공질서및안전",
+          "value": 237978,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "광주광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::24::환경",
+          "name": "환경",
+          "value": 152471,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "광주광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::24::보건",
+          "name": "보건",
+          "value": 119229,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "광주광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::24::농림해양수산",
+          "name": "농림해양수산",
+          "value": 73823,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "광주광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::24::과학기술",
+          "name": "과학기술",
+          "value": 7173,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "광주광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::24::예비비기타",
+          "name": "예비비기타",
+          "value": 2039,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "광주광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        }
+      ],
+      "meta": {
+        "level": "domain",
+        "code": "24",
+        "parentPath": [
+          "지방재정 총계"
+        ]
+      }
+    },
+    {
       "id": "metro::25",
       "name": "대전광역시",
       "children": [
         {
           "id": "metro-func::25::사회복지",
           "name": "사회복지",
-          "value": 1858112,
+          "value": 3113061,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -2752,7 +2544,7 @@
         {
           "id": "metro-func::25::일반공공행정",
           "name": "일반공공행정",
-          "value": 806666,
+          "value": 1177523,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -2765,98 +2557,7 @@
         {
           "id": "metro-func::25::교통및물류",
           "name": "교통및물류",
-          "value": 561371,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "대전광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::25::교육",
-          "name": "교육",
-          "value": 543891,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "대전광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::25::국토및지역개발",
-          "name": "국토및지역개발",
-          "value": 477162,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "대전광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::25::환경",
-          "name": "환경",
-          "value": 418379,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "대전광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::25::보건",
-          "name": "보건",
-          "value": 311314,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "대전광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::25::문화및관광",
-          "name": "문화및관광",
-          "value": 311082,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "대전광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::25::농림해양수산",
-          "name": "농림해양수산",
-          "value": 304057,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "대전광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::25::공공질서및안전",
-          "name": "공공질서및안전",
-          "value": 268480,
+          "value": 904992,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -2869,7 +2570,7 @@
         {
           "id": "metro-func::25::산업중소기업및에너지",
           "name": "산업중소기업및에너지",
-          "value": 242842,
+          "value": 787637,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -2880,22 +2581,9 @@
           }
         },
         {
-          "id": "metro-func::25::예비비기타",
-          "name": "예비비기타",
-          "value": 142367,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "대전광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::25::과학기술",
-          "name": "과학기술",
-          "value": 128309,
+          "id": "metro-func::25::국토및지역개발",
+          "name": "국토및지역개발",
+          "value": 504001,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -2908,7 +2596,111 @@
         {
           "id": "metro-func::25::기타",
           "name": "기타",
-          "value": 73967,
+          "value": 465300,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "대전광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::25::문화및관광",
+          "name": "문화및관광",
+          "value": 390187,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "대전광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::25::공공질서및안전",
+          "name": "공공질서및안전",
+          "value": 366022,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "대전광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::25::교육",
+          "name": "교육",
+          "value": 327223,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "대전광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::25::환경",
+          "name": "환경",
+          "value": 213578,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "대전광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::25::보건",
+          "name": "보건",
+          "value": 122999,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "대전광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::25::농림해양수산",
+          "name": "농림해양수산",
+          "value": 119268,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "대전광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::25::과학기술",
+          "name": "과학기술",
+          "value": 88507,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "대전광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::25::예비비기타",
+          "name": "예비비기타",
+          "value": 6321,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -2928,13 +2720,208 @@
       }
     },
     {
+      "id": "metro::39",
+      "name": "제주특별자치도",
+      "children": [
+        {
+          "id": "metro-func::39::사회복지",
+          "name": "사회복지",
+          "value": 1789090,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "제주특별자치도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::39::농림해양수산",
+          "name": "농림해양수산",
+          "value": 951059,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "제주특별자치도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::39::일반공공행정",
+          "name": "일반공공행정",
+          "value": 880705,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "제주특별자치도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::39::기타",
+          "name": "기타",
+          "value": 804352,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "제주특별자치도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::39::교통및물류",
+          "name": "교통및물류",
+          "value": 604736,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "제주특별자치도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::39::산업중소기업및에너지",
+          "name": "산업중소기업및에너지",
+          "value": 588111,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "제주특별자치도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::39::문화및관광",
+          "name": "문화및관광",
+          "value": 566335,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "제주특별자치도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::39::국토및지역개발",
+          "name": "국토및지역개발",
+          "value": 344273,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "제주특별자치도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::39::공공질서및안전",
+          "name": "공공질서및안전",
+          "value": 315962,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "제주특별자치도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::39::환경",
+          "name": "환경",
+          "value": 289563,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "제주특별자치도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::39::교육",
+          "name": "교육",
+          "value": 173071,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "제주특별자치도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::39::보건",
+          "name": "보건",
+          "value": 149077,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "제주특별자치도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::39::예비비기타",
+          "name": "예비비기타",
+          "value": 13565,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "제주특별자치도"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::39::과학기술",
+          "name": "과학기술",
+          "value": 1420,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "제주특별자치도"
+            ],
+            "accountType": "일반회계"
+          }
+        }
+      ],
+      "meta": {
+        "level": "domain",
+        "code": "39",
+        "parentPath": [
+          "지방재정 총계"
+        ]
+      }
+    },
+    {
       "id": "metro::26",
       "name": "울산광역시",
       "children": [
         {
           "id": "metro-func::26::사회복지",
           "name": "사회복지",
-          "value": 1737407,
+          "value": 1826209,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -2947,20 +2934,7 @@
         {
           "id": "metro-func::26::일반공공행정",
           "name": "일반공공행정",
-          "value": 674676,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "울산광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::26::교육",
-          "name": "교육",
-          "value": 480525,
+          "value": 1311802,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -2973,72 +2947,7 @@
         {
           "id": "metro-func::26::교통및물류",
           "name": "교통및물류",
-          "value": 435888,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "울산광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::26::국토및지역개발",
-          "name": "국토및지역개발",
-          "value": 384911,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "울산광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::26::환경",
-          "name": "환경",
-          "value": 380859,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "울산광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::26::농림해양수산",
-          "name": "농림해양수산",
-          "value": 313857,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "울산광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::26::문화및관광",
-          "name": "문화및관광",
-          "value": 292818,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "울산광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::26::보건",
-          "name": "보건",
-          "value": 275663,
+          "value": 590795,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -3051,46 +2960,7 @@
         {
           "id": "metro-func::26::산업중소기업및에너지",
           "name": "산업중소기업및에너지",
-          "value": 238417,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "울산광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::26::공공질서및안전",
-          "name": "공공질서및안전",
-          "value": 227595,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "울산광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::26::과학기술",
-          "name": "과학기술",
-          "value": 110580,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "울산광역시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::26::예비비기타",
-          "name": "예비비기타",
-          "value": 110290,
+          "value": 486711,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -3103,7 +2973,124 @@
         {
           "id": "metro-func::26::기타",
           "name": "기타",
-          "value": 56518,
+          "value": 370710,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "울산광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::26::교육",
+          "name": "교육",
+          "value": 324239,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "울산광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::26::공공질서및안전",
+          "name": "공공질서및안전",
+          "value": 304156,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "울산광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::26::국토및지역개발",
+          "name": "국토및지역개발",
+          "value": 300802,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "울산광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::26::환경",
+          "name": "환경",
+          "value": 298198,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "울산광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::26::문화및관광",
+          "name": "문화및관광",
+          "value": 284587,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "울산광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::26::농림해양수산",
+          "name": "농림해양수산",
+          "value": 119755,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "울산광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::26::보건",
+          "name": "보건",
+          "value": 90523,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "울산광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::26::과학기술",
+          "name": "과학기술",
+          "value": 80966,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "울산광역시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::26::예비비기타",
+          "name": "예비비기타",
+          "value": 26029,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -3129,7 +3116,7 @@
         {
           "id": "metro-func::29::사회복지",
           "name": "사회복지",
-          "value": 867577,
+          "value": 583408,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -3142,150 +3129,7 @@
         {
           "id": "metro-func::29::일반공공행정",
           "name": "일반공공행정",
-          "value": 329058,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "세종특별자치시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::29::환경",
-          "name": "환경",
-          "value": 208799,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "세종특별자치시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::29::교육",
-          "name": "교육",
-          "value": 178082,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "세종특별자치시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::29::교통및물류",
-          "name": "교통및물류",
-          "value": 169460,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "세종특별자치시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::29::국토및지역개발",
-          "name": "국토및지역개발",
-          "value": 142588,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "세종특별자치시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::29::보건",
-          "name": "보건",
-          "value": 128183,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "세종특별자치시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::29::농림해양수산",
-          "name": "농림해양수산",
-          "value": 126000,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "세종특별자치시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::29::공공질서및안전",
-          "name": "공공질서및안전",
-          "value": 115698,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "세종특별자치시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::29::문화및관광",
-          "name": "문화및관광",
-          "value": 108726,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "세종특별자치시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::29::산업중소기업및에너지",
-          "name": "산업중소기업및에너지",
-          "value": 106542,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "세종특별자치시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::29::과학기술",
-          "name": "과학기술",
-          "value": 48809,
-          "meta": {
-            "level": "detailProject",
-            "parentPath": [
-              "지방재정 총계",
-              "세종특별자치시"
-            ],
-            "accountType": "일반회계"
-          }
-        },
-        {
-          "id": "metro-func::29::예비비기타",
-          "name": "예비비기타",
-          "value": 46093,
+          "value": 333130,
           "meta": {
             "level": "detailProject",
             "parentPath": [
@@ -3298,7 +3142,150 @@
         {
           "id": "metro-func::29::기타",
           "name": "기타",
-          "value": 24385,
+          "value": 271448,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "세종특별자치시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::29::산업중소기업및에너지",
+          "name": "산업중소기업및에너지",
+          "value": 195187,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "세종특별자치시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::29::국토및지역개발",
+          "name": "국토및지역개발",
+          "value": 177636,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "세종특별자치시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::29::교통및물류",
+          "name": "교통및물류",
+          "value": 168453,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "세종특별자치시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::29::농림해양수산",
+          "name": "농림해양수산",
+          "value": 113902,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "세종특별자치시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::29::교육",
+          "name": "교육",
+          "value": 103607,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "세종특별자치시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::29::공공질서및안전",
+          "name": "공공질서및안전",
+          "value": 102078,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "세종특별자치시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::29::환경",
+          "name": "환경",
+          "value": 87206,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "세종특별자치시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::29::문화및관광",
+          "name": "문화및관광",
+          "value": 83998,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "세종특별자치시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::29::보건",
+          "name": "보건",
+          "value": 41470,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "세종특별자치시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::29::과학기술",
+          "name": "과학기술",
+          "value": 10019,
+          "meta": {
+            "level": "detailProject",
+            "parentPath": [
+              "지방재정 총계",
+              "세종특별자치시"
+            ],
+            "accountType": "일반회계"
+          }
+        },
+        {
+          "id": "metro-func::29::예비비기타",
+          "name": "예비비기타",
+          "value": 6198,
           "meta": {
             "level": "detailProject",
             "parentPath": [
