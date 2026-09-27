@@ -176,6 +176,14 @@ export function ComparePage({
         </div>
       </div>
 
+      {/* 본청 basis note for metro totals */}
+      {compareView === 'metro' && (
+        <p className="text-xs text-muted-foreground mb-4">
+          광역(시·도) 금액은 시·도 본청 예산(소속 시·군·구 제외)입니다. 출처: 지방재정365 세부사업별
+          세출(예산현액), 회계 간 내부거래·보전지출 제외.
+        </p>
+      )}
+
       {/* Metro selector for district mode */}
       {compareView === 'district' && metroNames.length > 0 && (
         <div className="flex items-center gap-2 mb-4">

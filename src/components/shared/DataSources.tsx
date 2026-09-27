@@ -47,6 +47,13 @@ const SOURCES = [
     url: OFFICIAL_DEBT_SOURCE.url,
     date: `2024 결산, ${OFFICIAL_DEBT_SOURCE.fetchedAt} 수집`,
   },
+  {
+    name: '지방재정365 세부사업별 세출(QWGJK)',
+    description:
+      '광역·시군구 세부사업별 세출(예산현액) 집계. 광역은 본청만, 회계 간 내부거래·보전지출은 제외',
+    url: 'https://www.lofin365.go.kr/portal/LF5100000.do',
+    date: '연도별 기준일 상이(각 연도 화면 참고)',
+  },
 ];
 
 export function DataSources() {
@@ -96,7 +103,8 @@ export function DataSources() {
       )}
       <p className="mt-3 text-xs text-muted-foreground">
         * 본 사이트의 예산 데이터는 위 공공 데이터를 기반으로 구성되었습니다.
-        세부 금액은 예산안 기준이며 실제 집행액과 다를 수 있습니다.
+        중앙정부 예산은 기획재정부 예산안 기준이며, 지역(광역·시군구) 예산은 지방재정365
+        세부사업별 세출의 예산현액(최종 예산) 기준으로 실제 집행액과 다를 수 있습니다.
       </p>
     </div>
   );

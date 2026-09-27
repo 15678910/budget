@@ -80,6 +80,25 @@ export interface DatasetMetadata {
   source: 'static' | 'api';
 }
 
+/**
+ * Metadata for the regional (지방재정365 세부사업별 세출 QWGJK) dataset.
+ * `source` is a free-form dataset id rather than DatasetMetadata's 'static' | 'api'.
+ */
+export interface RegionalDatasetMetadata {
+  availableYears: number[];
+  lastUpdated: string;
+  totalsByYear: Record<number, number>;
+  source: string;
+  /** 연도별 기준일 (YYYYMMDD), 예: { "2025": "20251231" } */
+  asOf?: Record<string, string>;
+  /** 연도별 제외한 회계 간 내부거래·보전지출 전국 합계 (억원) */
+  excludedTransfersEok?: Record<string, number>;
+  /** 광역(시·도) 금액 산정 기준 설명 */
+  metroBasis?: string;
+  note?: string;
+  mappingNotes?: string[];
+}
+
 /** One row from the regional budget dataset (flat) */
 export interface RegionalBudgetItem {
   fiscalYear: number;

@@ -8,6 +8,7 @@ import {
   loadEducationMetadata,
 } from "@/lib/data/load-budget";
 import { UnifiedComparePage } from "@/components/comparison/UnifiedComparePage";
+import { formatAsOfSummary } from "@/lib/utils/format";
 import type { BudgetTreeNode } from "@/types/budget";
 import type { Metadata } from "next";
 
@@ -51,6 +52,7 @@ export default function CompareRoute() {
 
   const defaultYearA = allYears.length >= 2 ? allYears[allYears.length - 2] : allYears[0];
   const defaultYearB = allYears[allYears.length - 1];
+  const regionalAsOf = formatAsOfSummary(regionalMeta.asOf);
 
   return (
     <UnifiedComparePage
@@ -63,6 +65,7 @@ export default function CompareRoute() {
       defaultYearB={defaultYearB}
       availableYears={allYears}
       defaultYear={allYears[allYears.length - 1]}
+      regionalAsOf={regionalAsOf}
     />
   );
 }

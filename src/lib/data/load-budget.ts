@@ -1,4 +1,4 @@
-import { BudgetTreeNode, DatasetMetadata } from '@/types/budget';
+import { BudgetTreeNode, DatasetMetadata, RegionalDatasetMetadata } from '@/types/budget';
 import fs from 'fs';
 import path from 'path';
 
@@ -34,7 +34,7 @@ export function loadRegionalByDistrict(year: number): BudgetTreeNode {
   return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 }
 
-export function loadRegionalMetadata(): DatasetMetadata {
+export function loadRegionalMetadata(): RegionalDatasetMetadata {
   const filePath = path.join(DATA_DIR, 'regional-metadata.json');
   return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 }

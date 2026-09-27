@@ -28,6 +28,8 @@ interface Props {
   educationDataByYear: Record<number, BudgetTreeNode>;
   availableYears: number[];
   defaultYear: number;
+  /** Formatted "YYYY년 M.D, ..." summary of the regional dataset's 기준일 (per year), or empty string. */
+  regionalAsOf?: string;
 }
 
 const MODES: { key: CompareMode; label: string }[] = [
@@ -263,6 +265,7 @@ export function RegionalCompareDashboard({
   educationDataByYear,
   availableYears,
   defaultYear,
+  regionalAsOf,
 }: Props) {
   const [year, setYear] = useState(defaultYear);
   const [mode, setMode] = useState<CompareMode>('metro');
@@ -478,6 +481,15 @@ export function RegionalCompareDashboard({
           </button>
         ))}
       </div>
+
+      {/* Source note (metro/district: lofin365 QWGJK) */}
+      {mode !== 'education' && (
+        <div className="px-4 py-2 text-[11px] text-gray-500 border-b border-gray-800">
+          출처: 지방재정365 세부사업별 세출(예산현액){regionalAsOf ? ` · 기준일 ${regionalAsOf}` : ''} · 회계 간
+          내부거래·보전지출 제외
+          {mode === 'metro' && ' · 광역(시·도) 금액은 시·도 본청 예산(소속 시·군·구 제외)'}
+        </div>
+      )}
 
       {/* Entity selectors */}
       <div className="flex flex-wrap items-center justify-center gap-4 px-4 py-4 border-b border-gray-800">

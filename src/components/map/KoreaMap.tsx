@@ -43,7 +43,7 @@ const GEO_TO_BUDGET: Record<string, string> = {
   '부산광역시': '부산광역시',
   '대구광역시': '대구광역시',
   '인천광역시': '인천광역시',
-  '광주광역시': '전남광주통합특별시',
+  '광주광역시': '광주광역시',
   '대전광역시': '대전광역시',
   '울산광역시': '울산광역시',
   '세종특별자치시': '세종특별자치시',
@@ -52,7 +52,7 @@ const GEO_TO_BUDGET: Record<string, string> = {
   '충청북도': '충청북도',
   '충청남도': '충청남도',
   '전라북도': '전북특별자치도',
-  '전라남도': '전남광주통합특별시',
+  '전라남도': '전라남도',
   '경상북도': '경상북도',
   '경상남도': '경상남도',
   '제주특별자치도': '제주특별자치도',
@@ -488,7 +488,7 @@ export function KoreaMap({
           {/* 본청 budget info overlay (district view only) */}
           {drillMetro && hqBudget > 0 && (
             <div className="absolute bottom-2 left-2 px-2 py-1 rounded bg-card/90 border border-border text-xs text-muted-foreground">
-              본청 직접 예산: {formatKoreanWon(hqBudget)}
+              {drillMetro} 본청 직접 예산: {formatKoreanWon(hqBudget)} · 시·도 본청 예산(소속 시·군·구 제외)
             </div>
           )}
 
@@ -506,6 +506,7 @@ export function KoreaMap({
                   ? (healthScores?.[hoveredBudgetName]?.grade ?? null)
                   : null
               }
+              isMetroLevel={!drillMetro}
             />
           )}
 

@@ -6,6 +6,7 @@ import {
   loadEducationByOffice,
   loadEducationMetadata,
 } from '@/lib/data/load-budget';
+import { formatAsOfSummary } from '@/lib/utils/format';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -33,6 +34,8 @@ export default function RegionalComparePage() {
     ...new Set([...regionalMeta.availableYears, ...educationMeta.availableYears]),
   ].sort((a, b) => a - b);
 
+  const regionalAsOf = formatAsOfSummary(regionalMeta.asOf);
+
   return (
     <div className="w-full max-w-7xl mx-auto">
       <RegionalCompareDashboard
@@ -41,6 +44,7 @@ export default function RegionalComparePage() {
         educationDataByYear={educationDataByYear}
         availableYears={allYears}
         defaultYear={allYears[allYears.length - 1]}
+        regionalAsOf={regionalAsOf}
       />
     </div>
   );

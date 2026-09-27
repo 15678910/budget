@@ -80,3 +80,28 @@ export function formatPercent(value: number): string {
 export function cn(...classes: ClassValue[]): string {
   return twMerge(clsx(...classes));
 }
+
+/**
+ * Formats a single YYYYMMDD string into "YYYY년 M.D" (no leading zeros on month/day).
+ * Returns null if the input isn't a valid 8-digit date string.
+ */
+export function formatAsOfDate(yyyymmdd: string): string | null {
+  if (!/^\d{8}$/.test(yyyymmdd)) return null;
+  const year = yyyymmdd.slice(0, 4);
+  const month = parseInt(yyyymmdd.slice(4, 6), 10);
+  const day = parseInt(yyyymmdd.slice(6, 8), 10);
+  return `${year}년 ${month}.${day}`;
+}
+
+/**
+ * Formats a per-year asOf map (e.g. { "2025": "20251231", "2026": "20260926" })
+ * into a human-readable summary string, e.g. "2025년 12.31, 2026년 9.26".
+ */
+export function formatAsOfSummary(asOf: Record<string, string> | undefined): string {
+  if (!asOf) return '';
+  return Object.keys(asOf)
+    .sort()
+    .map((year) => formatAsOfDate(asOf[year]))
+    .filter((s): s is string => s !== null)
+    .join(', ');
+}

@@ -20,6 +20,7 @@ interface UnifiedComparePageProps {
   // For RegionalCompareDashboard
   availableYears: number[];
   defaultYear: number;
+  regionalAsOf?: string;
 }
 
 export function UnifiedComparePage(props: UnifiedComparePageProps) {
@@ -71,6 +72,7 @@ export function UnifiedComparePage(props: UnifiedComparePageProps) {
           educationDataByYear={props.educationDataByYear}
           availableYears={props.availableYears}
           defaultYear={props.defaultYear}
+          regionalAsOf={props.regionalAsOf}
         />
       )}
     </div>

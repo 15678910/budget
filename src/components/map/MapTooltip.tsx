@@ -11,9 +11,11 @@ interface MapTooltipProps {
   x: number;
   y: number;
   healthGrade?: string | null;
+  /** True when hovering a 광역(시·도) on the province map (not a drilled-down 시·군·구). */
+  isMetroLevel?: boolean;
 }
 
-export function MapTooltip({ regionName, value, metric, population, x, y, healthGrade }: MapTooltipProps) {
+export function MapTooltip({ regionName, value, metric, population, x, y, healthGrade, isMetroLevel }: MapTooltipProps) {
   const formattedValue = (() => {
     switch (metric) {
       case 'totalBudget':
@@ -58,6 +60,11 @@ export function MapTooltip({ regionName, value, metric, population, x, y, health
         <span className="text-muted-foreground">인구</span>
         <span className="font-medium">{population.toLocaleString('ko-KR')}명</span>
       </div>
+      {isMetroLevel && (
+        <div className="mt-1 text-[10px] text-muted-foreground">
+          시·도 본청 예산(소속 시·군·구 제외)
+        </div>
+      )}
     </div>
   );
 }
