@@ -588,12 +588,10 @@ export function RegionalCompareDashboard({
               </div>
             </div>
             <div className="border border-gray-800 p-2 md:p-3">
-              <div className="text-xs text-gray-500">차이</div>
-              <div
-                className={`text-base md:text-base font-mono font-bold ${
-                  delta >= 0 ? 'text-emerald-400' : 'text-red-400'
-                }`}
-              >
+              <div className="text-xs text-gray-500 break-keep">
+                차이 ({entityB.name} − {entityA.name})
+              </div>
+              <div className="text-base md:text-base font-mono font-bold text-gray-200">
                 {delta >= 0 ? '+' : ''}
                 {formatKoreanWon(delta)}
               </div>
@@ -640,13 +638,15 @@ export function RegionalCompareDashboard({
                   </div>
                 </div>
                 <div className="border border-gray-800 p-2 md:p-3">
-                  <div className="text-xs text-gray-500">1인당 차이</div>
+                  <div className="text-xs text-gray-500 break-keep">
+                    1인당 차이 ({entityB.name} − {entityA.name})
+                  </div>
                   {(() => {
                     const pcA = (entityA.totalAmount * 1_000_000) / entityA.population;
                     const pcB = (entityB.totalAmount * 1_000_000) / entityB.population;
                     const pcDelta = pcB - pcA;
                     return (
-                      <div className={`text-base md:text-base font-mono font-bold ${pcDelta >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                      <div className="text-base md:text-base font-mono font-bold text-gray-200">
                         {pcDelta >= 0 ? '+' : ''}{Math.abs(pcDelta) >= 10_000
                           ? `${Math.round(pcDelta / 10_000).toLocaleString('ko-KR')}만원`
                           : `${Math.round(pcDelta).toLocaleString('ko-KR')}원`}
