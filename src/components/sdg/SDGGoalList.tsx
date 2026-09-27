@@ -82,13 +82,14 @@ export function SDGGoalList({
                 <div className="flex items-center justify-between gap-2">
                   <span className="flex min-w-0 items-center gap-2">
                     <GoalTile num={g.num} />
-                    <span className="truncate text-base font-semibold text-gray-100">
+                    <span className="break-keep text-base font-semibold text-gray-100">
                       {g.name}
                     </span>
                   </span>
-                  {a && (
-                    <span className="shrink-0">
-                      <TrafficBadge score={a.score} light={a.light} size="sm" showLabel />
+                  {(a || tr) && (
+                    <span className="flex shrink-0 items-center gap-2">
+                      {a && <TrafficBadge score={a.score} light={a.light} size="sm" showLabel />}
+                      {tr && <TrendArrow arrow={tr.arrow} gap={a ? 100 - a.score : null} showLabel />}
                     </span>
                   )}
                 </div>

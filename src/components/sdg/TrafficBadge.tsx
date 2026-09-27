@@ -29,7 +29,11 @@ export function TrafficBadge({
   return (
     <span
       className={`inline-flex items-center gap-1 rounded-full font-mono font-semibold text-gray-950 ${
-        sm ? 'px-1.5 py-0 text-[12px]' : 'px-2 py-0.5 text-[12px]'
+        showLabel
+          ? 'px-2.5 py-0.5 text-sm'
+          : sm
+            ? 'px-1.5 py-0 text-[12px]'
+            : 'px-2 py-0.5 text-[12px]'
       }`}
       style={{ background: color }}
       title={`달성도 ${score}점 · ${TRAFFIC_LABEL[light]} (목표값 기준)`}

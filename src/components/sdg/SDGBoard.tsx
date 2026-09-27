@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { SDGBoardMatrix } from './SDGBoardMatrix';
 import { SDGRegionProfile, type FiscalContext } from './SDGRegionProfile';
 import { SDGMapDashboard } from './SDGMapDashboard';
@@ -48,6 +48,13 @@ export function SDGBoard({
   const [selectedMetro, setSelectedMetro] = useState<string | null>(null);
   const [selectedSgg, setSelectedSgg] = useState<string | null>(null);
   const [goal, setGoal] = useState<number | null>(null);
+  const mapRef = useRef<HTMLElement | null>(null);
+
+  // 목표를 고르면 목록 위에 열린 지도로 스크롤(렌더 직후)
+  const selectGoal = (g: number) => {
+    setGoal(g);
+    requestAnimationFrame(() => mapRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+  };
 
   return (
     <div className="space-y-5">
@@ -70,71 +77,68 @@ export function SDGBoard({
         onSgg={setSelectedSgg}
       />
 
-      {/* 스코프별 단일 대상 뷰 — 목표 미선택 시 전체 폭, 선택 시 지도와 2단 */}
-      {!goal && (
-        <p className="text-sm text-gray-400">목표를 누르면 전국 지도가 열립니다.</p>
-      )}
-      <div
-        className={
-          goal ? 'grid gap-4 items-start lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]' : ''
-        }
-      >
-        <div>
-          {scope === 'national' && (
-            <SDGNationalSummary
-              national={national}
-              achievement={nationalAchievement}
-              trend={nationalTrend}
-              onSelectGoal={setGoal}
-              selectedGoal={goal}
-            />
-          )}
-          {scope === 'metro' &&
-            (selectedMetro ? (
-              <SDGRegionProfile
-                region={selectedMetro}
-                matrix={matrix}
-                fiscal={fiscalByRegion[selectedMetro] ?? null}
-                onSelectGoal={setGoal}
-                valuesByIndicator={valuesByIndicator}
-                base2018ByIndicator={base2018ByIndicator}
-                direction={direction}
-              />
-            ) : (
-              <Placeholder text="광역을 선택하면 프로파일이 표시됩니다." />
-            ))}
-          {scope === 'municipal' &&
-            (selectedMetro && selectedSgg ? (
-              <SDGMunicipalProfile metro={selectedMetro} sgg={selectedSgg} />
-            ) : (
-              <Placeholder text="광역 → 시군구를 선택하면 프로파일이 표시됩니다." />
-            ))}
-        </div>
-
-        {/* 목표 선택 시에만 전국 지도 패널 — lg에서 스크롤 따라 고정 */}
-        {goal && (
-          <div className="lg:sticky lg:top-20 self-start border border-gray-800 rounded-lg bg-gray-900/30 p-3 space-y-2">
-            <div className="flex items-center justify-between gap-2">
-              <span className="inline-flex items-center gap-2 min-w-0">
-                <span
-                  className={`inline-flex h-6 w-6 shrink-0 items-center justify-center rounded text-xs font-bold text-white ${GOAL_BG_CLASS[goal]}`}
-                >
-                  {goal}
-                </span>
-                <span className="truncate text-sm font-semibold text-gray-200">
-                  SDG {goal}. {SDG_GOALS.find((g) => g.num === goal)?.name}
-                </span>
-              </span>
-              <button
-                onClick={() => setGoal(null)}
-                className="shrink-0 rounded border border-gray-700 px-2.5 py-1 text-xs text-gray-400 hover:border-gray-500 hover:text-gray-200"
+      {/* 목표 선택 시 전국 지도 — 목록 위 전체 폭(2단으로 나누면 목록·지도 모두 좁아져 줄바꿈이 심함) */}
+      {goal ? (
+        <section
+          ref={mapRef}
+          aria-label={`SDG ${goal} 전국 지도`}
+          className="scroll-mt-20 border border-gray-800 rounded-lg bg-gray-900/30 p-3 space-y-2"
+        >
+          <div className="flex items-center justify-between gap-2">
+            <span className="inline-flex items-center gap-2 min-w-0">
+              <span
+                className={`inline-flex h-7 w-7 shrink-0 items-center justify-center rounded text-sm font-bold text-white ${GOAL_BG_CLASS[goal]}`}
               >
-                지도 닫기
-              </button>
-            </div>
-            <SDGMapDashboard key={goal} initialGoal={goal} geoData={geoData} kosis={kosis} />
+                {goal}
+              </span>
+              <span className="text-base font-semibold text-gray-100 break-keep">
+                SDG {goal}. {SDG_GOALS.find((g) => g.num === goal)?.name}
+              </span>
+            </span>
+            <button
+              onClick={() => setGoal(null)}
+              className="shrink-0 rounded border border-gray-700 px-3 py-1.5 text-sm text-gray-300 hover:border-gray-500 hover:text-gray-100"
+            >
+              지도 닫기
+            </button>
           </div>
+          <SDGMapDashboard key={goal} initialGoal={goal} geoData={geoData} kosis={kosis} />
+        </section>
+      ) : (
+        <p className="text-sm text-gray-400">목표를 누르면 이 자리에 전국 지도가 열립니다.</p>
+      )}
+
+      {/* 스코프별 단일 대상 뷰 — 항상 전체 폭 */}
+      <div>
+        {scope === 'national' && (
+          <SDGNationalSummary
+            national={national}
+            achievement={nationalAchievement}
+            trend={nationalTrend}
+            onSelectGoal={selectGoal}
+            selectedGoal={goal}
+          />
         )}
+        {scope === 'metro' &&
+          (selectedMetro ? (
+            <SDGRegionProfile
+              region={selectedMetro}
+              matrix={matrix}
+              fiscal={fiscalByRegion[selectedMetro] ?? null}
+              onSelectGoal={selectGoal}
+              valuesByIndicator={valuesByIndicator}
+              base2018ByIndicator={base2018ByIndicator}
+              direction={direction}
+            />
+          ) : (
+            <Placeholder text="광역을 선택하면 프로파일이 표시됩니다." />
+          ))}
+        {scope === 'municipal' &&
+          (selectedMetro && selectedSgg ? (
+            <SDGMunicipalProfile metro={selectedMetro} sgg={selectedSgg} />
+          ) : (
+            <Placeholder text="광역 → 시군구를 선택하면 프로파일이 표시됩니다." />
+          ))}
       </div>
 
       {/* 전체 비교 — 16×17 매트릭스(접이식, opt-in) */}
@@ -154,9 +158,7 @@ export function SDGBoard({
               setSelectedMetro(m);
               setSelectedSgg(null);
             }}
-            onSelectGoal={(g) => {
-              setGoal(g);
-            }}
+            onSelectGoal={selectGoal}
           />
         </div>
       </details>

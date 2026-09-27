@@ -49,7 +49,7 @@ export function TrendArrow({
   return (
     <span
       className={`inline-flex items-center gap-0.5 font-mono font-bold ${
-        sm ? 'text-[12px]' : 'text-xs'
+        showLabel ? 'text-base' : sm ? 'text-[12px]' : 'text-xs'
       }`}
       style={{ color: meta.color }}
       title={title}
@@ -57,7 +57,7 @@ export function TrendArrow({
       <span aria-hidden>{meta.glyph}</span>
       {showLabel ? (
         <span
-          className={`font-sans font-normal text-gray-300 ${sm ? 'text-[11px]' : 'text-[12px]'}`}
+          className={`font-sans font-normal text-gray-200 text-sm`}
         >
           {TREND_SHORT_LABEL[arrow]}
         </span>

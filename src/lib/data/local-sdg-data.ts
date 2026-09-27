@@ -133,7 +133,7 @@ export const SDG_DOMAINS: SDGDomain[] = [
       { id: 'emp_rate', name: '고용률', unit: '%', direction: 'higher_better', description: '15세 이상 인구 중 취업자 비율', source: '통계청' },
       { id: 'emp_unemp', name: '실업률', unit: '%', direction: 'lower_better', description: '경제활동인구 중 실업자 비율', source: '통계청' },
       { id: 'emp_youth', name: '청년실업률', unit: '%', direction: 'lower_better', description: '15~29세 경제활동인구 중 실업자', source: '통계청' },
-      { id: 'emp_female', name: '여성경활참가율', unit: '%', direction: 'higher_better', description: '15세 이상 여성 중 경제활동인구', source: '통계청' },
+      { id: 'emp_female', name: '여성 경제활동참가율', unit: '%', direction: 'higher_better', description: '15세 이상 여성 중 경제활동인구', source: '통계청' },
     ],
   },
   {
