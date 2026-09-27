@@ -140,7 +140,7 @@ export function PathFinderPanel({
           경로 찾기
         </button>
         {note && (
-          <p className="text-[11px] text-slate-500" role="status">
+          <p className="text-[12px] text-slate-500" role="status">
             {note}
           </p>
         )}

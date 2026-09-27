@@ -53,7 +53,7 @@ export function EducationTypeHierarchy() {
                 <span className="w-2.5 h-2.5 rounded-sm inline-block" style={{ background: TYPE_COLOR[t.type] }} />{t.type}
               </div>
               <div className="text-lg font-bold text-gray-100 mt-1">{formatKRW(t.perStudent)}</div>
-              <div className="text-[11px] text-gray-500">1인당 · {t.schools}교 · {(t.students / 10000).toFixed(1)}만명</div>
+              <div className="text-[12px] text-gray-500">1인당 · {t.schools}교 · {(t.students / 10000).toFixed(1)}만명</div>
             </div>
           ))}
         </div>
@@ -147,12 +147,12 @@ export function EducationTypeHierarchy() {
                 <span className="text-gray-100 font-bold">{s.amt.toFixed(1)}조원</span>
               </div>
               <div className="bg-gray-800 rounded h-6 overflow-hidden">
-                <div className="h-full rounded flex items-center justify-end pr-2 text-[11px] text-white/90"
+                <div className="h-full rounded flex items-center justify-end pr-2 text-[12px] text-white/90"
                   style={{ width: `${(s.amt / NATIONAL_EDU_FINANCE) * 100}%`, background: s.color }}>
                   {((s.amt / NATIONAL_EDU_FINANCE) * 100).toFixed(0)}%
                 </div>
               </div>
-              <div className="text-[11px] text-gray-500 mt-0.5">{s.note}</div>
+              <div className="text-[12px] text-gray-500 mt-0.5">{s.note}</div>
             </div>
           ))}
           <div className="border-t border-gray-800 pt-3 text-sm text-gray-300">

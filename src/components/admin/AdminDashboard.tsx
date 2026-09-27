@@ -626,7 +626,7 @@ export function AdminDashboard() {
                 {Array.from({ length: 24 }, (_, h) => (
                   <div
                     key={`h-${h}`}
-                    className="text-[10px] text-muted-foreground text-center pb-1 min-w-[20px]"
+                    className="text-[12px] text-muted-foreground text-center pb-1 min-w-[20px]"
                   >
                     {HOUR_LABELS.includes(h) ? h : ''}
                   </div>
@@ -637,7 +637,7 @@ export function AdminDashboard() {
                   <>
                     <div
                       key={`label-${dayIdx}`}
-                      className="text-[10px] text-muted-foreground pr-2 flex items-center justify-end"
+                      className="text-[12px] text-muted-foreground pr-2 flex items-center justify-end"
                     >
                       {DAY_LABELS[dayIdx]}
                     </div>

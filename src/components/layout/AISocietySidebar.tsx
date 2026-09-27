@@ -131,7 +131,7 @@ function HubLinks() {
             <Link
               href={group.href}
               className={cn(
-                'block text-[11px] font-semibold uppercase tracking-wider px-2 mb-1.5 rounded-md transition-colors',
+                'block text-[12px] font-semibold uppercase tracking-wider px-2 mb-1.5 rounded-md transition-colors',
                 isActive(pathname, group.href)
                   ? 'text-foreground'
                   : 'text-muted-foreground hover:text-foreground'
@@ -140,7 +140,7 @@ function HubLinks() {
               {group.title} ›
             </Link>
           ) : (
-            <h3 className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider px-2 mb-1.5">
+            <h3 className="text-[12px] font-semibold text-muted-foreground uppercase tracking-wider px-2 mb-1.5">
               {group.title}
             </h3>
           )}

@@ -53,6 +53,27 @@
   --color-primary-foreground: var(--primary-foreground);
 }
 
+/*
+ * 사이트 전체 글자 크기 확대 (2026-09-27 사용자 요청).
+ *
+ * 가독성이 떨어진다는 피드백에 따라 Tailwind v4의 텍스트 크기 토큰만 한 단계씩
+ * 키운다. `html` font-size(rem 기준)를 바꾸면 spacing/padding 등 rem 단위 여백까지
+ * 전부 함께 커지므로, 레이아웃은 그대로 두고 폰트 크기 토큰만 개별 재정의한다.
+ * 2xl 이상은 이미 충분히 크므로 변경하지 않는다.
+ */
+@theme {
+  --text-xs: 0.8125rem;
+  --text-xs--line-height: 1.25rem;
+  --text-sm: 0.9375rem;
+  --text-sm--line-height: 1.375rem;
+  --text-base: 1.0625rem;
+  --text-base--line-height: 1.625rem;
+  --text-lg: 1.1875rem;
+  --text-lg--line-height: 1.75rem;
+  --text-xl: 1.3125rem;
+  --text-xl--line-height: 1.875rem;
+}
+
 .dark {
   --background: #0a0a0a;
   --foreground: #ededed;
@@ -73,7 +94,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-size: 16px;
+  font-size: 17px;
 
   /*
    * 한글 줄바꿈.

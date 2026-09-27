@@ -379,7 +379,7 @@ function CandidateDrawer({ data, type, onClose }: { data: Analyzed; type: string
               {/* ── 후보 작성 공약 원문 ── */}
               {pledge.content && (
                 <div className="px-4 py-3 border-b border-gray-800/60">
-                  <div className="inline-flex items-center gap-1.5 mb-2 text-[11px] font-semibold tracking-wide text-sky-300 bg-sky-950/40 border border-sky-800/50 rounded px-2 py-0.5">
+                  <div className="inline-flex items-center gap-1.5 mb-2 text-[12px] font-semibold tracking-wide text-sky-300 bg-sky-950/40 border border-sky-800/50 rounded px-2 py-0.5">
                     📋 후보 작성 공약 <span className="font-normal text-sky-400/70">(선관위 제출 원문)</span>
                   </div>
                   <p className="text-sm text-gray-300 leading-relaxed whitespace-pre-line">{pledge.content}</p>
@@ -388,7 +388,7 @@ function CandidateDrawer({ data, type, onClose }: { data: Analyzed; type: string
 
               {/* ── 시스템 추정 영역 (후보 작성 아님) ── */}
               <div className="px-4 pt-3 pb-1 bg-gray-950/30 border-b border-gray-800/40">
-                <div className="inline-flex items-center gap-1.5 text-[11px] font-semibold tracking-wide text-emerald-300 bg-emerald-950/40 border border-emerald-800/50 rounded px-2 py-0.5">
+                <div className="inline-flex items-center gap-1.5 text-[12px] font-semibold tracking-wide text-emerald-300 bg-emerald-950/40 border border-emerald-800/50 rounded px-2 py-0.5">
                   💰 시스템 추정 <span className="font-normal text-emerald-400/70">(후보 작성 아님 · NABO 표준단가 자동계산)</span>
                 </div>
               </div>

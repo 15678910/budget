@@ -122,7 +122,7 @@ export function SDGImpactDashboard({
                 ? `약 ${summaryStats.povertyEscape}만`
                 : '--'}
             </div>
-            <div className="text-[10px] text-gray-600">가구</div>
+            <div className="text-[12px] text-gray-600">가구</div>
           </div>
           {/* Gini Improvement */}
           <div className="border border-gray-800 rounded p-3 text-center">
@@ -132,7 +132,7 @@ export function SDGImpactDashboard({
                 ? `-${summaryStats.giniImprovement.toFixed(3)}`
                 : '--'}
             </div>
-            <div className="text-[10px] text-gray-600">포인트</div>
+            <div className="text-[12px] text-gray-600">포인트</div>
           </div>
           {/* Education Relief */}
           <div className="border border-gray-800 rounded p-3 text-center">
@@ -142,7 +142,7 @@ export function SDGImpactDashboard({
                 ? `연 ${summaryStats.educationRelief.toLocaleString()}만`
                 : '--'}
             </div>
-            <div className="text-[10px] text-gray-600">원/인</div>
+            <div className="text-[12px] text-gray-600">원/인</div>
           </div>
         </div>
       </div>

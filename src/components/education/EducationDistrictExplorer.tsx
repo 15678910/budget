@@ -211,7 +211,7 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
               highlightName={hlPoint}
               onPointClick={(name) => setHlPoint(name === hlPoint ? null : name)} />
           </div>
-          <p className="text-[11px] text-gray-500 mt-1 text-center">시도 → 시군구 클릭 시 <strong className="text-gray-400">읍면동 경계</strong> + <strong className="text-gray-300">학교·유치원 위치 핀</strong>(유/초/중/고 버튼으로 필터) · 휠 확대 · 드래그 이동 · 핀↔목록 클릭 연동</p>
+          <p className="text-[12px] text-gray-500 mt-1 text-center">시도 → 시군구 클릭 시 <strong className="text-gray-400">읍면동 경계</strong> + <strong className="text-gray-300">학교·유치원 위치 핀</strong>(유/초/중/고 버튼으로 필터) · 휠 확대 · 드래그 이동 · 핀↔목록 클릭 연동</p>
         </div>
 
         {/* 우측: 교육지원청 목록 / 학교 목록 */}
@@ -232,12 +232,12 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
                       className="w-full px-2.5 py-2 rounded text-left hover:bg-gray-800/60 border border-transparent hover:border-gray-700 transition-colors">
                       <div className="flex items-center gap-2">
                         <span className="flex-1 text-sm text-gray-200 truncate">{d.name}</span>
-                        <span className="text-[11px] text-gray-500">{d.schools}교</span>
+                        <span className="text-[12px] text-gray-500">{d.schools}교</span>
                         <span className="text-xs text-gray-300 w-16 text-right">{(d.students / 10000).toFixed(1)}만명</span>
-                        {d.perStudent > 0 && <span className="text-[11px] text-emerald-400 w-20 text-right">{formatKRW(d.perStudent)}</span>}
+                        {d.perStudent > 0 && <span className="text-[12px] text-emerald-400 w-20 text-right">{formatKRW(d.perStudent)}</span>}
                       </div>
                       {d.sggs && d.sggs.length > 0 && (
-                        <div className="text-[11px] text-gray-500 mt-0.5 truncate">관할: {d.sggs.join(' · ')}</div>
+                        <div className="text-[12px] text-gray-500 mt-0.5 truncate">관할: {d.sggs.join(' · ')}</div>
                       )}
                     </button>
                   ))}
@@ -250,9 +250,9 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
                 <div>
                   <h3 className="text-sm font-semibold text-gray-200">{selectedDist.name}</h3>
                   {selectedDist.sggs && selectedDist.sggs.length > 0 && (
-                    <div className="text-[11px] text-gray-500">관할 시군구: {selectedDist.sggs.join(' · ')}</div>
+                    <div className="text-[12px] text-gray-500">관할 시군구: {selectedDist.sggs.join(' · ')}</div>
                   )}
-                  <div className="flex gap-3 text-[11px] text-gray-400 mt-0.5 flex-wrap">
+                  <div className="flex gap-3 text-[12px] text-gray-400 mt-0.5 flex-wrap">
                     <span>학교 {selectedDist.schools}</span>
                     <span>학생 {selectedDist.students.toLocaleString()}</span>
                     <span>교원 {selectedDist.teachers.toLocaleString()}</span>
@@ -296,9 +296,9 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
                       ) : kinderList.map((g, i) => (
                         <tr key={i} onClick={() => setHlPoint(g.n === hlPoint ? null : g.n)}
                           className={`border-b border-gray-800/40 cursor-pointer ${g.n === hlPoint ? 'bg-purple-600/30' : 'hover:bg-gray-800/40'}`}>
-                          <td className="py-1.5 px-1.5 text-gray-200">{g.n}{g.la == null && <span className="text-[10px] text-gray-600 ml-1">(위치없음)</span>}</td>
+                          <td className="py-1.5 px-1.5 text-gray-200">{g.n}{g.la == null && <span className="text-[12px] text-gray-600 ml-1">(위치없음)</span>}</td>
                           <td className="text-center py-1.5 px-1">
-                            <span className="px-1.5 py-0.5 rounded text-[10px] text-white" style={{ background: KIND_COLOR['유'] }}>{g.est.replace(/[()]/g, ' ').trim().split(' ')[0] || '유'}</span>
+                            <span className="px-1.5 py-0.5 rounded text-[12px] text-white" style={{ background: KIND_COLOR['유'] }}>{g.est.replace(/[()]/g, ' ').trim().split(' ')[0] || '유'}</span>
                           </td>
                           <td className="text-right py-1.5 px-1.5 text-gray-300">{g.s.toLocaleString()}</td>
                           <td className="text-right py-1.5 px-1.5 text-gray-400">{g.c.toLocaleString()}</td>
@@ -323,7 +323,7 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
                           className={`border-b border-gray-800/40 cursor-pointer ${s.n === hlPoint ? 'bg-yellow-500/20' : 'hover:bg-gray-800/40'}`}>
                           <td className="py-1.5 px-1.5 text-gray-200">{s.n}</td>
                           <td className="text-center py-1.5 px-1">
-                            <span className="px-1.5 py-0.5 rounded text-[10px] text-white" style={{ background: KIND_COLOR[s.k] ?? '#6b7280' }}>{s.k}</span>
+                            <span className="px-1.5 py-0.5 rounded text-[12px] text-white" style={{ background: KIND_COLOR[s.k] ?? '#6b7280' }}>{s.k}</span>
                           </td>
                           <td className="text-right py-1.5 px-1.5 text-gray-300">{s.s.toLocaleString()}</td>
                           <td className="text-right py-1.5 px-1.5 text-gray-300">{s.t.toLocaleString()}</td>
@@ -348,13 +348,13 @@ export function EducationDistrictExplorer({ geoData, municipalitiesGeo }: { geoD
           <Mini label="격차" value={`${distStats.spread.toFixed(1)}배`} color="text-gray-100" />
           <Mini label="지니계수" value={distStats.gini.toFixed(3)} color="text-blue-300" />
         </div>
-        <p className="text-[11px] text-gray-500 mt-2">
+        <p className="text-[12px] text-gray-500 mt-2">
           ※ 소규모 학교가 많은 농어촌 교육지원청일수록 학생 1인당 학교회계 예산이 높습니다(고정비). 본청(○○교육청)은 목록에서 제외.
           상단 <strong className="text-gray-400">지자체 교육지원</strong> 카드 = <strong className="text-gray-400">지방재정365 OpenAPI</strong>(교육관련지원 예산현황)
           실시간 호출값으로 매년 자동 갱신됩니다. 시도 선택 시 본청(법정전출금)+시군구 합계, 시군구 선택 시 해당 시군구의
           교육경비보조금·학교급식보조·전출금 등 교육 지원 총액을 표시합니다(예: 강원 {SUBSIDY_YEAR} 약 3,397억, 인제군 약 20억).
         </p>
-        <p className="text-[11px] text-gray-600 mt-1">
+        <p className="text-[12px] text-gray-600 mt-1">
           · <strong className="text-gray-500">읍면동 경계</strong>: 통계청 2013 행정구역(southkorea-maps) 기준.
           · <strong className="text-gray-500">유치원</strong>: 유치원알리미(e-childschoolinfo) 기본현황 — 원아수·학급수 (전국 7,805곳).
           · <strong className="text-gray-500">학교·유치원 위치 핀</strong>: 학교=전국초중등학교위치표준데이터(data.go.kr, 12,011교 좌표), 유치원=유치원알리미 좌표. 유/초/중/고 버튼으로 필터.
@@ -371,7 +371,7 @@ function Card({ label, value, sub, accent }: { label: string; value: string; sub
     <div className={`border ${border} bg-gray-900/40 rounded-lg p-4`}>
       <div className="text-xs text-gray-400">{label}</div>
       <div className={`text-xl font-bold mt-1 ${text}`}>{value}</div>
-      {sub && <div className="text-[11px] text-gray-500">{sub}</div>}
+      {sub && <div className="text-[12px] text-gray-500">{sub}</div>}
     </div>
   );
 }
@@ -379,7 +379,7 @@ function Card({ label, value, sub, accent }: { label: string; value: string; sub
 function Mini({ label, value, color }: { label: string; value: string; color: string }) {
   return (
     <div className="border border-gray-800 rounded p-2.5">
-      <div className="text-[11px] text-gray-500">{label}</div>
+      <div className="text-[12px] text-gray-500">{label}</div>
       <div className={`text-base font-bold mt-0.5 ${color}`}>{value}</div>
     </div>
   );

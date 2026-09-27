@@ -58,7 +58,7 @@ export function EducationAdmissionRate() {
           <span className="text-gray-500">({ADMISSION_LATEST_YEAR}년 2월 졸업·3월 입학 기준).</span>
           <span className="text-gray-500"> 출처: 한국교육개발원 교육기본통계(공공데이터포털 15053808).</span>
         </p>
-        <p className="text-[12px] text-gray-500">
+        <p className="text-xs text-gray-500">
           ※ 교육기본통계는 매년 <strong className="text-gray-400">4월 1일 기준</strong>으로 조사해 <strong className="text-gray-400">8월 말</strong>에 발표됩니다.
           {ADMISSION_LATEST_YEAR + 1}년분(올해 졸업생)은 <strong className="text-gray-400">{ADMISSION_LATEST_YEAR + 1}년 8월경</strong> 공개 예정이며, 공개 시 갱신됩니다.
           따라서 현재 최신 확정치는 {ADMISSION_LATEST_YEAR}년입니다.

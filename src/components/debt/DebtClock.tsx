@@ -225,7 +225,7 @@ function Cell({ label, value, color, sub, glossaryKey }: CellProps) {
       <div className="text-xs md:text-sm text-gray-500 leading-tight truncate flex items-center gap-1">
         {label}
         {tooltip && (
-          <span className="inline-flex items-center justify-center w-3 h-3 rounded-full border border-gray-600 text-[8px] text-gray-500 cursor-help flex-shrink-0">
+          <span className="inline-flex items-center justify-center w-3 h-3 rounded-full border border-gray-600 text-[11px] text-gray-500 cursor-help flex-shrink-0">
             ?
           </span>
         )}
@@ -236,7 +236,7 @@ function Cell({ label, value, color, sub, glossaryKey }: CellProps) {
         {value}
       </div>
       {sub && (
-        <div className="text-[9px] md:text-xs text-gray-600 leading-tight truncate">
+        <div className="text-[11px] md:text-xs text-gray-600 leading-tight truncate">
           {sub}
         </div>
       )}
@@ -591,8 +591,8 @@ export function DebtClock() {
 
       {/* ====== FOOTER: 데이터 출처 ====== */}
       <div className="border border-gray-800 px-3 py-2">
-        <div className="text-[9px] md:text-xs text-gray-600 text-center space-y-0.5">
-          <p className="text-gray-500 font-semibold uppercase tracking-widest text-[8px] md:text-[9px] mb-1">
+        <div className="text-[11px] md:text-xs text-gray-600 text-center space-y-0.5">
+          <p className="text-gray-500 font-semibold uppercase tracking-widest text-[11px] md:text-[11px] mb-1">
             데이터 출처 Sources
           </p>
           <p>

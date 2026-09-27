@@ -75,10 +75,10 @@ export function MultiYearTrendBadge({
     mt.green != null ? `목표 ${mt.green}${unit} 대비 회귀 페이스` : '추세 기울기 부호';
   return (
     <div className="flex items-center gap-2.5 flex-wrap rounded-md border border-sky-800/50 bg-sky-950/20 px-3 py-2">
-      <span className="text-[11px] font-semibold text-sky-300">{scopeLabel} 실측 추세</span>
+      <span className="text-[12px] font-semibold text-sky-300">{scopeLabel} 실측 추세</span>
       <Sparkline points={mt.points} higherBetter={higherBetter} unit={unit} />
       <TrendArrow arrow={mt.arrow} size="md" />
-      <span className="text-[11px] text-gray-400 font-mono">
+      <span className="text-[12px] text-gray-400 font-mono">
         slope {trend.slope >= 0 ? '+' : ''}
         {trend.slope.toFixed(2)}/yr
         {cagrPct != null && (
@@ -89,10 +89,10 @@ export function MultiYearTrendBadge({
         )}
         {' · '}R² {trend.r2.toFixed(2)}
       </span>
-      <span className="text-[10px] text-sky-400/80 font-medium">
+      <span className="text-[12px] text-sky-400/80 font-medium">
         실측 {trend.n}년 회귀(KOSIS) · {trend.firstYear}~{trend.lastYear}
       </span>
-      <span className="text-[10px] text-gray-500">{greenNote} · 보간 아님 · 인과 아님</span>
+      <span className="text-[12px] text-gray-500">{greenNote} · 보간 아님 · 인과 아님</span>
     </div>
   );
 }

@@ -31,21 +31,21 @@ export function SDGMunicipalProfile({
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={`/sdg/sdg-4-pic.svg?v=12`} alt={goal4.name} className="w-9 h-9 rounded" />
             <div>
-              <div className="text-[11px] text-gray-400">SDG 4 · 대학 진학률 (실측)</div>
+              <div className="text-[12px] text-gray-400">SDG 4 · 대학 진학률 (실측)</div>
               <div className="font-mono text-lg text-gray-100">
                 {data.admissionRate.toFixed(1)}
                 <span className="ml-0.5 text-xs text-gray-500">%</span>
               </div>
             </div>
           </div>
-          <p className="mt-1 text-[10px] text-gray-600">출처: 한국교육개발원 교육기본통계 2025</p>
+          <p className="mt-1 text-[12px] text-gray-600">출처: 한국교육개발원 교육기본통계 2025</p>
         </div>
       )}
 
       {/* 재정 맥락 (목표 아님) */}
       {data.fiscal && (
         <div>
-          <div className="mb-1 text-[11px] font-semibold text-gray-400">💰 재정 맥락 (목표 아님)</div>
+          <div className="mb-1 text-[12px] font-semibold text-gray-400">💰 재정 맥락 (목표 아님)</div>
           <div className="grid grid-cols-2 gap-2 text-sm">
             <div className="bg-gray-800/50 rounded p-2">
               <span className="text-gray-400">재정자립도</span>
@@ -69,7 +69,7 @@ export function SDGMunicipalProfile({
 
       {/* 나머지 목표 — 데이터 준비중 */}
       <div>
-        <div className="mb-1 text-[11px] font-semibold text-gray-400">나머지 목표</div>
+        <div className="mb-1 text-[12px] font-semibold text-gray-400">나머지 목표</div>
         <div className="grid grid-cols-4 sm:grid-cols-6 gap-1.5">
           {SDG_GOALS.filter((g) => !data.availableGoals.includes(g.num)).map((g) => (
             <div
@@ -79,13 +79,13 @@ export function SDGMunicipalProfile({
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={`/sdg/sdg-${g.num}-pic.svg?v=12`} alt={g.name} className="w-7 h-7 rounded" />
-              <span className="mt-0.5 text-[9px] text-gray-600">준비중</span>
+              <span className="mt-0.5 text-[11px] text-gray-600">준비중</span>
             </div>
           ))}
         </div>
       </div>
 
-      <p className="text-[11px] text-gray-600 border-t border-gray-800 pt-2">{data.note}</p>
+      <p className="text-[12px] text-gray-600 border-t border-gray-800 pt-2">{data.note}</p>
     </div>
   );
 }

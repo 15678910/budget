@@ -38,14 +38,14 @@ export function TrendArrow({
   return (
     <span
       className={`inline-flex items-center gap-0.5 font-mono font-bold ${
-        sm ? 'text-[11px]' : 'text-xs'
+        sm ? 'text-[12px]' : 'text-xs'
       }`}
       style={{ color: meta.color }}
       title={title}
     >
       <span aria-hidden>{meta.glyph}</span>
       {gap != null && (
-        <span className={`font-normal text-gray-500 ${sm ? 'text-[9px]' : 'text-[10px]'}`}>
+        <span className={`font-normal text-gray-500 ${sm ? 'text-[11px]' : 'text-[12px]'}`}>
           갭{gap}
         </span>
       )}

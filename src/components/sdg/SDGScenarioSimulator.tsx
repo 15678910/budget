@@ -99,10 +99,10 @@ export function SDGScenarioSimulator({
       {/* 가정 배너 */}
       <div className="rounded bg-amber-900/40 border border-amber-700/60 px-3 py-2">
         <div className="text-amber-200 font-bold text-sm">🧪 가정 시나리오 — 실제 데이터 아님</div>
-        <p className="text-[11px] text-amber-300/80 mt-0.5">
+        <p className="text-[12px] text-amber-300/80 mt-0.5">
           슬라이더로 가정값을 조정해 점수·순위 변화를 탐색합니다. 저장되지 않으며 실데이터를 변경하지 않습니다.
         </p>
-        <p className="text-[11px] text-amber-300/70 mt-0.5">
+        <p className="text-[12px] text-amber-300/70 mt-0.5">
           상대 점수: 한 지역 값 변경이 분포를 바꿔 전체 순위에 영향을 줍니다.
         </p>
       </div>
@@ -123,7 +123,7 @@ export function SDGScenarioSimulator({
               <div className="flex items-center justify-between mb-1">
                 <span className="text-gray-300">
                   {meta.name}{' '}
-                  <span className="text-[10px] text-gray-500">
+                  <span className="text-[12px] text-gray-500">
                     ({meta.direction === 'higher_better' ? '↑좋음' : '↓좋음'})
                   </span>
                 </span>

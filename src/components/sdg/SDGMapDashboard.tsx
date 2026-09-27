@@ -93,7 +93,7 @@ export function SDGMapDashboard({ geoData, kosis, initialGoal }: { geoData: any;
           background: `conic-gradient(${SDG_GOALS.map((g, i) => `${g.color} ${(i * 360 / 17).toFixed(2)}deg ${((i + 1) * 360 / 17).toFixed(2)}deg`).join(', ')})`,
         }}>
           <div className="absolute inset-[26%] rounded-full bg-gray-950 flex items-center justify-center">
-            <span className="text-[9px] font-extrabold text-white leading-none text-center">SDGs</span>
+            <span className="text-[11px] font-extrabold text-white leading-none text-center">SDGs</span>
           </div>
         </div>
         <div className="space-y-1">
@@ -143,7 +143,7 @@ export function SDGMapDashboard({ geoData, kosis, initialGoal }: { geoData: any;
           {/* UN 엠블럼(글로브+월계수) */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/sdg/un-emblem.svg?v=1" alt="UN" className="h-[26%] w-auto" />
-          <span className="font-extrabold leading-[1.04] tracking-tight text-[11px] md:text-[15px]" style={{ color: '#5B92E5' }}>
+          <span className="font-extrabold leading-[1.04] tracking-tight text-[12px] md:text-[15px]" style={{ color: '#5B92E5' }}>
             SUSTAINABLE<br />DEVELOPMENT
           </span>
           <div className="flex items-center justify-center gap-[1px] font-extrabold leading-none text-lg md:text-2xl" style={{ color: '#5B92E5' }}>
@@ -191,7 +191,7 @@ export function SDGMapDashboard({ geoData, kosis, initialGoal }: { geoData: any;
                   </g>
                 ))}
               </svg>
-              <div className="flex items-center justify-between text-[11px] text-gray-500 mt-1">
+              <div className="flex items-center justify-between text-[12px] text-gray-500 mt-1">
                 <span>낮음</span>
                 <div className="flex-1 mx-2 h-2 rounded" style={{ background: `linear-gradient(90deg, ${hexA(goal.color, 0.2)}, ${hexA(goal.color, 0.95)})` }} />
                 <span>높음 ({indicator.higherBetter ? '좋음' : '주의'})</span>
@@ -229,7 +229,7 @@ export function SDGMapDashboard({ geoData, kosis, initialGoal }: { geoData: any;
             <p className="text-sm text-gray-500 py-10 text-center">데이터 준비중</p>
           )}
           {indicator && (
-            <p className="text-[11px] text-gray-600 mt-3 border-t border-gray-800 pt-2">
+            <p className="text-[12px] text-gray-600 mt-3 border-t border-gray-800 pt-2">
               해석방향: {indicator.higherBetter ? '높을수록 양호' : '낮을수록 양호'} · 출처 {indicator.source}({indicator.year}).
               ※ 대표 지표이며 SDG 종합 달성도와 다를 수 있습니다.
             </p>

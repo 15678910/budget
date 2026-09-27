@@ -147,7 +147,7 @@ export function DepartmentChatbot({ departmentId }: { departmentId: DepartmentId
                     {msg.content}
                     {msg.role === 'assistant' && msg.source && (
                       <span
-                        className={`ml-2 inline-block text-[10px] px-1.5 py-0.5 rounded ${
+                        className={`ml-2 inline-block text-[12px] px-1.5 py-0.5 rounded ${
                           msg.source === 'ai'
                             ? 'bg-blue-900/50 text-blue-400'
                             : 'bg-muted text-muted-foreground/60'

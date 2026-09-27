@@ -392,8 +392,8 @@ export function FiscalHealthDashboard() {
 
       {/* ====== FOOTER ====== */}
       <div className="border border-gray-800 px-3 py-2">
-        <div className="text-[9px] md:text-xs text-gray-600 text-center space-y-0.5">
-          <p className="text-gray-500 font-semibold uppercase tracking-widest text-[8px] md:text-[9px] mb-1">
+        <div className="text-[11px] md:text-xs text-gray-600 text-center space-y-0.5">
+          <p className="text-gray-500 font-semibold uppercase tracking-widest text-[11px] md:text-[11px] mb-1">
             데이터 출처 Sources
           </p>
           <p>

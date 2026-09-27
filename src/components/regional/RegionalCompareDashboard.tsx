@@ -110,7 +110,7 @@ function CompareCell({
           className="w-2 h-2 rounded-full flex-shrink-0"
           style={{ backgroundColor: colorA }}
         />
-        <span className="text-[9px] font-medium flex-shrink-0" style={{ color: colorA }}>{labelA}</span>
+        <span className="text-[11px] font-medium flex-shrink-0" style={{ color: colorA }}>{labelA}</span>
         <span
           className="text-sm md:text-base font-mono font-bold tabular-nums truncate"
           style={{ color: colorA }}
@@ -123,7 +123,7 @@ function CompareCell({
           className="w-2 h-2 rounded-full flex-shrink-0"
           style={{ backgroundColor: colorB }}
         />
-        <span className="text-[9px] font-medium flex-shrink-0" style={{ color: colorB }}>{labelB}</span>
+        <span className="text-[11px] font-medium flex-shrink-0" style={{ color: colorB }}>{labelB}</span>
         <span
           className="text-sm md:text-base font-mono font-bold tabular-nums truncate"
           style={{ color: colorB }}
@@ -131,19 +131,19 @@ function CompareCell({
           {formatKoreanWon(comparison.amountB)}
         </span>
       </div>
-      <div className="text-[9px] text-gray-500 mb-0.5 truncate">
+      <div className="text-[11px] text-gray-500 mb-0.5 truncate">
         구성비 {comparison.shareA.toFixed(1)}% / {comparison.shareB.toFixed(1)}%
       </div>
       {/* Per-capita */}
       {popA > 0 && popB > 0 && (
-        <div className="text-[9px] text-gray-500 mb-1 truncate">
+        <div className="text-[11px] text-gray-500 mb-1 truncate">
           1인당 {formatPerCapita(comparison.amountA, popA)} / {formatPerCapita(comparison.amountB, popB)}
         </div>
       )}
       {/* Mini bar chart with labels */}
       <div className="space-y-0.5">
         <div className="flex items-center gap-1">
-          <span className="text-[8px] w-6 text-right flex-shrink-0" style={{ color: colorA }}>{labelA}</span>
+          <span className="text-[11px] w-6 text-right flex-shrink-0" style={{ color: colorA }}>{labelA}</span>
           <div className="h-2 rounded-full bg-gray-800 overflow-hidden flex-1">
             <div
               className="h-full rounded-full"
@@ -152,7 +152,7 @@ function CompareCell({
           </div>
         </div>
         <div className="flex items-center gap-1">
-          <span className="text-[8px] w-6 text-right flex-shrink-0" style={{ color: colorB }}>{labelB}</span>
+          <span className="text-[11px] w-6 text-right flex-shrink-0" style={{ color: colorB }}>{labelB}</span>
           <div className="h-2 rounded-full bg-gray-800 overflow-hidden flex-1">
             <div
               className="h-full rounded-full"
@@ -484,7 +484,7 @@ export function RegionalCompareDashboard({
 
       {/* Source note (metro/district: lofin365 QWGJK) */}
       {mode !== 'education' && (
-        <div className="px-4 py-2 text-[11px] text-gray-500 border-b border-gray-800">
+        <div className="px-4 py-2 text-[12px] text-gray-500 border-b border-gray-800">
           출처: 지방재정365 세부사업별 세출(예산현액){regionalAsOf ? ` · 기준일 ${regionalAsOf}` : ''} · 회계 간
           내부거래·보전지출 제외
           {mode === 'metro' && ' · 광역(시·도) 금액은 시·도 본청 예산(소속 시·군·구 제외)'}

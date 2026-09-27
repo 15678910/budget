@@ -101,7 +101,7 @@ export function GoalProgressSection({ data }: { data: VLRReportData }) {
                     <span className="text-xs text-muted-foreground">준비중</span>
                   )}
                 </td>
-                <td className="py-1.5 text-[12px] text-muted-foreground">
+                <td className="py-1.5 text-xs text-muted-foreground">
                   {g.repValueText ?? '—'}
                 </td>
               </tr>
@@ -146,7 +146,7 @@ function PriorityList({
                 <TrafficBadge score={g.score} light={g.light} size="sm" />
               </div>
               {g.targets.length > 0 && (
-                <p className="mt-1 line-clamp-2 text-[12px] leading-snug text-muted-foreground">
+                <p className="mt-1 line-clamp-2 text-xs leading-snug text-muted-foreground">
                   <span className="font-mono text-muted-foreground/80">{g.targets[0].code}</span>{' '}
                   {g.targets[0].text}
                 </p>
@@ -226,7 +226,7 @@ export function LessonsSection({ data }: { data: VLRReportData }) {
           ))}
         </ul>
       )}
-      <p className="mt-3 text-[12px] leading-relaxed text-muted-foreground">
+      <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
         위 권고는 달성도가 낮은 목표에 대한 점검 제안이며, 규칙 기반으로 자동 생성됩니다(자유 서술
         아님).
       </p>

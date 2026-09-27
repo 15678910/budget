@@ -115,8 +115,8 @@ export function SDGRegionProfile({
               title={targetNote || undefined}
               className="flex items-center gap-2 text-left hover:bg-gray-800/40 rounded px-1 py-0.5"
             >
-              <span className="w-5 text-[11px] font-mono text-gray-500">{g.num}</span>
-              <span className="w-14 text-[11px] text-gray-300 truncate">{g.name}</span>
+              <span className="w-5 text-[12px] font-mono text-gray-500">{g.num}</span>
+              <span className="w-14 text-[12px] text-gray-300 truncate">{g.name}</span>
               <span className="flex-1 h-2 rounded bg-gray-800 overflow-hidden">
                 {a ? (
                   <span
@@ -142,11 +142,11 @@ export function SDGRegionProfile({
                   <TrafficBadge score={a.score} light={a.light} size="sm" />
                 </span>
               ) : (
-                <span className="w-7 text-right text-[11px] font-mono text-gray-400">
+                <span className="w-7 text-right text-[12px] font-mono text-gray-400">
                   {v ?? '–'}
                 </span>
               )}
-              <span className="w-12 text-right text-[10px] font-mono text-gray-500">
+              <span className="w-12 text-right text-[12px] font-mono text-gray-500">
                 {rk ? `${rk.rank}/${rk.total}위` : ''}
               </span>
             </button>
@@ -193,7 +193,7 @@ export function SDGRegionProfile({
         />
       )}
 
-      <div className="text-[11px] text-gray-600 border-t border-gray-800 pt-2 space-y-1">
+      <div className="text-[12px] text-gray-600 border-t border-gray-800 pt-2 space-y-1">
         <p>
           <span style={{ color: '#16a34a' }}>●</span> 게이지·배지 ={' '}
           <strong className="text-gray-500">목표값 기준 달성도(0~100)</strong> · SDSN SDG Index 방법론 적응.

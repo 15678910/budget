@@ -130,7 +130,7 @@ function Cell({ label, value, color, sub, tooltip }: { label: string; value: str
         {tooltip && (
           <span className="relative inline-flex group/tip">
             <span
-              className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-gray-700 text-gray-400 text-[10px] font-bold cursor-help flex-shrink-0 hover:bg-gray-600 hover:text-gray-200"
+              className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-gray-700 text-gray-400 text-[12px] font-bold cursor-help flex-shrink-0 hover:bg-gray-600 hover:text-gray-200"
               aria-label={tooltip}
             >
               ?

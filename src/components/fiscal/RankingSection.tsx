@@ -73,7 +73,7 @@ function RankingRow({
           {formatDebt(district.debt)}
         </span>
         {district.debtSource === 'estimated' && (
-          <span className="ml-1 text-[10px] text-gray-500">[추정]</span>
+          <span className="ml-1 text-[12px] text-gray-500">[추정]</span>
         )}
       </div>
     </div>

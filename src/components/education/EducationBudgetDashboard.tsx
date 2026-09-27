@@ -107,7 +107,7 @@ export function EducationBudgetDashboard() {
       <div className="space-y-2">
         <div className="flex items-center gap-2 flex-wrap">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-100">전국 교육청 예산 정합성 분석</h1>
-          <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/40">
+          <span className="text-[12px] px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/40">
             시도교육청 17곳 · 2026 예산
           </span>
         </div>
@@ -139,12 +139,12 @@ export function EducationBudgetDashboard() {
           <div className="border border-gray-800 bg-gray-900/40 rounded-lg p-4">
             <div className="text-xs text-gray-400">① 공교육비 1인당 (전체)</div>
             <div className="text-2xl font-bold text-gray-100 mt-1">{formatKRW(summary.avgPerStudent)}</div>
-            <div className="text-[11px] text-gray-500">교원 인건비·시설·급식·사업 전부</div>
+            <div className="text-[12px] text-gray-500">교원 인건비·시설·급식·사업 전부</div>
           </div>
           <div className="border border-emerald-800/50 bg-emerald-950/20 rounded-lg p-4">
             <div className="text-xs text-emerald-400">② 순수 1인당 (학교회계 직접지출)</div>
             <div className="text-2xl font-bold text-emerald-300 mt-1">{formatKRW(nationalPure)}</div>
-            <div className="text-[11px] text-gray-500">
+            <div className="text-[12px] text-gray-500">
               전체의 {summary.avgPerStudent > 0 ? ((nationalPure / summary.avgPerStudent) * 100).toFixed(1) : 0}% · 본청 인건비 제외
             </div>
           </div>
@@ -171,7 +171,7 @@ export function EducationBudgetDashboard() {
             <Bar dataKey="pure" fill="#10b981" radius={[3, 3, 0, 0]} isAnimationActive={false} />
           </BarChart>
         </ResponsiveContainer>
-        <p className="text-[11px] text-gray-500 mt-2 leading-relaxed">
+        <p className="text-[12px] text-gray-500 mt-2 leading-relaxed">
           ※ "순수 1인당"은 학교가 직접 운용하는 학교회계 세출÷학생(학교알리미). 교원 급여 대부분은 교육청 본청이
           직접 집행하여 제외됩니다. 학교회계에도 기간제 인건비·일부 시설비가 일부 포함됩니다.
         </p>

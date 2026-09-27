@@ -421,7 +421,7 @@ export function IndustrySimulator() {
                     style={{ width: `${Math.min(impact.employmentDelta * 500, 100)}%` }}
                   />
                 </div>
-                <div className="text-[10px] text-muted-foreground/60 mt-0.5">고용영향</div>
+                <div className="text-[12px] text-muted-foreground/60 mt-0.5">고용영향</div>
               </button>
             );
           })}
@@ -448,7 +448,7 @@ export function IndustrySimulator() {
                     <span className="text-base">{industry.icon}</span>
                     <span className="text-sm font-semibold text-foreground">{industry.name}</span>
                   </div>
-                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400">추천</span>
+                  <span className="text-[12px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400">추천</span>
                 </div>
                 <div className="text-xs text-muted-foreground mt-1">
                   GRDP +{impact.grdpGrowthPct.toFixed(1)}% · 일자리 +{impact.jobCreation.toLocaleString('ko-KR')}
@@ -462,7 +462,7 @@ export function IndustrySimulator() {
                     style={{ width: `${Math.min(impact.employmentDelta * 500, 100)}%` }}
                   />
                 </div>
-                <div className="text-[10px] text-muted-foreground/60 mt-0.5">고용영향</div>
+                <div className="text-[12px] text-muted-foreground/60 mt-0.5">고용영향</div>
               </button>
             );
           })}

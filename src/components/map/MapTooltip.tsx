@@ -68,7 +68,7 @@ export function MapTooltip({ regionName, value, metric, population, x, y, health
         <div className="text-muted-foreground">데이터 없음</div>
       )}
       {isMetroLevel && (
-        <div className="mt-1 text-[10px] text-muted-foreground">
+        <div className="mt-1 text-[12px] text-muted-foreground">
           시·도 본청 예산(소속 시·군·구 제외)
         </div>
       )}

@@ -489,7 +489,7 @@ export function EstablishmentRoadmapSimulator({ regionTab, selectedMetroName, se
                   </div>
 
                   {/* Year label */}
-                  <div className="text-[10px] md:text-xs text-gray-600 mt-1 font-mono leading-none">
+                  <div className="text-[12px] md:text-xs text-gray-600 mt-1 font-mono leading-none">
                     {String(d.year).slice(2)}
                   </div>
                 </div>

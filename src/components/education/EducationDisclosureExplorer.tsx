@@ -183,7 +183,7 @@ export function EducationDisclosureExplorer() {
                   </tbody>
                 </table>
               </div>
-              <p className="text-[11px] text-gray-600 mt-2 leading-relaxed">
+              <p className="text-[12px] text-gray-600 mt-2 leading-relaxed">
                 ※ 학교명 가나다순 정렬. {(apiType === '09' || apiType === '62') && '학년별 컬럼: 학생수=N학년 학생, 학급=N학년 학급수, 학급당=학급당 학생수(학생÷학급). 초등 1~6학년·중고 1~3학년, 「특수학급」은 특수학급분, 「(계)」는 합계. '}
                 기본은 <strong className="text-gray-500">한글 라벨이 검증된 열</strong>만 표시합니다. 학교알리미 원자료 코드(미검증)는 「원자료 코드 열 보기」로 펼칠 수 있으며, 코드 정의는 학교알리미 공시 페이지를 참조하세요. (CSV 내보내기는 현재 보이는 열 기준)
               </p>

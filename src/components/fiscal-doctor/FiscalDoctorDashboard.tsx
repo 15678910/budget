@@ -307,7 +307,7 @@ export function FiscalDoctorDashboard() {
 
                 {/* ① 지역별 맞춤 정책 추천 — currentRegionName 기반 동적 렌더링 */}
                 <div className="space-y-1.5">
-                  <div className="text-[11px] text-gray-500 tracking-wide">
+                  <div className="text-[12px] text-gray-500 tracking-wide">
                     {currentRegionType === 'metro'
                       ? `💡 ${currentRegionName} 맞춤 정책 추천`
                       : `💡 ${currentRegionName}에 자주 거론되는 정책`}
@@ -329,7 +329,7 @@ export function FiscalDoctorDashboard() {
                         >
                           {sug.icon && <span className="mr-1">{sug.icon}</span>}
                           {sug.text}
-                          <span className="ml-1.5 text-[9px] px-1.5 py-0.5 rounded-full bg-emerald-400/20 text-emerald-200 border border-emerald-400/40 align-middle">
+                          <span className="ml-1.5 text-[11px] px-1.5 py-0.5 rounded-full bg-emerald-400/20 text-emerald-200 border border-emerald-400/40 align-middle">
                             NEW
                           </span>
                         </button>
@@ -350,7 +350,7 @@ export function FiscalDoctorDashboard() {
 
                 {/* ② 사회 과제 대응 정책 — 전국 공통 (부의 양극화·가계대출·AI 실업 등) */}
                 <div className="space-y-1.5">
-                  <div className="text-[11px] text-gray-500 tracking-wide">
+                  <div className="text-[12px] text-gray-500 tracking-wide">
                     🌐 사회 과제 대응 정책 <span className="text-gray-600">(부의 양극화 · 가계대출 · AI 전환)</span>
                   </div>
                   <div className="flex flex-wrap gap-2">

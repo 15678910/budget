@@ -35,7 +35,7 @@ function StatusBadge({ status }: { status: AIActivityStatus }) {
   };
 
   return (
-    <span className={`text-[10px] px-1.5 py-0.5 rounded border ${styles[status]}`}>
+    <span className={`text-[12px] px-1.5 py-0.5 rounded border ${styles[status]}`}>
       {status}
     </span>
   );
@@ -200,7 +200,7 @@ export function AICatalog({ onApplyEfficiency, currentEfficiencyRate, onScrollTo
                     {activity.sdgGoals.map((sdg) => (
                       <span
                         key={sdg}
-                        className="inline-flex items-center justify-center w-5 h-5 rounded-full text-white text-[10px] font-bold"
+                        className="inline-flex items-center justify-center w-5 h-5 rounded-full text-white text-[12px] font-bold"
                         style={{ backgroundColor: getSDGColor(sdg) }}
                         title={`SDG ${sdg}: ${getSDGName(sdg)}`}
                       >
@@ -212,7 +212,7 @@ export function AICatalog({ onApplyEfficiency, currentEfficiencyRate, onScrollTo
 
                 {/* Activity type */}
                 <div className="mt-1.5">
-                  <span className="text-[10px] text-gray-600 border border-gray-800 rounded px-1.5 py-0.5">
+                  <span className="text-[12px] text-gray-600 border border-gray-800 rounded px-1.5 py-0.5">
                     {activity.activityType}
                   </span>
                 </div>

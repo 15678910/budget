@@ -28,7 +28,7 @@ export function Cell({ label, value, color, sub, glossaryKey }: CellProps) {
       <div className="text-sm md:text-base text-gray-500 leading-tight truncate flex items-center gap-1">
         {label}
         {tooltip && (
-          <span className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full border border-gray-600 text-[9px] text-gray-500 cursor-help flex-shrink-0">
+          <span className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full border border-gray-600 text-[11px] text-gray-500 cursor-help flex-shrink-0">
             ?
           </span>
         )}

@@ -103,7 +103,7 @@ export default function InterlinkageMatrix({ data }: Props) {
                             alt={meta?.name ?? `목표 ${g}`}
                             className="h-7 w-7 rounded"
                           />
-                          <span className="text-[10px] text-slate-400">{g}</span>
+                          <span className="text-[12px] text-slate-400">{g}</span>
                         </div>
                       </th>
                     );
@@ -122,7 +122,7 @@ export default function InterlinkageMatrix({ data }: Props) {
                             alt={rowMeta?.name ?? `목표 ${rowGoal}`}
                             className="h-6 w-6 rounded"
                           />
-                          <span className="text-[11px] text-slate-300">
+                          <span className="text-[12px] text-slate-300">
                             {rowGoal}. {rowMeta?.short ?? ''}
                           </span>
                         </div>
@@ -132,7 +132,7 @@ export default function InterlinkageMatrix({ data }: Props) {
                           return (
                             <td
                               key={colGoal}
-                              className="h-9 w-9 rounded bg-slate-700/40 text-center align-middle text-[10px] text-slate-500"
+                              className="h-9 w-9 rounded bg-slate-700/40 text-center align-middle text-[12px] text-slate-500"
                               title={`${rowGoal}. ${rowMeta?.short ?? ''} (자기 자신)`}
                             >
                               —
@@ -145,7 +145,7 @@ export default function InterlinkageMatrix({ data }: Props) {
                           return (
                             <td
                               key={colGoal}
-                              className="h-9 w-9 rounded bg-slate-800/40 text-center align-middle text-[10px] text-slate-600"
+                              className="h-9 w-9 rounded bg-slate-800/40 text-center align-middle text-[12px] text-slate-600"
                               title={`${rowGoal} × ${colGoal}: 공통 표본 부족(또는 산출 불가)`}
                             >
                               ·
@@ -156,7 +156,7 @@ export default function InterlinkageMatrix({ data }: Props) {
                         return (
                           <td
                             key={colGoal}
-                            className={`h-9 w-9 cursor-default rounded text-center align-middle text-[10px] font-medium text-white/90 transition-shadow ${
+                            className={`h-9 w-9 cursor-default rounded text-center align-middle text-[12px] font-medium text-white/90 transition-shadow ${
                               isHover ? 'ring-2 ring-white/70' : ''
                             }`}
                             style={cellStyle(p.r)}

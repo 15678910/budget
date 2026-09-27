@@ -50,7 +50,7 @@ export function SDGBoardMatrix({
                   alt={g.name}
                   className="w-6 h-6 mx-auto"
                 />
-                <div className="text-white text-[9px] mt-0.5">{g.num}</div>
+                <div className="text-white text-[11px] mt-0.5">{g.num}</div>
               </th>
             ))}
           </tr>
@@ -81,9 +81,9 @@ export function SDGBoardMatrix({
                     style={{ background: cellColor(v, g.color) }}
                   >
                     {v == null ? (
-                      <span className="text-gray-700 text-[9px]">·</span>
+                      <span className="text-gray-700 text-[11px]">·</span>
                     ) : (
-                      <span className="text-[9px] font-mono text-white/90">{v}</span>
+                      <span className="text-[11px] font-mono text-white/90">{v}</span>
                     )}
                   </td>
                 );
@@ -92,7 +92,7 @@ export function SDGBoardMatrix({
           ))}
         </tbody>
       </table>
-      <div className="flex flex-wrap gap-3 px-3 py-2 text-[11px] text-gray-500 border-t border-gray-800">
+      <div className="flex flex-wrap gap-3 px-3 py-2 text-[12px] text-gray-500 border-t border-gray-800">
         {SDG_DOMAINS_5.map((d) => (
           <span key={d.id}>
             {d.label}({d.en}): {d.goals.join('·')}

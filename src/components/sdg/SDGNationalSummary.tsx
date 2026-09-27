@@ -54,7 +54,7 @@ export function SDGNationalSummary({
               />
               <div className="min-w-0 flex-1">
                 <div className="flex items-center justify-between gap-1">
-                  <div className="text-[11px] text-gray-400 truncate">
+                  <div className="text-[12px] text-gray-400 truncate">
                     {g.num}. {g.short}
                   </div>
                   <span className="flex items-center gap-1 shrink-0">
@@ -72,15 +72,15 @@ export function SDGNationalSummary({
                   <>
                     <div className="font-mono text-sm text-gray-100">
                       {fmt(n.value)}
-                      <span className="ml-0.5 text-[11px] text-gray-500">{n.unit}</span>
+                      <span className="ml-0.5 text-[12px] text-gray-500">{n.unit}</span>
                     </div>
-                    <div className="text-[10px] text-gray-500 truncate">{n.label}</div>
-                    <div className="text-[9px] text-gray-500">
+                    <div className="text-[12px] text-gray-500 truncate">{n.label}</div>
+                    <div className="text-[11px] text-gray-500">
                       {n.direction === 'lower_better' ? '↓ 낮을수록 양호' : '↑ 높을수록 양호'}
                     </div>
                   </>
                 ) : (
-                  <div className="text-[11px] text-gray-600">데이터 준비중</div>
+                  <div className="text-[12px] text-gray-600">데이터 준비중</div>
                 )}
               </div>
             </button>
@@ -88,8 +88,8 @@ export function SDGNationalSummary({
         })}
       </div>
 
-      <div className="text-[11px] text-gray-600 border-t border-gray-800 pt-2 space-y-1">
-        <p className="text-[10px] text-yellow-700/70">
+      <div className="text-[12px] text-gray-600 border-t border-gray-800 pt-2 space-y-1">
+        <p className="text-[12px] text-yellow-700/70">
           ※ 위 수치는 대표지표 1개, 배지·화살표·목표갭은 목표 매핑 지표 종합 기준입니다.
         </p>
         <p>
