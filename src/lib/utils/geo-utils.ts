@@ -156,3 +156,35 @@ export function matchDistrictName(
 
   return null;
 }
+
+// ---------------------------------------------------------------------------
+// Districts with budget data but no matching municipality geometry
+// ---------------------------------------------------------------------------
+
+/** A district that has budget data but could not be matched to any map geometry. */
+export interface UnmatchedDistrict {
+  name: string;
+  /** Total budget in 백만원 */
+  totalBudget: number;
+}
+
+/**
+ * Finds budget district nodes that have no matching municipality geometry
+ * (e.g. a newly created 자치구 not yet present in the TopoJSON boundaries,
+ * such as 인천 서해구/제물포구/검단구/영종구 after the 2026 administrative
+ * reorganization). Always excludes '본청', which never has a polygon.
+ *
+ * @param districtNodes - Budget tree nodes for a metro's districts (BudgetTreeNode.children)
+ * @param matchedBudgetNames - Budget district names already matched to a geometry
+ *   (the value set of the geoName -> budgetName mapping)
+ * @returns Unmatched districts with their total budget (백만원), sorted by amount descending
+ */
+export function computeUnmatchedDistricts(
+  districtNodes: BudgetTreeNode[],
+  matchedBudgetNames: ReadonlySet<string>,
+): UnmatchedDistrict[] {
+  return districtNodes
+    .filter((node) => node.name !== '본청' && !matchedBudgetNames.has(node.name))
+    .map((node) => ({ name: node.name, totalBudget: calculateNodeTotal(node) }))
+    .sort((a, b) => b.totalBudget - a.totalBudget);
+}

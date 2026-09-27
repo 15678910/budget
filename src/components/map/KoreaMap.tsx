@@ -6,7 +6,7 @@ import { geoMercator, geoPath } from 'd3-geo';
 import * as d3Scale from 'd3-scale';
 import type { BudgetTreeNode } from '@/types/budget';
 import { METRO_POPULATION } from '@/lib/utils/extract-entity';
-import { BUDGET_NAME_TO_PROVINCE_CODE, matchDistrictName } from '@/lib/utils/geo-utils';
+import { BUDGET_NAME_TO_PROVINCE_CODE, matchDistrictName, computeUnmatchedDistricts } from '@/lib/utils/geo-utils';
 import { formatKoreanWon } from '@/lib/utils/format';
 import { MapControls, type MapMetric } from './MapControls';
 import { MapTooltip } from './MapTooltip';
@@ -61,6 +61,9 @@ const GEO_TO_BUDGET: Record<string, string> = {
 function geoNameToBudgetName(geoName: string): string {
   return GEO_TO_BUDGET[geoName] ?? geoName;
 }
+
+/** Color for a geometry with no matching budget data (distinct from a real 0 value). */
+const MISSING_DATA_COLOR = '#6b7280';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -187,6 +190,13 @@ export function KoreaMap({
     }
     return mapping;
   }, [drillMetro, drillDistrictFeatures, drillBudgetNames]);
+
+  // ---------- Districts with budget data but no matching geometry ----------
+  const unmatchedDistricts = useMemo(() => {
+    if (!drillMetro) return [];
+    const matchedBudgetNames = new Set(districtGeoToBudget.values());
+    return computeUnmatchedDistricts(drillDistrictNodes, matchedBudgetNames);
+  }, [drillMetro, drillDistrictNodes, districtGeoToBudget]);
 
   // ---------- 본청 budget (not shown on map) ----------
   const hqBudget = useMemo(() => {
@@ -409,7 +419,17 @@ export function KoreaMap({
   // ---------- Get data for hovered region ----------
   const hoveredBudgetName = hoveredRegion ? resolveBudgetName(hoveredRegion) : null;
   const hoveredData = hoveredBudgetName ? regionMetrics.get(hoveredBudgetName) : null;
+  const hoveredHasData = hoveredBudgetName !== null && metricValues.has(hoveredBudgetName);
   const hoveredValue = hoveredBudgetName ? (metricValues.get(hoveredBudgetName) ?? 0) : 0;
+
+  // ---------- Whether any drawn region on the map has no matching budget data ----------
+  const hasMissingData = useMemo(() => {
+    return activeFeatures.some((feature) => {
+      const geoName = feature.properties?.name ?? feature.properties?.NAME ?? '';
+      const budgetName = resolveBudgetName(geoName);
+      return !metricValues.has(budgetName);
+    });
+  }, [activeFeatures, metricValues, resolveBudgetName]);
 
   // ---------- Render ----------
   return (
@@ -453,8 +473,9 @@ export function KoreaMap({
               {activeFeatures.map((feature: any, idx: number) => {
                 const geoName = feature.properties?.name ?? feature.properties?.NAME ?? '';
                 const budgetName = resolveBudgetName(geoName);
-                const value = metricValues.get(budgetName) ?? 0;
-                const color = colorScale(value);
+                const hasData = metricValues.has(budgetName);
+                const value = hasData ? metricValues.get(budgetName)! : 0;
+                const color = hasData ? colorScale(value) : MISSING_DATA_COLOR;
                 const isHovered = hoveredRegion === geoName;
                 const isSelected = selectedRegion === budgetName;
                 const featureKey = drillMetro
@@ -493,20 +514,21 @@ export function KoreaMap({
           )}
 
           {/* Tooltip */}
-          {hoveredRegion && hoveredData && (
+          {hoveredRegion && hoveredBudgetName && (
             <MapTooltip
-              regionName={hoveredBudgetName ?? hoveredRegion}
+              regionName={hoveredBudgetName}
               value={hoveredValue}
               metric={metric}
-              population={hoveredData.population}
+              population={hoveredData?.population ?? 0}
               x={mousePos.x}
               y={mousePos.y}
               healthGrade={
-                metric === 'healthScore' && hoveredBudgetName
+                metric === 'healthScore' && hoveredHasData
                   ? (healthScores?.[hoveredBudgetName]?.grade ?? null)
                   : null
               }
               isMetroLevel={!drillMetro}
+              hasData={hoveredHasData}
             />
           )}
 
@@ -531,11 +553,22 @@ export function KoreaMap({
         )}
       </div>
 
+      {/* Districts with budget data but no matching map geometry */}
+      {drillMetro && unmatchedDistricts.length > 0 && (
+        <p className="text-xs text-muted-foreground px-1">
+          지도 경계에 없는 자치구({year} 행정구역 개편):{' '}
+          {unmatchedDistricts
+            .map((d) => `${d.name} ${formatKoreanWon(d.totalBudget)}`)
+            .join(' · ')}
+        </p>
+      )}
+
       <MapLegend
         min={minValue}
         max={maxValue}
         metric={metric}
         colorScale={colorScale}
+        hasMissingData={hasMissingData}
       />
     </div>
   );

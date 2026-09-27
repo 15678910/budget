@@ -9,6 +9,8 @@ interface MapLegendProps {
   max: number;
   metric: MapMetric;
   colorScale: (value: number) => string;
+  /** True when at least one drawn region on the map has no matching budget data. */
+  hasMissingData?: boolean;
 }
 
 const METRIC_UNIT: Record<MapMetric, string> = {
@@ -39,7 +41,7 @@ const HEALTH_GRADE_LEGEND = [
   { grade: 'F', color: '#ef4444', label: 'F (0~34)' },
 ];
 
-export function MapLegend({ min, max, metric, colorScale }: MapLegendProps) {
+export function MapLegend({ min, max, metric, colorScale, hasMissingData = false }: MapLegendProps) {
   // Build gradient stops from the color scale
   const gradientStops = useMemo(() => {
     const steps = 20;
@@ -65,10 +67,12 @@ export function MapLegend({ min, max, metric, colorScale }: MapLegendProps) {
               <span className="text-xs text-muted-foreground">{label}</span>
             </div>
           ))}
-          <div className="flex items-center gap-1.5">
-            <div className="w-3 h-3 rounded-sm flex-shrink-0" style={{ backgroundColor: '#6b7280' }} />
-            <span className="text-xs text-muted-foreground">데이터 없음</span>
-          </div>
+          {hasMissingData && (
+            <div className="flex items-center gap-1.5">
+              <div className="w-3 h-3 rounded-sm flex-shrink-0 bg-gray-500" />
+              <span className="text-xs text-muted-foreground">데이터 없음</span>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -87,6 +91,12 @@ export function MapLegend({ min, max, metric, colorScale }: MapLegendProps) {
         <span>{formatLegendValue(min, metric)}</span>
         <span>{formatLegendValue(max, metric)}</span>
       </div>
+      {hasMissingData && (
+        <div className="flex items-center gap-1.5 mt-1">
+          <div className="w-3 h-3 rounded-sm flex-shrink-0 bg-gray-500" />
+          <span className="text-xs text-muted-foreground">데이터 없음</span>
+        </div>
+      )}
     </div>
   );
 }
