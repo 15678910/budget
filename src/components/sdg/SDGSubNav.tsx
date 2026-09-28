@@ -6,7 +6,10 @@ import { cn } from '@/lib/utils/format';
 
 interface SDGNavItem {
   href: string;
+  /** 버튼에 보이는 짧은 이름(한 줄에 5개가 들어가도록). */
   label: string;
+  /** 전체 이름 — title·aria-label에 사용. */
+  fullLabel: string;
   /** 활성 상태일 때 배경/테두리/텍스트에 쓸 색상 팔레트(테일윈드 색상 이름). */
   color: 'gray' | 'emerald' | 'sky' | 'violet' | 'amber';
   /** '/sdg'는 정확히 일치할 때만 활성, 나머지는 하위 경로도 활성으로 간주. */
@@ -14,11 +17,11 @@ interface SDGNavItem {
 }
 
 const SDG_NAV_ITEMS: SDGNavItem[] = [
-  { href: '/sdg', label: '🗺 SDG 지역 상황판', color: 'gray', exact: true },
-  { href: '/sdg/vlr', label: '📄 VLR 지역 자기평가 리포트', color: 'emerald' },
-  { href: '/sdg/ontology', label: '🔗 데이터 온톨로지 관계도', color: 'sky' },
-  { href: '/sdg/interlinkage', label: '🧩 연계성 분석(시너지·상충)', color: 'violet' },
-  { href: '/sdg/effectiveness', label: '📊 실효성 분석(예산-성과)', color: 'amber' },
+  { href: '/sdg', label: '🗺 상황판', fullLabel: 'SDG 지역 상황판', color: 'gray', exact: true },
+  { href: '/sdg/vlr', label: '📄 VLR 리포트', fullLabel: 'VLR 지역 자기평가 리포트', color: 'emerald' },
+  { href: '/sdg/ontology', label: '🔗 온톨로지 관계도', fullLabel: '데이터 온톨로지 관계도', color: 'sky' },
+  { href: '/sdg/interlinkage', label: '🧩 연계성(시너지·상충)', fullLabel: '연계성 분석(시너지·상충)', color: 'violet' },
+  { href: '/sdg/effectiveness', label: '📊 실효성(예산-성과)', fullLabel: '실효성 분석(예산-성과)', color: 'amber' },
 ];
 
 // 색상별 클래스를 정적 문자열로 매핑(테일윈드가 동적 클래스명을 감지하지 못하므로 필수).
@@ -44,7 +47,7 @@ export function SDGSubNav() {
 
   return (
     <nav aria-label="SDG 메뉴" className="mx-auto max-w-6xl px-4 py-2">
-      <div className="flex flex-nowrap gap-2 overflow-x-auto whitespace-nowrap sm:flex-wrap sm:whitespace-normal">
+      <div className="flex flex-nowrap gap-1.5 overflow-x-auto whitespace-nowrap sm:flex-wrap sm:whitespace-normal">
         {SDG_NAV_ITEMS.map((item) => {
           const isActive = item.exact ? pathname === item.href : pathname.startsWith(item.href);
           return (
@@ -52,6 +55,7 @@ export function SDGSubNav() {
               key={item.href}
               href={item.href}
               aria-current={isActive ? 'page' : undefined}
+              title={item.fullLabel}
               className={cn(
                 'inline-flex min-h-9 shrink-0 items-center gap-1 rounded-lg border px-3 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950 focus-visible:ring-blue-400',
                 isActive ? ACTIVE_CLASS[item.color] : INACTIVE_CLASS[item.color],
