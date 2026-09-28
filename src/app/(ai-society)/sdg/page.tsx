@@ -91,7 +91,7 @@ function buildIndicatorMeta(): Record<string, IndicatorMeta> {
 export default function SDGPage() {
   const geoData = loadGeo();
   const kosis = loadKosis();
-  const { valuesByIndicator, direction, population } = assembleIndicatorValues();
+  const { valuesByIndicator, rawValuesByIndicator, rawSeriesByIndicator, direction, population } = assembleIndicatorValues();
   const base2018ByIndicator = assembleBase2018();
   const matrix = buildMatrix({
     metros: CANON_16,
@@ -118,6 +118,8 @@ export default function SDGPage() {
   const mapSource = buildMapSource({
     kosisGoals: kosis.goals,
     valuesByIndicator,
+    rawValuesByIndicator,
+    rawSeriesByIndicator,
     direction,
     indicatorMeta,
   });

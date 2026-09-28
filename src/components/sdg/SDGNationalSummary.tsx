@@ -31,6 +31,9 @@ export function SDGNationalSummary({
   selectedGoal?: number | null;
 }) {
   const haveCount = SDG_GOALS.filter((g) => national[g.num] != null).length;
+  // regionalOnly(예: 면적류) 목표는 전국 숫자가 없다 — "데이터 보유"가 전국값 보유로
+  // 오독되지 않도록 몇 개가 시도별 값만 있는지 괄호로 병기한다.
+  const regionalOnlyCount = SDG_GOALS.filter((g) => national[g.num]?.regionalOnly).length;
 
   return (
     <div className="border border-gray-800 rounded-lg bg-gray-900/30 p-4 space-y-4">
@@ -40,6 +43,9 @@ export function SDGNationalSummary({
         </h3>
         <span className="text-sm text-emerald-400 font-semibold">
           데이터 보유 {haveCount}/17 목표
+          {regionalOnlyCount > 0 && (
+            <span className="text-gray-500 font-normal"> (시도별만 {regionalOnlyCount}개 포함)</span>
+          )}
         </span>
       </div>
 

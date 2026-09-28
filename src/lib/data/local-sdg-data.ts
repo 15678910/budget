@@ -114,6 +114,10 @@ export const SDG_DOMAINS: SDGDomain[] = [
       { id: 'edu_student', name: '교원1인당 학생수', unit: '명', direction: 'lower_better', description: '학생수 / 교원수', source: '교육부' },
       { id: 'edu_private', name: '사교육비', unit: '만원/월', direction: 'lower_better', description: '초중고 학생 1인당 월평균', source: '통계청' },
       { id: 'edu_univ', name: '대학진학률', unit: '%', direction: 'higher_better', description: '고교졸업자 중 대학진학자 비율', source: '교육부' },
+      // 실측 공식 데이터(admission-rate.ts, 한국교육개발원 교육기본통계). SDG goal4 대표지표로 edu_univ(합성
+      // 추정치) 대신 이 지표를 쓴다(indicator-map.ts REP_INDICATOR_BY_GOAL). RAW[]에는 값을 두지 않고
+      // board-data.ts에서 ADMISSION_SIDO를 직접 병합한다.
+      { id: 'edu_admission', name: '대학 진학률(KEDI)', unit: '%', direction: 'higher_better', description: '고교졸업자 중 대학진학자 비율(당해연도 등록 기준, 시군구 가중집계)', source: '한국교육개발원 교육기본통계(공공데이터포털 15053808)' },
     ],
   },
   {

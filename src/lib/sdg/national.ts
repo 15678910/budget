@@ -14,11 +14,18 @@ export interface NationalGoalValue {
   label: string;
   /** 단위 */
   unit: string;
-  /** 전국 절대값 (인구 가중 평균) */
-  value: number;
+  /**
+   * 전국 절대값 (인구 가중 평균). regionalOnly=true(예: 면적류 지표)면 전국 집계를
+   * 내지 않으므로 null — 시도별 값만 존재(지도에서 비교).
+   */
+  value: number | null;
   /** 해석방향 (표시 맥락용) */
   direction: IndicatorDirection;
   hasData: true;
+  /** true면 전국 집계가 없고 시도별 값만 있는 지표(예: 갯벌 면적, nationalAggregate='none'). */
+  regionalOnly?: boolean;
+  /** 대리지표·결측 등 해석 고지문. 있으면 목록에 "대리지표" 태그로 노출. */
+  proxyNote?: string;
 }
 
 export type NationalByGoal = Record<number, NationalGoalValue | null>;
@@ -42,7 +49,7 @@ export interface IndicatorLabel {
  * 여기 없는 goal은 INDICATOR_TO_GOAL 선언순 첫 지표를 사용.
  */
 const REP_INDICATOR_BY_GOAL: Record<number, string> = {
-  4: 'edu_univ', // 진학률 (기초 스코프와 일치, 교원1인당학생수 대신)
+  4: 'edu_admission', // 대학 진학률(KEDI 실측, admission-rate.ts) — 합성 추정치 edu_univ 대체
 };
 
 /**
@@ -100,11 +107,17 @@ export interface KosisIndicatorLike {
   unit: string;
   higherBetter: boolean;
   bySido: Record<string, number>;
+  /** 미지정='weightedMean'. 'none'이면 전국 집계를 만들지 않는다(예: 면적류 지표). */
+  nationalAggregate?: 'weightedMean' | 'none';
+  /** 대리지표·결측 고지문. */
+  proxyNote?: string;
 }
 
 /**
  * board 대표지표가 없는 goal에 한해 KOSIS 지표의 전국값(인구 가중 평균)을 채운다.
  * board 대표지표가 이미 있는 goal(national[g] != null)은 건드리지 않는다(board 우선순위 유지).
+ * nationalAggregate='none'인 지표(예: 갯벌 면적)는 전국 집계를 만들지 않고
+ * value=null·regionalOnly=true로 채운다 — "데이터 보유"에는 포함되지만 전국 숫자는 없다.
  *
  * @param national      nationalByGoal() 결과.
  * @param kosisGoals    public/data/sdg-sido.json의 goals (goal번호 문자열 → KOSIS 지표).
@@ -123,13 +136,16 @@ export function fillNationalFromKosis(
     if (out[goal] != null) continue; // board 대표지표가 이미 있으면 유지
     const vals = indicator?.bySido;
     if (!vals || Object.keys(vals).length === 0) continue;
+    const noAggregate = indicator.nationalAggregate === 'none';
     out[goal] = {
       indicatorId: `kosis_goal${goal}`,
       label: indicator.label,
       unit: indicator.unit,
-      value: weightedMean(vals, rawPopulation),
+      value: noAggregate ? null : weightedMean(vals, rawPopulation),
       direction: indicator.higherBetter ? 'higher_better' : 'lower_better',
       hasData: true,
+      ...(noAggregate ? { regionalOnly: true } : {}),
+      ...(indicator.proxyNote ? { proxyNote: indicator.proxyNote } : {}),
     };
   }
   return out;

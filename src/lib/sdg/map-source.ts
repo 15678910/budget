@@ -12,9 +12,9 @@
 //   (전국 목록과 다른 지표를 고르지 않기 위함 — 중복 로직 금지).
 //
 // board→지도 변환 시 주의: valuesByIndicator는 이미 16광역(광주+전남='광주전남' 병합)이다.
-//   지도는 TopoJSON 17개 원시 시도(광주·전남 분리)를 그리므로, '광주전남' 값을 광주·전남
-//   두 시도에 동일하게 적용한다(병합값 재사용 — 새 값 발명 아님). 그 외 시도(세종 포함)는
-//   이미 원시 키와 동일하므로 그대로 통과시킨다.
+//   광주·전남에 병합값을 똑같이 칠하면 색·순위가 오도(誤導)되므로(두 시도가 항상 동률),
+//   지도는 rawValuesByIndicator(원시 17개 시도, 광주·전남 분리)가 있으면 그 값을 그대로 쓴다.
+//   원시값이 없는 지표만 방어적으로 '광주전남' 병합값을 광주·전남에 동일 적용(explodeCanonToRaw)한다.
 
 import type { IndicatorDirection } from '@/lib/data/local-sdg-data';
 import type { SDGIndicator } from './goals';
@@ -34,6 +34,10 @@ export interface MapGoalSource {
   /** KOSIS 다년 실측 시계열(보유 goal만). board 대표지표는 없음. */
   seriesBySido?: Record<string, Record<string, number>>;
   origin: MapSourceOrigin;
+  /** 전국 집계 방식. 미지정='weightedMean'. 'none'이면 지도가 "순위" 대신 "시도별 값"으로 표기. */
+  nationalAggregate?: 'weightedMean' | 'none';
+  /** 대리지표·결측 고지문. 있으면 지도 헤더에 노출. */
+  proxyNote?: string;
 }
 
 export type MapSourceByGoal = Record<number, MapGoalSource | null>;
@@ -45,9 +49,9 @@ export interface IndicatorMeta {
 }
 
 /**
- * CANON_16 키('광주전남' 포함)를 지도용 17개 원시 시도 키로 펼친다.
- * '광주전남'은 이미 인구가중평균(또는 합산)된 값이므로 광주·전남에 동일하게 적용한다
- * (두 시도의 실제 개별값을 board 파이프라인이 보존하지 않기 때문 — 새 값을 지어내지 않음).
+ * CANON_16 키('광주전남' 포함)를 지도용 17개 원시 시도 키로 펼친다. rawValuesByIndicator가
+ * 없는 지표에 대한 방어적 폴백 전용 — '광주전남'은 이미 인구가중평균(또는 합산)된 값이므로
+ * 광주·전남에 동일하게 적용한다(두 시도의 실제 개별값이 없을 때만 씀 — 새 값 발명 아님).
  * 그 외 키(세종 포함)는 이미 원시 약칭과 동일하므로 그대로 통과.
  */
 function explodeCanonToRaw(values: Record<string, number>): Record<string, number> {
@@ -68,6 +72,13 @@ export interface BuildMapSourceParams {
   kosisGoals: Record<string, SDGIndicator>;
   /** 상황판 실데이터: 지표 id → (16광역 약칭 → 값). assembleIndicatorValues() 결과. */
   valuesByIndicator: Record<string, Record<string, number>>;
+  /**
+   * 지표 id → (원시 17개 시도 약칭, 광주·전남 분리 → 값). assembleIndicatorValues().rawValuesByIndicator.
+   * 있으면 지도가 항상 이 값을 우선 사용(canon16 병합값을 광주·전남에 동일 적용하지 않음).
+   */
+  rawValuesByIndicator?: Record<string, Record<string, number>>;
+  /** 지표 id → (원시 17개 시도 약칭 → {연도: 값}) 다년 실측 시계열. 보유 지표만. */
+  rawSeriesByIndicator?: Record<string, Record<string, Record<string, number>>>;
   /** 지표 id → 해석방향. */
   direction: Record<string, IndicatorDirection>;
   /** 지표 id → {label, unit, source}. SDG_DOMAINS에서 추출. */
@@ -79,7 +90,7 @@ export interface BuildMapSourceParams {
  * 둘 다 없으면 null(아직 시도별 공식 지표를 확보하지 못한 목표).
  */
 export function buildMapSource(params: BuildMapSourceParams): MapSourceByGoal {
-  const { kosisGoals, valuesByIndicator, direction, indicatorMeta } = params;
+  const { kosisGoals, valuesByIndicator, rawValuesByIndicator, rawSeriesByIndicator, direction, indicatorMeta } = params;
   const repByGoal = pickRepresentativeIndicators(valuesByIndicator);
 
   const out: MapSourceByGoal = {};
@@ -98,13 +109,16 @@ export function buildMapSource(params: BuildMapSourceParams): MapSourceByGoal {
     }
 
     const meta = indicatorMeta[ind];
+    const raw = rawValuesByIndicator?.[ind];
+    const bySido = raw && Object.keys(raw).length > 0 ? raw : explodeCanonToRaw(vals);
     out[goal] = {
       label: meta?.label ?? ind,
       source: meta?.source ?? '',
       year: String(TREND_CURRENT_YEAR),
       unit: meta?.unit ?? '',
       higherBetter: (direction[ind] ?? 'higher_better') === 'higher_better',
-      bySido: explodeCanonToRaw(vals),
+      bySido,
+      seriesBySido: rawSeriesByIndicator?.[ind],
       origin: 'board',
     };
   }

@@ -17,13 +17,25 @@ import {
   type IndicatorDirection,
 } from '@/lib/data/local-sdg-data';
 import { getMetroFiscalData } from '@/lib/data/fiscal-health-data';
+import { ADMISSION_SIDO } from '@/lib/data/admission-rate';
 import { INDICATOR_TO_GOAL } from './indicator-map';
 import { mergeToCanon16 } from './region-normalize';
 import { SIDO_FULL_TO_SHORT } from './goals';
 
 export interface BoardData {
-  /** 지표 id → (16광역 약칭 → 실값). 광주+전남은 '광주전남'으로 병합됨. */
+  /** 지표 id → (16광역 약칭 → 실값). 광주+전남은 '광주전남'으로 병합됨. 상황판/매트릭스/달성도용. */
   valuesByIndicator: Record<string, Record<string, number>>;
+  /**
+   * 지표 id → (원시 17개 시도 약칭 → 실값, 광주·전남 분리 미병합). 지도(map-source.ts) 전용 —
+   * 광주전남을 인구가중 병합한 값을 두 시도에 똑같이 칠하면 색·순위가 오도(誤導)되므로
+   * 지도는 항상 이 원시값을 우선 사용한다.
+   */
+  rawValuesByIndicator: Record<string, Record<string, number>>;
+  /**
+   * 지표 id → (원시 17개 시도 약칭 → {연도: 값}) 다년 실측 시계열. 보유 지표(현재 edu_admission)만 존재.
+   * 지도의 "실측 다년 추세" 배지(KOSIS 지표와 동일 메커니즘)에 그대로 투입한다.
+   */
+  rawSeriesByIndicator: Record<string, Record<string, Record<string, number>>>;
   /** 지표 id → 해석방향 */
   direction: Record<string, IndicatorDirection>;
   /** 원시 시도 약칭 → 인구 (ratio 병합 가중치) */
@@ -55,8 +67,9 @@ export function assembleIndicatorValues(): BoardData {
     if (short) population[short] = m.population; // 매핑되는 15개만(통합특별시는 미매핑)
   }
 
-  // 매핑된 각 지표에 대해 17 RAW 시도값 수집 → 16광역 병합(ratio)
+  // 매핑된 각 지표에 대해 17 RAW 시도값 수집 → 16광역 병합(ratio). 원시값도 함께 보존(지도용).
   const valuesByIndicator: Record<string, Record<string, number>> = {};
+  const rawValuesByIndicator: Record<string, Record<string, number>> = {};
   for (const indId of Object.keys(INDICATOR_TO_GOAL)) {
     const raw: Record<string, number> = {};
     for (const fullName of metroFullNames) {
@@ -64,8 +77,34 @@ export function assembleIndicatorValues(): BoardData {
       if (d && Number.isFinite(d.currentValue)) raw[toShort(fullName)] = d.currentValue;
     }
     if (Object.keys(raw).length) {
+      rawValuesByIndicator[indId] = raw;
       valuesByIndicator[indId] = mergeToCanon16(raw, 'ratio', population);
     }
   }
-  return { valuesByIndicator, direction, population };
+
+  const rawSeriesByIndicator: Record<string, Record<string, Record<string, number>>> = {};
+  addAdmissionIndicator({ valuesByIndicator, rawValuesByIndicator, rawSeriesByIndicator, population });
+
+  return { valuesByIndicator, rawValuesByIndicator, rawSeriesByIndicator, direction, population };
+}
+
+/**
+ * goal4 대표지표(edu_admission) = 실측 KEDI 대학 진학률(admission-rate.ts, 원시 17개 시도 약칭).
+ * RAW[]가 아니라 이 전용 데이터셋에서 직접 병합한다(합성 추정치 edu_univ와 분리).
+ */
+function addAdmissionIndicator(target: {
+  valuesByIndicator: Record<string, Record<string, number>>;
+  rawValuesByIndicator: Record<string, Record<string, number>>;
+  rawSeriesByIndicator: Record<string, Record<string, Record<string, number>>>;
+  population: Record<string, number>;
+}): void {
+  const raw: Record<string, number> = {};
+  const series: Record<string, Record<string, number>> = {};
+  for (const s of ADMISSION_SIDO) {
+    raw[s.sido] = s.latest;
+    series[s.sido] = Object.fromEntries(s.series.map((p) => [String(p.year), p.rate]));
+  }
+  target.rawValuesByIndicator['edu_admission'] = raw;
+  target.rawSeriesByIndicator['edu_admission'] = series;
+  target.valuesByIndicator['edu_admission'] = mergeToCanon16(raw, 'ratio', target.population);
 }

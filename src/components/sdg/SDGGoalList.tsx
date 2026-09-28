@@ -11,6 +11,22 @@ function fmt(v: number): string {
   return Number.isInteger(v) ? v.toLocaleString() : v.toFixed(1);
 }
 
+/** 전국 집계가 없는(regionalOnly) 지표의 값칸 안내문. */
+const NO_NATIONAL_VALUE = '전국값 없음 — 시도별로만 비교';
+
+/** 대표지표명 옆 "대리지표" 태그 — proxyNote가 있을 때만. title=전체 고지문. */
+function ProxyNoteTag({ note }: { note?: string }) {
+  if (!note) return null;
+  return (
+    <span
+      title={note}
+      className="shrink-0 rounded border border-amber-700/50 px-1 py-0.5 text-[10px] text-amber-300/90 cursor-help"
+    >
+      대리지표
+    </span>
+  );
+}
+
 /** 목표 번호 컬러 타일 — SDG 공식색(GOAL_BG_CLASS), 흰 굵은 숫자. */
 function GoalTile({ num }: { num: number }) {
   return (
@@ -94,13 +110,20 @@ export function SDGGoalList({
                   )}
                 </div>
                 <div className="flex items-center justify-between gap-2 pl-9">
-                  <span className="break-keep text-sm text-gray-300">{n.label}</span>
-                  <span className="flex shrink-0 items-baseline gap-1 whitespace-nowrap">
-                    <span className="font-mono text-base tabular-nums text-gray-50">
-                      {fmt(n.value)}
-                    </span>
-                    <span className="text-xs text-gray-400">{n.unit}</span>
+                  <span className="flex min-w-0 items-center gap-1.5">
+                    <span className="break-keep text-sm text-gray-300">{n.label}</span>
+                    <ProxyNoteTag note={n.proxyNote} />
                   </span>
+                  {n.value != null ? (
+                    <span className="flex shrink-0 items-baseline gap-1 whitespace-nowrap">
+                      <span className="font-mono text-base tabular-nums text-gray-50">
+                        {fmt(n.value)}
+                      </span>
+                      <span className="text-xs text-gray-400">{n.unit}</span>
+                    </span>
+                  ) : (
+                    <span className="shrink-0 text-xs text-gray-500 whitespace-nowrap">{NO_NATIONAL_VALUE}</span>
+                  )}
                 </div>
               </div>
 
@@ -113,17 +136,24 @@ export function SDGGoalList({
                   </span>
                 </span>
                 <span className="min-w-0">
-                  <span className="block break-keep text-sm text-gray-200">{n.label}</span>
+                  <span className="flex min-w-0 items-center gap-1.5">
+                    <span className="block break-keep text-sm text-gray-200">{n.label}</span>
+                    <ProxyNoteTag note={n.proxyNote} />
+                  </span>
                   <span className="mt-0.5 block text-xs text-gray-400">
                     {n.direction === 'lower_better' ? '낮을수록 좋음' : '높을수록 좋음'}
                   </span>
                 </span>
-                <span className="flex items-baseline justify-end gap-1 whitespace-nowrap">
-                  <span className="font-mono text-lg tabular-nums text-gray-50">
-                    {fmt(n.value)}
+                {n.value != null ? (
+                  <span className="flex items-baseline justify-end gap-1 whitespace-nowrap">
+                    <span className="font-mono text-lg tabular-nums text-gray-50">
+                      {fmt(n.value)}
+                    </span>
+                    <span className="text-sm text-gray-400">{n.unit}</span>
                   </span>
-                  <span className="text-sm text-gray-400">{n.unit}</span>
-                </span>
+                ) : (
+                  <span className="justify-self-end text-xs text-gray-500 whitespace-nowrap">{NO_NATIONAL_VALUE}</span>
+                )}
                 <span className="justify-self-end">
                   {a ? (
                     <TrafficBadge score={a.score} light={a.light} showLabel />

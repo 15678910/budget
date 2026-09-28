@@ -6,8 +6,8 @@ export const INDICATOR_TO_GOAL: Record<string, number> = {
   wel_basic: 1, wel_budget: 1,
   // Goal 3 건강
   hlt_life: 3, hlt_doctor: 3, hlt_suicide: 3, hlt_obesity: 3,
-  // Goal 4 교육
-  edu_student: 4, edu_private: 4, edu_univ: 4,
+  // Goal 4 교육 — edu_admission(KEDI 실측)이 대표지표. edu_univ(합성 추정치)는 목표4 매핑에서 제외.
+  edu_student: 4, edu_private: 4, edu_admission: 4,
   // Goal 5 성평등
   emp_female: 5,
   // Goal 8 일자리

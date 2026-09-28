@@ -51,6 +51,14 @@ export interface SDGIndicator {
    * 보유 지표(goal8·9)만 존재 — optional이므로 기존 소비처(bySido) 회귀 없음.
    */
   seriesBySido?: Record<string, Record<string, number>>;
+  /**
+   * 전국 집계 방식. 미지정 시 'weightedMean'(인구 가중 평균)으로 취급.
+   * 'none' = 전국 집계를 내지 않음(예: 갯벌 면적처럼 지역 총량/지형 특성상 인구가중평균이
+   * 무의미한 지표) — 시도별 값만 비교하고 전국 단일값은 표시하지 않는다.
+   */
+  nationalAggregate?: 'weightedMean' | 'none';
+  /** 대리지표·결측 등 해석에 필요한 짧은 고지문. 있으면 지도/목록에 노출. */
+  proxyNote?: string;
 }
 
 /** goal별 대표 지표 (시도 실데이터 보유분만; 나머지는 null = KOSIS 수집 예정) */

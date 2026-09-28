@@ -168,6 +168,9 @@ export function SDGMapDashboard({ geoData, mapSource, initialGoal }: { geoData: 
             </span>
           : <span className="text-xs text-amber-300/80">이 목표는 아직 시도별 공식 지표를 확보하지 못했습니다.</span>}
       </div>
+      {indicator?.proxyNote && (
+        <p className="text-sm text-amber-200/80">ⓘ {indicator.proxyNote}</p>
+      )}
 
       {/* 실측 다년(KOSIS) 추세 — seriesBySido 보유 goal(3·5·7·8·9·11) 표시. 나머지는 매트릭스/프로파일의 2점(B) 추세 유지. */}
       {multiYear && indicator && (
@@ -210,7 +213,10 @@ export function SDGMapDashboard({ geoData, mapSource, initialGoal }: { geoData: 
 
         {/* 순위 */}
         <div className="border border-gray-800 bg-gray-900/30 rounded-lg p-4">
-          <h3 className="text-sm font-semibold text-gray-300 mb-3">시도 순위 {indicator && <span className="text-gray-500">({indicator.label})</span>}</h3>
+          <h3 className="text-sm font-semibold text-gray-300 mb-3">
+            {indicator?.nationalAggregate === 'none' ? '시도별 값' : '시도 순위'}{' '}
+            {indicator && <span className="text-gray-500">({indicator.label})</span>}
+          </h3>
           {indicator ? (
             <div className="space-y-1 max-h-[400px] overflow-y-auto pr-1">
               {ranked.map((p: { short: string; value: number }, i: number) => {

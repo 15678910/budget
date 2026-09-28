@@ -1,8 +1,9 @@
 import { assembleIndicatorValues } from '@/lib/sdg/board-data';
 import { CANON_16 } from '@/lib/sdg/region-normalize';
+import { ADMISSION_SIDO } from '@/lib/data/admission-rate';
 
 describe('assembleIndicatorValues', () => {
-  const { valuesByIndicator, direction } = assembleIndicatorValues();
+  const { valuesByIndicator, rawValuesByIndicator, rawSeriesByIndicator, direction } = assembleIndicatorValues();
 
   it('매핑된 지표마다 16광역(또는 그 부분집합) 값이 광주전남 통합 키를 쓴다', () => {
     const empRate = valuesByIndicator['emp_rate'];
@@ -31,5 +32,29 @@ describe('assembleIndicatorValues', () => {
     const popJeonnam = 1761628;
     const expected = (gwangju * popGwangju + jeonnam * popJeonnam) / (popGwangju + popJeonnam);
     expect(valuesByIndicator['emp_rate']['광주전남']).toBeCloseTo(expected, 1);
+  });
+
+  it('rawValuesByIndicator는 원시 17개 시도(광주·전남 분리) 값을 보존한다', () => {
+    const rawEmpRate = rawValuesByIndicator['emp_rate'];
+    expect(rawEmpRate).toBeDefined();
+    expect(rawEmpRate['광주']).toBeCloseTo(60.5, 5);
+    expect(rawEmpRate['전남']).toBeCloseTo(65.5, 5);
+    // canon16 병합 키('광주전남')는 원시값에 없어야 함
+    expect(rawEmpRate['광주전남']).toBeUndefined();
+  });
+
+  it('edu_admission(KEDI 실측 진학률)이 ADMISSION_SIDO에서 직접 병합된다', () => {
+    expect(valuesByIndicator['edu_admission']).toBeDefined();
+    expect(direction['edu_admission']).toBe('higher_better');
+    // 원시값은 ADMISSION_SIDO의 시도별 latest와 정확히 일치(변형 없음)
+    for (const s of ADMISSION_SIDO) {
+      expect(rawValuesByIndicator['edu_admission'][s.sido]).toBe(s.latest);
+    }
+    // 광주+전남은 인구가중 병합된 '광주전남' 키로 존재
+    expect(valuesByIndicator['edu_admission']['광주전남']).toBeDefined();
+    expect(valuesByIndicator['edu_admission']['광주']).toBeUndefined();
+    // 다년 실측 시계열도 원시 시도별로 보존된다(연도 2022~2025)
+    const series = rawSeriesByIndicator['edu_admission'];
+    expect(series['서울']['2025']).toBeDefined();
   });
 });

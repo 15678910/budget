@@ -83,9 +83,9 @@ export const INDICATOR_TARGETS: Record<string, IndicatorTarget> = {
   // edu_private 사교육비 만원/월 (lower_better). 16광역 실분포: best=25만원(전북), worst=55만원(서울).
   // green=22는 분포 최우수 25보다 낮아 현재 어떤 광역도 도달 불가 → [A안] normative로 강등.
   edu_private: { green: 22, floor: 55, type: 'normative', source: '규범: 사교육비 억제 목표 22만원/월(aspirational, 분포 최우수 전북 25만원 미달 수준) / 분포 최악 55만원(서울)' },
-  // edu_univ 대학진학률 % (higher_better). 16광역 실분포: max=76%(세종), min=65%(강원).
-  // green=78은 분포 최고 76을 초과, floor=64는 분포 최저 65 미만 → [A안] normative로 강등.
-  edu_univ: { green: 78, floor: 64, type: 'normative', source: '규범: 대학진학률 향상 78% 지향(aspirational, 분포 최고 세종 76% 초과) / floor=64는 분포 최저 강원 65% 미만 aspirational 하한' },
+  // edu_admission 대학 진학률(KEDI, 실측) % (higher_better). 16광역 실분포(2025): max=82.9%(경남),
+  // min=62%(서울). 광주+전남 인구가중 병합값은 두 극값 사이라 병합 후에도 극값 불변 → 허용오차 없이 실분포 그대로 사용.
+  edu_admission: { green: 82.9, floor: 62, type: 'benchmark', source: '국내 16광역 분포(2025, 한국교육개발원 교육기본통계 공공데이터포털 15053808) — 상위 82.9%(경남) / 하위 62%(서울)' },
 
   // ── Goal 5 성평등 ──
   // emp_female 여성경활참가율 % (higher_better). 성평등 규범상 남성 수준(약 73%) 도달이
