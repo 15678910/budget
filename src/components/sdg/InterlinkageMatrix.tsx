@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { SDG_GOALS } from '@/lib/sdg/goals';
+import { GOAL_BG_CLASS } from '@/lib/sdg/goal-style';
 import type { InterlinkageResult, InterlinkagePair } from '@/lib/sdg/interlinkage';
 
 interface Props {
@@ -51,6 +52,11 @@ export default function InterlinkageMatrix({ data }: Props) {
   }, [pairs]);
 
   const [hovered, setHovered] = useState<string | null>(null);
+  // 마우스를 올린 셀의 행·열 목표 — 머리글을 강조해 어느 두 목표인지 바로 보이게
+  const hoveredGoals = useMemo(
+    () => new Set(hovered ? hovered.split('-').map(Number) : []),
+    [hovered],
+  );
 
   const lookup = (a: number, b: number): InterlinkagePair | null => {
     if (a === b) return null;
@@ -87,23 +93,34 @@ export default function InterlinkageMatrix({ data }: Props) {
         <p className="text-sm text-slate-400">표시할 데이터 보유 목표가 없습니다.</p>
       ) : (
         <>
-          {/* 히트맵 */}
+          {/* 히트맵 — 본문 폭 전체를 쓰고, 좁은 화면에서는 가로 스크롤 */}
           <div className="overflow-x-auto">
-            <table className="border-separate border-spacing-0.5">
+            <table className="w-full min-w-[720px] table-fixed border-separate border-spacing-1">
+              <colgroup>
+                <col className="w-36 md:w-44" />
+                {goals.map((g) => (
+                  <col key={g} />
+                ))}
+              </colgroup>
               <thead>
                 <tr>
                   <th className="sticky left-0 z-10 bg-slate-950 p-1" />
                   {goals.map((g) => {
                     const meta = goalMeta(g);
+                    const active = hoveredGoals.has(g);
                     return (
-                      <th key={g} className="p-1 align-bottom">
-                        <div className="flex flex-col items-center gap-0.5">
-                          <img
-                            src={`/sdg/sdg-${g}-pic.svg?v=12`}
-                            alt={meta?.name ?? `목표 ${g}`}
-                            className="h-7 w-7 rounded"
-                          />
-                          <span className="text-[12px] text-slate-400">{g}</span>
+                      <th key={g} scope="col" className="p-1 align-bottom" title={meta?.name}>
+                        <div className="flex flex-col items-center gap-1">
+                          <span
+                            className={`inline-flex h-8 w-8 items-center justify-center rounded text-sm font-bold text-white ${GOAL_BG_CLASS[g] ?? 'bg-slate-600'}`}
+                          >
+                            {g}
+                          </span>
+                          <span
+                            className={`break-keep text-center text-sm leading-tight ${active ? 'font-semibold text-white' : 'text-slate-300'}`}
+                          >
+                            {meta?.short ?? ''}
+                          </span>
                         </div>
                       </th>
                     );
@@ -113,17 +130,24 @@ export default function InterlinkageMatrix({ data }: Props) {
               <tbody>
                 {goals.map((rowGoal) => {
                   const rowMeta = goalMeta(rowGoal);
+                  const rowActive = hoveredGoals.has(rowGoal);
                   return (
                     <tr key={rowGoal}>
-                      <th className="sticky left-0 z-10 bg-slate-950 p-1">
-                        <div className="flex items-center gap-1.5 pr-2">
-                          <img
-                            src={`/sdg/sdg-${rowGoal}-pic.svg?v=12`}
-                            alt={rowMeta?.name ?? `목표 ${rowGoal}`}
-                            className="h-6 w-6 rounded"
-                          />
-                          <span className="text-[12px] text-slate-300">
-                            {rowGoal}. {rowMeta?.short ?? ''}
+                      <th
+                        scope="row"
+                        className="sticky left-0 z-10 bg-slate-950 p-1 text-left"
+                        title={rowMeta?.name}
+                      >
+                        <div className="flex items-center gap-2 pr-2">
+                          <span
+                            className={`inline-flex h-8 w-8 shrink-0 items-center justify-center rounded text-sm font-bold text-white ${GOAL_BG_CLASS[rowGoal] ?? 'bg-slate-600'}`}
+                          >
+                            {rowGoal}
+                          </span>
+                          <span
+                            className={`break-keep text-base leading-tight ${rowActive ? 'font-semibold text-white' : 'text-slate-200'}`}
+                          >
+                            {rowMeta?.short ?? ''}
                           </span>
                         </div>
                       </th>
@@ -132,7 +156,7 @@ export default function InterlinkageMatrix({ data }: Props) {
                           return (
                             <td
                               key={colGoal}
-                              className="h-9 w-9 rounded bg-slate-700/40 text-center align-middle text-[12px] text-slate-500"
+                              className="h-12 rounded bg-slate-700/40 text-center align-middle text-base text-slate-400 md:h-14"
                               title={`${rowGoal}. ${rowMeta?.short ?? ''} (자기 자신)`}
                             >
                               —
@@ -145,7 +169,7 @@ export default function InterlinkageMatrix({ data }: Props) {
                           return (
                             <td
                               key={colGoal}
-                              className="h-9 w-9 rounded bg-slate-800/40 text-center align-middle text-[12px] text-slate-600"
+                              className="h-12 rounded bg-slate-800/40 text-center align-middle text-base text-slate-400 md:h-14"
                               title={`${rowGoal} × ${colGoal}: 공통 표본 부족(또는 산출 불가)`}
                             >
                               ·
@@ -156,8 +180,8 @@ export default function InterlinkageMatrix({ data }: Props) {
                         return (
                           <td
                             key={colGoal}
-                            className={`h-9 w-9 cursor-default rounded text-center align-middle text-[12px] font-medium text-white/90 transition-shadow ${
-                              isHover ? 'ring-2 ring-white/70' : ''
+                            className={`h-12 cursor-default rounded text-center align-middle font-mono text-base font-semibold tabular-nums text-white transition-shadow md:h-14 md:text-lg ${
+                              isHover ? 'ring-2 ring-white/80' : ''
                             }`}
                             style={cellStyle(p.r)}
                             title={pairLabel(p)}
@@ -176,29 +200,29 @@ export default function InterlinkageMatrix({ data }: Props) {
           </div>
 
           {/* 범례 */}
-          <div className="mt-4 flex flex-wrap items-center gap-4 text-xs text-slate-400">
-            <span className="flex items-center gap-1.5">
-              <span className="inline-block h-3 w-3 rounded" style={cellStyle(0.8)} /> 양의 상관(시너지 경향)
+          <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-slate-300">
+            <span className="flex items-center gap-2">
+              <span className="inline-block h-4 w-4 rounded" style={cellStyle(0.8)} /> 양의 상관(시너지 경향)
             </span>
-            <span className="flex items-center gap-1.5">
-              <span className="inline-block h-3 w-3 rounded" style={cellStyle(-0.8)} /> 음의 상관(상충 경향)
+            <span className="flex items-center gap-2">
+              <span className="inline-block h-4 w-4 rounded" style={cellStyle(-0.8)} /> 음의 상관(상충 경향)
             </span>
-            <span className="flex items-center gap-1.5">
-              <span className="inline-block h-3 w-3 rounded" style={cellStyle(0.3)} /> 약한 상관(|r|&lt;0.5, 흐림)
+            <span className="flex items-center gap-2">
+              <span className="inline-block h-4 w-4 rounded" style={cellStyle(0.3)} /> 약한 상관(|r|&lt;0.5, 흐림)
             </span>
-            <span>· 셀에 마우스를 올리면 r·n·해석을 확인할 수 있습니다.</span>
-            <span>— 자기 자신 / · 공통표본&lt;5 제외</span>
+            <span className="text-slate-400">— 자기 자신 · 「·」 공통 표본 5곳 미만</span>
           </div>
+          <p className="mt-1 text-sm text-slate-400">셀에 마우스를 올리면 계수(r)·표본 수(n)·해석이 나옵니다.</p>
 
           {/* 강한 상관 예시 */}
           {strongPairs.length > 0 && (
             <div className="mt-6">
-              <h2 className="text-sm font-semibold text-slate-200">강한 상관 관측(|r| ≥ 0.5) — 탐색적</h2>
-              <ul className="mt-2 space-y-1 text-sm text-slate-300">
+              <h2 className="text-lg font-semibold text-slate-100">강한 상관 관측(|r| ≥ 0.5) — 탐색적</h2>
+              <ul className="mt-3 space-y-2 text-base text-slate-200">
                 {strongPairs.slice(0, 8).map((p) => (
-                  <li key={`${p.a}-${p.b}`} className="flex items-center gap-2">
+                  <li key={`${p.a}-${p.b}`} className="flex items-center gap-2.5">
                     <span
-                      className="inline-block h-3 w-3 shrink-0 rounded"
+                      className="inline-block h-4 w-4 shrink-0 rounded"
                       style={cellStyle(p.r)}
                     />
                     {pairLabel(p)}
