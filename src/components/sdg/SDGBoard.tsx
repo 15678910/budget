@@ -79,7 +79,7 @@ export function SDGBoard({
         <section
           ref={mapRef}
           aria-label={`SDG ${goal} 전국 지도`}
-          className="scroll-mt-20 border border-gray-800 rounded-lg bg-gray-900/30 p-3 space-y-2"
+          className="scroll-mt-32 border border-gray-800 rounded-lg bg-gray-900/30 p-3 space-y-2"
         >
           <div className="flex items-center justify-between gap-2">
             <span className="inline-flex items-center gap-2 min-w-0">

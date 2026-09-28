@@ -82,7 +82,7 @@ export default function SDGEffectivenessPage() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-8">
+    <div className="mx-auto w-full max-w-6xl px-4 pt-4 pb-8">
       <header className="mb-6">
         <h1 className="text-2xl font-bold text-slate-100">실효성·효율성 — 예산 대비 성과</h1>
         <p className="mt-2 text-sm text-slate-400">

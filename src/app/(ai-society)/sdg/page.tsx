@@ -138,33 +138,7 @@ export default function SDGPage() {
   );
 
   return (
-    <div className="w-full max-w-6xl mx-auto">
-      <div className="flex justify-end gap-2 mb-2">
-        <a
-          href="/sdg/vlr"
-          className="inline-flex items-center gap-1 text-sm px-3 py-1.5 rounded-lg border border-emerald-600/60 bg-emerald-950/30 text-emerald-200 hover:bg-emerald-900/40 font-medium"
-        >
-          📄 VLR 지역 자기평가 리포트
-        </a>
-        <a
-          href="/sdg/ontology"
-          className="inline-flex items-center gap-1 text-sm px-3 py-1.5 rounded-lg border border-sky-700/60 bg-sky-950/30 text-sky-200 hover:bg-sky-900/40"
-        >
-          🔗 데이터 온톨로지 관계도
-        </a>
-        <a
-          href="/sdg/interlinkage"
-          className="inline-flex items-center gap-1 text-sm px-3 py-1.5 rounded-lg border border-violet-700/60 bg-violet-950/30 text-violet-200 hover:bg-violet-900/40"
-        >
-          🧩 연계성 분석(시너지·상충)
-        </a>
-        <a
-          href="/sdg/effectiveness"
-          className="inline-flex items-center gap-1 text-sm px-3 py-1.5 rounded-lg border border-amber-700/60 bg-amber-950/30 text-amber-200 hover:bg-amber-900/40"
-        >
-          📊 실효성 분석(예산-성과)
-        </a>
-      </div>
+    <div className="w-full max-w-6xl mx-auto pt-4">
       <SDGBoard
         matrix={matrix}
         metros={CANON_16}

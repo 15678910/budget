@@ -83,7 +83,7 @@ export default async function VLRPage({
   const initialRegion = region && CANON_16_SET.has(region) ? region : undefined;
 
   return (
-    <div className="w-full">
+    <div className="w-full pt-4">
       <VLRReport
         regions={[...CANON_16]}
         vlrByRegion={vlrByRegion}
