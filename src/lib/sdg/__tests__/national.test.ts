@@ -1,4 +1,4 @@
-import { nationalByGoal } from '@/lib/sdg/national';
+import { nationalByGoal, fillNationalFromKosis, weightedMean, type KosisIndicatorLike } from '@/lib/sdg/national';
 import type { IndicatorDirection } from '@/lib/data/local-sdg-data';
 
 // 3개 광역으로 단순화한 인구가중 평균 검증.
@@ -81,5 +81,47 @@ describe('nationalByGoal', () => {
     expect(out[4]!.label).toBe('대학진학률');
     // 가중평균: (72*200 + 68*100) / 300 = (14400 + 6800) / 300 = 70.667
     expect(out[4]!.value).toBeCloseTo(70.667, 2);
+  });
+});
+
+describe('fillNationalFromKosis', () => {
+  it('board 대표지표가 없는 goal(예: 7)을 KOSIS 인구가중평균으로 채운다', () => {
+    const national = nationalByGoal({}, {}, direction, labels); // 전부 null
+    const kosisGoals: Record<string, KosisIndicatorLike> = {
+      7: {
+        label: '신재생에너지 생산량',
+        unit: 'toe',
+        higherBetter: true,
+        bySido: { 서울: 100, 경기: 300 },
+      },
+    };
+    const rawPopulation = { 서울: 100, 경기: 200 };
+    const out = fillNationalFromKosis(national, kosisGoals, rawPopulation);
+    expect(out[7]).not.toBeNull();
+    expect(out[7]!.label).toBe('신재생에너지 생산량');
+    expect(out[7]!.unit).toBe('toe');
+    expect(out[7]!.direction).toBe('higher_better');
+    // 가중평균 = (100*100 + 300*200) / 300 = (10000+60000)/300 = 233.33
+    expect(out[7]!.value).toBeCloseTo(weightedMean(kosisGoals[7].bySido, rawPopulation), 5);
+    expect(out[7]!.value).toBeCloseTo(233.333, 2);
+  });
+
+  it('board 대표지표가 이미 있는 goal은 KOSIS로 덮어쓰지 않는다', () => {
+    const values = { emp_rate: { 서울: 60, 부산: 50 } };
+    const pop = { 서울: 100, 부산: 100 };
+    const national = nationalByGoal(values, pop, direction, labels);
+    const kosisGoals: Record<string, KosisIndicatorLike> = {
+      8: { label: 'KOSIS 고용률', unit: '%', higherBetter: true, bySido: { 서울: 999 } },
+    };
+    const out = fillNationalFromKosis(national, kosisGoals, pop);
+    // board 값(55)이 유지되어야 함 — KOSIS(999)로 덮어쓰지 않음
+    expect(out[8]!.indicatorId).toBe('emp_rate');
+    expect(out[8]!.value).toBeCloseTo(55, 5);
+  });
+
+  it('KOSIS bySido가 비어있으면 null 유지', () => {
+    const national = nationalByGoal({}, {}, direction, labels);
+    const out = fillNationalFromKosis(national, { 7: { label: 'x', unit: '', higherBetter: true, bySido: {} } }, {});
+    expect(out[7]).toBeNull();
   });
 });

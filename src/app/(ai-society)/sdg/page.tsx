@@ -4,16 +4,21 @@ import { assembleBase2018 } from '@/lib/sdg/base2018';
 import { buildMatrix } from '@/lib/sdg/matrix';
 import { INDICATOR_TO_GOAL } from '@/lib/sdg/indicator-map';
 import { CANON_16, mergeToCanon16 } from '@/lib/sdg/region-normalize';
-import { nationalByGoal, type IndicatorLabel } from '@/lib/sdg/national';
+import { nationalByGoal, fillNationalFromKosis } from '@/lib/sdg/national';
 import { nationalGoalAchievement } from '@/lib/sdg/achievement';
 import { nationalGoalTrend } from '@/lib/sdg/trend-build';
+import { buildMapSource, type IndicatorMeta } from '@/lib/sdg/map-source';
 import { getMetroFiscalDataOfficial } from '@/lib/data/fiscal-health-official';
 import { SDG_DOMAINS } from '@/lib/data/local-sdg-data';
-import { SIDO_FULL_TO_SHORT } from '@/lib/sdg/goals';
+import { SIDO_FULL_TO_SHORT, type SDGIndicator } from '@/lib/sdg/goals';
 import type { FiscalContext } from '@/components/sdg/SDGRegionProfile';
 import type { Metadata } from 'next';
 import fs from 'fs';
 import path from 'path';
+
+interface KosisData {
+  goals: Record<string, SDGIndicator>;
+}
 
 export const metadata: Metadata = {
   title: 'SDG 지역 상황판 (16광역×17목표) | 마을살림/나라살림',
@@ -21,11 +26,11 @@ export const metadata: Metadata = {
     '16개 광역 × 17개 SDG 목표 매트릭스 상황판. 실데이터 대표지표 정규화, 출처 명시. 통합 SDG 점수는 미공개이며 종합 달성도와 다를 수 있습니다.',
 };
 
-function loadKosis() {
+function loadKosis(): KosisData {
   try {
     return JSON.parse(
       fs.readFileSync(path.join(process.cwd(), 'public', 'data', 'sdg-sido.json'), 'utf-8'),
-    );
+    ) as KosisData;
   } catch {
     return { goals: {} };
   }
@@ -73,11 +78,12 @@ function buildFiscalByRegion(): Record<string, FiscalContext> {
   return out;
 }
 
-// 지표 id → {label, unit} (SDG_DOMAINS에서 추출). 전국 절대값 카드 라벨용.
-function buildIndicatorLabels(): Record<string, IndicatorLabel> {
-  const out: Record<string, IndicatorLabel> = {};
+// 지표 id → {label, unit, source} (SDG_DOMAINS에서 추출).
+// 전국 절대값 카드 라벨 + 지도 대표지표(map-source) 헤더에 공용으로 쓴다.
+function buildIndicatorMeta(): Record<string, IndicatorMeta> {
+  const out: Record<string, IndicatorMeta> = {};
   for (const d of SDG_DOMAINS) {
-    for (const ind of d.indicators) out[ind.id] = { label: ind.name, unit: ind.unit };
+    for (const ind of d.indicators) out[ind.id] = { label: ind.name, unit: ind.unit, source: ind.source };
   }
   return out;
 }
@@ -98,12 +104,23 @@ export default function SDGPage() {
   // population은 원시 약칭(광주·전남 분리) 키 → valuesByIndicator(CANON_16, '광주전남' 병합)와
   // 키를 맞추기 위해 sum 병합으로 canon 인구 가중치 생성.
   const canonPopulation = mergeToCanon16(population, 'sum');
-  const national = nationalByGoal(
+  const indicatorMeta = buildIndicatorMeta();
+  const nationalFromBoard = nationalByGoal(
     valuesByIndicator,
     canonPopulation,
     direction,
-    buildIndicatorLabels(),
+    indicatorMeta,
   );
+  // board 대표지표가 없는 goal(예: 7=신재생에너지)은 KOSIS 전국값(인구가중평균)으로 채운다.
+  // KOSIS bySido는 17개 원시 시도(광주·전남 분리) 키라 병합 전 원시 population을 그대로 쓴다.
+  const national = fillNationalFromKosis(nationalFromBoard, kosis.goals, population);
+  // 지도 대표지표: KOSIS 우선 · 없으면 상황판 대표지표(전국 목록과 동일 선택) 폴백.
+  const mapSource = buildMapSource({
+    kosisGoals: kosis.goals,
+    valuesByIndicator,
+    direction,
+    indicatorMeta,
+  });
   // 목표값 기준 전국 달성도(신호등) — 상대점수와 별개.
   const nationalAchievement = nationalGoalAchievement(
     valuesByIndicator,
@@ -154,7 +171,7 @@ export default function SDGPage() {
         nationalTrend={nationalTrend}
         fiscalByRegion={fiscalByRegion}
         geoData={geoData}
-        kosis={kosis}
+        mapSource={mapSource}
         valuesByIndicator={valuesByIndicator}
         base2018ByIndicator={base2018ByIndicator}
         direction={direction}

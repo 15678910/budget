@@ -7,16 +7,13 @@ import { SDGScopeSelector, type SDGScope } from './SDGScopeSelector';
 import { SDGNationalSummary } from './SDGNationalSummary';
 import { SDGMunicipalProfile } from './SDGMunicipalProfile';
 import type { Matrix } from '@/lib/sdg/matrix';
-import { SDG_GOALS, type SDGIndicator } from '@/lib/sdg/goals';
+import { SDG_GOALS } from '@/lib/sdg/goals';
 import { GOAL_BG_CLASS } from '@/lib/sdg/goal-style';
 import type { NationalByGoal } from '@/lib/sdg/national';
 import type { GoalAchievementByGoal } from '@/lib/sdg/scoring';
 import type { GoalTrendByGoal } from '@/lib/sdg/trend-build';
+import type { MapSourceByGoal } from '@/lib/sdg/map-source';
 import type { IndicatorDirection } from '@/lib/data/local-sdg-data';
-
-interface KosisData {
-  goals: Record<string, SDGIndicator>;
-}
 
 export function SDGBoard({
   matrix,
@@ -26,7 +23,7 @@ export function SDGBoard({
   nationalTrend,
   fiscalByRegion,
   geoData,
-  kosis,
+  mapSource,
   valuesByIndicator,
   base2018ByIndicator,
   direction,
@@ -39,7 +36,7 @@ export function SDGBoard({
   fiscalByRegion: Record<string, FiscalContext>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any -- topojson(geoData)는 외부 토포 구조라 런타임 가드만 가능
   geoData: any;
-  kosis: KosisData;
+  mapSource: MapSourceByGoal;
   valuesByIndicator: Record<string, Record<string, number>>;
   base2018ByIndicator: Record<string, Record<string, number>>;
   direction: Record<string, IndicatorDirection>;
@@ -102,7 +99,7 @@ export function SDGBoard({
               지도 닫기
             </button>
           </div>
-          <SDGMapDashboard key={goal} initialGoal={goal} geoData={geoData} kosis={kosis} />
+          <SDGMapDashboard key={goal} initialGoal={goal} geoData={geoData} mapSource={mapSource} />
         </section>
       ) : (
         <p className="text-sm text-gray-400">목표를 누르면 이 자리에 전국 지도가 열립니다.</p>

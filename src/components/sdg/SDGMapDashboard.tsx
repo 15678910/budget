@@ -3,11 +3,11 @@
 import { useMemo, useState } from 'react';
 import { geoMercator, geoPath } from 'd3-geo';
 import { feature } from 'topojson-client';
-import { SDG_GOALS, getGoalIndicator, SIDO_FULL_TO_SHORT, type SDGIndicator } from '@/lib/sdg/goals';
+import { SDG_GOALS, SIDO_FULL_TO_SHORT } from '@/lib/sdg/goals';
+import type { MapGoalSource, MapSourceByGoal } from '@/lib/sdg/map-source';
 import { buildRegionSeries, regionMultiYearTrend, MULTIYEAR_ABSOLUTE } from '@/lib/sdg/multiyear-build';
 import { MultiYearTrendBadge } from './MultiYearTrendBadge';
 
-interface KosisData { goals: Record<string, SDGIndicator> }
 const W = 360, H = 440;
 
 // hex → rgba (농도용)
@@ -18,9 +18,9 @@ function hexA(hex: string, a: number): string {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function SDGMapDashboard({ geoData, kosis, initialGoal }: { geoData: any; kosis: KosisData; initialGoal?: number }) {
-  // 지표 = KOSIS 수집분 우선, 없으면 코드 내장(진학률 등)
-  const indicatorFor = (num: number): SDGIndicator | null => kosis?.goals?.[String(num)] ?? getGoalIndicator(num);
+export function SDGMapDashboard({ geoData, mapSource, initialGoal }: { geoData: any; mapSource: MapSourceByGoal; initialGoal?: number }) {
+  // 지표 = KOSIS 우선, 없으면 상황판 대표지표(map-source.ts에서 이미 병합됨)
+  const indicatorFor = (num: number): MapGoalSource | null => mapSource[num] ?? null;
   const [goalNum, setGoalNum] = useState(initialGoal ?? 4); // 기본: 데이터 보유 goal
   const goal = SDG_GOALS.find((g) => g.num === goalNum)!;
   const indicator = useMemo(() => indicatorFor(goalNum), [goalNum]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -109,7 +109,7 @@ export function SDGMapDashboard({ geoData, kosis, initialGoal }: { geoData: any;
       <div className="border-l-2 border-amber-500/60 bg-amber-950/20 rounded-r-md py-2.5 px-3.5 text-[13px] text-amber-100/85 leading-relaxed">
         <strong className="text-amber-300">⚖ 지표 해석 고지</strong> — 한국 지역 단위 공식 &apos;SDG 종합점수&apos;는 미공개입니다.
         본 지도는 goal별 <strong>대표 지표(출처 명시)</strong>로 시각화하며, 지표값을 곧 SDG 달성도로 단정하지 않습니다.
-        데이터 미보유 goal은 <strong>&apos;데이터 준비중&apos;</strong>(KOSIS 수집 예정)으로 표기합니다.
+        시도별 공식 지표를 아직 확보하지 못한 goal은 <strong>&apos;이 목표는 아직 시도별 공식 지표를 확보하지 못했습니다&apos;</strong>로 표기합니다.
         <br />
         <span className="text-amber-200/70">
           추세 표기 구분 — <strong>실측 다년(KOSIS)</strong>=선형회귀(보간 아님, 현재 goal 3·5·7·8·9·11) ·
@@ -162,8 +162,11 @@ export function SDGMapDashboard({ geoData, kosis, initialGoal }: { geoData: any;
         <span className="px-2 py-1 rounded text-white font-bold text-sm" style={{ background: goal.color }}>SDG {goal.num}</span>
         <span className="text-lg font-semibold text-gray-100">{goal.name}</span>
         {indicator
-          ? <span className="text-xs text-gray-400">지표: <strong className="text-gray-200">{indicator.label}</strong> · {indicator.year} · 출처 {indicator.source}</span>
-          : <span className="text-xs text-amber-300/80">데이터 준비중 — KOSIS 수집 예정(Phase C)</span>}
+          ? <span className="text-xs text-gray-400">
+              지표: <strong className="text-gray-200">{indicator.label}</strong> · {indicator.year} · 출처 {indicator.source}
+              {indicator.origin === 'board' && <span className="text-gray-600"> · 상황판 대표지표</span>}
+            </span>
+          : <span className="text-xs text-amber-300/80">이 목표는 아직 시도별 공식 지표를 확보하지 못했습니다.</span>}
       </div>
 
       {/* 실측 다년(KOSIS) 추세 — seriesBySido 보유 goal(3·5·7·8·9·11) 표시. 나머지는 매트릭스/프로파일의 2점(B) 추세 유지. */}
@@ -200,8 +203,7 @@ export function SDGMapDashboard({ geoData, kosis, initialGoal }: { geoData: any;
           ) : (
             <div className="h-[420px] flex flex-col items-center justify-center text-center gap-2">
               <span className="text-4xl opacity-40">🗺️</span>
-              <p className="text-sm text-gray-400">이 목표의 시도별 지표는 <strong className="text-gray-300">준비중</strong>입니다.</p>
-              <p className="text-xs text-gray-600">KOSIS OpenAPI 연동(Phase C) 후 표시됩니다.</p>
+              <p className="text-sm text-gray-400">이 목표는 아직 시도별 공식 지표를 확보하지 못했습니다.</p>
             </div>
           )}
         </div>

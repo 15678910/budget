@@ -45,13 +45,14 @@ const REP_INDICATOR_BY_GOAL: Record<number, string> = {
   4: 'edu_univ', // 진학률 (기초 스코프와 일치, 교원1인당학생수 대신)
 };
 
-export function nationalByGoal(
+/**
+ * goal → 상황판 대표지표 id. INDICATOR_TO_GOAL 선언순 첫 매핑 지표 + REP_INDICATOR_BY_GOAL 오버라이드.
+ * ⚠️ 지도(map-source.ts)도 이 함수를 그대로 재사용한다 — 전국 목록과 지도의 대표지표 선택을
+ *    다르게 두지 않기 위함(다른 선택 로직 중복 금지).
+ */
+export function pickRepresentativeIndicators(
   valuesByIndicator: Record<string, Record<string, number>>,
-  population: Record<string, number>,
-  directionMap: Record<string, IndicatorDirection>,
-  indicatorLabels: Record<string, IndicatorLabel>,
-): NationalByGoal {
-  // goal → 대표지표 id (선언순서상 첫 매핑 지표, 오버라이드 적용)
+): Record<number, string> {
   const repByGoal: Record<number, string> = {};
   for (const [ind, goal] of Object.entries(INDICATOR_TO_GOAL)) {
     if (!(goal in repByGoal)) repByGoal[goal] = ind;
@@ -63,6 +64,16 @@ export function nationalByGoal(
       repByGoal[goal] = overrideInd;
     }
   }
+  return repByGoal;
+}
+
+export function nationalByGoal(
+  valuesByIndicator: Record<string, Record<string, number>>,
+  population: Record<string, number>,
+  directionMap: Record<string, IndicatorDirection>,
+  indicatorLabels: Record<string, IndicatorLabel>,
+): NationalByGoal {
+  const repByGoal = pickRepresentativeIndicators(valuesByIndicator);
 
   const out: NationalByGoal = {};
   for (let goal = 1; goal <= 17; goal++) {
@@ -84,8 +95,48 @@ export function nationalByGoal(
   return out;
 }
 
+export interface KosisIndicatorLike {
+  label: string;
+  unit: string;
+  higherBetter: boolean;
+  bySido: Record<string, number>;
+}
+
+/**
+ * board 대표지표가 없는 goal에 한해 KOSIS 지표의 전국값(인구 가중 평균)을 채운다.
+ * board 대표지표가 이미 있는 goal(national[g] != null)은 건드리지 않는다(board 우선순위 유지).
+ *
+ * @param national      nationalByGoal() 결과.
+ * @param kosisGoals    public/data/sdg-sido.json의 goals (goal번호 문자열 → KOSIS 지표).
+ * @param rawPopulation 원시 17개 시도 약칭(광주·전남 분리) → 인구. KOSIS bySido도 17개 원시 키라
+ *                       assembleIndicatorValues().population(병합 전)을 그대로 써야 키가 맞는다.
+ */
+export function fillNationalFromKosis(
+  national: NationalByGoal,
+  kosisGoals: Record<string, KosisIndicatorLike>,
+  rawPopulation: Record<string, number>,
+): NationalByGoal {
+  const out: NationalByGoal = { ...national };
+  for (const [goalStr, indicator] of Object.entries(kosisGoals)) {
+    const goal = Number(goalStr);
+    if (!Number.isInteger(goal) || goal < 1 || goal > 17) continue;
+    if (out[goal] != null) continue; // board 대표지표가 이미 있으면 유지
+    const vals = indicator?.bySido;
+    if (!vals || Object.keys(vals).length === 0) continue;
+    out[goal] = {
+      indicatorId: `kosis_goal${goal}`,
+      label: indicator.label,
+      unit: indicator.unit,
+      value: weightedMean(vals, rawPopulation),
+      direction: indicator.higherBetter ? 'higher_better' : 'lower_better',
+      hasData: true,
+    };
+  }
+  return out;
+}
+
 /** 인구 가중 평균. 가중치 미제공/0이면 단순평균. */
-function weightedMean(
+export function weightedMean(
   values: Record<string, number>,
   population: Record<string, number>,
 ): number {
