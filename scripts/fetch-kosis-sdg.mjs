@@ -84,6 +84,44 @@ const INDICATORS = [
     objL1: 'ALL', sidoField: 'C1_CODE4',
     label: '주택보급률(다가구 포함)', unit: '%', higherBetter: true, source: '국토교통부 주택보급률',
   },
+  // 신규 6 — 부록 B (2026-09-28 실 API 검증). 지표 없던 목표 2·6·12·14·15·17 보강.
+  {
+    goal: 2, orgId: '177', tblId: 'DT_H_OBE_OBE', itmId: 'CR',
+    objL1: 'ALL', sidoField: 'C1_NM', filter: (r) => /^\d{3}$/.test(r.C1), // 3자리 C1 = 시도 합계행(5자리는 시군구)
+    label: '성인 비만율(자가보고)', unit: '%', higherBetter: false,
+    source: '질병관리청 지역사회건강조사 「비만율(자가보고)」 (KOSIS 177_DT_H_OBE_OBE) — 세종 미포함(16개 시도)',
+  },
+  {
+    goal: 6, orgId: '101', tblId: 'DT_1YL20741', itmId: 'T10',
+    objL1: 'ALL', sidoField: 'C1_NM',
+    label: '상수도보급률', unit: '%', higherBetter: true,
+    source: '국가데이터처 e-지방지표 「상수도보급률(시도/시/군/구)」 (KOSIS 101_DT_1YL20741)',
+  },
+  {
+    goal: 12, orgId: '101', tblId: 'DT_1YL21311', itmId: 'T10',
+    objL1: 'ALL', sidoField: 'C1_NM',
+    label: '생활계폐기물 재활용률', unit: '%', higherBetter: true,
+    source: '국가데이터처 e-지방지표 「생활계폐기물 재활용률(시도/시/군/구)」 (KOSIS 101_DT_1YL21311)',
+  },
+  {
+    // 5년 주기 조사(prdSe=F) — 연안 시도만 존재(내륙 시도는 갯벌 없음 → 자연 결측).
+    goal: 14, orgId: '146', tblId: 'DT_MLTM_1362', itmId: '13103130919T.0001',
+    objL1: 'ALL', sidoField: 'C1_NM', prdSe: 'F', startPrdDe: '1985', endPrdDe: '2026',
+    label: '연안습지(갯벌) 면적', unit: 'k㎡', higherBetter: true,
+    source: '해양수산부 「연안습지(갯벌)면적현황」 (KOSIS 146_DT_MLTM_1362) — 연안 11개 시도만(내륙 시도 결측)',
+  },
+  {
+    goal: 15, orgId: '101', tblId: 'DT_1YL21281', itmId: 'T10',
+    objL1: 'ALL', sidoField: 'C1_NM',
+    label: '인구 천명당 도시공원조성면적', unit: '㎡/인', higherBetter: true,
+    source: '국가데이터처 e-지방지표 「인구 천명당 도시공원조성면적(시도)」 (KOSIS 101_DT_1YL21281)',
+  },
+  {
+    goal: 17, orgId: '101', tblId: 'DT_1YL20921', itmId: 'T20',
+    objL1: 'ALL', sidoField: 'C1_NM',
+    label: '재정자립도', unit: '%', higherBetter: true,
+    source: '국가데이터처 e-지방지표 「재정자립도(세입과목개편후)」 (KOSIS 101_DT_1YL20921)',
+  },
 ];
 
 // 행에서 시도 약칭 추출. 매핑 불가(합계/전국)면 null.
@@ -104,9 +142,15 @@ function sidoOf(r, sidoField) {
 }
 
 async function fetchIndicator(ind) {
+  // 기본: prdSe=Y(연간) + newEstPrdCnt=10(최근 10개연도).
+  // 5년 주기 통계(예: 갯벌면적조사) 등은 ind.prdSe/startPrdDe/endPrdDe로 오버라이드.
+  const prdSe = ind.prdSe || 'Y';
+  const periodParam = ind.startPrdDe
+    ? `&startPrdDe=${ind.startPrdDe}&endPrdDe=${ind.endPrdDe}`
+    : `&newEstPrdCnt=${ind.newEstPrdCnt || 10}`;
   let url = `https://kosis.kr/openapi/Param/statisticsParameterData.do?method=getList&apiKey=${KEY}`
     + `&orgId=${ind.orgId}&tblId=${ind.tblId}&itmId=${ind.itmId}`
-    + `&objL1=${ind.objL1}&prdSe=Y&newEstPrdCnt=10&format=json&jsonVD=Y`;
+    + `&objL1=${ind.objL1}&prdSe=${prdSe}${periodParam}&format=json&jsonVD=Y`;
   if (ind.objL2) url += `&objL2=${ind.objL2}`;
   const res = await fetch(url, { signal: AbortSignal.timeout(10000) }); // 10s 타임아웃 (무한 대기 방지)
   const j = await res.json();
