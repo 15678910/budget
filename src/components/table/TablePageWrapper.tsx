@@ -3,19 +3,18 @@
 import { useState } from 'react';
 import type { BudgetRawItem } from '@/types/budget';
 import { BudgetTable } from '@/components/table/BudgetTable';
-import { DEFAULT_YEAR } from '@/lib/constants';
+import { useFlatBudget } from '@/hooks/useFlatBudget';
 import { cn } from '@/lib/utils/format';
 
 interface TablePageWrapperProps {
-  dataByYear: Record<number, BudgetRawItem[]>;
+  initialYear: number;
+  initialItems: BudgetRawItem[];
   availableYears: number[];
 }
 
-export function TablePageWrapper({ dataByYear, availableYears }: TablePageWrapperProps) {
-  const defaultYear = availableYears.includes(DEFAULT_YEAR)
-    ? DEFAULT_YEAR
-    : availableYears[availableYears.length - 1];
-  const [year, setYear] = useState(defaultYear);
+export function TablePageWrapper({ initialYear, initialItems, availableYears }: TablePageWrapperProps) {
+  const [year, setYear] = useState(initialYear);
+  const { items, status } = useFlatBudget(year, initialYear, initialItems);
 
   return (
     <div>
@@ -34,7 +33,13 @@ export function TablePageWrapper({ dataByYear, availableYears }: TablePageWrappe
           ))}
         </select>
       </div>
-      <BudgetTable items={dataByYear[year]} />
+      {status === 'loading' && (
+        <p className="text-sm text-muted-foreground">불러오는 중…</p>
+      )}
+      {status === 'error' && (
+        <p className="text-sm text-muted-foreground">데이터를 불러오지 못했습니다</p>
+      )}
+      {status === 'ready' && <BudgetTable items={items} />}
     </div>
   );
 }

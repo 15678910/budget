@@ -8,6 +8,7 @@ import {
   loadEducationMetadata,
 } from "@/lib/data/load-budget";
 import { UnifiedComparePage } from "@/components/comparison/UnifiedComparePage";
+import { calculateTotal } from "@/lib/data/transform";
 import { formatAsOfSummary } from "@/lib/utils/format";
 import type { BudgetTreeNode } from "@/types/budget";
 import type { Metadata } from "next";
@@ -30,7 +31,16 @@ export default function CompareRoute() {
 
   const domainDataByYear: Record<number, BudgetTreeNode> = {};
   for (const year of meta.availableYears) {
-    domainDataByYear[year] = loadBudgetByDomain(year);
+    const tree = loadBudgetByDomain(year);
+    domainDataByYear[year] = {
+      ...tree,
+      children: (tree.children ?? []).map((d) => ({
+        id: d.id,
+        name: d.name,
+        value: calculateTotal(d),
+        meta: d.meta,
+      })),
+    };
   }
 
   const metroDataByYear: Record<number, BudgetTreeNode> = {};

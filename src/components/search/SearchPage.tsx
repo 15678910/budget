@@ -4,26 +4,24 @@ import { useState, useMemo, useEffect, useRef } from 'react';
 import type { BudgetRawItem, DatasetMetadata } from '@/types/budget';
 import { createSearchIndex, searchBudget } from '@/lib/data/search-index';
 import { formatKoreanWon, cn } from '@/lib/utils/format';
-import { DEFAULT_YEAR } from '@/lib/constants';
-import { SampleDataNotice } from '@/components/shared/SampleDataNotice';
+import { useFlatBudget } from '@/hooks/useFlatBudget';
+import { CentralDataSource } from '@/components/shared/CentralDataSource';
 
 interface SearchPageProps {
-  dataByYear: Record<number, BudgetRawItem[]>;
+  initialYear: number;
+  initialItems: BudgetRawItem[];
   metadata: DatasetMetadata;
 }
 
-export function SearchPage({ dataByYear, metadata }: SearchPageProps) {
+export function SearchPage({ initialYear, initialItems, metadata }: SearchPageProps) {
   const availableYears = metadata.availableYears;
-  const defaultYear = availableYears.includes(DEFAULT_YEAR)
-    ? DEFAULT_YEAR
-    : availableYears[availableYears.length - 1];
 
-  const [year, setYear] = useState(defaultYear);
+  const [year, setYear] = useState(initialYear);
   const [query, setQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const items = dataByYear[year] ?? [];
+  const { items, status } = useFlatBudget(year, initialYear, initialItems);
 
   const index = useMemo(() => createSearchIndex(items), [items]);
 
@@ -50,7 +48,7 @@ export function SearchPage({ dataByYear, metadata }: SearchPageProps) {
     <div className="max-w-3xl mx-auto py-8 px-4">
       <h1 className="text-2xl font-bold mb-6">예산 검색</h1>
 
-      <SampleDataNotice kind="central" className="mb-4" />
+      <CentralDataSource className="mb-4" />
 
       <div className="flex items-center gap-3 mb-4">
         <select
@@ -96,7 +94,14 @@ export function SearchPage({ dataByYear, metadata }: SearchPageProps) {
         )}
       </div>
 
-      {!debouncedQuery && (
+      {status === 'loading' && (
+        <p className="text-sm text-muted-foreground text-center py-16">불러오는 중…</p>
+      )}
+      {status === 'error' && (
+        <p className="text-sm text-muted-foreground text-center py-16">데이터를 불러오지 못했습니다</p>
+      )}
+
+      {status === 'ready' && !debouncedQuery && (
         <div className="text-center py-16 text-muted-foreground">
           <svg className="mx-auto mb-4 opacity-30" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
@@ -106,7 +111,7 @@ export function SearchPage({ dataByYear, metadata }: SearchPageProps) {
         </div>
       )}
 
-      {debouncedQuery && results.length === 0 && (
+      {status === 'ready' && debouncedQuery && results.length === 0 && (
         <div className="text-center py-16 text-muted-foreground">
           <p>검색 결과가 없습니다</p>
           <p className="text-base mt-1 opacity-70">다른 검색어를 시도해 보세요</p>

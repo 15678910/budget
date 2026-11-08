@@ -14,12 +14,8 @@ describe('SampleDataNotice copy', () => {
     expect(SAMPLE_DATA_BADGE).toBe('「표본 데이터」');
   });
 
-  it('central 카피는 표본 데이터임을 밝히고 열린재정 공식 URL을 가리킨다', () => {
-    const { central } = SAMPLE_DATA_COPY;
-    expect(central.badge).toContain('표본 데이터');
-    expect(central.body).toContain('실제 예산이 아닙니다');
-    expect(central.officialName).toBe('열린재정');
-    expect(central.officialUrl).toBe('https://www.openfiscaldata.go.kr');
+  it('central 카피는 더 이상 없다 (중앙정부는 실제 데이터)', () => {
+    expect('central' in SAMPLE_DATA_COPY).toBe(false);
   });
 
   it('education 카피는 표본 데이터임을 밝히고 지방교육재정알리미 공식 URL을 가리킨다', () => {
@@ -30,7 +26,7 @@ describe('SampleDataNotice copy', () => {
     expect(education.officialUrl).toBe('https://www.eduinfo.go.kr');
   });
 
-  it('두 카피 모두 실제 데이터로 교체할 예정임을 안내한다', () => {
+  it('모든 카피 모두 실제 데이터로 교체할 예정임을 안내한다', () => {
     for (const copy of Object.values(SAMPLE_DATA_COPY)) {
       expect(copy.suffix).toContain('실제 데이터로 교체할 예정');
     }

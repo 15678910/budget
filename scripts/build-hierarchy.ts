@@ -116,7 +116,6 @@ function buildDomainTree(items: BudgetRawItem[]): BudgetTreeNode {
       meta: {
         level: 'domain' as HierarchyLevel,
         code: domainCode,
-        parentPath: ['총지출'],
       },
     }));
 
@@ -131,7 +130,6 @@ function buildDomainTree(items: BudgetRawItem[]): BudgetTreeNode {
         meta: {
           level: 'sector' as HierarchyLevel,
           code: sectorCode,
-          parentPath: ['총지출', domainName],
         },
       };
       domainNode.children!.push(sectorNode);
@@ -147,7 +145,6 @@ function buildDomainTree(items: BudgetRawItem[]): BudgetTreeNode {
         children: [],
         meta: {
           level: 'program' as HierarchyLevel,
-          parentPath: ['총지출', domainName, sectorName],
         },
       };
       sectorNode.children!.push(programNode);
@@ -163,7 +160,6 @@ function buildDomainTree(items: BudgetRawItem[]): BudgetTreeNode {
         value: 0,
         meta: {
           level: 'detailProject' as HierarchyLevel,
-          parentPath: ['총지출', domainName, sectorName, programName],
           ministryName,
           accountType,
         },
@@ -181,7 +177,6 @@ function buildDomainTree(items: BudgetRawItem[]): BudgetTreeNode {
     children: Array.from(domainMap.values()),
     meta: {
       level: 'root' as HierarchyLevel,
-      parentPath: [],
     },
   };
 
@@ -215,7 +210,6 @@ function buildMinistryTree(items: BudgetRawItem[]): BudgetTreeNode {
       children: [],
       meta: {
         level: 'domain' as HierarchyLevel,   // Reuse 'domain' level for consistent styling
-        parentPath: ['총지출'],
       },
     }));
 
@@ -230,7 +224,6 @@ function buildMinistryTree(items: BudgetRawItem[]): BudgetTreeNode {
         meta: {
           level: 'sector' as HierarchyLevel,
           code: domainCode,
-          parentPath: ['총지출', ministryName],
         },
       };
       ministryNode.children!.push(domainNode);
@@ -246,7 +239,6 @@ function buildMinistryTree(items: BudgetRawItem[]): BudgetTreeNode {
         children: [],
         meta: {
           level: 'program' as HierarchyLevel,
-          parentPath: ['총지출', ministryName, domainName],
         },
       };
       domainNode.children!.push(programNode);
@@ -262,7 +254,6 @@ function buildMinistryTree(items: BudgetRawItem[]): BudgetTreeNode {
         value: 0,
         meta: {
           level: 'detailProject' as HierarchyLevel,
-          parentPath: ['총지출', ministryName, domainName, programName],
           accountType,
         },
       };
@@ -278,7 +269,6 @@ function buildMinistryTree(items: BudgetRawItem[]): BudgetTreeNode {
     children: Array.from(ministryMap.values()),
     meta: {
       level: 'root' as HierarchyLevel,
-      parentPath: [],
     },
   };
 
@@ -337,7 +327,7 @@ function main(): void {
   // Build domain-view tree
   console.log(`[build-hierarchy] Building domain-view tree...`);
   const domainTree = buildDomainTree(items);
-  fs.writeFileSync(DOMAIN_OUT, JSON.stringify(domainTree, null, 2), 'utf-8');
+  fs.writeFileSync(DOMAIN_OUT, JSON.stringify(domainTree), 'utf-8');
   const domainTotal = sumChildren(domainTree);
   console.log(
     `[build-hierarchy] Domain tree: ${domainTree.children?.length ?? 0} domains, ` +
@@ -347,7 +337,7 @@ function main(): void {
   // Build ministry-view tree
   console.log(`[build-hierarchy] Building ministry-view tree...`);
   const ministryTree = buildMinistryTree(items);
-  fs.writeFileSync(MINISTRY_OUT, JSON.stringify(ministryTree, null, 2), 'utf-8');
+  fs.writeFileSync(MINISTRY_OUT, JSON.stringify(ministryTree), 'utf-8');
   const ministryTotal = sumChildren(ministryTree);
   console.log(
     `[build-hierarchy] Ministry tree: ${ministryTree.children?.length ?? 0} ministries, ` +

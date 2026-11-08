@@ -8,6 +8,7 @@ import { getNodeColor } from "@/lib/utils/colors";
 import { ShareButton } from "@/components/shared/ShareButton";
 import { DataSources } from "@/components/shared/DataSources";
 import { SampleDataNotice } from "@/components/shared/SampleDataNotice";
+import { CentralDataSource } from "@/components/shared/CentralDataSource";
 
 type SortKey = "amount" | "change" | "name";
 type CompareViewMode = 'domain' | 'metro' | 'district' | 'education';
@@ -178,12 +179,8 @@ export function ComparePage({
       </div>
 
       {/* Sample data notice (domain/education views only — metro/district are real data) */}
-      {(compareView === 'domain' || compareView === 'education') && (
-        <SampleDataNotice
-          kind={compareView === 'education' ? 'education' : 'central'}
-          className="mb-4"
-        />
-      )}
+      {compareView === 'domain' && <CentralDataSource className="mb-4" />}
+      {compareView === 'education' && <SampleDataNotice kind="education" className="mb-4" />}
 
       {/* 본청 basis note for metro totals */}
       {compareView === 'metro' && (
