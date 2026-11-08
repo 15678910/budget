@@ -1,0 +1,94 @@
+/*
+ * 칼럼 본문(마크다운 렌더 결과) 글꼴·간격.
+ * 색은 globals.css 의 테마 변수(--foreground 등)를 써서 라이트·다크 모두 따른다.
+ */
+.blog-prose {
+  color: var(--foreground);
+  font-size: 1.0625rem;
+  line-height: 1.85;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.blog-prose > * + * {
+  margin-top: 1.1em;
+}
+.blog-prose h2 {
+  margin-top: 2.4em;
+  padding-top: 0.6em;
+  border-top: 1px solid var(--border);
+  font-size: 1.375rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.blog-prose h3 {
+  margin-top: 1.8em;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+.blog-prose a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.blog-prose strong {
+  font-weight: 700;
+}
+.blog-prose blockquote {
+  border-left: 3px solid var(--border);
+  padding: 0.2em 0 0.2em 1em;
+  color: var(--muted-foreground);
+}
+.blog-prose ul,
+.blog-prose ol {
+  padding-left: 1.6em;
+}
+.blog-prose ul {
+  list-style: disc;
+}
+.blog-prose ol {
+  list-style: decimal;
+}
+.blog-prose li + li {
+  margin-top: 0.35em;
+}
+.blog-prose hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 2em 0;
+}
+.blog-prose code {
+  background: var(--muted);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+  font-size: 0.9em;
+}
+.blog-table-wrap {
+  overflow-x: auto;
+}
+.blog-prose table {
+  width: 100%;
+  /* 좁은 화면에서 칸이 글자 단위로 쪼개지지 않게 — 대신 .blog-table-wrap 이 가로 스크롤 */
+  min-width: 34rem;
+  overflow-wrap: normal;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+.blog-prose th,
+.blog-prose td {
+  border: 1px solid var(--border);
+  padding: 0.5em 0.75em;
+  text-align: left;
+  vertical-align: top;
+}
+.blog-prose th {
+  background: var(--muted);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* 참고 자료처럼 긴 번호 목록은 조금 작게 */
+.blog-prose h2 + ol {
+  font-size: 0.95rem;
+  line-height: 1.7;
+}

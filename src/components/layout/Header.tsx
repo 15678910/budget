@@ -20,6 +20,7 @@ const MAIN_TABS = [
   { href: "/fiscal-health", label: "재정건전성" },
   { href: "/debt-clock", label: "국채시계" },
   { href: "/disputes", label: "분쟁" },
+  { href: "/blog", label: "칼럼" },
 ];
 
 const PLEDGE_TABS = [

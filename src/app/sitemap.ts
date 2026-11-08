@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next';
+import { getPostMetas } from '@/lib/blog/posts';
 
 /**
  * Next.js 자동 생성 sitemap.xml — `https://budget.ai.kr/sitemap.xml`
@@ -46,6 +47,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // ── 정책·비전 ────────────────────────────────
     { url: `${base}/public-bank`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
     { url: `${base}/goals`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+
+    // ── 칼럼 ─────────────────────────────────────
+    { url: `${base}/blog`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
+    ...getPostMetas().map((p) => ({
+      url: `${base}/blog/${p.slug}`,
+      lastModified: new Date(p.date),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    })),
 
     // ── 보조 ─────────────────────────────────────
     { url: `${base}/search`, lastModified: now, changeFrequency: 'weekly', priority: 0.6 },

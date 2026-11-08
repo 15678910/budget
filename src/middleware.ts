@@ -70,6 +70,11 @@ function isAuthRoute(pathname: string): boolean {
   return false;
 }
 
+/** 유지보수 중에도 일반 방문자에게 공개하는 경로 — 칼럼(/blog, /blog/*). 2026-11-08 사용자 결정. */
+function isPublicDuringMaintenance(pathname: string): boolean {
+  return pathname === '/blog' || pathname.startsWith('/blog/');
+}
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -130,8 +135,12 @@ export async function middleware(request: NextRequest) {
 
     // 1-B') 추가 통과 조건:
     //   · 로그인 경로(/auth/login, /api/auth/*) → 관리자가 로그인할 수 있도록 항상 허용
+    //   · 칼럼(/blog, /blog/*) → 점검 중에도 공개
     //   · 로그인한 관리자(user_token 이메일 ∈ ADMIN_EMAILS) → 사이트 전체 통과
-    const exempt = isAuthRoute(pathname) || (await isAdminLoggedIn(request));
+    const exempt =
+      isAuthRoute(pathname) ||
+      isPublicDuringMaintenance(pathname) ||
+      (await isAdminLoggedIn(request));
 
     if (!allowedByCookie && !exempt) {
       // 1-C) 차단 → /maintenance 로 rewrite (URL 유지, 내용만 점검 페이지)
