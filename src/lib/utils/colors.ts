@@ -10,6 +10,7 @@ export const DOMAIN_COLORS: Record<string, string> = {
   '사회복지':                '#DD8452',
   '국방':                    '#55A868',
   '일반·지역행정':           '#C44E52',
+  '일반·지방행정':           '#C44E52',
   '공공질서·안전':           '#8172B3',
   '농림수산':                '#937860',
   '산업·중소기업·에너지':    '#DA8BC3',
@@ -21,6 +22,7 @@ export const DOMAIN_COLORS: Record<string, string> = {
   '문화·체육·관광':          '#DD8452',
   '보건':                    '#C44E52',
   '외교·통일':               '#8172B3',
+  '예비비':                  '#B0B0B0',
 };
 
 /**

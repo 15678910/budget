@@ -2292,6 +2292,16 @@ function rowsToCsv(rows: CsvRow[]): string {
 // ---------------------------------------------------------------------------
 
 function main(): void {
+  // data/raw/budget-*.csv 는 이제 열린재정 실제 데이터(scripts/fetch-openfiscal-budget.ts)다.
+  // 표본으로 덮어쓰는 사고를 막기 위해 --force 없이는 실행하지 않는다.
+  if (!process.argv.includes('--force')) {
+    console.error(
+      '[generate] data/raw/budget-*.csv 는 열린재정 실제 데이터입니다. ' +
+      '표본으로 덮어쓰려면 `tsx scripts/generate-sample-data.ts --force` 로 실행하세요. (실제 데이터 재수집: npm run data:fetch)'
+    );
+    process.exit(1);
+  }
+
   const outDir = path.resolve(process.cwd(), 'data', 'raw');
   if (!fs.existsSync(outDir)) {
     fs.mkdirSync(outDir, { recursive: true });

@@ -154,7 +154,7 @@ function main(): void {
     fs.mkdirSync(OUTPUT_DIR, { recursive: true });
   }
 
-  fs.writeFileSync(OUTPUT_PATH, JSON.stringify(items, null, 2), 'utf-8');
+  fs.writeFileSync(OUTPUT_PATH, JSON.stringify(items), 'utf-8');
 
   const total = items.reduce((s, r) => s + r.amount, 0);
   console.log(

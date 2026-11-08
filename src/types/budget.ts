@@ -24,7 +24,8 @@ export interface BudgetTreeNode {
   meta?: {
     level: HierarchyLevel;
     code?: string;
-    parentPath: string[];
+    /** 조상 노드 이름 경로. 현재 build-hierarchy.ts는 용량 절감을 위해 기록하지 않는다(사용처 없음). */
+    parentPath?: string[];
     ministryName?: string;
     accountType?: string;
     changeFromPrevYear?: number;

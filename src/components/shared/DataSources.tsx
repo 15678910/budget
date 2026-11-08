@@ -6,13 +6,13 @@ import { OFFICIAL_DEBT_SOURCE } from '@/lib/data/local-debt-official';
 const SOURCES = [
   {
     name: '기획재정부 2026년 예산안',
-    description: '공식 수치 확인처 — 중앙정부 세입·세출 예산 총액 및 분야별·부처별 배분 (본 사이트의 중앙정부 화면 수치는 표본 데이터이며 이 출처를 따르지 않음)',
+    description: '공식 수치 확인처 — 중앙정부 세입·세출 예산 총액 및 분야별·부처별 배분',
     url: 'https://www.mofe.go.kr',
     date: '2025.08',
   },
   {
     name: '열린재정 (Open Fiscal Data)',
-    description: '공식 수치 확인처 — 국가재정 세부 데이터, 국가채무, 재정수입·지출 (본 사이트의 중앙정부 화면 수치는 표본 데이터이며 이 출처를 따르지 않음)',
+    description: '중앙정부 세부사업 예산편성현황(총지출·국회확정 본예산) — 본 사이트 중앙정부 화면의 데이터 원천. 공공누리 제3유형(출처표시·변경금지)',
     url: 'https://www.openfiscaldata.go.kr',
     date: '상시',
   },
@@ -102,8 +102,9 @@ export function DataSources() {
         </div>
       )}
       <p className="mt-3 text-xs text-muted-foreground">
-        * 중앙정부·시도교육청 예산은 표본 데이터(실제 수치 아님)이며, 지역(광역·시군구) 예산은
-        지방재정365 세부사업별 세출의 예산현액(최종 예산) 기준입니다.
+        * 중앙정부 예산은 열린재정 세부사업 예산편성현황(총지출, 국회확정 본예산) 기준이고, 시·도교육청 예산은
+        표본 데이터(실제 수치 아님)이며, 지역(광역·시군구) 예산은 지방재정365 세부사업별 세출의
+        예산현액(최종 예산) 기준입니다.
       </p>
     </div>
   );

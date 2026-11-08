@@ -32,6 +32,12 @@ export const AVAILABLE_YEARS: number[] = [2023, 2024, 2025, 2026];
 export const DEFAULT_YEAR = 2026;
 
 /**
+ * 중앙정부 예산 데이터 출처 (열린재정, 공공누리 제3유형: 출처표시·변경금지).
+ * 문구는 src/components/shared/CentralDataSource.tsx 에 있다.
+ */
+export const CENTRAL_BUDGET_SOURCE_URL = 'https://www.openfiscaldata.go.kr';
+
+/**
  * 헤더 로고 클릭 시 트리맵을 최상위로 되돌리기 위한 이벤트 이름.
  *
  * 트리맵은 홈페이지(/) 자체이므로 로고의 <Link href="/">는 같은 경로로 판단돼
@@ -81,6 +87,7 @@ export const DOMAIN_NAME_ORDER: string[] = [
   '사회복지',
   '국방',
   '일반·지역행정',
+  '일반·지방행정',
   '공공질서·안전',
   '농림수산',
   '산업·중소기업·에너지',
@@ -92,4 +99,5 @@ export const DOMAIN_NAME_ORDER: string[] = [
   '문화·체육·관광',
   '보건',
   '외교·통일',
+  '예비비',
 ];

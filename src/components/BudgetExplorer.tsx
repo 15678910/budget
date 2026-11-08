@@ -6,6 +6,7 @@ import { Breadcrumb } from './layout/Breadcrumb';
 import { UnitConverter } from './shared/UnitConverter';
 import { DataSources } from './shared/DataSources';
 import { SampleDataNotice } from './shared/SampleDataNotice';
+import { CentralDataSource } from './shared/CentralDataSource';
 import { useTreemapNavigation } from '@/hooks/useTreemapNavigation';
 
 const BudgetTreemap = dynamic(
@@ -272,14 +273,14 @@ export function BudgetExplorer({
   // Unit conversion text for total
   const totalUnitText = selectedUnit ? formatUnitConversion(totalValue, selectedUnit) : '';
 
-  const sampleNoticeKind = viewMode === 'education' ? 'education' : viewMode === 'domain' || viewMode === 'ministry' ? 'central' : null;
+  const showEducationNotice = viewMode === 'education';
+  const showCentralSource = viewMode === 'domain' || viewMode === 'ministry';
 
   return (
     <div>
-      {/* Sample data notice (central/education views only — metro/district are real data) */}
-      {sampleNoticeKind && (
-        <SampleDataNotice kind={sampleNoticeKind} className="mb-4" />
-      )}
+      {/* Education sample notice / central data source (metro/district are real data) */}
+      {showEducationNotice && <SampleDataNotice kind="education" className="mb-4" />}
+      {showCentralSource && <CentralDataSource className="mb-4" />}
 
       {/* Controls bar */}
       <div className="flex flex-wrap items-center justify-between gap-3 mb-4">

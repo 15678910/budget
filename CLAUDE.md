@@ -80,6 +80,14 @@
 - PDF/대용량 파일: `.gitignore`에 추가
 - 커밋 전 반드시: `npx tsc --noEmit` + `npx next build` 통과 확인
 
+## 중앙정부 예산 데이터 파이프라인 (열린재정 실제 데이터)
+- 원천: 열린재정 재정상세통계 「세부사업 예산편성현황(총지출)」, 조회기준 총지출·예산기금 전체, 금액은 **국회확정금액(본예산)**. 2023~2026 4개년. 공공누리 제3유형(출처표시·변경금지) → 화면에 출처 표기 유지.
+- 수집·변환: `npm run data:fetch` (`scripts/fetch-openfiscal-budget.ts`, 키 불필요) → `data/raw/budget-{year}.csv` (12열, 백만원) → `npm run data:parse` → `npm run data:build`. 한 번에: `npm run data:all`.
+- 검증 기준(국회확정 총지출): 2023 638.7조, 2024 656.6조, 2025 673.3조, 2026 727.9조. 분야 16개(예비비 포함), 부처 60~63개.
+- 분야명은 `DOMAIN_COLORS`(`src/lib/utils/colors.ts`) 키에 맞춰 스크립트의 `DOMAIN_MAP`에서 정규화한다(예: 공공질서및안전→공공질서·안전). 부문코드는 원천에 없어 분야코드+가나다순 일련번호로 합성한다.
+- `npm run data:generate`(표본 생성기)는 실행 금지 — 실제 CSV를 표본으로 덮어쓴다. 시·도교육청(`education-*`)만 아직 표본이다.
+- 용량: 분야 트리 약 1.5MB, 세부사업 flat 약 2.5MB(연도당). 테이블·검색 페이지는 기본 연도만 서버에서 넣고 나머지는 `/api/budget/flat?year=`로 지연 로드한다. 트리 노드에 `parentPath`는 기록하지 않는다.
+
 ## 자주 발생하는 실수
 1. `html2canvas` 사용 → Tailwind v4 lab() 색상 에러 → `window.print()` 사용
 2. Gemini fallback 시 `general` 카테고리로 빠짐 → 키워드 매칭 확인
@@ -88,6 +96,8 @@
 5. 시뮬레이션 캐시가 fiscal만 저장 → MultiPerspectiveResult 전체 저장
 6. 조례 API가 HTTP → HTTPS 사용 필수
 7. Admin 인증: 평문 비교 금지 → `timingSafeEqual` 사용
+8. `npm run data:generate`로 중앙정부 실제 CSV를 표본으로 덮어씀 → `data:fetch`만 사용, `data:all`도 fetch 기반
+9. 열린재정 SHEET 다운로드 요청에 `totalCnt:"0"`을 넣으면 빈 배열 반환 → 0이 아닌 값(예: 30000) 사용
 
 ## 수정 금지 영역
 - `src/lib/data/fiscal-health-data.ts` — 재정 데이터 원본 (수동 검증 필요)
