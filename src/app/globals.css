@@ -172,3 +172,23 @@ body {
     page-break-inside: avoid;
   }
 }
+
+/* 인쇄(PDF) — AI 기본소득 기금 시뮬레이터. 인쇄 버튼이 body[data-bi-print]를 단다. */
+@media print {
+  body[data-bi-print] main .max-w-7xl > :not(.bi-print-root) {
+    display: none !important;
+  }
+  .bi-print-root,
+  .bi-print-root * {
+    background-color: transparent !important;
+    color: #111111 !important;
+    border-color: #bbbbbb !important;
+  }
+  .bi-print-root .bi-no-print {
+    display: none !important;
+  }
+  .bi-print-root section {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
