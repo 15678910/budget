@@ -103,6 +103,7 @@ export const DEFAULT_SOURCES: Record<SourceKey, SourcedValue> = {
   futureFundTotal: {
     label: '미래대응기금 규모', value: 162.3, unit: '조 원', kind: 'source',
     source: '기획예산처 2027년 예산안', url: BUDGET_2027_URL,
+    note: '보도자료 원문: 내국세 추세선을 넘는 추가 세수 162조 3천억 원(4대 분야 45.4조, 국채 발행 축소 12.5조)',
   },
   futureFundSurplus: {
     label: '미래대응기금 여유 재원', value: 104.4, unit: '조 원', kind: 'derived',
@@ -124,7 +125,7 @@ export const DEFAULT_SOURCES: Record<SourceKey, SourcedValue> = {
   budgetTotal2027: {
     label: '2027년 예산안 총지출', value: 820.9, unit: '조 원', kind: 'source',
     source: '기획예산처 2027년 예산안 보도자료', url: BUDGET_2027_URL,
-    note: '보도 표에서 옮김. 원문 PDF 대조 전',
+    note: '보도자료 원문: 총지출 820조 9천억 원(2026년 본예산 727.9조 대비 12.8% 증가)',
   },
   inheritanceTaxPaid: {
     label: '상속세 총결정세액', value: 8.9345, unit: '조 원', kind: 'source',

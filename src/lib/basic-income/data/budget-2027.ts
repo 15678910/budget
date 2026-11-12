@@ -1,12 +1,13 @@
 /**
  * 2027년 정부 예산안 12대 분야 지출(조 원, 기획예산처 2026.9.1 발표).
- * 금액은 보도자료 첨부 PDF에 있고, 여기 값은 그 표를 옮긴 보도(파이낸셜뉴스)에서 가져왔다. 원문 PDF 대조 전.
- * 분야 합계(약 824.4조)는 총지출 820.9조와 다르다(분야 간 중복 집계로 보이나 설명 없음).
+ * 금액은 보도자료 첨부 「2. 27년 예산안 홍보자료.pdf」 4쪽 '분야별 재원배분 모습' 표의 2027년 예산안 열(2026-11-12 원문 대조).
+ * 보건·복지·고용과 국방은 군인연금기금을 국방으로 옮긴 새 기준이다(구 기준 293.9·71.8).
+ * 분야 합계(824.4조)는 총지출 820.9조와 다르다. 원문 표에도 차이 설명이 없다.
  */
 import type { BudgetSector, SourcedValue } from '../types';
 
 export const BUDGET_2027_URL = 'https://www.korea.kr/briefing/pressReleaseView.do?newsId=156776382';
-const NOTE = '보도 표(파이낸셜뉴스 2026.9.1)에서 옮김. 원문 PDF 대조 전';
+const NOTE = '첨부 「27년 예산안 홍보자료」 4쪽 분야별 재원배분 표(원문 대조)';
 
 function sector(id: string, label: string, amount: number): BudgetSector {
   const source: SourcedValue = {

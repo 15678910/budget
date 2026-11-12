@@ -39,7 +39,7 @@ export function BudgetCompare({ need, year }: { need: number; year: number }) {
         ))}
       </ul>
       <p className="text-xs text-gray-500">
-        분야별 금액: 기획예산처 2027년 예산안(보도 표에서 옮김, 원문 PDF 대조 전).{' '}
+        분야별 금액: 기획예산처 2027년 예산안 첨부 홍보자료 4쪽 표(원문 대조).{' '}
         <a href={BUDGET_2027_URL} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">
           정책브리핑 원문
         </a>

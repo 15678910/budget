@@ -4,6 +4,7 @@ import { DEFAULT_FUTURE_FUND, DEFAULT_INPUT, DEFAULT_SOURCES } from '@/lib/basic
 import { perpetualTarget, sanitizeInput } from '@/lib/basic-income/engine';
 import { runFutureFundScenarios } from '@/lib/basic-income/future-fund-scenarios';
 import { base } from '@/lib/basic-income/__fixtures__/base';
+import { BUDGET_2027 } from '@/lib/basic-income/data/budget-2027';
 import type { CarbonTaxInput } from '@/lib/basic-income/types';
 
 const carbon = (over: Partial<CarbonTaxInput>): CarbonTaxInput => ({
@@ -95,5 +96,27 @@ describe('I5: S3 아동 계좌 결과', () => {
     expect(s3.child?.reachesTarget).toBe(false);
     const rich = runFutureFundScenarios(base, { ...DEFAULT_FUTURE_FUND, surplusFund: 10_000 })[2];
     expect(rich.child?.reachesTarget).toBe(true);
+  });
+});
+
+describe('2027 예산안 원문 PDF 대조(2026-11-12)', () => {
+  const EXPECTED: Record<string, number> = {
+    welfare: 289.0, admin: 149.0, education: 110.7, defense: 73.3, industry: 41.2, rnd: 39.5,
+    agri: 30.7, soc: 28.9, safety: 28.8, environment: 14.6, culture: 11.6, diplomacy: 7.1,
+  };
+
+  it('12대 분야 금액은 홍보자료 4쪽 표와 같고, 원문 대조를 마친 출처로 표시된다', () => {
+    expect(BUDGET_2027).toHaveLength(12);
+    for (const s of BUDGET_2027) {
+      expect(s.amount).toBe(EXPECTED[s.id]);
+      expect(s.source.note).not.toMatch(/대조 전/);
+      expect(s.source.note).toMatch(/홍보자료/);
+    }
+  });
+
+  it('총지출 820.9조와 미래대응기금 162.3조도 원문 대조 표시를 단다', () => {
+    expect(DEFAULT_SOURCES.budgetTotal2027.value).toBe(820.9);
+    expect(DEFAULT_SOURCES.budgetTotal2027.note).not.toMatch(/대조 전/);
+    expect(DEFAULT_SOURCES.futureFundTotal.note).toMatch(/보도자료/);
   });
 });
