@@ -11,12 +11,30 @@ const carbon = (over: Partial<CarbonTaxInput>): CarbonTaxInput => ({
 });
 
 describe('C1·I6: 확인 전 사실값', () => {
-  it('로봇세·데이터세 기반, 유산 대상 재산, 초과 세수는 0과 "출처 확인 전"', () => {
-    for (const k of ['robotBase', 'dataBase', 'bequestEstate', 'surplusExcess'] as const) {
+  it('로봇세 기반과 초과 세수는 0과 "출처 확인 전"', () => {
+    for (const k of ['robotBase', 'surplusExcess'] as const) {
       expect(DEFAULT_SOURCES[k].value).toBe(0);
       expect(DEFAULT_SOURCES[k].note).toBe('출처 확인 전');
       expect(DEFAULT_SOURCES[k].url).toBeUndefined();
     }
+  });
+
+  it('데이터세 기반은 방미통위 보도자료의 2024년 온라인 광고비 10조 1,011억 원', () => {
+    expect(DEFAULT_SOURCES.dataBase).toMatchObject({ value: 10.1011, kind: 'source' });
+    expect(DEFAULT_SOURCES.dataBase.url).toContain('korea.kr');
+    expect(DEFAULT_INPUT.alt.data.base).toBe(10.1011);
+  });
+
+  it('유산 대상 재산은 국세통계 2025년 결정분 중 총상속재산가액 50억 원 초과 합계(백만 원 → 조 원)', () => {
+    // 6-2-2 표: 100억 이하 6,417,155 + 500억 이하 7,890,128 + 500억 초과 5,756,932 (백만 원)
+    expect(DEFAULT_SOURCES.bequestEstate).toMatchObject({ value: 20.064215, kind: 'derived' });
+    expect(DEFAULT_INPUT.bequest.eligibleEstate).toBe(20.064215);
+  });
+
+  it('상속세 실효율은 같은 구간의 총결정세액 ÷ 총상속재산가액', () => {
+    // 1,524,956 + 2,634,822 + 2,221,334 = 6,381,112 (백만 원)
+    expect(DEFAULT_SOURCES.bequestTaxRate.kind).toBe('derived');
+    expect(DEFAULT_SOURCES.bequestTaxRate.value).toBeCloseTo(6_381_112 / 20_064_215, 3);
   });
 
   it('인구 변화율은 장래인구추계 대조 전이라 0% 가정', () => {

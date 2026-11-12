@@ -75,3 +75,4 @@ data/
 # 디렉터리를 새로 만들면 git이 조용히 무시하므로 이 목록에 같이 추가할 것.
 !/src/lib/data/
 !/src/lib/programs/data/
+!/src/lib/basic-income/data/
