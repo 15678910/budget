@@ -188,6 +188,7 @@ export type SourceKey =
   | 'surplusExcess' | 'surplusSaveRatio' | 'sharedYield'
   | 'futureFundTotal' | 'futureFundSurplus' | 'depositRate' | 'consignReturn'
   | 'childBirths' | 'childTarget' | 'childRate' | 'childYears'
+  | 'ffProgramSpend' | 'ffBondCut' | 'chileCrisisDraw' | 'aiShockYear' | 'mortgageShockYear'
   /* 아래는 입력칸 없이 출처 목록에만 보이는 참고 값 */
   | 'budgetTotal2027' | 'inheritanceTaxPaid' | 'swissCo2Levy' | 'canadaCarbonRepeal';
 
@@ -196,4 +197,58 @@ export interface ExcludedRevenue {
   reason: string;
   source: string;
   url?: string;
+}
+
+export type FundRuleId = 'GOV' | 'NORWAY' | 'CHILE';
+
+/** 같은 돈을 세 규칙(정부안·노르웨이·칠레)에 따로 넣는 비교의 입력. 금액은 조 원. */
+export interface FundRuleInput {
+  baseYear: number;
+  years: number;
+  /** 첫해 들어오는 돈(2027년 미래대응기금) */
+  seed: number;
+  /** 둘째 해부터 해마다 들어오는 초과 세수 */
+  annualInflow: number;
+  /** 첫해 돈 중 사업비(정부안은 들어온 돈의 이 비율만 국민에게 쓴다) */
+  programSpend: number;
+  /** 첫해 돈 중 국채 발행 축소 */
+  bondCut: number;
+  depositRate: number;
+  realReturn: number;
+  /** 노르웨이 규칙: 해마다 잔액에서 꺼내는 비율 */
+  withdrawalRate: number;
+  /** 칠레 규칙: 위기 해에 잔액에서 꺼낼 수 있는 상한 */
+  crisisDrawRate: number;
+  population0: number;
+  populationGrowth: number;
+  crisisYears: { aiUnemployment: number; mortgage: number };
+}
+
+export interface FundRuleYear {
+  year: number;
+  inflow: number;
+  payout: number;
+  /** 그해 끝 잔액(정부안은 예탁 명목 원금) */
+  balance: number;
+  perPersonWon: number;
+  crisis: boolean;
+}
+
+export interface FundRuleResult {
+  id: FundRuleId;
+  label: string;
+  rule: string;
+  crisisNote: string;
+  rows: FundRuleYear[];
+  paidTotal: number;
+  /** 잔액이 명목 기준인가(정부안 예탁 원금). 나머지는 실질 */
+  nominal: boolean;
+  /** 10·30년째 값. 기간이 그보다 짧으면 null */
+  balanceAt10: number | null;
+  balanceAt30: number | null;
+  perPersonWon: { first: number; y10: number | null; y30: number | null };
+  /** 위기 해 1인당 액수. 위기 연도가 기간 밖이면 null */
+  crisisPerPersonWon: { aiUnemployment: number | null; mortgage: number | null };
+  /** 정부안 예탁 이자 누적(일반회계로 감). 다른 규칙은 0 */
+  generalAccountInterestTotal: number;
 }

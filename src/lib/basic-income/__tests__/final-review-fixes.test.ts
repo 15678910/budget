@@ -12,12 +12,21 @@ const carbon = (over: Partial<CarbonTaxInput>): CarbonTaxInput => ({
 });
 
 describe('C1·I6: 확인 전 사실값', () => {
-  it('로봇세 기반과 초과 세수는 0과 "출처 확인 전"', () => {
-    for (const k of ['robotBase', 'surplusExcess'] as const) {
-      expect(DEFAULT_SOURCES[k].value).toBe(0);
-      expect(DEFAULT_SOURCES[k].note).toBe('출처 확인 전');
-      expect(DEFAULT_SOURCES[k].url).toBeUndefined();
-    }
+  it('초과 세수는 아직 0과 "출처 확인 전"', () => {
+    expect(DEFAULT_SOURCES.surplusExcess.value).toBe(0);
+    expect(DEFAULT_SOURCES.surplusExcess.note).toBe('출처 확인 전');
+    expect(DEFAULT_SOURCES.surplusExcess.url).toBeUndefined();
+  });
+
+  it('로봇세 기반은 2024년 로봇산업 실태조사의 내수 출하액 4조 8,581억 원(수출 제외)', () => {
+    expect(DEFAULT_SOURCES.robotBase).toMatchObject({ value: 4.8581, kind: 'source' });
+    expect(DEFAULT_SOURCES.robotBase.source).toMatch(/로봇산업 실태조사/);
+    expect(DEFAULT_SOURCES.robotBase.note).toMatch(/내수/);
+    expect(DEFAULT_SOURCES.robotBase.note).toMatch(/원문 대조/);
+    expect(DEFAULT_SOURCES.robotBase.note).not.toMatch(/대조 전/);
+    expect(DEFAULT_SOURCES.robotBase.url).toContain('kiria.org');
+    expect(DEFAULT_SOURCES.robotBase.url).toBeDefined();
+    expect(DEFAULT_INPUT.alt.robot.base).toBe(4.8581);
   });
 
   it('데이터세 기반은 방미통위 보도자료의 2024년 온라인 광고비 10조 1,011억 원', () => {

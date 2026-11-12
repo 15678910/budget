@@ -3,7 +3,7 @@
  * 첫 화면은 S1 현행(기본소득 기금 0원)이다.
  */
 import { DEFAULT_SOURCES } from './data/sources';
-import type { ExcludedRevenue, FutureFundInput, SharedAsset, SimInput, SourceKey } from './types';
+import type { ExcludedRevenue, FundRuleInput, FutureFundInput, SharedAsset, SimInput, SourceKey } from './types';
 
 export { DEFAULT_SOURCES } from './data/sources';
 
@@ -52,6 +52,23 @@ export const DEFAULT_FUTURE_FUND: FutureFundInput = {
   depositRate: v('depositRate'),
   consignReturn: v('consignReturn'),
   child: { births: v('childBirths'), targetWon: v('childTarget'), rate: v('childRate'), years: v('childYears') },
+};
+
+/** 기금 규칙 비교: 2027년 미래대응기금을 세 규칙에 따로 넣는다. 이후 해마다 초과 세수(정부 정의)가 들어온다. */
+export const DEFAULT_FUND_RULES: FundRuleInput = {
+  baseYear: 2027,
+  years: 30,
+  seed: v('futureFundTotal'),
+  annualInflow: v('surplusExcess'),
+  programSpend: v('ffProgramSpend'),
+  bondCut: v('ffBondCut'),
+  depositRate: v('depositRate'),
+  realReturn: v('realReturn'),
+  withdrawalRate: v('withdrawalRate'),
+  crisisDrawRate: v('chileCrisisDraw'),
+  population0: v('population0'),
+  populationGrowth: v('populationGrowth'),
+  crisisYears: { aiUnemployment: v('aiShockYear'), mortgage: v('mortgageShockYear') },
 };
 
 /** 기본소득 재원에서 뺀 세입. 이미 법이 정한 쓰임이 있다. */

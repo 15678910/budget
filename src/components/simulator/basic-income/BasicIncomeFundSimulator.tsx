@@ -2,19 +2,22 @@
 
 import { useMemo, useState } from 'react';
 import {
+  DEFAULT_FUND_RULES,
   DEFAULT_FUTURE_FUND,
   DEFAULT_INPUT,
   firstPassingYear,
   maxSustainableNow,
   perpetualTarget,
+  runFundRules,
   runFutureFundScenarios,
   sanitizeInput,
   simulate,
 } from '@/lib/basic-income';
-import type { SimInput } from '@/lib/basic-income/types';
+import type { FundRuleInput, SimInput } from '@/lib/basic-income/types';
 import { BudgetCompare } from './BudgetCompare';
 import { ExportButtons } from './ExportButtons';
 import { FundPanel } from './FundPanel';
+import { FundRuleTable } from './FundRuleTable';
 import { InflowPanel } from './InflowPanel';
 import { OutflowPanel } from './OutflowPanel';
 import { ScenarioTable } from './ScenarioTable';
@@ -41,6 +44,19 @@ export function BasicIncomeFundSimulator() {
   const passYear = useMemo(() => firstPassingYear(clean), [clean]);
   const target = useMemo(() => perpetualTarget(clean), [clean]);
   const scenarios = useMemo(() => runFutureFundScenarios(clean, DEFAULT_FUTURE_FUND), [clean]);
+  const ruleInput = useMemo<FundRuleInput>(
+    () => ({
+      ...DEFAULT_FUND_RULES,
+      baseYear: clean.baseYear,
+      annualInflow: clean.surplus.annualExcess,
+      realReturn: clean.realReturn,
+      withdrawalRate: clean.withdrawalRate,
+      population0: clean.population0,
+      populationGrowth: clean.populationGrowth,
+    }),
+    [clean],
+  );
+  const fundRules = useMemo(() => runFundRules(ruleInput), [ruleInput]);
 
   const first = result.rows[0];
   const firstPaying = result.rows.find((r) => r.paying);
@@ -92,6 +108,11 @@ export function BasicIncomeFundSimulator() {
       <section id="bi-scenarios" className={BOX}>
         <h3 className={SECTION_TITLE}>미래대응기금 쓰임새 비교</h3>
         <ScenarioTable rows={scenarios} />
+      </section>
+
+      <section id="bi-fund-rules" className={BOX}>
+        <h3 className={SECTION_TITLE}>기금 규칙 비교: 정부안 · 노르웨이 · 칠레</h3>
+        <FundRuleTable rows={fundRules} input={ruleInput} />
       </section>
 
       {firstPaying && (

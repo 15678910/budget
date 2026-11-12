@@ -17,6 +17,7 @@ const POP_PROJ_URL = 'https://www.index.go.kr/unity/potal/main/EachDtlPageDetail
 const INHERIT_TAX_URL = 'https://www.index.go.kr/unify/idx-info.do?idxCd=2848';
 const TASIS_URL = 'https://tasis.nts.go.kr/';
 const AD_SPEND_URL = 'https://www.korea.kr/briefing/pressReleaseView.do?newsId=156738893';
+const ROBOT_SURVEY_URL = 'https://kiria.org/portal/policysut/portalPlcyReports.do';
 const SWISS_URL = 'https://www.bafu.admin.ch/de/co2-abgabe-private';
 const CANADA_URL =
   'https://www.canada.ca/en/department-finance/news/2025/03/removing-the-consumer-carbon-price-effective-april-1-2025.html';
@@ -47,8 +48,13 @@ export const DEFAULT_SOURCES: Record<SourceKey, SourcedValue> = {
   initialFund: a('기본소득 기금 처음 잔액', 0, '조 원', 'S1 현행: 기본소득 기금 없음'),
   socialInsuranceTopUp: a('연금·건보 보전', 0, '조 원/년', '켜면 해마다 필요액에 더한다'),
   // 로봇세
-  // 자동화 설비 규모 원문 자료를 찾으면 넣는다.
-  robotBase: a('로봇세 과세 기반', 0, '조 원', '출처 확인 전'),
+  // 정의(2026-11-12 사용자 결정 ①): 국내에 공급된 로봇·부품 금액 = 실태조사의 내수 출하액.
+  // 수출은 국외 사용자 몫이라 뺀다. 수입(6,895억 원)은 원문에 내수와 합친 값이 없어 넣지 않았다.
+  robotBase: {
+    label: '로봇세 과세 기반(로봇 내수 출하액)', value: 4.8581, unit: '조 원', kind: 'source',
+    source: "산업통상부·한국로봇산업진흥원·한국AI·로봇산업협회 '2024년 로봇산업 실태조사'(2025.12 공표)", url: ROBOT_SURVEY_URL,
+    note: '2024년 내수 출하액 4조 8,581억 원(전년 대비 3.5% 증가, 수출 1조 2,578억 원 제외). 결과보고서 원문 대조(PDF 64쪽). 품목별 내수: 제조업용 2조 608억·전문서비스용 5,475억·개인서비스용 3,683억·부품 및 SW 1조 8,814억 원',
+  },
   robotRate: a('로봇세율', 0.05, '비율'),
   robotDecline: a('로봇세 기반 연 감소율', 0.03, '비율', '자동화가 끝나면 기반이 줄어든다'),
   // 데이터세
@@ -110,6 +116,20 @@ export const DEFAULT_SOURCES: Record<SourceKey, SourcedValue> = {
     note: '162.3조에서 사업비 45.4조와 국채 발행 축소 12.5조를 뺀 값(필자 계산)',
   },
   depositRate: a('공자기금 예탁 이자율', 0.03, '비율'),
+  ffProgramSpend: {
+    label: '미래대응기금 중 4대 분야 사업비', value: 45.4, unit: '조 원', kind: 'source',
+    source: '기획예산처 2027년 예산안', url: BUDGET_2027_URL,
+    note: '보도자료 원문: 청년·성장·지역·교육 4대 분야 45.4조 원',
+  },
+  ffBondCut: {
+    label: '미래대응기금 중 국채 발행 축소', value: 12.5, unit: '조 원', kind: 'source',
+    source: '기획예산처 2027년 예산안', url: BUDGET_2027_URL,
+    note: '보도자료 원문: 국채 발행 축소 12.5조 원',
+  },
+  // 기금 규칙 비교(칠레 규칙·위기 시험)
+  chileCrisisDraw: a('칠레 규칙: 위기 해 인출 상한', 0.25, '비율', '칠레 ESSF는 위기 때 꺼내 쓰지만 법정 비율이 없어 둔 가정'),
+  aiShockYear: a('위기 시험: AI 실업이 커지는 해', 2032, '년', '예시 연도(예측 아님)'),
+  mortgageShockYear: a('위기 시험: 주택담보대출 부실이 터지는 해', 2030, '년', '예시 연도(예측 아님)'),
   consignReturn: a('위탁 운용 기대수익률', 0.05, '비율'),
   childBirths: {
     label: '2025년 출생아 수', value: 254_341, unit: '명', kind: 'source',
